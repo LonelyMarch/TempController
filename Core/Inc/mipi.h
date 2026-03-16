@@ -6,6 +6,7 @@
 #ifndef __MIPI_H
 #define __MIPI_H
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

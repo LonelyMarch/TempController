@@ -54,6 +54,10 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+/* 跨任务共享温度变量（定义位于 main.c）。 */
+extern volatile float g_temp_current_c;
+extern volatile float g_temp_setpoint_c;
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

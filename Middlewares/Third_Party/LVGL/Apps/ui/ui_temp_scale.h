@@ -24,12 +24,6 @@ void UI_TempScale_SetCurrentTemp(float value_c);
  */
 void UI_TempScale_SetSetpointTemp(float value_c);
 
-/**
- * @brief 读取当前设定温度。
- * @return 当前设定温度（摄氏度）。
- */
-float UI_TempScale_GetSetpointTemp(void);
-
 #ifdef __cplusplus
 }
 #endif

@@ -7,12 +7,15 @@
 /** 每次局部刷新使用的缓冲行数。 */
 #define LCD_BUF_LINES 40U
 
+/* Put large LVGL draw buffers into RAM_D1 via linker section .lvgl_buf. */
+#define LVGL_DRAW_BUF_ATTR __attribute__((section(".lvgl_buf"), aligned(32)))
+
 /** LVGL 显示对象句柄（单例）。 */
 static lv_display_t * s_disp;
 /** LVGL 主绘制缓冲区。 */
-static lv_color_t s_buf1[LCD_W * LCD_BUF_LINES];
+static lv_color_t s_buf1[LCD_W * LCD_BUF_LINES] LVGL_DRAW_BUF_ATTR;
 /** LVGL 次绘制缓冲区（双缓冲）。 */
-static lv_color_t s_buf2[LCD_W * LCD_BUF_LINES];
+static lv_color_t s_buf2[LCD_W * LCD_BUF_LINES] LVGL_DRAW_BUF_ATTR;
 
 /**
  * @brief 通过 lcd.c 的总线接口连续发送原始字节流。

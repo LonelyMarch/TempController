@@ -64,11 +64,6 @@ static uint16_t joystick_read_adc_once_dma(void)
 {
     uint32_t start_tick;
 
-    /* DMA 采样仅在调度器运行后执行，避免在初始化阶段阻塞等待。 */
-    if(osKernelGetState() != osKernelRunning) {
-        return s_last_adc_raw;
-    }
-
     s_dma_done = false;
     s_dma_error = false;
 

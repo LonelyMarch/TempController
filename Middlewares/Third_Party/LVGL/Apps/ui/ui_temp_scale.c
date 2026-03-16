@@ -4,8 +4,8 @@
 
 #include "joystick.h"
 
-#define UI_TEMP_MIN_C           10.0f
-#define UI_TEMP_MAX_C           45.0f
+#define UI_TEMP_MIN_C           40.0f
+#define UI_TEMP_MAX_C           70.0f
 #define UI_TEMP_FINE_STEP_C      0.5f
 #define UI_TEMP_COARSE_STEP_C    1.0f
 
@@ -19,8 +19,6 @@ typedef struct {
     lv_obj_t * scale;
     lv_obj_t * marker;
     lv_timer_t * timer;
-    float current_temp;
-    float set_temp;
 } ui_ctx_t;
 
 static ui_ctx_t s_ui;
@@ -47,11 +45,11 @@ static float clamp_temp(float value)
 static void update_labels(void)
 {
     if(s_ui.label_curr_value != NULL) {
-        lv_label_set_text_fmt(s_ui.label_curr_value, "%.1f C", s_ui.current_temp);
+        lv_label_set_text_fmt(s_ui.label_curr_value, "%.1f C", g_temp_current_c);
     }
 
     if(s_ui.label_set_value != NULL) {
-        lv_label_set_text_fmt(s_ui.label_set_value, "%.1f C", s_ui.set_temp);
+        lv_label_set_text_fmt(s_ui.label_set_value, "%.1f C", g_temp_setpoint_c);
     }
 }
 
@@ -89,7 +87,7 @@ static void scale_draw_event_cb(lv_event_t * e)
     text_dsc.opa = LV_OPA_COVER;
     text_dsc.font = LV_FONT_DEFAULT;
 
-    set_minor_index = (int32_t)(s_ui.set_temp * (float)SCALE_MINOR_PER_C);
+    set_minor_index = (int32_t)(g_temp_setpoint_c * (float)SCALE_MINOR_PER_C);
 
     for(i = -SCALE_VISIBLE_MINOR; i <= SCALE_VISIBLE_MINOR; i++) {
         int32_t x = center_x + i * SCALE_PIXEL_PER_MINOR;
@@ -144,7 +142,7 @@ static void ui_tick_cb(lv_timer_t * timer)
     /* 左右细调：一次 0.5 度。 */
     step = Joystick_GetEncoderStep();
     if(step != 0) {
-        s_ui.set_temp = clamp_temp(s_ui.set_temp + (float)step * UI_TEMP_FINE_STEP_C);
+        g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c + (float)step * UI_TEMP_FINE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
@@ -152,17 +150,17 @@ static void ui_tick_cb(lv_timer_t * timer)
     /* 上下粗调：一次 1.0 度；按压回到当前温度。 */
     dir = Joystick_GetDirection();
     if(dir == JOYSTICK_DIR_UP) {
-        s_ui.set_temp = clamp_temp(s_ui.set_temp + UI_TEMP_COARSE_STEP_C);
+        g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c + UI_TEMP_COARSE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
     else if(dir == JOYSTICK_DIR_DOWN) {
-        s_ui.set_temp = clamp_temp(s_ui.set_temp - UI_TEMP_COARSE_STEP_C);
+        g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c - UI_TEMP_COARSE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
     else if(dir == JOYSTICK_DIR_PRESS) {
-        s_ui.set_temp = clamp_temp(s_ui.current_temp);
+        g_temp_setpoint_c = clamp_temp(g_temp_current_c);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
@@ -221,8 +219,8 @@ void UI_TempScale_Create(void)
     lv_obj_set_style_bg_color(s_ui.marker, lv_color_hex(0xF67A4D), 0);
     lv_obj_set_style_border_width(s_ui.marker, 0, 0);
 
-    s_ui.current_temp = 24.3f;
-    s_ui.set_temp = 24.0f;
+    g_temp_current_c = clamp_temp(g_temp_current_c);
+    g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c);
     update_labels();
 
     /* 避免重复创建定时器导致多重轮询。 */
@@ -238,7 +236,7 @@ void UI_TempScale_Create(void)
  */
 void UI_TempScale_SetCurrentTemp(float value_c)
 {
-    s_ui.current_temp = clamp_temp(value_c);
+    g_temp_current_c = clamp_temp(value_c);
     update_labels();
 }
 
@@ -248,18 +246,9 @@ void UI_TempScale_SetCurrentTemp(float value_c)
  */
 void UI_TempScale_SetSetpointTemp(float value_c)
 {
-    s_ui.set_temp = clamp_temp(value_c);
+    g_temp_setpoint_c = clamp_temp(value_c);
     update_labels();
     if(s_ui.scale != NULL) {
         lv_obj_invalidate(s_ui.scale);
     }
-}
-
-/**
- * @brief 读取当前设定温度。
- * @return 设定温度（摄氏度）。
- */
-float UI_TempScale_GetSetpointTemp(void)
-{
-    return s_ui.set_temp;
 }
