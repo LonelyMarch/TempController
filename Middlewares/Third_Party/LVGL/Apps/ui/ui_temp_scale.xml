@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 温控界面定义：暗色线性风格 + 横向刻度尺 -->
+<lvgl-project name="tempcontroller_temp_scale" version="1.0">
+  <!-- 主屏：280x240，适配当前横屏布局 -->
+  <screen id="main" width="280" height="240" theme="dark-linear">
+    <style id="bg" bg_color="#060B1A" bg_grad_color="#0F1A34" bg_grad_dir="ver" />
+    <label id="title_current" text="CURRENT TEMP" x="12" y="12" color="#8B9AB8" />
+    <label id="value_current" text="24.3 C" x="12" y="30" color="#F0F5FF" />
+    <label id="title_set" text="SET TEMP" align="top_right" x="-12" y="12" color="#F67A4D" />
+    <label id="value_set" text="24.0 C" align="top_right" x="-12" y="30" color="#F8B18E" />
+    <!-- 自定义刻度绘制区域：通过 draw_event_scale 对应 C 侧绘制回调 -->
+    <custom-widget id="temp_scale" type="draw_event_scale" x="0" y="144" width="280" height="82" />
+    <!-- 中央固定参考线 -->
+    <rect id="center_marker" x="138" y="164" width="4" height="18" radius="2" color="#F67A4D" />
+  </screen>
+  <!-- 输入映射：摇杆用于调节设定温度 -->
+  <interaction>
+    <input source="adc1_in19_joystick" map="left/right/up/down/press" />
+    <action trigger="left|right" target="set_temp" step="0.5" />
+    <action trigger="up|down" target="set_temp" step="1.0" />
+    <action trigger="press" target="set_temp" expression="current_temp" />
+  </interaction>
+</lvgl-project>

@@ -55,6 +55,13 @@ const osThreadAttr_t lvTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for joystickTask */
+osThreadId_t joystickTaskHandle;
+const osThreadAttr_t joystickTask_attributes = {
+  .name = "joystickTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -62,6 +69,7 @@ const osThreadAttr_t lvTask_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartLvTask(void *argument);
+extern void StartJoystickTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -115,6 +123,9 @@ void MX_FREERTOS_Init(void) {
   /* Create the thread(s) */
   /* creation of lvTask */
   lvTaskHandle = osThreadNew(StartLvTask, NULL, &lvTask_attributes);
+
+  /* creation of joystickTask */
+  joystickTaskHandle = osThreadNew(StartJoystickTask, NULL, &joystickTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

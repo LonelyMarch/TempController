@@ -29,6 +29,8 @@
 /* USER CODE BEGIN Includes */
 #include "lvgl.h"
 #include "mipi.h"
+#include "joystick.h"
+#include "ui_temp_scale.h"
 
 /* USER CODE END Includes */
 
@@ -107,12 +109,19 @@ int main(void)
   MX_SPI1_Init();
   MX_DMA2D_Init();
   /* USER CODE BEGIN 2 */
+
   lv_init();
   lv_tick_set_cb(HAL_GetTick);
-
+  
   if(MIPI_LVGL_Init() != HAL_OK) {
     Error_Handler();
   }
+
+  if(Joystick_Init() != HAL_OK) {
+    Error_Handler();
+  }
+
+  UI_TempScale_Create();
 
   /* USER CODE END 2 */
 

@@ -51,13 +51,16 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
-        Core/Src/lcd.c
+    Core/Src/lcd.c
     Core/Src/mipi.c
+    Core/Src/joystick.c
+    Middlewares/Third_Party/LVGL/Apps/ui/ui_temp_scale.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/ui
 )
 
 # Add project symbols (macros)
