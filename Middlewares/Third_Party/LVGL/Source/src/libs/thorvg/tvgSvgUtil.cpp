@@ -42,7 +42,7 @@ static uint8_t _hexCharToDec(const char c)
 /* External Class Implementation                                        */
 /************************************************************************/
 
-size_t svgUtilURLDecode(const char *src, char** dst)
+size_t svgUtilURLDecode(const char* src, char** dst)
 {
     if (!src) return 0;
 
@@ -53,17 +53,23 @@ size_t svgUtilURLDecode(const char *src, char** dst)
     LV_ASSERT_MALLOC(decoded);
 
     char a, b;
-    int idx =0;
-    while (*src) {
+    int idx = 0;
+    while (*src)
+    {
         if (*src == '%' &&
             ((a = src[1]) && (b = src[2])) &&
-            (isxdigit(a) && isxdigit(b))) {
+            (isxdigit(a) && isxdigit(b)))
+        {
             decoded[idx++] = (_hexCharToDec(a) << 4) + _hexCharToDec(b);
-            src+=3;
-        } else if (*src == '+') {
+            src += 3;
+        }
+        else if (*src == '+')
+        {
             decoded[idx++] = ' ';
             src++;
-        } else {
+        }
+        else
+        {
             decoded[idx++] = *src++;
         }
     }
@@ -75,4 +81,3 @@ size_t svgUtilURLDecode(const char *src, char** dst)
 
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

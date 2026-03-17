@@ -1,4 +1,3 @@
-
 /**
  * @file lv_sprintf_clib.c
  *
@@ -37,7 +36,7 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-int lv_snprintf(char * buffer, size_t count, const char * format, ...)
+int lv_snprintf(char* buffer, size_t count, const char* format, ...)
 {
     va_list va;
     va_start(va, format);
@@ -46,7 +45,7 @@ int lv_snprintf(char * buffer, size_t count, const char * format, ...)
     return ret;
 }
 
-int lv_vsnprintf(char * buffer, size_t count, const char * format, va_list va)
+int lv_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
     return vsnprintf(buffer, count, format, va);
 }

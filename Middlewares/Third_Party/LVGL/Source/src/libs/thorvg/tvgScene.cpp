@@ -32,8 +32,10 @@
 
 Result Scene::Impl::resetEffects()
 {
-    if (effects) {
-        for (auto e = effects->begin(); e < effects->end(); ++e) {
+    if (effects)
+    {
+        for (auto e = effects->begin(); e < effects->end(); ++e)
+        {
             delete(*e);
         }
         delete(effects);
@@ -60,13 +62,13 @@ Scene::~Scene()
 
 unique_ptr<Scene> Scene::gen() noexcept
 {
-    return unique_ptr<Scene>(new Scene);
+    return unique_ptr < Scene > (new Scene);
 }
 
 
 TVG_DEPRECATED uint32_t Scene::identifier() noexcept
 {
-    return (uint32_t) Type::Scene;
+    return (uint32_t)Type::Scene;
 }
 
 
@@ -118,12 +120,14 @@ Result Scene::push(SceneEffect effect, ...) noexcept
 
     RenderEffect* re = nullptr;
 
-    switch (effect) {
-        case SceneEffect::GaussianBlur: {
+    switch (effect)
+    {
+    case SceneEffect::GaussianBlur:
+        {
             re = RenderEffectGaussian::gen(args);
             break;
         }
-        default: break;
+    default: break;
     }
 
     if (!re) return Result::InvalidArguments;
@@ -134,4 +138,3 @@ Result Scene::push(SceneEffect effect, ...) noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

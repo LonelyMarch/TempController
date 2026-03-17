@@ -78,7 +78,7 @@ Fill* LinearGradient::Impl::duplicate()
 /* External Class Implementation                                        */
 /************************************************************************/
 
-Fill::Fill():pImpl(new Impl())
+Fill::Fill() : pImpl(new Impl())
 {
 }
 
@@ -93,8 +93,10 @@ Result Fill::colorStops(const ColorStop* colorStops, uint32_t cnt) noexcept
 {
     if ((!colorStops && cnt > 0) || (colorStops && cnt == 0)) return Result::InvalidArguments;
 
-    if (cnt == 0) {
-        if (pImpl->colorStops) {
+    if (cnt == 0)
+    {
+        if (pImpl->colorStops)
+        {
             free(pImpl->colorStops);
             pImpl->colorStops = nullptr;
             pImpl->cnt = 0;
@@ -102,7 +104,8 @@ Result Fill::colorStops(const ColorStop* colorStops, uint32_t cnt) noexcept
         return Result::Success;
     }
 
-    if (pImpl->cnt != cnt) {
+    if (pImpl->cnt != cnt)
+    {
         pImpl->colorStops = static_cast<ColorStop*>(lv_realloc(pImpl->colorStops, cnt * sizeof(ColorStop)));
         LV_ASSERT_MALLOC(pImpl->colorStops);
     }
@@ -138,7 +141,8 @@ FillSpread Fill::spread() const noexcept
 
 Result Fill::transform(const Matrix& m) noexcept
 {
-    if (!pImpl->transform) {
+    if (!pImpl->transform)
+    {
         pImpl->transform = static_cast<Matrix*>(lv_malloc(sizeof(Matrix)));
         LV_ASSERT_MALLOC(pImpl->transform);
     }
@@ -162,11 +166,11 @@ Fill* Fill::duplicate() const noexcept
 
 TVG_DEPRECATED uint32_t Fill::identifier() const noexcept
 {
-    return (uint32_t) type();
+    return (uint32_t)type();
 }
 
 
-RadialGradient::RadialGradient():pImpl(new Impl())
+RadialGradient::RadialGradient() : pImpl(new Impl())
 {
     Fill::pImpl->method(new FillDup<RadialGradient::Impl>(pImpl));
 }
@@ -196,13 +200,13 @@ Result RadialGradient::radial(float* cx, float* cy, float* r) const noexcept
 
 unique_ptr<RadialGradient> RadialGradient::gen() noexcept
 {
-    return unique_ptr<RadialGradient>(new RadialGradient);
+    return unique_ptr < RadialGradient > (new RadialGradient);
 }
 
 
 TVG_DEPRECATED uint32_t RadialGradient::identifier() noexcept
 {
-    return (uint32_t) Type::RadialGradient;
+    return (uint32_t)Type::RadialGradient;
 }
 
 
@@ -212,7 +216,7 @@ Type RadialGradient::type() const noexcept
 }
 
 
-LinearGradient::LinearGradient():pImpl(new Impl())
+LinearGradient::LinearGradient() : pImpl(new Impl())
 {
     Fill::pImpl->method(new FillDup<LinearGradient::Impl>(pImpl));
 }
@@ -248,13 +252,13 @@ Result LinearGradient::linear(float* x1, float* y1, float* x2, float* y2) const 
 
 unique_ptr<LinearGradient> LinearGradient::gen() noexcept
 {
-    return unique_ptr<LinearGradient>(new LinearGradient);
+    return unique_ptr < LinearGradient > (new LinearGradient);
 }
 
 
 TVG_DEPRECATED uint32_t LinearGradient::identifier() noexcept
 {
-    return (uint32_t) Type::LinearGradient;
+    return (uint32_t)Type::LinearGradient;
 }
 
 
@@ -264,4 +268,3 @@ Type LinearGradient::type() const noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

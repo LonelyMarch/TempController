@@ -55,7 +55,8 @@ static bool _genOutline(SwImage* image, const Matrix& transform, SwMpool* mpool,
     to[2] = {w, h};
     to[3] = {0, h};
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         outline->pts.push(mathTransform(&to[i], transform));
         outline->types.push(SW_CURVE_TYPE_POINT);
     }
@@ -75,16 +76,20 @@ static bool _genOutline(SwImage* image, const Matrix& transform, SwMpool* mpool,
 /* External Class Implementation                                        */
 /************************************************************************/
 
-bool imagePrepare(SwImage* image, const Matrix& transform, const SwBBox& clipRegion, SwBBox& renderRegion, SwMpool* mpool, unsigned tid)
+bool imagePrepare(SwImage* image, const Matrix& transform, const SwBBox& clipRegion, SwBBox& renderRegion,
+                  SwMpool* mpool, unsigned tid)
 {
     image->direct = _onlyShifted(transform);
 
     //Fast track: Non-transformed image but just shifted.
-    if (image->direct) {
+    if (image->direct)
+    {
         image->ox = -static_cast<int32_t>(nearbyint(transform.e13));
         image->oy = -static_cast<int32_t>(nearbyint(transform.e23));
-    //Figure out the scale factor by transform matrix
-    } else {
+        //Figure out the scale factor by transform matrix
+    }
+    else
+    {
         auto scaleX = sqrtf((transform.e11 * transform.e11) + (transform.e21 * transform.e21));
         auto scaleY = sqrtf((transform.e22 * transform.e22) + (transform.e12 * transform.e12));
         image->scale = (fabsf(scaleX - scaleY) > 0.01f) ? 1.0f : scaleX;
@@ -125,4 +130,3 @@ void imageFree(SwImage* image)
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

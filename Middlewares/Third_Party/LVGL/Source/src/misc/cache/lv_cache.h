@@ -45,16 +45,16 @@ extern "C" {
  * @param ops           A set of operations that can be performed on the cache. See lv_cache_ops_t for details.
  * @return              Returns a pointer to the created cache object on success, `NULL` on error.
  */
-lv_cache_t * lv_cache_create(const lv_cache_class_t * cache_class,
-                             size_t node_size, size_t max_size,
-                             lv_cache_ops_t ops);
+lv_cache_t* lv_cache_create(const lv_cache_class_t* cache_class,
+                            size_t node_size, size_t max_size,
+                            lv_cache_ops_t ops);
 
 /**
  * Destroy a cache object.
  * @param cache         The cache object pointer to destroy.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void lv_cache_destroy(lv_cache_t * cache, void * user_data);
+void lv_cache_destroy(lv_cache_t* cache, void* user_data);
 
 /**
  * Acquire a cache entry with the given key. If entry not in cache, it will return `NULL` (not found).
@@ -64,7 +64,7 @@ void lv_cache_destroy(lv_cache_t * cache, void * user_data);
  * @param user_data     A user data pointer that will be passed to the create callback.
  * @return              Returns a pointer to the acquired cache entry on success with `lv_cache_entry_t::ref_cnt` incremented, `NULL` on error.
  */
-lv_cache_entry_t * lv_cache_acquire(lv_cache_t * cache, const void * key, void * user_data);
+lv_cache_entry_t* lv_cache_acquire(lv_cache_t* cache, const void* key, void* user_data);
 
 /**
  * Acquire a cache entry with the given key. If the entry is not in the cache, it will create a new entry with the given key.
@@ -77,7 +77,7 @@ lv_cache_entry_t * lv_cache_acquire(lv_cache_t * cache, const void * key, void *
  * @param user_data     A user data pointer that will be passed to the create callback.
  * @return              Returns a pointer to the acquired or created cache entry on success with `lv_cache_entry_t::ref_cnt` incremented, `NULL` on error.
  */
-lv_cache_entry_t * lv_cache_acquire_or_create(lv_cache_t * cache, const void * key, void * user_data);
+lv_cache_entry_t* lv_cache_acquire_or_create(lv_cache_t* cache, const void* key, void* user_data);
 
 /**
  * Add a new cache entry with the given key and data. If the cache is full, the cache's policy will be used to evict an entry.
@@ -86,7 +86,7 @@ lv_cache_entry_t * lv_cache_acquire_or_create(lv_cache_t * cache, const void * k
  * @param user_data     A user data pointer that will be passed to the create callback.
  * @return              Returns a pointer to the added cache entry on success with `lv_cache_entry_t::ref_cnt` incremented, `NULL` on error.
  */
-lv_cache_entry_t * lv_cache_add(lv_cache_t * cache, const void * key, void * user_data);
+lv_cache_entry_t* lv_cache_add(lv_cache_t* cache, const void* key, void* user_data);
 
 /**
  * Release a cache entry. The `lv_cache_entry_t::ref_cnt` will be decremented. If the `lv_cache_entry_t::ref_cnt` is zero, it will issue an error.
@@ -95,7 +95,7 @@ lv_cache_entry_t * lv_cache_add(lv_cache_t * cache, const void * key, void * use
  * @param entry         The cache entry pointer to release.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void lv_cache_release(lv_cache_t * cache, lv_cache_entry_t * entry, void * user_data);
+void lv_cache_release(lv_cache_t* cache, lv_cache_entry_t* entry, void* user_data);
 
 /**
  * Reserve a certain amount of memory/count in the cache. This function is useful when you want to reserve a certain amount of memory/count in advance,
@@ -105,7 +105,7 @@ void lv_cache_release(lv_cache_t * cache, lv_cache_entry_t * entry, void * user_
  * @param reserved_size The amount of memory/count to reserve.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void lv_cache_reserve(lv_cache_t * cache, uint32_t reserved_size, void * user_data);
+void lv_cache_reserve(lv_cache_t* cache, uint32_t reserved_size, void* user_data);
 
 /**
  * Drop a cache entry with the given key. If the entry is not in the cache, nothing will happen to it.
@@ -116,7 +116,7 @@ void lv_cache_reserve(lv_cache_t * cache, uint32_t reserved_size, void * user_da
  * @param key           The key of the entry to drop.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void lv_cache_drop(lv_cache_t * cache, const void * key, void * user_data);
+void lv_cache_drop(lv_cache_t* cache, const void* key, void* user_data);
 
 /**
  * Drop all cache entries. All entries will be removed from the cache and their data will be freed when the last reference to them is released.
@@ -124,7 +124,7 @@ void lv_cache_drop(lv_cache_t * cache, const void * key, void * user_data);
  * @param cache         The cache object pointer to drop all entries.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void lv_cache_drop_all(lv_cache_t * cache, void * user_data);
+void lv_cache_drop_all(lv_cache_t* cache, void* user_data);
 
 /**
  * Evict one entry from the cache. The eviction policy will be used to select the entry to evict.
@@ -132,7 +132,7 @@ void lv_cache_drop_all(lv_cache_t * cache, void * user_data);
  * @param user_data     A user data pointer that will be passed to the free callback.
  * @return              Returns true if an entry is evicted, false if no entry is evicted.
  */
-bool lv_cache_evict_one(lv_cache_t * cache, void * user_data);
+bool lv_cache_evict_one(lv_cache_t* cache, void* user_data);
 
 /**
  * Set the maximum size of the cache.
@@ -143,7 +143,7 @@ bool lv_cache_evict_one(lv_cache_t * cache, void * user_data);
  * @param max_size      The new maximum size of the cache.
  * @param user_data     A user data pointer that will be passed to the free callback.
  */
-void   lv_cache_set_max_size(lv_cache_t * cache, size_t max_size, void * user_data);
+void lv_cache_set_max_size(lv_cache_t* cache, size_t max_size, void* user_data);
 
 /**
  * Get the maximum size of the cache.
@@ -151,7 +151,7 @@ void   lv_cache_set_max_size(lv_cache_t * cache, size_t max_size, void * user_da
  * @param user_data     A user data pointer that will be passed to the free callback.
  * @return              Returns the maximum size of the cache.
  */
-size_t lv_cache_get_max_size(lv_cache_t * cache, void * user_data);
+size_t lv_cache_get_max_size(lv_cache_t* cache, void* user_data);
 
 /**
  * Get the current size of the cache.
@@ -159,7 +159,7 @@ size_t lv_cache_get_max_size(lv_cache_t * cache, void * user_data);
  * @param user_data     A user data pointer that will be passed to the free callback.
  * @return              Returns the current size of the cache.
  */
-size_t lv_cache_get_size(lv_cache_t * cache, void * user_data);
+size_t lv_cache_get_size(lv_cache_t* cache, void* user_data);
 
 /**
  * Get the free size of the cache.
@@ -167,7 +167,7 @@ size_t lv_cache_get_size(lv_cache_t * cache, void * user_data);
  * @param user_data     A user data pointer that will be passed to the free callback.
  * @return              Returns the free size of the cache.
  */
-size_t lv_cache_get_free_size(lv_cache_t * cache, void * user_data);
+size_t lv_cache_get_free_size(lv_cache_t* cache, void* user_data);
 
 /**
  * Return true if the cache is enabled.
@@ -183,7 +183,7 @@ bool lv_cache_is_enabled(lv_cache_t * cache);
  * @param compare_cb    The compare callback to set.
  * @param user_data     A user data pointer.
  */
-void   lv_cache_set_compare_cb(lv_cache_t * cache, lv_cache_compare_cb_t compare_cb, void * user_data);
+void lv_cache_set_compare_cb(lv_cache_t* cache, lv_cache_compare_cb_t compare_cb, void* user_data);
 
 /**
  * Set the create callback of the cache.
@@ -191,7 +191,7 @@ void   lv_cache_set_compare_cb(lv_cache_t * cache, lv_cache_compare_cb_t compare
  * @param alloc_cb      The create callback to set.
  * @param user_data     A user data pointer.
  */
-void   lv_cache_set_create_cb(lv_cache_t * cache, lv_cache_create_cb_t alloc_cb, void * user_data);
+void lv_cache_set_create_cb(lv_cache_t* cache, lv_cache_create_cb_t alloc_cb, void* user_data);
 
 /**
  * Set the free callback of the cache.
@@ -199,28 +199,28 @@ void   lv_cache_set_create_cb(lv_cache_t * cache, lv_cache_create_cb_t alloc_cb,
  * @param free_cb       The free callback to set.
  * @param user_data     A user data pointer.
  */
-void   lv_cache_set_free_cb(lv_cache_t * cache, lv_cache_free_cb_t free_cb, void * user_data);
+void lv_cache_set_free_cb(lv_cache_t* cache, lv_cache_free_cb_t free_cb, void* user_data);
 
 /**
  * Give a name for a cache object. Only the pointer of the string is saved.
  * @param cache         The cache object pointer to set the name.
  * @param name          The name of the cache.
  */
-void lv_cache_set_name(lv_cache_t * cache, const char * name);
+void lv_cache_set_name(lv_cache_t* cache, const char* name);
 
 /**
  * Get the name of a cache object.
  * @param cache         The cache object pointer to get the name.
  * @return              Returns the name of the cache.
  */
-const char * lv_cache_get_name(lv_cache_t * cache);
+const char* lv_cache_get_name(lv_cache_t * cache);
 
 /**
  * Create an iterator for the cache object. The iterator is used to iterate over all cache entries.
  * @param cache         The cache object pointer to create the iterator.
  * @return              Returns a pointer to the created iterator on success, `NULL` on error.
  */
-lv_iter_t * lv_cache_iter_create(lv_cache_t * cache);
+lv_iter_t* lv_cache_iter_create(lv_cache_t * cache);
 
 /*************************
  *    GLOBAL VARIABLES

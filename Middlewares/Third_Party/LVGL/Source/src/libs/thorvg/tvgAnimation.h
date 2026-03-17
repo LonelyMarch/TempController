@@ -42,7 +42,8 @@ struct Animation::Impl
 
     ~Impl()
     {
-        if (PP(picture)->unref() == 0) {
+        if (PP(picture)->unref() == 0)
+        {
             delete(picture);
         }
     }
@@ -51,4 +52,3 @@ struct Animation::Impl
 #endif //_TVG_ANIMATION_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

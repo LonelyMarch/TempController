@@ -42,23 +42,23 @@
  **********************/
 
 FT_CALLBACK_DEF(unsigned long)
-ft_lv_fs_stream_io(FT_Stream       stream,
-                   unsigned long   offset,
-                   unsigned char * buffer,
-                   unsigned long   count);
+ft_lv_fs_stream_io(FT_Stream stream,
+                   unsigned long offset,
+                   unsigned char* buffer,
+                   unsigned long count);
 FT_CALLBACK_DEF(void)
-ft_lv_fs_stream_close(FT_Stream  stream);
-FT_CALLBACK_DEF(void *)
-ft_alloc(FT_Memory  memory,
-         long       size);
-FT_CALLBACK_DEF(void *)
-ft_realloc(FT_Memory  memory,
-           long       cur_size,
-           long       new_size,
-           void   *   block);
+ft_lv_fs_stream_close(FT_Stream stream);
+FT_CALLBACK_DEF(void*)
+ft_alloc(FT_Memory memory,
+         long size);
+FT_CALLBACK_DEF(void*)
+ft_realloc(FT_Memory memory,
+           long cur_size,
+           long new_size,
+           void* block);
 FT_CALLBACK_DEF(void)
-ft_free(FT_Memory  memory,
-        void   *   block);
+ft_free(FT_Memory memory,
+        void* block);
 
 /**********************
  *  STATIC VARIABLES
@@ -70,11 +70,11 @@ ft_free(FT_Memory  memory,
 
 #ifdef FT_DEBUG_MEMORY
 
-    extern FT_Int
-    ft_mem_debug_init(FT_Memory  memory);
+extern FT_Int
+ft_mem_debug_init(FT_Memory memory);
 
-    extern void
-    ft_mem_debug_done(FT_Memory  memory);
+extern void
+ft_mem_debug_done(FT_Memory memory);
 
 #endif
 
@@ -86,27 +86,28 @@ ft_free(FT_Memory  memory,
 
 /* documentation is in ftstream.h */
 
-FT_BASE_DEF(FT_Error)
-FT_Stream_Open(FT_Stream    stream,
-               const char * filepathname)
+FT_BASE_DEF (FT_Error)
+FT_Stream_Open(FT_Stream stream,
+               const char* filepathname)
 {
-    lv_fs_file_t  file;
+    lv_fs_file_t file;
 
-    if(!stream)
+    if (!stream)
         return FT_THROW(Invalid_Stream_Handle);
 
     stream->descriptor.pointer = NULL;
-    stream->pathname.pointer   = (char *)filepathname;
-    stream->base               = NULL;
-    stream->pos                = 0;
-    stream->read               = NULL;
-    stream->close              = NULL;
+    stream->pathname.pointer = (char*)filepathname;
+    stream->base = NULL;
+    stream->pos = 0;
+    stream->read = NULL;
+    stream->close = NULL;
 
     lv_fs_res_t res = lv_fs_open(&file, filepathname, LV_FS_MODE_RD);
 
-    if(res != LV_FS_RES_OK) {
+    if (res != LV_FS_RES_OK)
+    {
         FT_ERROR(("FT_Stream_Open:"
-                  " could not open `%s'\n", filepathname));
+            " could not open `%s'\n", filepathname));
 
         return FT_THROW(Cannot_Open_Resource);
     }
@@ -115,7 +116,8 @@ FT_Stream_Open(FT_Stream    stream,
 
     uint32_t pos;
     res = lv_fs_tell(&file, &pos);
-    if(res != LV_FS_RES_OK) {
+    if (res != LV_FS_RES_OK)
+    {
         FT_ERROR(("FT_Stream_Open:"));
         FT_ERROR((" opened `%s' but zero-sized\n", filepathname));
         lv_fs_close(&file);
@@ -124,10 +126,11 @@ FT_Stream_Open(FT_Stream    stream,
     stream->size = pos;
     lv_fs_seek(&file, 0, LV_FS_SEEK_SET);
 
-    lv_fs_file_t * file_p = lv_malloc(sizeof(lv_fs_file_t));
+    lv_fs_file_t* file_p = lv_malloc(sizeof(lv_fs_file_t));
     LV_ASSERT_MALLOC(file_p);
 
-    if(!file_p) {
+    if (!file_p)
+    {
         FT_ERROR(("FT_Stream_Open: malloc failed for file_p"));
         lv_fs_close(&file);
         return FT_THROW(Cannot_Open_Stream);
@@ -136,12 +139,12 @@ FT_Stream_Open(FT_Stream    stream,
     *file_p = file;
 
     stream->descriptor.pointer = file_p;
-    stream->read  = ft_lv_fs_stream_io;
+    stream->read = ft_lv_fs_stream_io;
     stream->close = ft_lv_fs_stream_close;
 
     FT_TRACE1(("FT_Stream_Open:"));
     FT_TRACE1((" opened `%s' (%ld bytes) successfully\n",
-               filepathname, stream->size));
+        filepathname, stream->size));
 
     return FT_Err_Ok;
 }
@@ -150,21 +153,22 @@ FT_Stream_Open(FT_Stream    stream,
 
 /* documentation is in ftobjs.h */
 
-FT_BASE_DEF(FT_Memory)
+FT_BASE_DEF (FT_Memory)
 FT_New_Memory(void)
 {
-    FT_Memory  memory;
+    FT_Memory memory;
 
     memory = (FT_Memory)lv_malloc(sizeof(*memory));
-    if(memory) {
-        memory->user    = NULL;
-        memory->alloc   = ft_alloc;
+    if (memory)
+    {
+        memory->user = NULL;
+        memory->alloc = ft_alloc;
         memory->realloc = ft_realloc;
-        memory->free    = ft_free;
+        memory->free = ft_free;
 #ifdef FT_DEBUG_MEMORY
-        ft_mem_debug_init(memory);
+ft_mem_debug_init (memory);
 #endif
-    }
+}
 
     return memory;
 }
@@ -172,12 +176,13 @@ FT_New_Memory(void)
 /* documentation is in ftobjs.h */
 
 FT_BASE_DEF(void)
-FT_Done_Memory(FT_Memory  memory)
+FT_Done_Memory(FT_Memory memory)
 {
+
 #ifdef FT_DEBUG_MEMORY
-    ft_mem_debug_done(memory);
+ft_mem_debug_done (memory);
 #endif
-    lv_free(memory);
+lv_free (memory);
 }
 
 /**********************
@@ -190,9 +195,9 @@ FT_Done_Memory(FT_Memory  memory)
  * @param size The requested size in bytes.
  * @return The address of newly allocated block.
  */
-FT_CALLBACK_DEF(void *)
-ft_alloc(FT_Memory  memory,
-         long       size)
+FT_CALLBACK_DEF(void*)
+ft_alloc(FT_Memory memory,
+         long size)
 {
     FT_UNUSED(memory);
 
@@ -207,11 +212,11 @@ ft_alloc(FT_Memory  memory,
  * @param block The current address of the block in memory.
  * @return The address of the reallocated memory block.
  */
-FT_CALLBACK_DEF(void *)
-ft_realloc(FT_Memory  memory,
-           long       cur_size,
-           long       new_size,
-           void   *   block)
+FT_CALLBACK_DEF(void*)
+ft_realloc(FT_Memory memory,
+           long cur_size,
+           long new_size,
+           void* block)
 {
     FT_UNUSED(memory);
     FT_UNUSED(cur_size);
@@ -225,8 +230,8 @@ ft_realloc(FT_Memory  memory,
  * @param block The address of block in memory to be freed.
  */
 FT_CALLBACK_DEF(void)
-ft_free(FT_Memory  memory,
-        void   *   block)
+ft_free(FT_Memory memory,
+        void* block)
 {
     FT_UNUSED(memory);
 
@@ -240,15 +245,15 @@ ft_free(FT_Memory  memory,
  * @param stream A pointer to the stream object.
  */
 FT_CALLBACK_DEF(void)
-ft_lv_fs_stream_close(FT_Stream  stream)
+ft_lv_fs_stream_close(FT_Stream stream)
 {
-    lv_fs_file_t * file_p = STREAM_FILE(stream);
+    lv_fs_file_t* file_p = STREAM_FILE(stream);
     lv_fs_close(file_p);
     lv_free(file_p);
 
     stream->descriptor.pointer = NULL;
-    stream->size               = 0;
-    stream->base               = NULL;
+    stream->size = 0;
+    stream->base = NULL;
 }
 
 /**
@@ -262,22 +267,22 @@ ft_lv_fs_stream_close(FT_Stream  stream)
  *         indicates an error.
  */
 FT_CALLBACK_DEF(unsigned long)
-ft_lv_fs_stream_io(FT_Stream       stream,
-                   unsigned long   offset,
-                   unsigned char * buffer,
-                   unsigned long   count)
+ft_lv_fs_stream_io(FT_Stream stream,
+                   unsigned long offset,
+                   unsigned char* buffer,
+                   unsigned long count)
 {
-    lv_fs_file_t * file_p;
+    lv_fs_file_t* file_p;
 
-    if(!count && offset > stream->size)
+    if (!count && offset > stream->size)
         return 1;
 
     file_p = STREAM_FILE(stream);
 
-    if(stream->pos != offset)
+    if (stream->pos != offset)
         lv_fs_seek(file_p, (long)offset, LV_FS_SEEK_SET);
 
-    if(count == 0)
+    if (count == 0)
         return 0;
 
     uint32_t br;

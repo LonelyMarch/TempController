@@ -41,8 +41,8 @@ void lv_bin_decoder_init(void);
  */
 lv_result_t lv_bin_decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc, lv_image_header_t * header);
 
-lv_result_t lv_bin_decoder_get_area(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc,
-                                    const lv_area_t * full_area, lv_area_t * decoded_area);
+lv_result_t lv_bin_decoder_get_area(lv_image_decoder_t* decoder, lv_image_decoder_dsc_t* dsc,
+                                    const lv_area_t* full_area, lv_area_t* decoded_area);
 
 /**
  * Open a lvgl binary image

@@ -39,14 +39,15 @@
 *   GLOBAL FUNCTIONS
 **********************/
 
-void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_nanovg_arc(lv_draw_task_t* t, const lv_draw_arc_dsc_t* dsc, const lv_area_t* coords)
 {
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_draw_nanovg_unit_t * u = (lv_draw_nanovg_unit_t *)t->draw_unit;
+    lv_draw_nanovg_unit_t* u = (lv_draw_nanovg_unit_t*)t->draw_unit;
 
     lv_area_t clip_area;
-    if(!lv_area_intersect(&clip_area, coords, &t->clip_area)) {
+    if (!lv_area_intersect(&clip_area, coords, &t->clip_area))
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -55,16 +56,19 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
     float end_angle = dsc->end_angle;
     float sweep_angle = end_angle - start_angle;
 
-    while(sweep_angle < 0) {
+    while (sweep_angle < 0)
+    {
         sweep_angle += 360;
     }
 
-    while(sweep_angle > 360) {
+    while (sweep_angle > 360)
+    {
         sweep_angle -= 360;
     }
 
     /*If the angles are the same then there is nothing to draw*/
-    if(nvg_math_is_zero(sweep_angle)) {
+    if (nvg_math_is_zero(sweep_angle))
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -78,20 +82,24 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
 
     enum NVGwinding winding = NVG_CCW;
 
-    if(nvg_math_is_equal(sweep_angle, 360)) {
+    if (nvg_math_is_equal(sweep_angle, 360))
+    {
         nvgCircle(u->vg, cx, cy, radius_out);
 
         /* radius_in <= 0, normal fill circle */
-        if(radius_in > 0) {
+        if (radius_in > 0)
+        {
             nvgCircle(u->vg, cx, cy, radius_in);
         }
         winding = NVG_CW;
     }
-    else {
+    else
+    {
         float start_angle_rad = NVG_MATH_RADIANS(start_angle);
         float end_angle_rad = NVG_MATH_RADIANS(end_angle);
 
-        if(radius_in > 0) {
+        if (radius_in > 0)
+        {
             /* radius_out start point */
             float start_x = radius_out * NVG_MATH_COSF(start_angle_rad) + cx;
             float start_y = radius_out * NVG_MATH_SINF(start_angle_rad) + cy;
@@ -124,13 +132,15 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
             /* close arc */
             nvgClosePath(u->vg);
         }
-        else {
+        else
+        {
             /* draw a normal arc pie shape */
             lv_nanovg_path_append_arc(u->vg, cx, cy, radius_out, start_angle, sweep_angle, true);
         }
 
         /* draw round */
-        if(dsc->rounded && dsc->width > 0) {
+        if (dsc->rounded && dsc->width > 0)
+        {
             float round_radius = radius_out > dsc->width ? dsc->width / 2.0f : radius_out / 2.0f;
             float round_center = radius_out - round_radius;
             float rcx1 = cx + round_center * NVG_MATH_COSF(end_angle_rad);
@@ -143,10 +153,12 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
         }
     }
 
-    if(dsc->img_src) {
+    if (dsc->img_src)
+    {
         lv_image_header_t header;
         int image_handle = lv_nanovg_image_cache_get_handle(u, dsc->img_src, lv_color32_make(0, 0, 0, 0), 0, &header);
-        if(image_handle < 0) {
+        if (image_handle < 0)
+        {
             LV_PROFILER_DRAW_END;
             return;
         }
@@ -163,7 +175,8 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
         nvgFillPaint(u->vg, paint);
         nvgFill(u->vg);
     }
-    else {
+    else
+    {
         lv_nanovg_fill(u->vg, winding, NVG_SOURCE_OVER, lv_nanovg_color_convert(dsc->color, dsc->opa));
     }
 

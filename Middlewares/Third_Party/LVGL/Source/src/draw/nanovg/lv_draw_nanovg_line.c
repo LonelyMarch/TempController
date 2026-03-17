@@ -40,17 +40,18 @@
 *   GLOBAL FUNCTIONS
 **********************/
 
-void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
+void lv_draw_nanovg_line(lv_draw_task_t* t, const lv_draw_line_dsc_t* dsc)
 {
     LV_PROFILER_DRAW_BEGIN;
-    lv_draw_nanovg_unit_t * u = (lv_draw_nanovg_unit_t *)t->draw_unit;
+    lv_draw_nanovg_unit_t* u = (lv_draw_nanovg_unit_t*)t->draw_unit;
 
     float p1_x = dsc->p1.x;
     float p1_y = dsc->p1.y;
     float p2_x = dsc->p2.x;
     float p2_y = dsc->p2.y;
 
-    if(p1_x == p2_x && p1_y == p2_y) {
+    if (p1_x == p2_x && p1_y == p2_y)
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -63,7 +64,8 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
     rel_clip_area.y1 = (int32_t)(LV_MIN(p1_y, p2_y) - half_w);
     rel_clip_area.y2 = (int32_t)(LV_MAX(p1_y, p2_y) + half_w);
 
-    if(!lv_area_intersect(&rel_clip_area, &rel_clip_area, &t->clip_area)) {
+    if (!lv_area_intersect(&rel_clip_area, &rel_clip_area, &t->clip_area))
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -81,7 +83,8 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
     float w2_dy = w_dy / 2;
 
     int32_t ndash = 0;
-    if(dash_width && dash_l * inv_dl < 1.0f) {
+    if (dash_width && dash_l * inv_dl < 1.0f)
+    {
         ndash = (int32_t)((1.0f / inv_dl + dash_l - 1) / dash_l);
     }
 
@@ -115,7 +118,8 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
     nvgMoveTo(u->vg, head_start_x, head_start_y);
 
     /* draw line head */
-    if(dsc->round_start) {
+    if (dsc->round_start)
+    {
         float arc_cx = p1_x - w2_dy;
         float arc_cy = p1_y - w2_dx;
 
@@ -131,7 +135,8 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
                                               p1_x, p1_y,
                                               head_end_x, head_end_y);
     }
-    else {
+    else
+    {
         nvgLineTo(u->vg, head_end_x, head_end_y);
     }
 
@@ -139,7 +144,8 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
     nvgLineTo(u->vg, tail_start_x, tail_start_y);
 
     /* draw line tail */
-    if(dsc->round_end) {
+    if (dsc->round_end)
+    {
         float arc_cx = p2_x + w2_dy;
         float arc_cy = p2_y + w2_dx;
         lv_nanovg_path_append_arc_right_angle(u->vg,
@@ -151,14 +157,16 @@ void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc)
                                               p2_x, p2_y,
                                               tail_end_x, tail_end_y);
     }
-    else {
+    else
+    {
         nvgLineTo(u->vg, tail_end_x, tail_end_y);
     }
 
     /* close draw line body */
     nvgLineTo(u->vg, head_start_x, head_start_y);
 
-    for(int32_t i = 0; i < ndash; i++) {
+    for (int32_t i = 0; i < ndash; i++)
+    {
         float start_x = p1_x - w2_dx + dx * (i * dash_l + dash_width) * inv_dl;
         float start_y = p1_y + w2_dy + dy * (i * dash_l + dash_width) * inv_dl;
 

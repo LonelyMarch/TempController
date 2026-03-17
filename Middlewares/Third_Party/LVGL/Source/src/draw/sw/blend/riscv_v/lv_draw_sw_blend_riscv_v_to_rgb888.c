@@ -39,19 +39,20 @@
 /**
  * Fill with solid color (no blending needed, opa >= 255)
  */
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t * dsc, uint32_t dest_px_size)
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t* dsc, uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
     LV_ASSERT(dsc->opa >= LV_OPA_MAX);
     LV_ASSERT(dsc->mask_buf == NULL);
 
-    const int32_t w           = dsc->dest_w;
-    const int32_t h           = dsc->dest_h;
+    const int32_t w = dsc->dest_w;
+    const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
-    uint8_t * dest_buf        = dsc->dest_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* RGB888: 3 bytes per pixel (B, G, R) - use RVV segmented store */
         /* Initialize color vectors once with max vl */
         size_t vlmax = __riscv_vsetvlmax_e8m2();
@@ -59,9 +60,11 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t
         vuint8m2_t v_g = __riscv_vmv_v_x_u8m2(dsc->color.green, vlmax);
         vuint8m2_t v_r = __riscv_vmv_v_x_u8m2(dsc->color.red, vlmax);
 
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented store for 3-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
                 LV_RVV_VSSEG3E8_U8M2(dest_buf + x * 3, v_b, v_g, v_r, vl);
             }
@@ -69,20 +72,24 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t
             dest_buf = drawbuf_next_row(dest_buf, dest_stride);
         }
     }
-    else { /* dest_px_size == 4 */
+    else
+    {
+        /* dest_px_size == 4 */
         /* XRGB8888: 4 bytes per pixel */
         const uint32_t color32 = 0xFF000000 | ((uint32_t)dsc->color.red << 16) |
-                                 ((uint32_t)dsc->color.green << 8) | dsc->color.blue;
+            ((uint32_t)dsc->color.green << 8) | dsc->color.blue;
 
         /* Initialize color vector once with max vl */
         size_t vlmax = __riscv_vsetvlmax_e32m4();
         vuint32m4_t v_color = __riscv_vmv_v_x_u32m4(color32, vlmax);
 
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV - use m4 to reduce register pressure */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e32m4(w - x);
-                __riscv_vse32_v_u32m4((uint32_t *)(dest_buf + x * 4), v_color, vl);
+                __riscv_vse32_v_u32m4((uint32_t*)(dest_buf + x * 4), v_color, vl);
             }
 
             dest_buf = drawbuf_next_row(dest_buf, dest_stride);
@@ -96,30 +103,33 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t
  * Fill with color and opacity (opa < 255)
  * blend formula: result = (fg * opa + bg * (255 - opa)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_fill_dsc_t * dsc, uint32_t dest_px_size)
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_fill_dsc_t* dsc, uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
     LV_ASSERT(dsc->opa < LV_OPA_MAX);
     LV_ASSERT(dsc->mask_buf == NULL);
 
-    const int32_t w           = dsc->dest_w;
-    const int32_t h           = dsc->dest_h;
+    const int32_t w = dsc->dest_w;
+    const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
-    const uint8_t opa         = dsc->opa;
-    const uint8_t opa_inv     = 255 - opa;
-    const uint16_t fg_b_opa   = (uint16_t)dsc->color.blue * opa;
-    const uint16_t fg_g_opa   = (uint16_t)dsc->color.green * opa;
-    const uint16_t fg_r_opa   = (uint16_t)dsc->color.red * opa;
-    uint8_t * dest_buf        = dsc->dest_buf;
+    const uint8_t opa = dsc->opa;
+    const uint8_t opa_inv = 255 - opa;
+    const uint16_t fg_b_opa = (uint16_t)dsc->color.blue * opa;
+    const uint16_t fg_g_opa = (uint16_t)dsc->color.green * opa;
+    const uint16_t fg_r_opa = (uint16_t)dsc->color.red * opa;
+    uint8_t* dest_buf = dsc->dest_buf;
     size_t vl;
 
     /* Early exit if fully transparent */
-    if(opa == 0) return LV_RESULT_OK;
+    if (opa == 0) return LV_RESULT_OK;
 
-    if(dest_px_size == 3) {
-        for(int32_t y = 0; y < h; y++) {
+    if (dest_px_size == 3)
+    {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented load/store for 3-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load destination B, G, R channels using segmented load */
@@ -139,9 +149,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_f
             dest_buf = drawbuf_next_row(dest_buf, dest_stride);
         }
     }
-    else { /* dest_px_size == 4 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    else
+    {
+        /* dest_px_size == 4 */
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load destination B, G, R, X channels using segmented load */
@@ -156,7 +170,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_f
                                             fg_r_opa, fg_g_opa, fg_b_opa, opa_inv,
                                             v_r, v_g, v_b, vl);
 
-                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl);  /* Alpha = 0xFF */
+                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl); /* Alpha = 0xFF */
 
                 /* Store result using segmented store */
                 LV_RVV_VSSEG4E8_U8M2(dest_buf + x * 4, v_b, v_g, v_r, v_x, vl);
@@ -171,28 +185,31 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_f
 /**
  * Fill with color and per-pixel mask (opa >= 255)
  */
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_fill_dsc_t * dsc, uint32_t dest_px_size)
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_fill_dsc_t* dsc, uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
     LV_ASSERT(dsc->opa >= LV_OPA_MAX);
     LV_ASSERT(dsc->mask_buf != NULL);
 
-    const int32_t w           = dsc->dest_w;
-    const int32_t h           = dsc->dest_h;
+    const int32_t w = dsc->dest_w;
+    const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t mask_stride = dsc->mask_stride;
-    const uint8_t * mask_buf  = dsc->mask_buf;
-    const uint8_t fg_b        = dsc->color.blue;
-    const uint8_t fg_g        = dsc->color.green;
-    const uint8_t fg_r        = dsc->color.red;
-    uint8_t * dest_buf        = dsc->dest_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
+    const uint8_t fg_b = dsc->color.blue;
+    const uint8_t fg_g = dsc->color.green;
+    const uint8_t fg_r = dsc->color.red;
+    uint8_t* dest_buf = dsc->dest_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* RGB888: 3 bytes per pixel - use RVV for blending with mask */
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented load/store for 3-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load mask values */
@@ -224,11 +241,15 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_
             mask_buf += mask_stride;
         }
     }
-    else { /* dest_px_size == 4 */
+    else
+    {
+        /* dest_px_size == 4 */
         /* XRGB8888: 4 bytes per pixel - use segmented load/store like RGB888 */
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented load/store for 4-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load mask values */
@@ -245,7 +266,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_
                 LV_RVV_BLEND_SOLID_RGB_VMASK_U8M2(v_dst_r, v_dst_g, v_dst_b,
                                                   fg_r, fg_g, fg_b, v_mask8,
                                                   v_r, v_g, v_b, vl);
-                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl);  /* Alpha = 0xFF */
+                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl); /* Alpha = 0xFF */
 
                 /* Optional: Handle special cases for mask == 0 or mask >= 255.
                  * Without this, max error is ±1. Uncomment if exact values required. */
@@ -270,34 +291,37 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_
  * Fill with color, opacity, and per-pixel mask
  * Effective mix = (mask * opa) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_blend_fill_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_blend_fill_dsc_t* dsc,
                                                                    uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
     LV_ASSERT(dsc->opa < LV_OPA_MAX);
     LV_ASSERT(dsc->mask_buf != NULL);
 
-    const int32_t w           = dsc->dest_w;
-    const int32_t h           = dsc->dest_h;
+    const int32_t w = dsc->dest_w;
+    const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
-    const uint8_t opa         = dsc->opa;
+    const uint8_t opa = dsc->opa;
     const int32_t mask_stride = dsc->mask_stride;
-    const uint8_t * mask_buf  = dsc->mask_buf;
-    uint8_t * dest_buf = dsc->dest_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
     const uint8_t fg_b = dsc->color.blue;
     const uint8_t fg_g = dsc->color.green;
     const uint8_t fg_r = dsc->color.red;
     size_t vl;
 
     /* Early exit if fully transparent */
-    if(opa == 0) return LV_RESULT_OK;
+    if (opa == 0) return LV_RESULT_OK;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* RGB888: 3 bytes per pixel - use RVV for blending with opa and mask */
 
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented load/store for 3-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load mask values */
@@ -333,13 +357,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_bl
             mask_buf += mask_stride;
         }
     }
-    else { /* dest_px_size == 4 */
+    else
+    {
+        /* dest_px_size == 4 */
         /* XRGB8888: 4 bytes per pixel - use segmented load/store like RGB888 */
 
 
-        for(int32_t y = 0; y < h; y++) {
+        for (int32_t y = 0; y < h; y++)
+        {
             /* Process with RVV using segmented load/store for 4-byte pixels */
-            for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m2(w - x);
 
                 /* Load mask values */
@@ -347,13 +375,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_bl
 
                 /* Compute mix = (mask * opa) >> 8 using widening multiply */
                 vuint16m4_t v_mix16 = __riscv_vsrl_vx_u16m4(
-                                          __riscv_vwmulu_vx_u16m4(v_mask8, opa, vl), 8, vl);
+                    __riscv_vwmulu_vx_u16m4(v_mask8, opa, vl), 8, vl);
                 vuint8m2_t v_mix8 = __riscv_vnsrl_wx_u8m2(v_mix16, 0, vl);
 
                 /* Load destination B, G, R, X channels using segmented load */
                 vuint8m2_t v_dst_b, v_dst_g, v_dst_r, v_dst_x;
                 LV_RVV_VLSEG4E8_U8M2(dest_buf + x * 4, vl, v_dst_b, v_dst_g, v_dst_r, v_dst_x);
-                (void)v_dst_x;  /* v_dst_x is X/Alpha, ignored for input */
+                (void)v_dst_x; /* v_dst_x is X/Alpha, ignored for input */
 
                 /* Blend solid color with mix (mask * opa) */
                 vuint8m2_t v_b, v_g, v_r;
@@ -366,7 +394,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_bl
                                                        v_dst_r, v_dst_g, v_dst_b,
                                                        v_mix8, vl);
 
-                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl);  /* Alpha = 0xFF */
+                vuint8m2_t v_x = __riscv_vmv_v_x_u8m2(0xFF, vl); /* Alpha = 0xFF */
 
                 /* Store result using segmented store */
                 LV_RVV_VSSEG4E8_U8M2(dest_buf + x * 4, v_b, v_g, v_r, v_x, vl);
@@ -388,7 +416,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_bl
  * RGB565 to RGB888/XRGB8888 simple copy (no blending, opa >= 255)
  * RGB565 format: RRRRRGGGGGGBBBBB (5-6-5 bits)
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc, uint32_t dest_px_size)
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc, uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
     LV_ASSERT(dsc->opa >= LV_OPA_MAX);
@@ -398,13 +426,16 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc
     const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint16_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint16_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    if (dest_px_size == 3)
+    {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e16m2(w - x);
 
                 /* Load RGB565 pixels */
@@ -433,9 +464,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else { /* dest_px_size == 4 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    else
+    {
+        /* dest_px_size == 4 */
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e16m2(w - x);
 
                 /* Load RGB565 pixels */
@@ -474,7 +509,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc
  * blend formula: result = (src * opa + dst * (255 - opa)) >> 8
  * Optimized using vwmaccu for blend calculation
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -486,13 +521,16 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint16_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint16_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    if (dest_px_size == 3)
+    {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load RGB565 source pixels */
@@ -523,9 +561,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else { /* dest_px_size == 4 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    else
+    {
+        /* dest_px_size == 4 */
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load RGB565 source pixels */
@@ -566,7 +608,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_
  * blend formula: result = (src * mask + dst * (255 - mask)) >> 8
  * Optimized using vwmaccu for blend calculation
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                 uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -578,14 +620,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint16_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint16_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    if (dest_px_size == 3)
+    {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load mask */
@@ -622,9 +667,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend
             mask_buf += mask_stride;
         }
     }
-    else { /* dest_px_size == 4 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    else
+    {
+        /* dest_px_size == 4 */
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load mask */
@@ -677,7 +726,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend
  * Note: with_opa_mask needs 16-bit intermediate for mix calculation,
  * so we cannot directly use the vwmaccu optimization for this case.
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                     uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -690,14 +739,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_b
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint16_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint16_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    if (dest_px_size == 3)
+    {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load mask and compute effective mix = (mask * opa) >> 8 */
@@ -739,9 +791,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_b
             mask_buf += mask_stride;
         }
     }
-    else { /* dest_px_size == 4 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+    else
+    {
+        /* dest_px_size == 4 */
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
 
                 /* Load mask and compute effective mix */
@@ -796,7 +852,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_b
  * src_px_size: 3 for RGB888, 4 for XRGB8888
  * dest_px_size: 3 for RGB888, 4 for XRGB8888
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc,
                                                       uint32_t dest_px_size, uint32_t src_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -808,15 +864,18 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc
     const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
     size_t vl;
 
     /* Fast path: same pixel size, use RVV memcpy */
-    if(src_px_size == dest_px_size) {
+    if (src_px_size == dest_px_size)
+    {
         const int32_t row_bytes = w * dest_px_size;
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < row_bytes; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < row_bytes; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m8(row_bytes - x);
                 vuint8m8_t v_data = __riscv_vle8_v_u8m8(src_buf + x, vl);
                 __riscv_vse8_v_u8m8(dest_buf + x, v_data, vl);
@@ -828,10 +887,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc
     }
 
     /* Different pixel sizes: need per-pixel conversion */
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* Source: XRGB8888 -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r;
                 LV_RVV_LOAD_XRGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, vl);
@@ -841,14 +903,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else {
+    else
+    {
         /* Destination: XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
 
         /* Source: RGB888 -> XRGB8888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r;
                 LV_RVV_LOAD_RGB888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, vl);
@@ -866,7 +931,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc
  * RGB888/XRGB8888 to RGB888/XRGB8888 with opacity
  * blend formula: result = (src * opa + dst * (255 - opa)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                uint32_t dest_px_size, uint32_t src_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -879,15 +944,19 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        if(src_px_size == 3) {
+    if (dest_px_size == 3)
+    {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
                     LV_RVV_LOAD_RGB888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, vl);
@@ -901,10 +970,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_
                 src_buf = drawbuf_next_row(src_buf, src_stride);
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
                     LV_RVV_LOAD_XRGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, vl);
@@ -919,15 +991,19 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_
             }
         }
     }
-    else {
+    else
+    {
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        if(src_px_size == 3) {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                uint8_t * dest_row = dest_buf;
-                const uint8_t * src_row = src_buf;
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                uint8_t* dest_row = dest_buf;
+                const uint8_t* src_row = src_buf;
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
                     LV_RVV_LOAD_RGB888_U8M1(src_row, x, v_src_b, v_src_g, v_src_r, vl);
@@ -941,10 +1017,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_
                 src_buf = drawbuf_next_row(src_buf, src_stride);
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
                     LV_RVV_LOAD_XRGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, vl);
@@ -967,7 +1046,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_
  * RGB888/XRGB8888 to RGB888/XRGB8888 with per-pixel mask
  * blend formula: result = (src * mask + dst * (255 - mask)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                 uint32_t dest_px_size, uint32_t src_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -980,16 +1059,20 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        if(src_px_size == 3) {
+    if (dest_px_size == 3)
+    {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
@@ -1014,10 +1097,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend
                 mask_buf += mask_stride;
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
@@ -1042,13 +1128,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend
             }
         }
     }
-    else {
+    else
+    {
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        if(src_px_size == 3) {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
@@ -1072,10 +1162,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend
                 mask_buf += mask_stride;
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint8m1_t v_src_b, v_src_g, v_src_r;
@@ -1107,7 +1200,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend
  * effective mix = (mask * opa) >> 8
  * blend formula: result = (src * mix + dst * (255 - mix)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                     uint32_t dest_px_size, uint32_t src_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1121,16 +1214,20 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
-        if(src_px_size == 3) {
+    if (dest_px_size == 3)
+    {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint16m2_t v_mask16 = __riscv_vzext_vf2_u16m2(v_mask, vl);
@@ -1155,10 +1252,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
                 mask_buf += mask_stride;
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> RGB888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint16m2_t v_mask16 = __riscv_vzext_vf2_u16m2(v_mask, vl);
@@ -1169,7 +1269,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
                     vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                     LV_RVV_LOAD_RGB888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                     vuint8m1_t v_r, v_g, v_b;
-                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g, v_b, vl);
+                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g,
+                                                v_b, vl);
                     LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                     v_src_r, v_src_g, v_src_b,
                                                     v_dst_r, v_dst_g, v_dst_b,
@@ -1182,13 +1283,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
             }
         }
     }
-    else {
+    else
+    {
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        if(src_px_size == 3) {
+        if (src_px_size == 3)
+        {
             /* RGB888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint16m2_t v_mask16 = __riscv_vzext_vf2_u16m2(v_mask, vl);
@@ -1199,7 +1304,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
                     vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                     LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                     vuint8m1_t v_r, v_g, v_b;
-                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g, v_b, vl);
+                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g,
+                                                v_b, vl);
                     LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                     v_src_r, v_src_g, v_src_b,
                                                     v_dst_r, v_dst_g, v_dst_b,
@@ -1211,10 +1317,13 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
                 mask_buf += mask_stride;
             }
         }
-        else {
+        else
+        {
             /* XRGB8888 -> XRGB8888 */
-            for(int32_t y = 0; y < h; y++) {
-                for(int32_t x = 0; x < w; x += vl) {
+            for (int32_t y = 0; y < h; y++)
+            {
+                for (int32_t x = 0; x < w; x += vl)
+                {
                     vl = __riscv_vsetvl_e8m1(w - x);
                     vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                     vuint16m2_t v_mask16 = __riscv_vzext_vf2_u16m2(v_mask, vl);
@@ -1225,7 +1334,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
                     vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                     LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                     vuint8m1_t v_r, v_g, v_b;
-                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g, v_b, vl);
+                    LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_mix, v_r, v_g,
+                                                v_b, vl);
                     LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                     v_src_r, v_src_g, v_src_b,
                                                     v_dst_r, v_dst_g, v_dst_b,
@@ -1250,7 +1360,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_b
  * ARGB8888 to RGB888/XRGB8888 blend using source alpha
  * blend formula: result = (src * src_alpha + dst * (255 - src_alpha)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc,
                                                         uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1261,21 +1371,25 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_d
     const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* ARGB8888 -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                 LV_RVV_LOAD_ARGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, v_src_a, vl);
                 LV_RVV_LOAD_RGB888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_src_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_src_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1286,19 +1400,23 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_d
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else {
+    else
+    {
         /* ARGB8888 -> XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                 LV_RVV_LOAD_ARGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, v_src_a, vl);
                 LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_src_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_src_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1318,7 +1436,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_d
  * effective_alpha = (src_alpha * opa) >> 8
  * blend formula: result = (src * effective_alpha + dst * (255 - effective_alpha)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                  uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1330,14 +1448,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blen
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* ARGB8888 -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
@@ -1346,7 +1467,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blen
                 LV_RVV_CALC_EFF_ALPHA_OPA_U8M1(v_src_a, opa, v_eff_a, vl);
                 LV_RVV_LOAD_RGB888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1357,12 +1479,15 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blen
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else {
+    else
+    {
         /* ARGB8888 -> XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
@@ -1371,7 +1496,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blen
                 LV_RVV_CALC_EFF_ALPHA_OPA_U8M1(v_src_a, opa, v_eff_a, vl);
                 LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1391,7 +1517,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blen
  * effective_alpha = (src_alpha * mask) >> 8
  * blend formula: result = (src * effective_alpha + dst * (255 - effective_alpha)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                   uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1403,15 +1529,18 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_ble
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* ARGB8888 -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
@@ -1435,12 +1564,15 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_ble
             mask_buf += mask_stride;
         }
     }
-    else {
+    else
+    {
         /* ARGB8888 -> XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
@@ -1450,7 +1582,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_ble
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                 LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1471,7 +1604,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_ble
  * effective_alpha = (src_alpha * mask * opa) >> 16
  * blend formula: result = (src * effective_alpha + dst * (255 - effective_alpha)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                       uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1484,15 +1617,18 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw
     const int32_t src_stride = dsc->src_stride;
     const int32_t mask_stride = dsc->mask_stride;
     const uint8_t opa = dsc->opa;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
-    const uint8_t * mask_buf = dsc->mask_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
+    const uint8_t* mask_buf = dsc->mask_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* ARGB8888 -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
@@ -1519,12 +1655,15 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw
             mask_buf += mask_stride;
         }
     }
-    else {
+    else
+    {
         /* ARGB8888 -> XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_mask = __riscv_vle8_v_u8m1(&mask_buf[x], vl);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
@@ -1534,7 +1673,8 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw
                 vuint8m1_t v_dst_b, v_dst_g, v_dst_r;
                 LV_RVV_LOAD_XRGB8888_U8M1(dest_buf, x, v_dst_b, v_dst_g, v_dst_r, vl);
                 vuint8m1_t v_r, v_g, v_b;
-                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g, v_b, vl);
+                LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, v_eff_a, v_r, v_g,
+                                            v_b, vl);
                 LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b,
                                                 v_src_r, v_src_g, v_src_b,
                                                 v_dst_r, v_dst_g, v_dst_b,
@@ -1557,7 +1697,7 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw
  * blend formula: result = src_premul + dst * (255 - src_alpha) / 255
  *              = src_premul + (dst * (255 - src_alpha)) >> 8
  */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                       uint32_t dest_px_size)
 {
     LV_ASSERT(dest_px_size == 3 || dest_px_size == 4);
@@ -1566,14 +1706,17 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw
     const int32_t h = dsc->dest_h;
     const int32_t dest_stride = dsc->dest_stride;
     const int32_t src_stride = dsc->src_stride;
-    uint8_t * dest_buf = dsc->dest_buf;
-    const uint8_t * src_buf = dsc->src_buf;
+    uint8_t* dest_buf = dsc->dest_buf;
+    const uint8_t* src_buf = dsc->src_buf;
     size_t vl;
 
-    if(dest_px_size == 3) {
+    if (dest_px_size == 3)
+    {
         /* ARGB8888 premultiplied -> RGB888 */
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 LV_RVV_LOAD_ARGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, v_src_a, vl);
@@ -1602,12 +1745,15 @@ lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw
             src_buf = drawbuf_next_row(src_buf, src_stride);
         }
     }
-    else {
+    else
+    {
         /* ARGB8888 premultiplied -> XRGB8888 */
         size_t max_vl = __riscv_vsetvlmax_e8m1();
         vuint8m1_t v_a = __riscv_vmv_v_x_u8m1(0xFF, max_vl);
-        for(int32_t y = 0; y < h; y++) {
-            for(int32_t x = 0; x < w; x += vl) {
+        for (int32_t y = 0; y < h; y++)
+        {
+            for (int32_t x = 0; x < w; x += vl)
+            {
                 vl = __riscv_vsetvl_e8m1(w - x);
                 vuint8m1_t v_src_b, v_src_g, v_src_r, v_src_a;
                 LV_RVV_LOAD_ARGB8888_U8M1(src_buf, x, v_src_b, v_src_g, v_src_r, v_src_a, vl);

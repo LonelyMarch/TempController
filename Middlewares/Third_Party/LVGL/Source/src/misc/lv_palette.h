@@ -23,7 +23,8 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-typedef enum {
+typedef enum
+{
     LV_PALETTE_RED,
     LV_PALETTE_PINK,
     LV_PALETTE_PURPLE,

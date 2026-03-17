@@ -36,9 +36,9 @@ struct LottieBuilder;
 class LottieLoader : public FrameModule, public Task
 {
 public:
-    const char* content = nullptr;      //lottie file data
-    uint32_t size = 0;                  //lottie data size
-    float frameNo = 0.0f;               //current frame number
+    const char* content = nullptr; //lottie file data
+    uint32_t size = 0; //lottie data size
+    float frameNo = 0.0f; //current frame number
     float frameCnt = 0.0f;
     float frameDuration = 0.0f;
     float frameRate = 0.0f;
@@ -47,10 +47,10 @@ public:
     LottieComposition* comp = nullptr;
 
     Key key;
-    char* dirName = nullptr;            //base resource directory
-    bool copy = false;                  //"content" is owned by this loader
-    bool overridden = false;             //overridden properties with slots
-    bool rebuild = false;               //require building the lottie scene
+    char* dirName = nullptr; //base resource directory
+    bool copy = false; //"content" is owned by this loader
+    bool overridden = false; //overridden properties with slots
+    bool rebuild = false; //require building the lottie scene
 
     LottieLoader();
     ~LottieLoader();
@@ -87,4 +87,3 @@ private:
 #endif //_TVG_LOTTIELOADER_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

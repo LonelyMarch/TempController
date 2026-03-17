@@ -46,9 +46,8 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_eve_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc)
+void lv_draw_eve_triangle(lv_draw_task_t* t, const lv_draw_triangle_dsc_t* dsc)
 {
-
     lv_area_t tri_area;
     tri_area.x1 = (int32_t)LV_MIN3(dsc->p[0].x, dsc->p[1].x, dsc->p[2].x);
     tri_area.y1 = (int32_t)LV_MIN3(dsc->p[0].y, dsc->p[1].y, dsc->p[2].y);
@@ -58,40 +57,44 @@ void lv_draw_eve_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc
     bool is_common;
     lv_area_t draw_area;
     is_common = lv_area_intersect(&draw_area, &tri_area, &t->clip_area);
-    if(!is_common) return;
+    if (!is_common) return;
 
     lv_point_t p[3];
     /*If there is a vertical side use it as p[0] and p[1]*/
-    if(dsc->p[0].x == dsc->p[1].x) {
+    if (dsc->p[0].x == dsc->p[1].x)
+    {
         p[0] = lv_point_from_precise(&dsc->p[0]);
         p[1] = lv_point_from_precise(&dsc->p[1]);
         p[2] = lv_point_from_precise(&dsc->p[2]);
     }
-    else if(dsc->p[0].x == dsc->p[2].x) {
+    else if (dsc->p[0].x == dsc->p[2].x)
+    {
         p[0] = lv_point_from_precise(&dsc->p[0]);
         p[1] = lv_point_from_precise(&dsc->p[2]);
         p[2] = lv_point_from_precise(&dsc->p[1]);
     }
-    else if(dsc->p[1].x == dsc->p[2].x) {
+    else if (dsc->p[1].x == dsc->p[2].x)
+    {
         p[0] = lv_point_from_precise(&dsc->p[1]);
         p[1] = lv_point_from_precise(&dsc->p[2]);
         p[2] = lv_point_from_precise(&dsc->p[0]);
     }
-    else {
+    else
+    {
         p[0] = lv_point_from_precise(&dsc->p[0]);
         p[1] = lv_point_from_precise(&dsc->p[1]);
         p[2] = lv_point_from_precise(&dsc->p[2]);
 
         /*Set the smallest y as p[0]*/
-        if(p[0].y > p[1].y) lv_point_swap(&p[0], &p[1]);
-        if(p[0].y > p[2].y) lv_point_swap(&p[0], &p[2]);
+        if (p[0].y > p[1].y) lv_point_swap(&p[0], &p[1]);
+        if (p[0].y > p[2].y) lv_point_swap(&p[0], &p[2]);
 
         /*Set the greatest y as p[1]*/
-        if(p[1].y < p[2].y) lv_point_swap(&p[1], &p[2]);
+        if (p[1].y < p[2].y) lv_point_swap(&p[1], &p[2]);
     }
 
     /*Be sure p[0] is on the top*/
-    if(p[0].y > p[1].y) lv_point_swap(&p[0], &p[1]);
+    if (p[0].y > p[1].y) lv_point_swap(&p[0], &p[1]);
 
     lv_eve_save_context();
 
@@ -110,7 +113,7 @@ void lv_draw_eve_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc
     lv_eve_vertex_2f(p[2].x, p[2].y);
 
     lv_eve_color_mask(1, 1, 1, 1);
-    lv_eve_stencil_func(EVE_EQUAL, 255, 255) ;
+    lv_eve_stencil_func(EVE_EQUAL, 255, 255);
 
     lv_eve_vertex_2f(0, 0);
     lv_eve_vertex_2f(1022, 0);
@@ -123,5 +126,3 @@ void lv_draw_eve_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc
  **********************/
 
 #endif /*LV_USE_DRAW_EVE*/
-
-

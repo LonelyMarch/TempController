@@ -39,20 +39,21 @@ struct LottieLayer;
 struct LottieObject;
 
 
-template<typename T>
+template <typename T>
 struct LottieScalarFrame
 {
-    T value;                    //keyframe value
-    float no;                   //frame number
+    T value; //keyframe value
+    float no; //frame number
     LottieInterpolator* interpolator;
-    bool hold = false;           //do not interpolate.
+    bool hold = false; //do not interpolate.
 
     T interpolate(LottieScalarFrame<T>* next, float frameNo)
     {
         auto t = (frameNo - no) / (next->no - no);
         if (interpolator) t = interpolator->progress(t);
 
-        if (hold) {
+        if (hold)
+        {
             if (t < 1.0f) return value;
             else return next->value;
         }
@@ -61,11 +62,11 @@ struct LottieScalarFrame
 };
 
 
-template<typename T>
+template <typename T>
 struct LottieVectorFrame
 {
-    T value;                    //keyframe value
-    float no;                   //frame number
+    T value; //keyframe value
+    float no; //frame number
     LottieInterpolator* interpolator;
     T outTangent, inTangent;
     float length;
@@ -77,22 +78,27 @@ struct LottieVectorFrame
         auto t = (frameNo - no) / (next->no - no);
         if (interpolator) t = interpolator->progress(t);
 
-        if (hold) {
+        if (hold)
+        {
             if (t < 1.0f) return value;
             else return next->value;
         }
 
-        if (hasTangent) {
+        if (hasTangent)
+        {
             Bezier bz = {value, value + outTangent, next->value + inTangent, next->value};
             return bz.at(bz.atApprox(t * length, length));
-        } else {
+        }
+        else
+        {
             return lerp(value, next->value, t);
         }
     }
 
     float angle(LottieVectorFrame* next, float frameNo)
     {
-        if (!hasTangent) {
+        if (!hasTangent)
+        {
             Point dp = next->value - value;
             return rad2deg(tvg::atan2(dp.y, dp.x));
         }
@@ -119,10 +125,13 @@ struct LottieProperty
 
     LottieExpression* exp = nullptr;
     Type type;
-    uint8_t ix;  //property index
+    uint8_t ix; //property index
 
     //TODO: Apply common bodies?
-    virtual ~LottieProperty() {}
+    virtual ~LottieProperty()
+    {
+    }
+
     virtual uint32_t frameCnt() = 0;
     virtual uint32_t nearest(float time) = 0;
     virtual float frameNo(int32_t key) = 0;
@@ -131,7 +140,10 @@ struct LottieProperty
 
 struct LottieExpression
 {
-    enum LoopMode : uint8_t { None = 0, InCycle = 1, InPingPong, InOffset, InContinue, OutCycle, OutPingPong, OutOffset, OutContinue };
+    enum LoopMode : uint8_t
+    {
+        None = 0, InCycle = 1, InPingPong, InOffset, InContinue, OutCycle, OutPingPong, OutOffset, OutContinue
+    };
 
     char* code;
     LottieComposition* comp;
@@ -140,15 +152,16 @@ struct LottieExpression
     LottieProperty* property;
     bool disabled = false;
 
-    struct {
-        uint32_t key = 0;      //the keyframe number repeating to
-        float in = FLT_MAX;    //looping duration in frame number
+    struct
+    {
+        uint32_t key = 0; //the keyframe number repeating to
+        float in = FLT_MAX; //looping duration in frame number
         LoopMode mode = None;
     } loop;
 
     ~LottieExpression()
     {
-    	lv_free(code);
+        lv_free(code);
     }
 };
 
@@ -157,13 +170,17 @@ static void _copy(PathSet* pathset, Array<Point>& outPts, Matrix* transform)
 {
     Array<Point> inPts;
 
-    if (transform) {
-        for (int i = 0; i < pathset->ptsCnt; ++i) {
+    if (transform)
+    {
+        for (int i = 0; i < pathset->ptsCnt; ++i)
+        {
             Point pt = pathset->pts[i];
             pt *= *transform;
             outPts.push(pt);
         }
-    } else {
+    }
+    else
+    {
         inPts.data = pathset->pts;
         inPts.count = pathset->ptsCnt;
         outPts.push(inPts);
@@ -182,13 +199,14 @@ static void _copy(PathSet* pathset, Array<PathCommand>& outCmds)
 }
 
 
-template<typename T>
+template <typename T>
 uint32_t _bsearch(T* frames, float frameNo)
 {
     int32_t low = 0;
     int32_t high = int32_t(frames->count) - 1;
 
-    while (low <= high) {
+    while (low <= high)
+    {
         auto mid = low + (high - low) / 2;
         auto frame = frames->data + mid;
         if (frameNo < frame->no) high = mid - 1;
@@ -200,10 +218,11 @@ uint32_t _bsearch(T* frames, float frameNo)
 }
 
 
-template<typename T>
+template <typename T>
 uint32_t _nearest(T* frames, float frameNo)
 {
-    if (frames) {
+    if (frames)
+    {
         auto key = _bsearch(frames, frameNo);
         if (key == frames->count - 1) return key;
         return (fabsf(frames->data[key].no - frameNo) < fabsf(frames->data[key + 1].no - frameNo)) ? key : (key + 1);
@@ -212,57 +231,68 @@ uint32_t _nearest(T* frames, float frameNo)
 }
 
 
-template<typename T>
+template <typename T>
 float _frameNo(T* frames, int32_t key)
 {
     if (!frames) return 0.0f;
     if (key < 0) key = 0;
-    if (key >= (int32_t) frames->count) key = (int32_t)(frames->count - 1);
+    if (key >= (int32_t)frames->count) key = (int32_t)(frames->count - 1);
     return (*frames)[key].no;
 }
 
 
-template<typename T>
+template <typename T>
 float _loop(T* frames, float frameNo, LottieExpression* exp)
 {
     if (frameNo >= exp->loop.in || frameNo < frames->first().no || frameNo < frames->last().no) return frameNo;
 
     frameNo -= frames->first().no;
 
-    switch (exp->loop.mode) {
-        case LottieExpression::LoopMode::InCycle: {
+    switch (exp->loop.mode)
+    {
+    case LottieExpression::LoopMode::InCycle:
+        {
             return fmodf(frameNo, frames->last().no - frames->first().no) + (*frames)[exp->loop.key].no;
         }
-        case LottieExpression::LoopMode::InPingPong: {
+    case LottieExpression::LoopMode::InPingPong:
+        {
             auto range = frames->last().no - (*frames)[exp->loop.key].no;
             auto forward = (static_cast<int>(frameNo / range) % 2) == 0 ? true : false;
             frameNo = fmodf(frameNo, range);
             return (forward ? frameNo : (range - frameNo)) + (*frames)[exp->loop.key].no;
         }
-        case LottieExpression::LoopMode::OutCycle: {
-            return fmodf(frameNo, (*frames)[frames->count - 1 - exp->loop.key].no - frames->first().no) + frames->first().no;
+    case LottieExpression::LoopMode::OutCycle:
+        {
+            return fmodf(frameNo, (*frames)[frames->count - 1 - exp->loop.key].no - frames->first().no) + frames->
+                first().no;
         }
-        case LottieExpression::LoopMode::OutPingPong: {
+    case LottieExpression::LoopMode::OutPingPong:
+        {
             auto range = (*frames)[frames->count - 1 - exp->loop.key].no - frames->first().no;
             auto forward = (static_cast<int>(frameNo / range) % 2) == 0 ? true : false;
             frameNo = fmodf(frameNo, range);
             return (forward ? frameNo : (range - frameNo)) + frames->first().no;
         }
-        default: break;
+    default: break;
     }
     return frameNo;
 }
 
 
-template<typename T>
+template <typename T>
 struct LottieGenericProperty : LottieProperty
 {
     //Property has an either keyframes or single value.
     Array<LottieScalarFrame<T>>* frames = nullptr;
     T value;
 
-    LottieGenericProperty(T v) : value(v) {}
-    LottieGenericProperty() {}
+    LottieGenericProperty(T v) : value(v)
+    {
+    }
+
+    LottieGenericProperty()
+    {
+    }
 
     ~LottieGenericProperty()
     {
@@ -273,7 +303,8 @@ struct LottieGenericProperty : LottieProperty
     {
         delete(frames);
         frames = nullptr;
-        if (exp) {
+        if (exp)
+        {
             delete(exp);
             exp = nullptr;
         }
@@ -297,7 +328,8 @@ struct LottieGenericProperty : LottieProperty
     LottieScalarFrame<T>& newFrame()
     {
         if (!frames) frames = new Array<LottieScalarFrame<T>>;
-        if (frames->count + 1 >= frames->reserved) {
+        if (frames->count + 1 >= frames->reserved)
+        {
             auto old = frames->reserved;
             frames->grow(frames->count + 2);
             memset((void*)(frames->data + old), 0x00, sizeof(LottieScalarFrame<T>) * (frames->reserved - old));
@@ -324,7 +356,8 @@ struct LottieGenericProperty : LottieProperty
 
     T operator()(float frameNo, LottieExpressions* exps)
     {
-        if (exps && exp) {
+        if (exps && exp)
+        {
             T out{};
             if (exp->loop.mode != LottieExpression::LoopMode::None) frameNo = _loop(frames, frameNo, exp);
             if (exps->result<LottieGenericProperty<T>>(frameNo, out, exp)) return out;
@@ -335,15 +368,20 @@ struct LottieGenericProperty : LottieProperty
     LottieGenericProperty<T>& operator=(const LottieGenericProperty<T>& other)
     {
         //shallow copy, used for slot overriding
-        if (other.frames) {
+        if (other.frames)
+        {
             frames = other.frames;
             const_cast<LottieGenericProperty<T>&>(other).frames = nullptr;
-        } else value = other.value;
+        }
+        else value = other.value;
         return *this;
     }
 
     float angle(float frameNo) { return 0; }
-    void prepare() {}
+
+    void prepare()
+    {
+    }
 };
 
 
@@ -359,7 +397,8 @@ struct LottiePathSet : LottieProperty
 
     void release()
     {
-        if (exp) {
+        if (exp)
+        {
             delete(exp);
             exp = nullptr;
         }
@@ -369,9 +408,10 @@ struct LottiePathSet : LottieProperty
 
         if (!frames) return;
 
-        for (auto p = frames->begin(); p < frames->end(); ++p) {
-        	lv_free((*p).value.cmds);
-        	lv_free((*p).value.pts);
+        for (auto p = frames->begin(); p < frames->end(); ++p)
+        {
+            lv_free((*p).value.cmds);
+            lv_free((*p).value.pts);
         }
         lv_free(frames->data);
         lv_free(frames);
@@ -394,11 +434,14 @@ struct LottiePathSet : LottieProperty
 
     LottieScalarFrame<PathSet>& newFrame()
     {
-        if (!frames) {
-            frames = static_cast<Array<LottieScalarFrame<PathSet>>*>(lv_zalloc(sizeof(Array<LottieScalarFrame<PathSet>>)));
+        if (!frames)
+        {
+            frames = static_cast<Array<LottieScalarFrame<PathSet>>*>(lv_zalloc(
+                sizeof(Array<LottieScalarFrame<PathSet>>)));
             LV_ASSERT_MALLOC(frames);
         }
-        if (frames->count + 1 >= frames->reserved) {
+        if (frames->count + 1 >= frames->reserved)
+        {
             auto old = frames->reserved;
             frames->grow(frames->count + 2);
             memset((void*)(frames->data + old), 0x00, sizeof(LottieScalarFrame<PathSet>) * (frames->reserved - old));
@@ -412,7 +455,8 @@ struct LottiePathSet : LottieProperty
         return (*frames)[frames->count];
     }
 
-    bool operator()(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform, const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath)
+    bool operator()(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform,
+                    const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath)
     {
         PathSet* path = nullptr;
         LottieScalarFrame<PathSet>* frame = nullptr;
@@ -422,13 +466,17 @@ struct LottiePathSet : LottieProperty
         if (!frames) path = &value;
         else if (frames->count == 1 || frameNo <= frames->first().no) path = &frames->first().value;
         else if (frameNo >= frames->last().no) path = &frames->last().value;
-        else {
+        else
+        {
             frame = frames->data + _bsearch(frames, frameNo);
             if (tvg::equal(frame->no, frameNo)) path = &frame->value;
-            else if (frame->value.ptsCnt != (frame + 1)->value.ptsCnt) {
+            else if (frame->value.ptsCnt != (frame + 1)->value.ptsCnt)
+            {
                 path = &frame->value;
                 TVGLOG("LOTTIE", "Different numbers of points in consecutive frames - interpolation omitted.");
-            } else {
+            }
+            else
+            {
                 t = (frameNo - frame->no) / ((frame + 1)->no - frame->no);
                 if (frame->interpolator) t = frame->interpolator->progress(t);
                 if (frame->hold) path = &(frame + ((t < 1.0f) ? 0 : 1))->value;
@@ -436,9 +484,12 @@ struct LottiePathSet : LottieProperty
             }
         }
 
-        if (!interpolate) {
-            if (roundness) {
-                if (offsetPath) {
+        if (!interpolate)
+        {
+            if (roundness)
+            {
+                if (offsetPath)
+                {
                     Array<PathCommand> cmds1(path->cmdsCnt);
                     Array<Point> pts1(path->ptsCnt);
                     roundness->modifyPath(path->cmds, path->cmdsCnt, path->pts, path->ptsCnt, cmds1, pts1, transform);
@@ -446,7 +497,8 @@ struct LottiePathSet : LottieProperty
                 }
                 return roundness->modifyPath(path->cmds, path->cmdsCnt, path->pts, path->ptsCnt, cmds, pts, transform);
             }
-            if (offsetPath) return offsetPath->modifyPath(path->cmds, path->cmdsCnt, path->pts, path->ptsCnt, cmds, pts);
+            if (offsetPath) return offsetPath->
+                modifyPath(path->cmds, path->cmdsCnt, path->pts, path->ptsCnt, cmds, pts);
 
             _copy(path, cmds);
             _copy(path, pts, transform);
@@ -456,8 +508,10 @@ struct LottiePathSet : LottieProperty
         auto s = frame->value.pts;
         auto e = (frame + 1)->value.pts;
 
-        if (!roundness && !offsetPath) {
-            for (auto i = 0; i < frame->value.ptsCnt; ++i, ++s, ++e) {
+        if (!roundness && !offsetPath)
+        {
+            for (auto i = 0; i < frame->value.ptsCnt; ++i, ++s, ++e)
+            {
                 auto pt = lerp(*s, *e, t);
                 if (transform) pt *= *transform;
                 pts.push(pt);
@@ -469,19 +523,27 @@ struct LottiePathSet : LottieProperty
         auto interpPts = (Point*)lv_malloc(frame->value.ptsCnt * sizeof(Point));
         LV_ASSERT_MALLOC(interpPts);
         auto p = interpPts;
-        for (auto i = 0; i < frame->value.ptsCnt; ++i, ++s, ++e, ++p) {
+        for (auto i = 0; i < frame->value.ptsCnt; ++i, ++s, ++e, ++p)
+        {
             *p = lerp(*s, *e, t);
             if (transform) *p *= *transform;
         }
 
-        if (roundness) {
-            if (offsetPath) {
+        if (roundness)
+        {
+            if (offsetPath)
+            {
                 Array<PathCommand> cmds1;
                 Array<Point> pts1;
-                roundness->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts, frame->value.ptsCnt, cmds1, pts1, nullptr);
+                roundness->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts, frame->value.ptsCnt, cmds1,
+                                      pts1, nullptr);
                 offsetPath->modifyPath(cmds1.data, cmds1.count, pts1.data, pts1.count, cmds, pts);
-            } else roundness->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts, frame->value.ptsCnt, cmds, pts, nullptr);
-        } else if (offsetPath) offsetPath->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts, frame->value.ptsCnt, cmds, pts);
+            }
+            else roundness->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts, frame->value.ptsCnt, cmds,
+                                       pts, nullptr);
+        }
+        else if (offsetPath) offsetPath->modifyPath(frame->value.cmds, frame->value.cmdsCnt, interpPts,
+                                                    frame->value.ptsCnt, cmds, pts);
 
         lv_free(interpPts);
 
@@ -489,16 +551,21 @@ struct LottiePathSet : LottieProperty
     }
 
 
-    bool operator()(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform, const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath, LottieExpressions* exps)
+    bool operator()(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform,
+                    const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath,
+                    LottieExpressions* exps)
     {
-        if (exps && exp) {
+        if (exps && exp)
+        {
             if (exp->loop.mode != LottieExpression::LoopMode::None) frameNo = _loop(frames, frameNo, exp);
             if (exps->result<LottiePathSet>(frameNo, cmds, pts, transform, roundness, offsetPath, exp)) return true;
         }
         return operator()(frameNo, cmds, pts, transform, roundness, offsetPath);
     }
 
-    void prepare() {}
+    void prepare()
+    {
+    }
 };
 
 
@@ -506,7 +573,7 @@ struct LottieColorStop : LottieProperty
 {
     Array<LottieScalarFrame<ColorStop>>* frames = nullptr;
     ColorStop value;
-    uint16_t count = 0;     //colorstop count
+    uint16_t count = 0; //colorstop count
     bool populated = false;
 
     ~LottieColorStop()
@@ -516,20 +583,23 @@ struct LottieColorStop : LottieProperty
 
     void release()
     {
-        if (exp) {
+        if (exp)
+        {
             delete(exp);
             exp = nullptr;
         }
 
-        if (value.data) {
-        	lv_free(value.data);
+        if (value.data)
+        {
+            lv_free(value.data);
             value.data = nullptr;
         }
 
         if (!frames) return;
 
-        for (auto p = frames->begin(); p < frames->end(); ++p) {
-        	lv_free((*p).value.data);
+        for (auto p = frames->begin(); p < frames->end(); ++p)
+        {
+            lv_free((*p).value.data);
         }
         lv_free(frames->data);
         lv_free(frames);
@@ -553,11 +623,14 @@ struct LottieColorStop : LottieProperty
 
     LottieScalarFrame<ColorStop>& newFrame()
     {
-        if (!frames) {
-            frames = static_cast<Array<LottieScalarFrame<ColorStop>>*>(lv_zalloc(sizeof(Array<LottieScalarFrame<ColorStop>>)));
+        if (!frames)
+        {
+            frames = static_cast<Array<LottieScalarFrame<ColorStop>>*>(lv_zalloc(
+                sizeof(Array<LottieScalarFrame<ColorStop>>)));
             LV_ASSERT_MALLOC(frames);
         }
-        if (frames->count + 1 >= frames->reserved) {
+        if (frames->count + 1 >= frames->reserved)
+        {
             auto old = frames->reserved;
             frames->grow(frames->count + 2);
             memset((void*)(frames->data + old), 0x00, sizeof(LottieScalarFrame<ColorStop>) * (frames->reserved - old));
@@ -573,18 +646,21 @@ struct LottieColorStop : LottieProperty
 
     Result operator()(float frameNo, Fill* fill, LottieExpressions* exps)
     {
-        if (exps && exp) {
+        if (exps && exp)
+        {
             if (exp->loop.mode != LottieExpression::LoopMode::None) frameNo = _loop(frames, frameNo, exp);
             if (exps->result<LottieColorStop>(frameNo, fill, exp)) return Result::Success;
         }
 
         if (!frames) return fill->colorStops(value.data, count);
 
-        if (frames->count == 1 || frameNo <= frames->first().no) {
+        if (frames->count == 1 || frameNo <= frames->first().no)
+        {
             return fill->colorStops(frames->first().value.data, count);
         }
 
-        if (frameNo >= frames->last().no) {
+        if (frameNo >= frames->last().no)
+        {
             return fill->colorStops(frames->last().value.data, count);
         }
 
@@ -595,7 +671,8 @@ struct LottieColorStop : LottieProperty
         auto t = (frameNo - frame->no) / ((frame + 1)->no - frame->no);
         if (frame->interpolator) t = frame->interpolator->progress(t);
 
-        if (frame->hold) {
+        if (frame->hold)
+        {
             if (t < 1.0f) fill->colorStops(frame->value.data, count);
             else fill->colorStops((frame + 1)->value.data, count);
         }
@@ -605,7 +682,8 @@ struct LottieColorStop : LottieProperty
 
         Array<Fill::ColorStop> result;
 
-        for (auto i = 0; i < count; ++i, ++s, ++e) {
+        for (auto i = 0; i < count; ++i, ++s, ++e)
+        {
             auto offset = lerp(s->offset, e->offset, t);
             auto r = lerp(s->r, e->r, t);
             auto g = lerp(s->g, e->g, t);
@@ -619,10 +697,13 @@ struct LottieColorStop : LottieProperty
     LottieColorStop& operator=(const LottieColorStop& other)
     {
         //shallow copy, used for slot overriding
-        if (other.frames) {
+        if (other.frames)
+        {
             frames = other.frames;
             const_cast<LottieColorStop&>(other).frames = nullptr;
-        } else {
+        }
+        else
+        {
             value = other.value;
             const_cast<LottieColorStop&>(other).value = {nullptr, nullptr};
         }
@@ -632,7 +713,9 @@ struct LottieColorStop : LottieProperty
         return *this;
     }
 
-    void prepare() {}
+    void prepare()
+    {
+    }
 };
 
 
@@ -655,7 +738,8 @@ struct LottiePosition : LottieProperty
         delete(frames);
         frames = nullptr;
 
-        if (exp) {
+        if (exp)
+        {
             delete(exp);
             exp = nullptr;
         }
@@ -679,7 +763,8 @@ struct LottiePosition : LottieProperty
     LottieVectorFrame<Point>& newFrame()
     {
         if (!frames) frames = new Array<LottieVectorFrame<Point>>;
-        if (frames->count + 1 >= frames->reserved) {
+        if (frames->count + 1 >= frames->reserved)
+        {
             auto old = frames->reserved;
             frames->grow(frames->count + 2);
             memset((void*)(frames->data + old), 0x00, sizeof(LottieVectorFrame<Point>) * (frames->reserved - old));
@@ -707,7 +792,8 @@ struct LottiePosition : LottieProperty
     Point operator()(float frameNo, LottieExpressions* exps)
     {
         Point out{};
-        if (exps && exp) {
+        if (exps && exp)
+        {
             if (exp->loop.mode != LottieExpression::LoopMode::None) frameNo = _loop(frames, frameNo, exp);
             if (exps->result<LottiePosition>(frameNo, out, exp)) return out;
         }
@@ -719,7 +805,8 @@ struct LottiePosition : LottieProperty
         if (!frames || frames->count == 1) return 0;
 
         if (frameNo <= frames->first().no) return frames->first().angle(frames->data + 1, frames->first().no);
-        if (frameNo >= frames->last().no) {
+        if (frameNo >= frames->last().no)
+        {
             auto frame = frames->data + frames->count - 2;
             return frame->angle(frame + 1, frames->last().no);
         }
@@ -731,7 +818,8 @@ struct LottiePosition : LottieProperty
     void prepare()
     {
         if (!frames || frames->count < 2) return;
-        for (auto frame = frames->begin() + 1; frame < frames->end(); ++frame) {
+        for (auto frame = frames->begin() + 1; frame < frames->end(); ++frame)
+        {
             (frame - 1)->prepare(frame);
         }
     }
@@ -750,25 +838,29 @@ struct LottieTextDoc : LottieProperty
 
     void release()
     {
-        if (exp) {
+        if (exp)
+        {
             delete(exp);
             exp = nullptr;
         }
 
-        if (value.text) {
-        	lv_free(value.text);
+        if (value.text)
+        {
+            lv_free(value.text);
             value.text = nullptr;
         }
-        if (value.name) {
-        	lv_free(value.name);
+        if (value.name)
+        {
+            lv_free(value.name);
             value.name = nullptr;
         }
 
         if (!frames) return;
 
-        for (auto p = frames->begin(); p < frames->end(); ++p) {
-        	lv_free((*p).value.text);
-        	lv_free((*p).value.name);
+        for (auto p = frames->begin(); p < frames->end(); ++p)
+        {
+            lv_free((*p).value.text);
+            lv_free((*p).value.name);
         }
         delete(frames);
         frames = nullptr;
@@ -792,10 +884,12 @@ struct LottieTextDoc : LottieProperty
     LottieScalarFrame<TextDocument>& newFrame()
     {
         if (!frames) frames = new Array<LottieScalarFrame<TextDocument>>;
-        if (frames->count + 1 >= frames->reserved) {
+        if (frames->count + 1 >= frames->reserved)
+        {
             auto old = frames->reserved;
             frames->grow(frames->count + 2);
-            memset((void*)(frames->data + old), 0x00, sizeof(LottieScalarFrame<TextDocument>) * (frames->reserved - old));
+            memset((void*)(frames->data + old), 0x00,
+                   sizeof(LottieScalarFrame<TextDocument>) * (frames->reserved - old));
         }
         ++frames->count;
         return frames->last();
@@ -819,10 +913,13 @@ struct LottieTextDoc : LottieProperty
     LottieTextDoc& operator=(const LottieTextDoc& other)
     {
         //shallow copy, used for slot overriding
-        if (other.frames) {
+        if (other.frames)
+        {
             frames = other.frames;
             const_cast<LottieTextDoc&>(other).frames = nullptr;
-        } else {
+        }
+        else
+        {
             value = other.value;
             const_cast<LottieTextDoc&>(other).value.text = nullptr;
             const_cast<LottieTextDoc&>(other).value.name = nullptr;
@@ -830,7 +927,9 @@ struct LottieTextDoc : LottieProperty
         return *this;
     }
 
-    void prepare() {}
+    void prepare()
+    {
+    }
 };
 
 
@@ -844,4 +943,3 @@ using LottieCheckbox = LottieGenericProperty<int8_t>;
 #endif //_TVG_LOTTIE_PROPERTY_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

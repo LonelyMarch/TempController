@@ -28,19 +28,19 @@
 #include "tvgLoader.h"
 
 #ifdef _WIN32
-    #include <cstring>
+#include <cstring>
 #endif
 
 #ifdef THORVG_SW_RASTER_SUPPORT
-    #include "tvgSwRenderer.h"
+#include "tvgSwRenderer.h"
 #endif
 
 #ifdef THORVG_GL_RASTER_SUPPORT
-    #include "tvgGlRenderer.h"
+#include "tvgGlRenderer.h"
 #endif
 
 #ifdef THORVG_WG_RASTER_SUPPORT
-    #include "tvgWgRenderer.h"
+#include "tvgWgRenderer.h"
 #endif
 
 
@@ -94,36 +94,36 @@ Result Initializer::init(CanvasEngine engine, uint32_t threads) noexcept
     auto nonSupport = true;
     if (static_cast<int>(engine) == 0) return Result::InvalidArguments;
 
-    if (engine & CanvasEngine::Sw) {
-        #ifdef THORVG_SW_RASTER_SUPPORT
-            if (!SwRenderer::init(threads)) return Result::FailedAllocation;
-            nonSupport = false;
-        #endif
-    }
+    if (engine & CanvasEngine::Sw) { 
+#ifdef THORVG_SW_RASTER_SUPPORT
+if (!SwRenderer::init (threads)) return Result::FailedAllocation;
+nonSupport=false;
+#endif
+}
 
-    if (engine & CanvasEngine::Gl) {
-        #ifdef THORVG_GL_RASTER_SUPPORT
-            if (!GlRenderer::init(threads)) return Result::FailedAllocation;
-            nonSupport = false;
-        #endif
-    }
+    if (engine &CanvasEngine::Gl){
+#ifdef THORVG_GL_RASTER_SUPPORT
+if (!GlRenderer::init (threads)) return Result::FailedAllocation;
+nonSupport=false;
+#endif
+}
 
-    if (engine & CanvasEngine::Wg) {
-        #ifdef THORVG_WG_RASTER_SUPPORT
-            if (!WgRenderer::init(threads)) return Result::FailedAllocation;
-            nonSupport = false;
-        #endif
-    }
+    if (engine &CanvasEngine::Wg){
+#ifdef THORVG_WG_RASTER_SUPPORT
+if (!WgRenderer::init (threads)) return Result::FailedAllocation;
+nonSupport=false;
+#endif
+}
 
-    if (nonSupport) return Result::NonSupport;
+    if (nonSupport)return Result::NonSupport;
 
     if (_initCnt++ > 0) return Result::Success;
 
-    if (!_buildVersionInfo(nullptr, nullptr, nullptr)) return Result::Unknown;
+    if (!_buildVersionInfo (nullptr, nullptr, nullptr)) return Result::Unknown;
 
     if (!LoaderMgr::init()) return Result::Unknown;
 
-    TaskScheduler::init(threads);
+TaskScheduler::init (threads);
 
     return Result::Success;
 }
@@ -136,32 +136,32 @@ Result Initializer::term(CanvasEngine engine) noexcept
     auto nonSupport = true;
     if (static_cast<int>(engine) == 0) return Result::InvalidArguments;
 
-    if (engine & CanvasEngine::Sw) {
-        #ifdef THORVG_SW_RASTER_SUPPORT
-            if (!SwRenderer::term()) return Result::InsufficientCondition;
-            nonSupport = false;
-        #endif
-    }
+    if (engine & CanvasEngine::Sw) { 
+#ifdef THORVG_SW_RASTER_SUPPORT
+if (!SwRenderer::term()) return Result::InsufficientCondition;
+nonSupport=false;
+#endif
+}
 
-    if (engine & CanvasEngine::Gl) {
-        #ifdef THORVG_GL_RASTER_SUPPORT
-            if (!GlRenderer::term()) return Result::InsufficientCondition;
-            nonSupport = false;
-        #endif
-    }
+    if (engine &CanvasEngine::Gl){
+#ifdef THORVG_GL_RASTER_SUPPORT
+if (!GlRenderer::term()) return Result::InsufficientCondition;
+nonSupport=false;
+#endif
+}
 
-    if (engine & CanvasEngine::Wg) {
-        #ifdef THORVG_WG_RASTER_SUPPORT
-            if (!WgRenderer::term()) return Result::InsufficientCondition;
-            nonSupport = false;
-        #endif
-    }
+    if (engine &CanvasEngine::Wg){
+#ifdef THORVG_WG_RASTER_SUPPORT
+if (!WgRenderer::term()) return Result::InsufficientCondition;
+nonSupport=false;
+#endif
+}
 
-    if (nonSupport) return Result::NonSupport;
+    if (nonSupport)return Result::NonSupport;
 
-    if (--_initCnt > 0) return Result::Success;
+    if (--_initCnt> 0) return Result::Success;
 
-    TaskScheduler::term();
+TaskScheduler::term();
 
     if (!LoaderMgr::term()) return Result::Unknown;
 
@@ -171,7 +171,7 @@ Result Initializer::term(CanvasEngine engine) noexcept
 
 const char* Initializer::version(uint32_t* major, uint32_t* minor, uint32_t* micro) noexcept
 {
-    if ((!major && ! minor && !micro) || _buildVersionInfo(major, minor, micro)) return THORVG_VERSION_STRING;
+    if ((!major && !minor && !micro) || _buildVersionInfo(major, minor, micro)) return THORVG_VERSION_STRING;
     return nullptr;
 }
 
@@ -182,4 +182,3 @@ uint16_t THORVG_VERSION_NUMBER()
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

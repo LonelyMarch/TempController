@@ -21,7 +21,7 @@
  *********************/
 
 #ifndef M_PI
-    #define M_PI 3.14159265358979323846264338327950288
+#define M_PI 3.14159265358979323846264338327950288
 #endif
 
 /**********************
@@ -32,7 +32,8 @@
  * GLOBAL PROTOTYPES
  **********************/
 
-fastgltf::math::fmat4x4 lv_gltf_math_look_at_rh(const fastgltf::math::fvec3 & eye, const fastgltf::math::fvec3 & center, const fastgltf::math::fvec3 & up) noexcept;
+fastgltf::math::fmat4x4 lv_gltf_math_look_at_rh(const fastgltf::math::fvec3& eye, const fastgltf::math::fvec3& center,
+                                                const fastgltf::math::fvec3& up) noexcept;
 fastgltf::math::fmat4x4 lv_gltf_math_perspective_rh(float fov, float ratio, float z_near, float z_far) noexcept;
 
 template <typename T>
@@ -49,11 +50,11 @@ template <typename T>
     T cy = cos(Y), sy = sin(Y), cp = cos(P), sp = sin(P), cr = cos(R), sr = sin(R);
     T cr_cp = cr * cp, sp_sy = sp * sy, sr_cp = sr * cp, sp_cy = sp * cy;
     return fastgltf::math::quat<T>(
-               sr_cp * cy - cr * sp_sy, // X
-               sr_cp * sy + cr * sp_cy, // Y
-               cr_cp * sy - sr * sp_cy, // Z
-               cr_cp * cy + sr * sp_sy  // W
-           );
+        sr_cp * cy - cr * sp_sy, // X
+        sr_cp * sy + cr * sp_cy, // Y
+        cr_cp * sy - sr * sp_cy, // Z
+        cr_cp * cy + sr * sp_sy // W
+    );
 }
 
 template <typename T>
@@ -70,10 +71,10 @@ template <typename T>
     T cosy_cosp = T(1.0) - T(2.0) * (Q11 + q[2] * q[2]);
 
     return fastgltf::math::vec<T, 3>(
-               (std::abs(sinp) >= T(1)) ? std::copysign(T(M_PI) / T(2), sinp) : std::asin(sinp),
-               std::atan2(siny_cosp, cosy_cosp),
-               std::atan2(sinr_cosp, cosr_cosp)
-           );
+        (std::abs(sinp) >= T(1)) ? std::copysign(T(M_PI) / T(2), sinp) : std::asin(sinp),
+        std::atan2(siny_cosp, cosy_cosp),
+        std::atan2(sinr_cosp, cosr_cosp)
+    );
 }
 
 /**********************

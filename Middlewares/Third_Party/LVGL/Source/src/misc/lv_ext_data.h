@@ -23,9 +23,10 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 #if LV_USE_EXT_DATA
-typedef struct {
-    void * data;
-    void (* free_cb)(void * data);
+typedef struct
+{
+    void* data;
+    void (*free_cb)(void* data);
 } lv_ext_data_t;
 #endif
 

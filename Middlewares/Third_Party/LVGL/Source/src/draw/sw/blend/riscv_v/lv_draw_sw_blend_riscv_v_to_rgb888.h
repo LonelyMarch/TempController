@@ -120,41 +120,41 @@ extern "C" {
  **********************/
 
 /* Color fill functions */
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t * dsc, uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_fill_dsc_t * dsc, uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_fill_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888(lv_draw_sw_blend_fill_dsc_t* dsc, uint32_t dest_px_size);
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa(lv_draw_sw_blend_fill_dsc_t* dsc, uint32_t dest_px_size);
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_mask(lv_draw_sw_blend_fill_dsc_t* dsc,
                                                                uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_blend_fill_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_color_to_rgb888_with_opa_mask(lv_draw_sw_blend_fill_dsc_t* dsc,
                                                                    uint32_t dest_px_size);
 
 /* RGB565 to RGB888/XRGB8888 blend functions */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc, uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc, uint32_t dest_px_size);
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                 uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb565_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                     uint32_t dest_px_size);
 
 /* RGB888/XRGB8888 to RGB888/XRGB8888 blend functions */
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc, uint32_t dest_px_size,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc, uint32_t dest_px_size,
                                                       uint32_t src_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                uint32_t dest_px_size, uint32_t src_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                 uint32_t dest_px_size, uint32_t src_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_rgb888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                     uint32_t dest_px_size, uint32_t src_px_size);
 
 /* ARGB8888 to RGB888/XRGB8888 blend functions */
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc, uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc, uint32_t dest_px_size);
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                  uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                   uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_to_rgb888_with_opa_mask(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                       uint32_t dest_px_size);
-lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw_blend_image_dsc_t * dsc,
+lv_result_t lv_draw_sw_blend_riscv_v_argb8888_premultiplied_to_rgb888(lv_draw_sw_blend_image_dsc_t* dsc,
                                                                       uint32_t dest_px_size);
 
 /**********************

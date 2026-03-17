@@ -53,7 +53,8 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-typedef enum {
+typedef enum
+{
     LV_THREAD_PRIO_LOWEST,
     LV_THREAD_PRIO_LOW,
     LV_THREAD_PRIO_MID,
@@ -99,9 +100,9 @@ uint32_t lv_os_get_proc_idle_percent(void);
  * @param user_data     arbitrary data, will be available in the callback
  * @return              LV_RESULT_OK: success; LV_RESULT_INVALID: failure
  */
-lv_result_t lv_thread_init(lv_thread_t * thread, const char * const name,
-                           lv_thread_prio_t prio, void (*callback)(void *), size_t stack_size,
-                           void * user_data);
+lv_result_t lv_thread_init(lv_thread_t* thread, const char* const name,
+                           lv_thread_prio_t prio, void (*callback)(void*), size_t stack_size,
+                           void* user_data);
 
 /**
  * Delete a thread
@@ -188,8 +189,8 @@ lv_result_t lv_thread_sync_delete(lv_thread_sync_t * sync);
  * optimizations and avoid the call overhead of the OS API to ensure no performance penalty.
  */
 
-static inline lv_result_t lv_thread_init(lv_thread_t * thread, const char * const name, lv_thread_prio_t prio,
-                                         void (*callback)(void *), size_t stack_size, void * user_data)
+static inline lv_result_t lv_thread_init(lv_thread_t* thread, const char* const name, lv_thread_prio_t prio,
+                                         void (*callback)(void*), size_t stack_size, void* user_data)
 {
     LV_UNUSED(thread);
     LV_UNUSED(name);
@@ -200,67 +201,67 @@ static inline lv_result_t lv_thread_init(lv_thread_t * thread, const char * cons
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_thread_delete(lv_thread_t * thread)
+static inline lv_result_t lv_thread_delete(lv_thread_t* thread)
 {
     LV_UNUSED(thread);
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_mutex_init(lv_mutex_t * mutex)
+static inline lv_result_t lv_mutex_init(lv_mutex_t* mutex)
 {
     LV_UNUSED(mutex);
     return LV_RESULT_OK;
 }
 
-static inline lv_result_t lv_mutex_lock(lv_mutex_t * mutex)
+static inline lv_result_t lv_mutex_lock(lv_mutex_t* mutex)
 {
     LV_UNUSED(mutex);
     return LV_RESULT_OK;
 }
 
-static inline lv_result_t lv_mutex_lock_isr(lv_mutex_t * mutex)
+static inline lv_result_t lv_mutex_lock_isr(lv_mutex_t* mutex)
 {
     LV_UNUSED(mutex);
     return LV_RESULT_OK;
 }
 
-static inline lv_result_t lv_mutex_unlock(lv_mutex_t * mutex)
+static inline lv_result_t lv_mutex_unlock(lv_mutex_t* mutex)
 {
     LV_UNUSED(mutex);
     return LV_RESULT_OK;
 }
 
-static inline lv_result_t lv_mutex_delete(lv_mutex_t * mutex)
+static inline lv_result_t lv_mutex_delete(lv_mutex_t* mutex)
 {
     LV_UNUSED(mutex);
     return LV_RESULT_OK;
 }
 
-static inline lv_result_t lv_thread_sync_init(lv_thread_sync_t * sync)
+static inline lv_result_t lv_thread_sync_init(lv_thread_sync_t* sync)
 {
     LV_UNUSED(sync);
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_thread_sync_wait(lv_thread_sync_t * sync)
+static inline lv_result_t lv_thread_sync_wait(lv_thread_sync_t* sync)
 {
     LV_UNUSED(sync);
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_thread_sync_signal(lv_thread_sync_t * sync)
+static inline lv_result_t lv_thread_sync_signal(lv_thread_sync_t* sync)
 {
     LV_UNUSED(sync);
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_thread_sync_signal_isr(lv_thread_sync_t * sync)
+static inline lv_result_t lv_thread_sync_signal_isr(lv_thread_sync_t* sync)
 {
     LV_UNUSED(sync);
     return LV_RESULT_INVALID;
 }
 
-static inline lv_result_t lv_thread_sync_delete(lv_thread_sync_t * sync)
+static inline lv_result_t lv_thread_sync_delete(lv_thread_sync_t* sync)
 {
     LV_UNUSED(sync);
     return LV_RESULT_INVALID;

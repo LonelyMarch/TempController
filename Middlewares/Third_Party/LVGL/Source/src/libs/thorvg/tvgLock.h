@@ -31,8 +31,8 @@
 #include <mutex>
 #include "tvgTaskScheduler.h"
 
-namespace tvg {
-
+namespace tvg
+{
     struct Key
     {
         std::mutex mtx;
@@ -44,7 +44,8 @@ namespace tvg {
 
         ScopedLock(Key& k)
         {
-            if (TaskScheduler::threads() > 0) {
+            if (TaskScheduler::threads() > 0)
+            {
                 k.mtx.lock();
                 key = &k;
             }
@@ -52,25 +53,28 @@ namespace tvg {
 
         ~ScopedLock()
         {
-            if (TaskScheduler::threads() > 0) {
+            if (TaskScheduler::threads() > 0)
+            {
                 key->mtx.unlock();
             }
         }
     };
-
 }
 
 #else //THORVG_THREAD_SUPPORT
 
-namespace tvg {
-
-    struct Key {};
+namespace tvg
+{
+    struct Key
+    {
+    };
 
     struct ScopedLock
     {
-        ScopedLock(Key& key) {}
+        ScopedLock(Key& key)
+        {
+        }
     };
-
 }
 
 #endif //THORVG_THREAD_SUPPORT
@@ -79,4 +83,3 @@ namespace tvg {
 
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

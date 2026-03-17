@@ -26,11 +26,12 @@ extern "C" {
  *      MACROS
  **********************/
 
-struct _lv_draw_image_dsc_t {
+struct _lv_draw_image_dsc_t
+{
     lv_draw_dsc_base_t base;
 
     /**The image source: pointer to `lv_image_dsc_t` or a path to a file*/
-    const void * src;
+    const void* src;
 
     /**The header of the image. Initialized internally in `lv_draw_image` */
     lv_image_header_t header;
@@ -74,17 +75,17 @@ struct _lv_draw_image_dsc_t {
     lv_blend_mode_t blend_mode : 4;
 
     /**1: perform the transformation with anti-aliasing */
-    uint16_t antialias          : 1;
+    uint16_t antialias : 1;
 
     /**If the image is smaller than the `image_area` field of `lv_draw_image_dsc_t`
      * tile the image (repeat is both horizontally and vertically) to fill the
      * `image_area` area*/
-    uint16_t tile               : 1;
+    uint16_t tile : 1;
 
-    const lv_image_colorkey_t * colorkey;
+    const lv_image_colorkey_t* colorkey;
 
     /**Used internally to store some information about the palette or the color of A8 images*/
-    lv_draw_image_sup_t * sup;
+    lv_draw_image_sup_t* sup;
 
     /** Used to indicate the entire original, non-clipped area where the image is to be drawn.
      * This is important for:
@@ -96,7 +97,7 @@ struct _lv_draw_image_dsc_t {
 
     /**Pointer to an A8 or L8 image descriptor to mask the image with.
      * The mask is always center aligned. */
-    const lv_image_dsc_t * bitmap_mask_src;
+    const lv_image_dsc_t* bitmap_mask_src;
 };
 
 /**
@@ -108,9 +109,9 @@ struct _lv_draw_image_dsc_t {
  * @param img_coords        the absolute coordinates of the image
  * @param clipped_img_area  the absolute clip coordinates
  */
-typedef void (*lv_draw_image_core_cb)(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc,
-                                      const lv_image_decoder_dsc_t * decoder_dsc, lv_draw_image_sup_t * sup,
-                                      const lv_area_t * img_coords, const lv_area_t * clipped_img_area);
+typedef void (*lv_draw_image_core_cb)(lv_draw_task_t* t, const lv_draw_image_dsc_t* draw_dsc,
+                                      const lv_image_decoder_dsc_t* decoder_dsc, lv_draw_image_sup_t* sup,
+                                      const lv_area_t* img_coords, const lv_area_t* clipped_img_area);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -127,7 +128,7 @@ void lv_draw_image_dsc_init(lv_draw_image_dsc_t * dsc);
  * @param task      draw task
  * @return          the task's draw descriptor or NULL if the task is not of type LV_DRAW_TASK_TYPE_IMAGE
  */
-lv_draw_image_dsc_t * lv_draw_task_get_image_dsc(lv_draw_task_t * task);
+lv_draw_image_dsc_t* lv_draw_task_get_image_dsc(lv_draw_task_t * task);
 
 /**
  * Create an image draw task
@@ -138,7 +139,7 @@ lv_draw_image_dsc_t * lv_draw_task_get_image_dsc(lv_draw_task_t * task);
  *                      (if only a part of the image is rendered)
  *                      or can be larger (in case of tiled images).   .
  */
-void lv_draw_image(lv_layer_t * layer, const lv_draw_image_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_image(lv_layer_t* layer, const lv_draw_image_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Create a draw task to blend a layer to another layer
@@ -148,7 +149,7 @@ void lv_draw_image(lv_layer_t * layer, const lv_draw_image_dsc_t * dsc, const lv
  * @note                `coords` can be small than the total widget area from which the layer is created
  *                      (if only a part of the widget was rendered to a layer)
  */
-void lv_draw_layer(lv_layer_t * layer, const lv_draw_image_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_layer(lv_layer_t* layer, const lv_draw_image_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Get the type of an image source
@@ -158,7 +159,7 @@ void lv_draw_layer(lv_layer_t * layer, const lv_draw_image_dsc_t * dsc, const lv
  *  - or a symbol (e.g. LV_SYMBOL_CLOSE)
  * @return type of the image source LV_IMAGE_SRC_VARIABLE/FILE/SYMBOL/UNKNOWN
  */
-lv_image_src_t lv_image_src_get_type(const void * src);
+lv_image_src_t lv_image_src_get_type(const void* src);
 
 #ifdef __cplusplus
 } /*extern "C"*/

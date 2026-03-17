@@ -22,7 +22,7 @@ extern "C" {
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_width(lv_style_t * style, int32_t value);
+void lv_style_set_width(lv_style_t* style, int32_t value);
 
 /**
  * Sets a minimal width. Pixel and percentage values can be used. Percentage values
@@ -31,7 +31,7 @@ void lv_style_set_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_min_width(lv_style_t * style, int32_t value);
+void lv_style_set_min_width(lv_style_t* style, int32_t value);
 
 /**
  * Sets a maximal width. Pixel and percentage values can be used. Percentage values
@@ -40,7 +40,7 @@ void lv_style_set_min_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_max_width(lv_style_t * style, int32_t value);
+void lv_style_set_max_width(lv_style_t* style, int32_t value);
 
 /**
  * Sets height of Widget. Pixel, percentage and `LV_SIZE_CONTENT` can be used.
@@ -49,7 +49,7 @@ void lv_style_set_max_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_height(lv_style_t * style, int32_t value);
+void lv_style_set_height(lv_style_t* style, int32_t value);
 
 /**
  * Sets a minimal height. Pixel and percentage values can be used. Percentage values
@@ -58,7 +58,7 @@ void lv_style_set_height(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_min_height(lv_style_t * style, int32_t value);
+void lv_style_set_min_height(lv_style_t* style, int32_t value);
 
 /**
  * Sets a maximal height. Pixel and percentage values can be used. Percentage values
@@ -67,7 +67,7 @@ void lv_style_set_min_height(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_max_height(lv_style_t * style, int32_t value);
+void lv_style_set_max_height(lv_style_t* style, int32_t value);
 
 /**
  * Its meaning depends on the type of Widget. For example in case of lv_scale it means
@@ -76,7 +76,7 @@ void lv_style_set_max_height(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_length(lv_style_t * style, int32_t value);
+void lv_style_set_length(lv_style_t* style, int32_t value);
 
 /**
  * Set X coordinate of Widget considering the ``align`` setting. Pixel and percentage
@@ -86,7 +86,7 @@ void lv_style_set_length(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_x(lv_style_t * style, int32_t value);
+void lv_style_set_x(lv_style_t* style, int32_t value);
 
 /**
  * Set Y coordinate of Widget considering the ``align`` setting. Pixel and percentage
@@ -96,7 +96,7 @@ void lv_style_set_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_y(lv_style_t * style, int32_t value);
+void lv_style_set_y(lv_style_t* style, int32_t value);
 
 /**
  * Set the alignment which tells from which point of the parent the X and Y
@@ -109,7 +109,7 @@ void lv_style_set_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_align(lv_style_t * style, lv_align_t value);
+void lv_style_set_align(lv_style_t* style, lv_align_t value);
 
 /**
  * Make Widget wider on both sides with this value. Pixel and percentage (with
@@ -118,7 +118,7 @@ void lv_style_set_align(lv_style_t * style, lv_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_width(lv_style_t * style, int32_t value);
+void lv_style_set_transform_width(lv_style_t* style, int32_t value);
 
 /**
  * Make Widget higher on both sides with this value. Pixel and percentage (with
@@ -127,7 +127,7 @@ void lv_style_set_transform_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_height(lv_style_t * style, int32_t value);
+void lv_style_set_transform_height(lv_style_t* style, int32_t value);
 
 /**
  * Move Widget with this value in X direction. Applied after layouts, aligns and other
@@ -137,7 +137,7 @@ void lv_style_set_transform_height(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_translate_x(lv_style_t * style, int32_t value);
+void lv_style_set_translate_x(lv_style_t* style, int32_t value);
 
 /**
  * Move Widget with this value in Y direction. Applied after layouts, aligns and other
@@ -147,7 +147,7 @@ void lv_style_set_translate_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_translate_y(lv_style_t * style, int32_t value);
+void lv_style_set_translate_y(lv_style_t* style, int32_t value);
 
 /**
  * Move object around the centre of the parent object (e.g. around the circumference
@@ -156,7 +156,7 @@ void lv_style_set_translate_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_translate_radial(lv_style_t * style, int32_t value);
+void lv_style_set_translate_radial(lv_style_t* style, int32_t value);
 
 /**
  * Zoom Widget horizontally. The value 256 (or `LV_SCALE_NONE`) means normal size, 128
@@ -165,7 +165,7 @@ void lv_style_set_translate_radial(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_scale_x(lv_style_t * style, int32_t value);
+void lv_style_set_transform_scale_x(lv_style_t* style, int32_t value);
 
 /**
  * Zoom Widget vertically. The value 256 (or `LV_SCALE_NONE`) means normal size, 128
@@ -174,7 +174,7 @@ void lv_style_set_transform_scale_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_scale_y(lv_style_t * style, int32_t value);
+void lv_style_set_transform_scale_y(lv_style_t* style, int32_t value);
 
 /**
  * Rotate Widget. The value is interpreted in 0.1 degree units. E.g. 450 means 45 deg.
@@ -182,7 +182,7 @@ void lv_style_set_transform_scale_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_rotation(lv_style_t * style, int32_t value);
+void lv_style_set_transform_rotation(lv_style_t* style, int32_t value);
 
 /**
  * Set pivot point's X coordinate for transformations. Relative to Widget's top left corner.
@@ -190,7 +190,7 @@ void lv_style_set_transform_rotation(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_pivot_x(lv_style_t * style, int32_t value);
+void lv_style_set_transform_pivot_x(lv_style_t* style, int32_t value);
 
 /**
  * Set pivot point's Y coordinate for transformations. Relative to Widget's top left corner.
@@ -198,7 +198,7 @@ void lv_style_set_transform_pivot_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_pivot_y(lv_style_t * style, int32_t value);
+void lv_style_set_transform_pivot_y(lv_style_t* style, int32_t value);
 
 /**
  * Skew Widget horizontally. The value is interpreted in 0.1 degree units. E.g. 450
@@ -207,7 +207,7 @@ void lv_style_set_transform_pivot_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_skew_x(lv_style_t * style, int32_t value);
+void lv_style_set_transform_skew_x(lv_style_t* style, int32_t value);
 
 /**
  * Skew Widget vertically. The value is interpreted in 0.1 degree units. E.g. 450
@@ -216,7 +216,7 @@ void lv_style_set_transform_skew_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_transform_skew_y(lv_style_t * style, int32_t value);
+void lv_style_set_transform_skew_y(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding on the top. It makes the content area smaller in this direction.
@@ -224,7 +224,7 @@ void lv_style_set_transform_skew_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_top(lv_style_t * style, int32_t value);
+void lv_style_set_pad_top(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding on the bottom. It makes the content area smaller in this direction.
@@ -232,7 +232,7 @@ void lv_style_set_pad_top(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_bottom(lv_style_t * style, int32_t value);
+void lv_style_set_pad_bottom(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding on the left. It makes the content area smaller in this direction.
@@ -240,7 +240,7 @@ void lv_style_set_pad_bottom(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_left(lv_style_t * style, int32_t value);
+void lv_style_set_pad_left(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding on the right. It makes the content area smaller in this direction.
@@ -248,7 +248,7 @@ void lv_style_set_pad_left(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_right(lv_style_t * style, int32_t value);
+void lv_style_set_pad_right(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding between the rows. Used by the layouts.
@@ -256,7 +256,7 @@ void lv_style_set_pad_right(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_row(lv_style_t * style, int32_t value);
+void lv_style_set_pad_row(lv_style_t* style, int32_t value);
 
 /**
  * Sets the padding between the columns. Used by the layouts.
@@ -264,7 +264,7 @@ void lv_style_set_pad_row(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_column(lv_style_t * style, int32_t value);
+void lv_style_set_pad_column(lv_style_t* style, int32_t value);
 
 /**
  * Pad text labels away from the scale ticks/remainder of the ``LV_PART_``.
@@ -272,7 +272,7 @@ void lv_style_set_pad_column(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_pad_radial(lv_style_t * style, int32_t value);
+void lv_style_set_pad_radial(lv_style_t* style, int32_t value);
 
 /**
  * Sets margin on the top. Widget will keep this space from its siblings in layouts.
@@ -280,7 +280,7 @@ void lv_style_set_pad_radial(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_margin_top(lv_style_t * style, int32_t value);
+void lv_style_set_margin_top(lv_style_t* style, int32_t value);
 
 /**
  * Sets margin on the bottom. Widget will keep this space from its siblings in layouts.
@@ -288,7 +288,7 @@ void lv_style_set_margin_top(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_margin_bottom(lv_style_t * style, int32_t value);
+void lv_style_set_margin_bottom(lv_style_t* style, int32_t value);
 
 /**
  * Sets margin on the left. Widget will keep this space from its siblings in layouts.
@@ -296,7 +296,7 @@ void lv_style_set_margin_bottom(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_margin_left(lv_style_t * style, int32_t value);
+void lv_style_set_margin_left(lv_style_t* style, int32_t value);
 
 /**
  * Sets margin on the right. Widget will keep this space from its siblings in layouts.
@@ -304,7 +304,7 @@ void lv_style_set_margin_left(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_margin_right(lv_style_t * style, int32_t value);
+void lv_style_set_margin_right(lv_style_t* style, int32_t value);
 
 /**
  * Set background color of Widget.
@@ -312,7 +312,7 @@ void lv_style_set_margin_right(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_bg_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_bg_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of the background. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -322,7 +322,7 @@ void lv_style_set_bg_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_bg_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set gradient color of the background. Used only if `grad_dir` is not `LV_GRAD_DIR_NONE`.
@@ -330,7 +330,7 @@ void lv_style_set_bg_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_bg_grad_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_bg_grad_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set direction of the gradient of the background. Possible values are
@@ -339,7 +339,7 @@ void lv_style_set_bg_grad_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_grad_dir(lv_style_t * style, lv_grad_dir_t value);
+void lv_style_set_bg_grad_dir(lv_style_t* style, lv_grad_dir_t value);
 
 /**
  * Set point from which background color should start for gradients. 0 means to
@@ -348,7 +348,7 @@ void lv_style_set_bg_grad_dir(lv_style_t * style, lv_grad_dir_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_main_stop(lv_style_t * style, int32_t value);
+void lv_style_set_bg_main_stop(lv_style_t* style, int32_t value);
 
 /**
  * Set point from which background's gradient color should start. 0 means to top/left
@@ -357,7 +357,7 @@ void lv_style_set_bg_main_stop(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_grad_stop(lv_style_t * style, int32_t value);
+void lv_style_set_bg_grad_stop(lv_style_t* style, int32_t value);
 
 /**
  * Set opacity of the first gradient color.
@@ -365,7 +365,7 @@ void lv_style_set_bg_grad_stop(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_main_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_bg_main_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set opacity of the second gradient color.
@@ -373,7 +373,7 @@ void lv_style_set_bg_main_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_grad_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_bg_grad_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set gradient definition. The pointed instance must exist while Widget is alive.
@@ -384,7 +384,7 @@ void lv_style_set_bg_grad_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to gradient descriptor
  */
-void lv_style_set_bg_grad(lv_style_t * style, const lv_grad_dsc_t * value);
+void lv_style_set_bg_grad(lv_style_t* style, const lv_grad_dsc_t* value);
 
 /**
  * Set a background image. Can be a pointer to `lv_image_dsc_t`, a path to a file or
@@ -393,7 +393,7 @@ void lv_style_set_bg_grad(lv_style_t * style, const lv_grad_dsc_t * value);
  * @param  style   Pointer to style
  * @param  value   Pointer to image source
  */
-void lv_style_set_bg_image_src(lv_style_t * style, const void * value);
+void lv_style_set_bg_image_src(lv_style_t* style, const void* value);
 
 /**
  * Set opacity of the background image. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means
@@ -403,7 +403,7 @@ void lv_style_set_bg_image_src(lv_style_t * style, const void * value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_image_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_bg_image_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set a color to mix to the background image.
@@ -411,7 +411,7 @@ void lv_style_set_bg_image_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_bg_image_recolor(lv_style_t * style, lv_color_t value);
+void lv_style_set_bg_image_recolor(lv_style_t* style, lv_color_t value);
 
 /**
  * Set intensity of background image recoloring. Value 0, `LV_OPA_0` or
@@ -422,7 +422,7 @@ void lv_style_set_bg_image_recolor(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_image_recolor_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_bg_image_recolor_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * If enabled the background image will be tiled. Possible values are `true` or `false`.
@@ -430,7 +430,7 @@ void lv_style_set_bg_image_recolor_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_bg_image_tiled(lv_style_t * style, bool value);
+void lv_style_set_bg_image_tiled(lv_style_t* style, bool value);
 
 /**
  * Set color of the border.
@@ -438,7 +438,7 @@ void lv_style_set_bg_image_tiled(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_border_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_border_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of the border. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -448,7 +448,7 @@ void lv_style_set_border_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_border_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_border_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set width of the border. Only pixel values can be used.
@@ -456,7 +456,7 @@ void lv_style_set_border_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_border_width(lv_style_t * style, int32_t value);
+void lv_style_set_border_width(lv_style_t* style, int32_t value);
 
 /**
  * Set only which side(s) the border should be drawn. Possible values are
@@ -466,7 +466,7 @@ void lv_style_set_border_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_border_side(lv_style_t * style, lv_border_side_t value);
+void lv_style_set_border_side(lv_style_t* style, lv_border_side_t value);
 
 /**
  * Sets whether the border should be drawn before or after the children are drawn.
@@ -475,7 +475,7 @@ void lv_style_set_border_side(lv_style_t * style, lv_border_side_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_border_post(lv_style_t * style, bool value);
+void lv_style_set_border_post(lv_style_t* style, bool value);
 
 /**
  * Set width of outline in pixels.
@@ -483,7 +483,7 @@ void lv_style_set_border_post(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_outline_width(lv_style_t * style, int32_t value);
+void lv_style_set_outline_width(lv_style_t* style, int32_t value);
 
 /**
  * Set color of outline.
@@ -491,7 +491,7 @@ void lv_style_set_outline_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_outline_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_outline_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of outline. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -501,7 +501,7 @@ void lv_style_set_outline_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_outline_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_outline_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set padding of outline, i.e. the gap between Widget and the outline.
@@ -509,7 +509,7 @@ void lv_style_set_outline_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_outline_pad(lv_style_t * style, int32_t value);
+void lv_style_set_outline_pad(lv_style_t* style, int32_t value);
 
 /**
  * Set width of the shadow in pixels. The value should be >= 0.
@@ -517,7 +517,7 @@ void lv_style_set_outline_pad(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_shadow_width(lv_style_t * style, int32_t value);
+void lv_style_set_shadow_width(lv_style_t* style, int32_t value);
 
 /**
  * Set an offset on the shadow in pixels in X direction.
@@ -525,7 +525,7 @@ void lv_style_set_shadow_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_shadow_offset_x(lv_style_t * style, int32_t value);
+void lv_style_set_shadow_offset_x(lv_style_t* style, int32_t value);
 
 /**
  * Set an offset on the shadow in pixels in Y direction.
@@ -533,7 +533,7 @@ void lv_style_set_shadow_offset_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_shadow_offset_y(lv_style_t * style, int32_t value);
+void lv_style_set_shadow_offset_y(lv_style_t* style, int32_t value);
 
 /**
  * Make shadow calculation to use a larger or smaller rectangle as base. The value can
@@ -542,7 +542,7 @@ void lv_style_set_shadow_offset_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_shadow_spread(lv_style_t * style, int32_t value);
+void lv_style_set_shadow_spread(lv_style_t* style, int32_t value);
 
 /**
  * Set color of shadow.
@@ -550,7 +550,7 @@ void lv_style_set_shadow_spread(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_shadow_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_shadow_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of shadow. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -560,7 +560,7 @@ void lv_style_set_shadow_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_shadow_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_shadow_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set opacity of an image. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -570,7 +570,7 @@ void lv_style_set_shadow_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_image_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_image_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set color to mix with the image.
@@ -578,7 +578,7 @@ void lv_style_set_image_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_image_recolor(lv_style_t * style, lv_color_t value);
+void lv_style_set_image_recolor(lv_style_t* style, lv_color_t value);
 
 /**
  * Set intensity of color mixing. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -588,7 +588,7 @@ void lv_style_set_image_recolor(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_image_recolor_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_image_recolor_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set image colorkey definition. The lv_image_colorkey_t contains two color values:
@@ -598,7 +598,7 @@ void lv_style_set_image_recolor_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to image color key
  */
-void lv_style_set_image_colorkey(lv_style_t * style, const lv_image_colorkey_t * value);
+void lv_style_set_image_colorkey(lv_style_t* style, const lv_image_colorkey_t* value);
 
 /**
  * Set width of lines in pixels.
@@ -606,7 +606,7 @@ void lv_style_set_image_colorkey(lv_style_t * style, const lv_image_colorkey_t *
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_line_width(lv_style_t * style, int32_t value);
+void lv_style_set_line_width(lv_style_t* style, int32_t value);
 
 /**
  * Set width of dashes in pixels. Note that dash works only on horizontal and vertical lines.
@@ -614,7 +614,7 @@ void lv_style_set_line_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_line_dash_width(lv_style_t * style, int32_t value);
+void lv_style_set_line_dash_width(lv_style_t* style, int32_t value);
 
 /**
  * Set gap between dashes in pixels. Note that dash works only on horizontal and
@@ -623,7 +623,7 @@ void lv_style_set_line_dash_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_line_dash_gap(lv_style_t * style, int32_t value);
+void lv_style_set_line_dash_gap(lv_style_t* style, int32_t value);
 
 /**
  * Make end points of the lines rounded. `true`: rounded, `false`: perpendicular line ending.
@@ -631,7 +631,7 @@ void lv_style_set_line_dash_gap(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_line_rounded(lv_style_t * style, bool value);
+void lv_style_set_line_rounded(lv_style_t* style, bool value);
 
 /**
  * Set color of lines.
@@ -639,7 +639,7 @@ void lv_style_set_line_rounded(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_line_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_line_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of lines.
@@ -647,7 +647,7 @@ void lv_style_set_line_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_line_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_line_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set width (thickness) of arcs in pixels.
@@ -655,7 +655,7 @@ void lv_style_set_line_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_arc_width(lv_style_t * style, int32_t value);
+void lv_style_set_arc_width(lv_style_t* style, int32_t value);
 
 /**
  * Make end points of arcs rounded. `true`: rounded, `false`: perpendicular line ending.
@@ -663,7 +663,7 @@ void lv_style_set_arc_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_arc_rounded(lv_style_t * style, bool value);
+void lv_style_set_arc_rounded(lv_style_t* style, bool value);
 
 /**
  * Set color of arc.
@@ -671,7 +671,7 @@ void lv_style_set_arc_rounded(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_arc_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_arc_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of arcs.
@@ -679,7 +679,7 @@ void lv_style_set_arc_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_arc_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_arc_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set an image from which arc will be masked out. It's useful to display complex
@@ -688,7 +688,7 @@ void lv_style_set_arc_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to image source
  */
-void lv_style_set_arc_image_src(lv_style_t * style, const void * value);
+void lv_style_set_arc_image_src(lv_style_t* style, const void* value);
 
 /**
  * Sets color of text.
@@ -696,7 +696,7 @@ void lv_style_set_arc_image_src(lv_style_t * style, const void * value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_text_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_text_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set opacity of text. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -706,7 +706,7 @@ void lv_style_set_text_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_text_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set font of text (a pointer `lv_font_t *`).
@@ -714,7 +714,7 @@ void lv_style_set_text_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to font
  */
-void lv_style_set_text_font(lv_style_t * style, const lv_font_t * value);
+void lv_style_set_text_font(lv_style_t* style, const lv_font_t* value);
 
 /**
  * Set letter space in pixels.
@@ -722,7 +722,7 @@ void lv_style_set_text_font(lv_style_t * style, const lv_font_t * value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_letter_space(lv_style_t * style, int32_t value);
+void lv_style_set_text_letter_space(lv_style_t* style, int32_t value);
 
 /**
  * Set line space in pixels.
@@ -730,7 +730,7 @@ void lv_style_set_text_letter_space(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_line_space(lv_style_t * style, int32_t value);
+void lv_style_set_text_line_space(lv_style_t* style, int32_t value);
 
 /**
  * Set decoration for the text. Possible values are
@@ -739,7 +739,7 @@ void lv_style_set_text_line_space(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_decor(lv_style_t * style, lv_text_decor_t value);
+void lv_style_set_text_decor(lv_style_t* style, lv_text_decor_t value);
 
 /**
  * Set how to align the lines of the text. Note that it doesn't align the Widget
@@ -750,7 +750,7 @@ void lv_style_set_text_decor(lv_style_t * style, lv_text_decor_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_align(lv_style_t * style, lv_text_align_t value);
+void lv_style_set_text_align(lv_style_t* style, lv_text_align_t value);
 
 /**
  * Sets the color of letter outline stroke.
@@ -758,7 +758,7 @@ void lv_style_set_text_align(lv_style_t * style, lv_text_align_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_text_outline_stroke_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_text_outline_stroke_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set the letter outline stroke width in pixels.
@@ -766,7 +766,7 @@ void lv_style_set_text_outline_stroke_color(lv_style_t * style, lv_color_t value
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_outline_stroke_width(lv_style_t * style, int32_t value);
+void lv_style_set_text_outline_stroke_width(lv_style_t* style, int32_t value);
 
 /**
  * Set the opacity of the letter outline stroke. Value 0, `LV_OPA_0` or
@@ -776,7 +776,7 @@ void lv_style_set_text_outline_stroke_width(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_text_outline_stroke_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_text_outline_stroke_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Sets the intensity of blurring. Applied on each lv_part separately before the
@@ -785,7 +785,7 @@ void lv_style_set_text_outline_stroke_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_blur_radius(lv_style_t * style, int32_t value);
+void lv_style_set_blur_radius(lv_style_t* style, int32_t value);
 
 /**
  * If `true` the background of the widget will be blurred. The part should have < 100%
@@ -795,7 +795,7 @@ void lv_style_set_blur_radius(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_blur_backdrop(lv_style_t * style, bool value);
+void lv_style_set_blur_backdrop(lv_style_t* style, bool value);
 
 /**
  * Setting to `LV_BLUR_QUALITY_SPEED` the blurring algorithm will prefer speed over
@@ -805,7 +805,7 @@ void lv_style_set_blur_backdrop(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_blur_quality(lv_style_t * style, lv_blur_quality_t value);
+void lv_style_set_blur_quality(lv_style_t* style, lv_blur_quality_t value);
 
 /**
  * Sets the intensity of blurring. Applied on each lv_part separately before the
@@ -814,7 +814,7 @@ void lv_style_set_blur_quality(lv_style_t * style, lv_blur_quality_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_drop_shadow_radius(lv_style_t * style, int32_t value);
+void lv_style_set_drop_shadow_radius(lv_style_t* style, int32_t value);
 
 /**
  * Set an offset on the shadow in pixels in X direction.
@@ -822,7 +822,7 @@ void lv_style_set_drop_shadow_radius(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_drop_shadow_offset_x(lv_style_t * style, int32_t value);
+void lv_style_set_drop_shadow_offset_x(lv_style_t* style, int32_t value);
 
 /**
  * Set an offset on the shadow in pixels in Y direction.
@@ -830,7 +830,7 @@ void lv_style_set_drop_shadow_offset_x(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_drop_shadow_offset_y(lv_style_t * style, int32_t value);
+void lv_style_set_drop_shadow_offset_y(lv_style_t* style, int32_t value);
 
 /**
  * Set the color of the shadow.
@@ -838,7 +838,7 @@ void lv_style_set_drop_shadow_offset_y(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_drop_shadow_color(lv_style_t * style, lv_color_t value);
+void lv_style_set_drop_shadow_color(lv_style_t* style, lv_color_t value);
 
 /**
  * Set the opacity of the shadow.
@@ -846,7 +846,7 @@ void lv_style_set_drop_shadow_color(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_drop_shadow_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_drop_shadow_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Setting to `LV_BLUR_QUALITY_SPEED` the blurring algorithm will prefer speed over
@@ -856,7 +856,7 @@ void lv_style_set_drop_shadow_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_drop_shadow_quality(lv_style_t * style, lv_blur_quality_t value);
+void lv_style_set_drop_shadow_quality(lv_style_t* style, lv_blur_quality_t value);
 
 /**
  * Set radius on every corner. The value is interpreted in pixels (>= 0) or
@@ -865,7 +865,7 @@ void lv_style_set_drop_shadow_quality(lv_style_t * style, lv_blur_quality_t valu
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_radius(lv_style_t * style, int32_t value);
+void lv_style_set_radius(lv_style_t* style, int32_t value);
 
 /**
  * Move start point of object (e.g. scale tick) radially.
@@ -873,7 +873,7 @@ void lv_style_set_radius(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_radial_offset(lv_style_t * style, int32_t value);
+void lv_style_set_radial_offset(lv_style_t* style, int32_t value);
 
 /**
  * Enable clipping of content that overflows rounded corners of parent Widget. Can be
@@ -882,7 +882,7 @@ void lv_style_set_radial_offset(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_clip_corner(lv_style_t * style, bool value);
+void lv_style_set_clip_corner(lv_style_t* style, bool value);
 
 /**
  * Scale down all opacity values of the Widget by this factor. Value 0, `LV_OPA_0` or
@@ -892,7 +892,7 @@ void lv_style_set_clip_corner(lv_style_t * style, bool value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * First draw Widget on the layer, then scale down layer opacity factor. Value 0,
@@ -903,7 +903,7 @@ void lv_style_set_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_opa_layered(lv_style_t * style, lv_opa_t value);
+void lv_style_set_opa_layered(lv_style_t* style, lv_opa_t value);
 
 /**
  * Mix a color with all colors of the Widget.
@@ -911,7 +911,7 @@ void lv_style_set_opa_layered(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to color-filter descriptor
  */
-void lv_style_set_color_filter_dsc(lv_style_t * style, const lv_color_filter_dsc_t * value);
+void lv_style_set_color_filter_dsc(lv_style_t* style, const lv_color_filter_dsc_t* value);
 
 /**
  * The intensity of mixing of color filter.
@@ -919,7 +919,7 @@ void lv_style_set_color_filter_dsc(lv_style_t * style, const lv_color_filter_dsc
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_color_filter_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_color_filter_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Set a color to mix to the obj.
@@ -927,7 +927,7 @@ void lv_style_set_color_filter_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Color to submit
  */
-void lv_style_set_recolor(lv_style_t * style, lv_color_t value);
+void lv_style_set_recolor(lv_style_t* style, lv_color_t value);
 
 /**
  * Sets the intensity of color mixing. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means
@@ -938,7 +938,7 @@ void lv_style_set_recolor(lv_style_t * style, lv_color_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_recolor_opa(lv_style_t * style, lv_opa_t value);
+void lv_style_set_recolor_opa(lv_style_t* style, lv_opa_t value);
 
 /**
  * Animation template for Widget's animation. Should be a pointer to `lv_anim_t`. The
@@ -949,7 +949,7 @@ void lv_style_set_recolor_opa(lv_style_t * style, lv_opa_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to animation descriptor
  */
-void lv_style_set_anim(lv_style_t * style, const lv_anim_t * value);
+void lv_style_set_anim(lv_style_t* style, const lv_anim_t* value);
 
 /**
  * Animation duration in milliseconds. Its meaning is widget specific. E.g. blink time
@@ -959,7 +959,7 @@ void lv_style_set_anim(lv_style_t * style, const lv_anim_t * value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_anim_duration(lv_style_t * style, uint32_t value);
+void lv_style_set_anim_duration(lv_style_t* style, uint32_t value);
 
 /**
  * An initialized ``lv_style_transition_dsc_t`` to describe a transition.
@@ -967,7 +967,7 @@ void lv_style_set_anim_duration(lv_style_t * style, uint32_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to transition descriptor
  */
-void lv_style_set_transition(lv_style_t * style, const lv_style_transition_dsc_t * value);
+void lv_style_set_transition(lv_style_t* style, const lv_style_transition_dsc_t* value);
 
 /**
  * Describes how to blend the colors to the background. Possible values are
@@ -976,7 +976,7 @@ void lv_style_set_transition(lv_style_t * style, const lv_style_transition_dsc_t
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_blend_mode(lv_style_t * style, lv_blend_mode_t value);
+void lv_style_set_blend_mode(lv_style_t* style, lv_blend_mode_t value);
 
 /**
  * Set layout of Widget. Children will be repositioned and resized according to
@@ -985,7 +985,7 @@ void lv_style_set_blend_mode(lv_style_t * style, lv_blend_mode_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_layout(lv_style_t * style, uint16_t value);
+void lv_style_set_layout(lv_style_t* style, uint16_t value);
 
 /**
  * Set base direction of Widget. Possible values are `LV_BIDI_DIR_LTR/RTL/AUTO`.
@@ -993,7 +993,7 @@ void lv_style_set_layout(lv_style_t * style, uint16_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_base_dir(lv_style_t * style, lv_base_dir_t value);
+void lv_style_set_base_dir(lv_style_t* style, lv_base_dir_t value);
 
 /**
  * If set, a layer will be created for the widget and the layer will be masked with
@@ -1002,7 +1002,7 @@ void lv_style_set_base_dir(lv_style_t * style, lv_base_dir_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to A8 bitmap mask
  */
-void lv_style_set_bitmap_mask_src(lv_style_t * style, const void * value);
+void lv_style_set_bitmap_mask_src(lv_style_t* style, const void* value);
 
 /**
  * Adjust sensitivity for rotary encoders in 1/256 unit. It means, 128: slow down the
@@ -1011,7 +1011,7 @@ void lv_style_set_bitmap_mask_src(lv_style_t * style, const void * value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_rotary_sensitivity(lv_style_t * style, uint32_t value);
+void lv_style_set_rotary_sensitivity(lv_style_t* style, uint32_t value);
 
 #if LV_USE_FLEX
 /**
@@ -1020,7 +1020,7 @@ void lv_style_set_rotary_sensitivity(lv_style_t * style, uint32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_flex_flow(lv_style_t * style, lv_flex_flow_t value);
+void lv_style_set_flex_flow(lv_style_t* style, lv_flex_flow_t value);
 
 /**
  * Defines how to align the children in the direction of flex flow.
@@ -1028,7 +1028,7 @@ void lv_style_set_flex_flow(lv_style_t * style, lv_flex_flow_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_flex_main_place(lv_style_t * style, lv_flex_align_t value);
+void lv_style_set_flex_main_place(lv_style_t* style, lv_flex_align_t value);
 
 /**
  * Defines how to align the children perpendicular to the direction of flex flow.
@@ -1036,7 +1036,7 @@ void lv_style_set_flex_main_place(lv_style_t * style, lv_flex_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_flex_cross_place(lv_style_t * style, lv_flex_align_t value);
+void lv_style_set_flex_cross_place(lv_style_t* style, lv_flex_align_t value);
 
 /**
  * Defines how to align the tracks of the flow.
@@ -1044,7 +1044,7 @@ void lv_style_set_flex_cross_place(lv_style_t * style, lv_flex_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_flex_track_place(lv_style_t * style, lv_flex_align_t value);
+void lv_style_set_flex_track_place(lv_style_t* style, lv_flex_align_t value);
 
 /**
  * Defines how much space to take proportionally from the free space of the Widget's track.
@@ -1052,7 +1052,7 @@ void lv_style_set_flex_track_place(lv_style_t * style, lv_flex_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_flex_grow(lv_style_t * style, uint8_t value);
+void lv_style_set_flex_grow(lv_style_t* style, uint8_t value);
 
 #endif /* LV_USE_FLEX */
 
@@ -1063,7 +1063,7 @@ void lv_style_set_flex_grow(lv_style_t * style, uint8_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to grid-column descriptor array
  */
-void lv_style_set_grid_column_dsc_array(lv_style_t * style, const int32_t * value);
+void lv_style_set_grid_column_dsc_array(lv_style_t* style, const int32_t* value);
 
 /**
  * Defines how to distribute the columns.
@@ -1071,7 +1071,7 @@ void lv_style_set_grid_column_dsc_array(lv_style_t * style, const int32_t * valu
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_column_align(lv_style_t * style, lv_grid_align_t value);
+void lv_style_set_grid_column_align(lv_style_t* style, lv_grid_align_t value);
 
 /**
  * An array to describe the rows of the grid. Should be LV_GRID_TEMPLATE_LAST terminated.
@@ -1079,7 +1079,7 @@ void lv_style_set_grid_column_align(lv_style_t * style, lv_grid_align_t value);
  * @param  style   Pointer to style
  * @param  value   Pointer to grid-row descriptor array
  */
-void lv_style_set_grid_row_dsc_array(lv_style_t * style, const int32_t * value);
+void lv_style_set_grid_row_dsc_array(lv_style_t* style, const int32_t* value);
 
 /**
  * Defines how to distribute the rows.
@@ -1087,7 +1087,7 @@ void lv_style_set_grid_row_dsc_array(lv_style_t * style, const int32_t * value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_row_align(lv_style_t * style, lv_grid_align_t value);
+void lv_style_set_grid_row_align(lv_style_t* style, lv_grid_align_t value);
 
 /**
  * Set column in which Widget should be placed.
@@ -1095,7 +1095,7 @@ void lv_style_set_grid_row_align(lv_style_t * style, lv_grid_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_column_pos(lv_style_t * style, int32_t value);
+void lv_style_set_grid_cell_column_pos(lv_style_t* style, int32_t value);
 
 /**
  * Set how to align Widget horizontally.
@@ -1103,7 +1103,7 @@ void lv_style_set_grid_cell_column_pos(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_x_align(lv_style_t * style, lv_grid_align_t value);
+void lv_style_set_grid_cell_x_align(lv_style_t* style, lv_grid_align_t value);
 
 /**
  * Set how many columns Widget should span. Needs to be >= 1.
@@ -1111,7 +1111,7 @@ void lv_style_set_grid_cell_x_align(lv_style_t * style, lv_grid_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_column_span(lv_style_t * style, int32_t value);
+void lv_style_set_grid_cell_column_span(lv_style_t* style, int32_t value);
 
 /**
  * Set row in which Widget should be placed.
@@ -1119,7 +1119,7 @@ void lv_style_set_grid_cell_column_span(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_row_pos(lv_style_t * style, int32_t value);
+void lv_style_set_grid_cell_row_pos(lv_style_t* style, int32_t value);
 
 /**
  * Set how to align Widget vertically.
@@ -1127,7 +1127,7 @@ void lv_style_set_grid_cell_row_pos(lv_style_t * style, int32_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_y_align(lv_style_t * style, lv_grid_align_t value);
+void lv_style_set_grid_cell_y_align(lv_style_t* style, lv_grid_align_t value);
 
 /**
  * Set how many rows Widget should span. Needs to be >= 1.
@@ -1135,7 +1135,7 @@ void lv_style_set_grid_cell_y_align(lv_style_t * style, lv_grid_align_t value);
  * @param  style   Pointer to style
  * @param  value   Value to submit
  */
-void lv_style_set_grid_cell_row_span(lv_style_t * style, int32_t value);
+void lv_style_set_grid_cell_row_span(lv_style_t* style, int32_t value);
 
 #endif /* LV_USE_GRID */
 

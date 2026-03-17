@@ -40,13 +40,13 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_nema_gfx_layer(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc, const lv_area_t * coords)
+void lv_draw_nema_gfx_layer(lv_draw_task_t* t, const lv_draw_image_dsc_t* draw_dsc, const lv_area_t* coords)
 {
-    lv_layer_t * layer_to_draw = (lv_layer_t *)draw_dsc->src;
+    lv_layer_t* layer_to_draw = (lv_layer_t*)draw_dsc->src;
 
     /*It can happen that nothing was draw on a layer and therefore its buffer is not allocated.
      *In this case just return. */
-    if(layer_to_draw->draw_buf == NULL) return;
+    if (layer_to_draw->draw_buf == NULL) return;
 
     lv_draw_image_dsc_t new_draw_dsc = *draw_dsc;
     new_draw_dsc.src = layer_to_draw->draw_buf;

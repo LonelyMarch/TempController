@@ -36,7 +36,7 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 
-bool lv_draw_eve_ramg_get_addr(uint32_t * addr_dst, uintptr_t key,
+bool lv_draw_eve_ramg_get_addr(uint32_t* addr_dst, uintptr_t key,
                                uint32_t addr_size, uint32_t addr_align);
 
 #endif/*LV_USE_DRAW_EVE*/

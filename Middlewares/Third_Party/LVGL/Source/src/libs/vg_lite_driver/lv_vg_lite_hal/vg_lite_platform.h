@@ -14,12 +14,14 @@
 #define VG_SYSTEM_RESERVE_COUNT 2
 
 /* Implementation of list. ****************************************/
-typedef struct list_head {
-    struct list_head * next;
-    struct list_head * prev;
+typedef struct list_head
+{
+    struct list_head* next;
+    struct list_head* prev;
 } list_head_t;
 
-typedef struct heap_node {
+typedef struct heap_node
+{
     list_head_t list;
     uint32_t offset;
     unsigned long size;
@@ -27,20 +29,20 @@ typedef struct heap_node {
     vg_lite_vidmem_pool_t pool;
 } heap_node_t;
 
-typedef struct vg_module_parameters {
+typedef struct vg_module_parameters
+{
+    uint32_t register_mem_base;
+    uint32_t gpu_mem_base[VG_SYSTEM_RESERVE_COUNT];
 
-    uint32_t        register_mem_base;
-    uint32_t        gpu_mem_base[VG_SYSTEM_RESERVE_COUNT];
-
-    volatile void * contiguous_mem_base[VG_SYSTEM_RESERVE_COUNT];
-    uint32_t        contiguous_mem_size[VG_SYSTEM_RESERVE_COUNT];
+    volatile void* contiguous_mem_base[VG_SYSTEM_RESERVE_COUNT];
+    uint32_t contiguous_mem_size[VG_SYSTEM_RESERVE_COUNT];
 }
 vg_module_parameters_t;
 
 /*!
 @brief Initialize the hardware mem setting.
 */
-void vg_lite_init_mem(vg_module_parameters_t * param);
+void vg_lite_init_mem(vg_module_parameters_t* param);
 
 /*!
 @brief The hardware IRQ handler.

@@ -5,13 +5,13 @@
  ******************************************************************************/
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
-    #include "lvgl.h"
+#include "lvgl.h"
 #else
-    #include "../../lvgl.h"
+#include "../../lvgl.h"
 #endif
 
 #ifndef LV_FONT_SOURCE_HAN_SANS_SC_14_CJK
-    #define LV_FONT_SOURCE_HAN_SANS_SC_14_CJK 1
+#define LV_FONT_SOURCE_HAN_SANS_SC_14_CJK 1
 #endif
 
 #if LV_FONT_SOURCE_HAN_SANS_SC_14_CJK
@@ -20761,7 +20761,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 12289, .range_length = 72, .glyph_id_start = 96,
-        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 12, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 12,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     },
     {
         .range_start = 12362, .range_length = 24, .glyph_id_start = 108,
@@ -20773,11 +20774,13 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 12431, .range_length = 95, .glyph_id_start = 175,
-        .unicode_list = NULL, .glyph_id_ofs_list = glyph_id_ofs_list_4, .list_length = 95, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_FULL
+        .unicode_list = NULL, .glyph_id_ofs_list = glyph_id_ofs_list_4, .list_length = 95,
+        .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_FULL
     },
     {
         .range_start = 12527, .range_length = 52772, .glyph_id_start = 247,
-        .unicode_list = unicode_list_5, .glyph_id_ofs_list = NULL, .list_length = 1187, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_5, .glyph_id_ofs_list = NULL, .list_length = 1187,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     }
 };
 
@@ -23835,11 +23838,11 @@ static const int8_t kern_class_values[] = {
 
 /*Collect the kern class' data in one place*/
 static const lv_font_fmt_txt_kern_classes_t kern_classes = {
-    .class_pair_values   = kern_class_values,
-    .left_class_mapping  = kern_left_class_mapping,
+    .class_pair_values = kern_class_values,
+    .left_class_mapping = kern_left_class_mapping,
     .right_class_mapping = kern_right_class_mapping,
-    .left_class_cnt      = 155,
-    .right_class_cnt     = 138,
+    .left_class_cnt = 155,
+    .right_class_cnt = 138,
 };
 
 /*--------------------
@@ -23848,7 +23851,7 @@ static const lv_font_fmt_txt_kern_classes_t kern_classes = {
 
 #if LV_VERSION_CHECK(8, 0, 0)
 /*Store all the custom data of the font*/
-static  lv_font_fmt_txt_glyph_cache_t cache;
+static lv_font_fmt_txt_glyph_cache_t cache;
 static const lv_font_fmt_txt_dsc_t font_dsc = {
 #else
 static lv_font_fmt_txt_dsc_t font_dsc = {
@@ -23878,10 +23881,10 @@ const lv_font_t lv_font_source_han_sans_sc_14_cjk = {
 #else
 lv_font_t lv_font_source_han_sans_sc_14_cjk = {
 #endif
-    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
-    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
-    .line_height = 17,          /*The maximum line height required by the font*/
-    .base_line = 4,             /*Baseline measured from the bottom of the line*/
+    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt, /*Function pointer to get glyph's data*/
+    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt, /*Function pointer to get glyph's bitmap*/
+    .line_height = 17, /*The maximum line height required by the font*/
+    .base_line = 4, /*Baseline measured from the bottom of the line*/
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
@@ -23889,10 +23892,8 @@ lv_font_t lv_font_source_han_sans_sc_14_cjk = {
     .underline_position = -2,
     .underline_thickness = 1,
 #endif
-    .dsc = &font_dsc           /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
+    .dsc = &font_dsc /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
 };
 
 
-
 #endif /*#if LV_FONT_SOURCE_HAN_SANS_SC_14_CJK*/
-

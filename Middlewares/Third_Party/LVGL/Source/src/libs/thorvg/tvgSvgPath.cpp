@@ -67,7 +67,8 @@
 
 static char* _skipComma(const char* content)
 {
-    while (*content && isspace(*content)) {
+    while (*content && isspace(*content))
+    {
         content++;
     }
     if (*content == ',') return (char*)content + 1;
@@ -100,7 +101,8 @@ static bool _parseFlag(char** content, int* number)
 }
 
 
-void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, Point* curCtl, float x, float y, float rx, float ry, float angle, bool largeArc, bool sweep)
+void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, Point* curCtl, float x, float y,
+                      float rx, float ry, float angle, bool largeArc, bool sweep)
 {
     float cxp, cyp, cx, cy;
     float sx, sy;
@@ -143,7 +145,8 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
     lambda = (x1p2 / rx2) + (y1p2 / ry2);
 
     //Correction of out-of-range radii, see F6.6.2 (step 4)
-    if (lambda > 1.0f) {
+    if (lambda > 1.0f)
+    {
         //See F6.6.3
         float lambdaRoot = sqrtf(lambda);
 
@@ -158,7 +161,8 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
 
     //Check if there is no possible solution
     //(i.e. we can't do a square root of a negative value)
-    if (c < 0.0f) {
+    if (c < 0.0f)
+    {
         //Scale uniformly until we have a single solution
         //(see F6.2) i.e. when c == 0.0
         float scale = sqrtf(1.0f - c / (rx2 * ry2));
@@ -174,7 +178,9 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
         //Step 3 (F6.5.3 first part) - simplified since cxp and cyp == 0.0
         cx = 0.0f;
         cy = 0.0f;
-    } else {
+    }
+    else
+    {
         //Complete c calculation
         c = sqrtf(c / ((rx2 * y1p2) + (ry2 * x1p2)));
         //Inverse sign if Fa == Fs
@@ -203,10 +209,13 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
     nat = tvg::atan2(((-y1p - cyp) / ry), ((-x1p - cxp) / rx));
     deltaTheta = (nat < at) ? 2.0f * MATH_PI - at + nat : nat - at;
 
-    if (sweep) {
+    if (sweep)
+    {
         //Ensure delta theta < 0 or else add 360 degrees
         if (deltaTheta < 0.0f) deltaTheta += 2.0f * MATH_PI;
-    } else {
+    }
+    else
+    {
         //Ensure delta theta > 0 or else substract 360 degrees
         if (deltaTheta > 0.0f) deltaTheta -= 2.0f * MATH_PI;
     }
@@ -229,7 +238,8 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
     cosTheta1 = cosf(theta1);
     sinTheta1 = sinf(theta1);
 
-    for (int i = 0; i < segments; ++i) {
+    for (int i = 0; i < segments; ++i)
+    {
         //End angle (for this segment) = current + delta
         float c1x, c1y, ex, ey, c2x, c2y;
         float theta2 = theta1 + delta;
@@ -271,85 +281,101 @@ void _pathAppendArcTo(Array<PathCommand>* cmds, Array<Point>* pts, Point* cur, P
 static int _numberCount(char cmd)
 {
     int count = 0;
-    switch (cmd) {
-        case 'M':
-        case 'm':
-        case 'L':
-        case 'l':
-        case 'T':
-        case 't': {
+    switch (cmd)
+    {
+    case 'M':
+    case 'm':
+    case 'L':
+    case 'l':
+    case 'T':
+    case 't':
+        {
             count = 2;
             break;
         }
-        case 'C':
-        case 'c':
-        case 'E':
-        case 'e': {
+    case 'C':
+    case 'c':
+    case 'E':
+    case 'e':
+        {
             count = 6;
             break;
         }
-        case 'H':
-        case 'h':
-        case 'V':
-        case 'v': {
+    case 'H':
+    case 'h':
+    case 'V':
+    case 'v':
+        {
             count = 1;
             break;
         }
-        case 'S':
-        case 's':
-        case 'Q':
-        case 'q': {
+    case 'S':
+    case 's':
+    case 'Q':
+    case 'q':
+        {
             count = 4;
             break;
         }
-        case 'A':
-        case 'a': {
+    case 'A':
+    case 'a':
+        {
             count = 7;
             break;
         }
-        default:
-            break;
+    default:
+        break;
     }
     return count;
 }
 
 
-static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cmd, float* arr, int count, Point* cur, Point* curCtl, Point* startPoint, bool *isQuadratic, bool* closed)
+static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cmd, float* arr, int count, Point* cur,
+                            Point* curCtl, Point* startPoint, bool* isQuadratic, bool* closed)
 {
-    switch (cmd) {
-        case 'm':
-        case 'l':
-        case 'c':
-        case 's':
-        case 'q':
-        case 't': {
-            for (int i = 0; i < count - 1; i += 2) {
+    switch (cmd)
+    {
+    case 'm':
+    case 'l':
+    case 'c':
+    case 's':
+    case 'q':
+    case 't':
+        {
+            for (int i = 0; i < count - 1; i += 2)
+            {
                 arr[i] = arr[i] + cur->x;
                 arr[i + 1] = arr[i + 1] + cur->y;
             }
             break;
         }
-        case 'h': {
+    case 'h':
+        {
             arr[0] = arr[0] + cur->x;
             break;
         }
-        case 'v': {
+    case 'v':
+        {
             arr[0] = arr[0] + cur->y;
             break;
         }
-        case 'a': {
+    case 'a':
+        {
             arr[5] = arr[5] + cur->x;
             arr[6] = arr[6] + cur->y;
             break;
         }
-        default: {
+    default:
+        {
             break;
         }
     }
 
-    switch (cmd) {
-        case 'm':
-        case 'M': {
+    switch (cmd)
+    {
+    case 'm':
+    case 'M':
+        {
             Point p = {arr[0], arr[1]};
             cmds->push(PathCommand::MoveTo);
             pts->push(p);
@@ -357,16 +383,18 @@ static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cm
             *startPoint = {arr[0], arr[1]};
             break;
         }
-        case 'l':
-        case 'L': {
+    case 'l':
+    case 'L':
+        {
             Point p = {arr[0], arr[1]};
             cmds->push(PathCommand::LineTo);
             pts->push(p);
             *cur = {arr[0], arr[1]};
             break;
         }
-        case 'c':
-        case 'C': {
+    case 'c':
+    case 'C':
+        {
             Point p[3];
             cmds->push(PathCommand::CubicTo);
             p[0] = {arr[0], arr[1]};
@@ -380,14 +408,18 @@ static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cm
             *isQuadratic = false;
             break;
         }
-        case 's':
-        case 'S': {
+    case 's':
+    case 'S':
+        {
             Point p[3], ctrl;
             if ((cmds->count > 1) && (cmds->last() == PathCommand::CubicTo) &&
-                !(*isQuadratic)) {
+                !(*isQuadratic))
+            {
                 ctrl.x = 2 * cur->x - curCtl->x;
                 ctrl.y = 2 * cur->y - curCtl->y;
-            } else {
+            }
+            else
+            {
                 ctrl = *cur;
             }
             cmds->push(PathCommand::CubicTo);
@@ -402,8 +434,9 @@ static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cm
             *isQuadratic = false;
             break;
         }
-        case 'q':
-        case 'Q': {
+    case 'q':
+    case 'Q':
+        {
             Point p[3];
             float ctrl_x0 = (cur->x + 2 * arr[0]) * (1.0 / 3.0);
             float ctrl_y0 = (cur->y + 2 * arr[1]) * (1.0 / 3.0);
@@ -421,14 +454,18 @@ static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cm
             *isQuadratic = true;
             break;
         }
-        case 't':
-        case 'T': {
+    case 't':
+    case 'T':
+        {
             Point p[3], ctrl;
             if ((cmds->count > 1) && (cmds->last() == PathCommand::CubicTo) &&
-                *isQuadratic) {
+                *isQuadratic)
+            {
                 ctrl.x = 2 * cur->x - curCtl->x;
                 ctrl.y = 2 * cur->y - curCtl->y;
-            } else {
+            }
+            else
+            {
                 ctrl = *cur;
             }
             float ctrl_x0 = (cur->x + 2 * ctrl.x) * (1.0 / 3.0);
@@ -447,44 +484,53 @@ static bool _processCommand(Array<PathCommand>* cmds, Array<Point>* pts, char cm
             *isQuadratic = true;
             break;
         }
-        case 'h':
-        case 'H': {
+    case 'h':
+    case 'H':
+        {
             Point p = {arr[0], cur->y};
             cmds->push(PathCommand::LineTo);
             pts->push(p);
             cur->x = arr[0];
             break;
         }
-        case 'v':
-        case 'V': {
+    case 'v':
+    case 'V':
+        {
             Point p = {cur->x, arr[0]};
             cmds->push(PathCommand::LineTo);
             pts->push(p);
             cur->y = arr[0];
             break;
         }
-        case 'z':
-        case 'Z': {
+    case 'z':
+    case 'Z':
+        {
             cmds->push(PathCommand::Close);
             *cur = *startPoint;
             *closed = true;
             break;
         }
-        case 'a':
-        case 'A': {
-            if (tvg::zero(arr[0]) || tvg::zero(arr[1])) {
+    case 'a':
+    case 'A':
+        {
+            if (tvg::zero(arr[0]) || tvg::zero(arr[1]))
+            {
                 Point p = {arr[5], arr[6]};
                 cmds->push(PathCommand::LineTo);
                 pts->push(p);
                 *cur = {arr[5], arr[6]};
-            } else if (!tvg::equal(cur->x, arr[5]) || !tvg::equal(cur->y, arr[6])) {
-                _pathAppendArcTo(cmds, pts, cur, curCtl, arr[5], arr[6], fabsf(arr[0]), fabsf(arr[1]), arr[2], arr[3], arr[4]);
+            }
+            else if (!tvg::equal(cur->x, arr[5]) || !tvg::equal(cur->y, arr[6]))
+            {
+                _pathAppendArcTo(cmds, pts, cur, curCtl, arr[5], arr[6], fabsf(arr[0]), fabsf(arr[1]), arr[2], arr[3],
+                                 arr[4]);
                 *cur = *curCtl = {arr[5], arr[6]};
                 *isQuadratic = false;
             }
             break;
         }
-        default: {
+    default:
+        {
             return false;
         }
     }
@@ -497,26 +543,38 @@ static char* _nextCommand(char* path, char* cmd, float* arr, int* count, bool* c
     int large, sweep;
 
     path = _skipComma(path);
-    if (isalpha(*path)) {
+    if (isalpha(*path))
+    {
         *cmd = *path;
         path++;
         *count = _numberCount(*cmd);
-    } else {
+    }
+    else
+    {
         if (*cmd == 'm') *cmd = 'l';
         else if (*cmd == 'M') *cmd = 'L';
-        else {
-          if (*closed) return nullptr;
+        else
+        {
+            if (*closed) return nullptr;
         }
     }
-    if (*count == 7) {
+    if (*count == 7)
+    {
         //Special case for arc command
-        if (_parseNumber(&path, &arr[0])) {
-            if (_parseNumber(&path, &arr[1])) {
-                if (_parseNumber(&path, &arr[2])) {
-                    if (_parseFlag(&path, &large)) {
-                        if (_parseFlag(&path, &sweep)) {
-                            if (_parseNumber(&path, &arr[5])) {
-                                if (_parseNumber(&path, &arr[6])) {
+        if (_parseNumber(&path, &arr[0]))
+        {
+            if (_parseNumber(&path, &arr[1]))
+            {
+                if (_parseNumber(&path, &arr[2]))
+                {
+                    if (_parseFlag(&path, &large))
+                    {
+                        if (_parseFlag(&path, &sweep))
+                        {
+                            if (_parseNumber(&path, &arr[5]))
+                            {
+                                if (_parseNumber(&path, &arr[6]))
+                                {
                                     arr[3] = (float)large;
                                     arr[4] = (float)sweep;
                                     return path;
@@ -530,8 +588,10 @@ static char* _nextCommand(char* path, char* cmd, float* arr, int* count, bool* c
         *count = 0;
         return NULL;
     }
-    for (int i = 0; i < *count; i++) {
-        if (!_parseNumber(&path, &arr[i])) {
+    for (int i = 0; i < *count; i++)
+    {
+        if (!_parseNumber(&path, &arr[i]))
+        {
             *count = 0;
             return NULL;
         }
@@ -550,9 +610,9 @@ bool svgPathToShape(const char* svgPath, Shape* shape)
 {
     float numberArray[7];
     int numberCount = 0;
-    Point cur = { 0, 0 };
-    Point curCtl = { 0, 0 };
-    Point startPoint = { 0, 0 };
+    Point cur = {0, 0};
+    Point curCtl = {0, 0};
+    Point startPoint = {0, 0};
     char cmd = 0;
     bool isQuadratic = false;
     bool closed = false;
@@ -562,11 +622,13 @@ bool svgPathToShape(const char* svgPath, Shape* shape)
     auto& cmds = P(shape)->rs.path.cmds;
     auto lastCmds = cmds.count;
 
-    while ((path[0] != '\0')) {
+    while ((path[0] != '\0'))
+    {
         path = _nextCommand(path, &cmd, numberArray, &numberCount, &closed);
         if (!path) break;
         closed = false;
-        if (!_processCommand(&cmds, &pts, cmd, numberArray, numberCount, &cur, &curCtl, &startPoint, &isQuadratic, &closed)) break;
+        if (!_processCommand(&cmds, &pts, cmd, numberArray, numberCount, &cur, &curCtl, &startPoint, &isQuadratic,
+                             &closed)) break;
     }
 
     if (cmds.count > lastCmds && cmds[lastCmds] != PathCommand::MoveTo) return false;
@@ -574,4 +636,3 @@ bool svgPathToShape(const char* svgPath, Shape* shape)
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

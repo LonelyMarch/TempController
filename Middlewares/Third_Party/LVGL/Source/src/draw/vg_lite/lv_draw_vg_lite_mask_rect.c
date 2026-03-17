@@ -40,21 +40,22 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-void lv_draw_vg_lite_mask_rect(lv_draw_task_t * t, const lv_draw_mask_rect_dsc_t * dsc,
-                               const lv_area_t * coords)
+void lv_draw_vg_lite_mask_rect(lv_draw_task_t* t, const lv_draw_mask_rect_dsc_t* dsc,
+                               const lv_area_t* coords)
 {
     LV_UNUSED(coords);
     lv_area_t draw_area;
 
-    if(!lv_area_intersect(&draw_area, &dsc->area, &t->clip_area)) {
+    if (!lv_area_intersect(&draw_area, &dsc->area, &t->clip_area))
+    {
         return;
     }
 
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_draw_vg_lite_unit_t * u = (lv_draw_vg_lite_unit_t *)t->draw_unit;
+    lv_draw_vg_lite_unit_t* u = (lv_draw_vg_lite_unit_t*)t->draw_unit;
 
-    lv_vg_lite_path_t * path = lv_vg_lite_path_get(u, VG_LITE_FP32);
+    lv_vg_lite_path_t* path = lv_vg_lite_path_get(u, VG_LITE_FP32);
     lv_vg_lite_path_set_bounding_box_area(path, &t->clip_area);
 
     /* Nesting cropping regions using rounded rectangles and normal rectangles */

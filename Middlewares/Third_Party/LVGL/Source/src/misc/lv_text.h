@@ -30,14 +30,15 @@ extern "C" {
 /**
  * Options for text rendering.
  */
-typedef enum {
-    LV_TEXT_FLAG_NONE      = 0x00,
+typedef enum
+{
+    LV_TEXT_FLAG_NONE = 0x00,
 
     /*Ignore max-width to avoid automatic word wrapping*/
-    LV_TEXT_FLAG_EXPAND    = 0x01,
+    LV_TEXT_FLAG_EXPAND = 0x01,
 
     /**Max-width is already equal to the longest line. (Used to skip some calculation)*/
-    LV_TEXT_FLAG_FIT       = 0x02,
+    LV_TEXT_FLAG_FIT = 0x02,
 
     /**To prevent overflow, insert breaks between any two characters.
     Otherwise breaks are inserted at word boundaries, as configured via LV_TXT_BREAK_CHARS
@@ -46,12 +47,12 @@ typedef enum {
     LV_TEXT_FLAG_BREAK_ALL = 0x04,
 
     /**Enable parsing of recolor command*/
-    LV_TEXT_FLAG_RECOLOR   = 0x08,
-
+    LV_TEXT_FLAG_RECOLOR = 0x08,
 } lv_text_flag_t;
 
 /** Label align policy*/
-typedef enum {
+typedef enum
+{
     LV_TEXT_ALIGN_AUTO, /**< Align text auto*/
     LV_TEXT_ALIGN_LEFT, /**< Align text to left*/
     LV_TEXT_ALIGN_CENTER, /**< Align text to center*/
@@ -72,7 +73,7 @@ typedef enum {
  * @param max_width max width of the text (break the lines to fit this size). Set COORD_MAX to avoid
  * @param flag settings for the text from ::lv_text_flag_t
  */
-void lv_text_get_size(lv_point_t * size_res, const char * text, const lv_font_t * font, int32_t letter_space,
+void lv_text_get_size(lv_point_t* size_res, const char* text, const lv_font_t* font, int32_t letter_space,
                       int32_t line_space, int32_t max_width, lv_text_flag_t flag);
 
 /**********************

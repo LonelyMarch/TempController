@@ -39,13 +39,13 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-void lv_draw_nema_gfx_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc)
+void lv_draw_nema_gfx_triangle(lv_draw_task_t* t, const lv_draw_triangle_dsc_t* dsc)
 {
-    if(dsc->opa <= LV_OPA_MIN) return;
+    if (dsc->opa <= LV_OPA_MIN) return;
 
-    lv_draw_nema_gfx_unit_t * draw_nema_gfx_unit = (lv_draw_nema_gfx_unit_t *)t->draw_unit;
+    lv_draw_nema_gfx_unit_t* draw_nema_gfx_unit = (lv_draw_nema_gfx_unit_t*)t->draw_unit;
 
-    lv_layer_t * layer = t->target_layer;
+    lv_layer_t* layer = t->target_layer;
 
     lv_area_t rel_clip_area;
     lv_area_copy(&rel_clip_area, &t->clip_area);
@@ -60,7 +60,7 @@ void lv_draw_nema_gfx_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t 
     lv_area_move(&coords, -layer->buf_area.x1, -layer->buf_area.y1);
 
     lv_area_t clipped_coords;
-    if(!lv_area_intersect(&clipped_coords, &coords, &rel_clip_area))
+    if (!lv_area_intersect(&clipped_coords, &coords, &rel_clip_area))
         return; /* Fully clipped, nothing to do */
 
     nema_set_clip(rel_clip_area.x1, rel_clip_area.y1, lv_area_get_width(&rel_clip_area),
@@ -70,20 +70,23 @@ void lv_draw_nema_gfx_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t 
     uint32_t dst_nema_cf = lv_nemagfx_cf_to_nema(dst_cf);
 
     /* the stride should be computed internally for NEMA_TSC images and images missing a stride value */
-    int32_t stride = (dst_cf >= LV_COLOR_FORMAT_NEMA_TSC_START && dst_cf <= LV_COLOR_FORMAT_NEMA_TSC_END) ?
-                     -1 : lv_area_get_width(&(layer->buf_area)) * lv_color_format_get_size(dst_cf);
+    int32_t stride = (dst_cf >= LV_COLOR_FORMAT_NEMA_TSC_START && dst_cf <= LV_COLOR_FORMAT_NEMA_TSC_END)
+                         ? -1
+                         : lv_area_get_width(&(layer->buf_area)) * lv_color_format_get_size(dst_cf);
 
     nema_bind_dst_tex((uintptr_t)NEMA_VIRT2PHYS(layer->draw_buf->data), lv_area_get_width(&(layer->buf_area)),
                       lv_area_get_height(&(layer->buf_area)), dst_nema_cf, stride);
 
-    if(dsc->grad.dir == (lv_grad_dir_t)LV_GRAD_DIR_NONE) {
-
+    if (dsc->grad.dir == (lv_grad_dir_t)LV_GRAD_DIR_NONE)
+    {
         lv_color32_t col32 = lv_color_to_32(dsc->color, dsc->opa);
 
-        if(col32.alpha < 255U) {
+        if (col32.alpha < 255U)
+        {
             nema_set_blend_fill(NEMA_BL_SIMPLE);
         }
-        else {
+        else
+        {
             nema_set_blend_fill(NEMA_BL_SRC);
         }
 
@@ -95,7 +98,7 @@ void lv_draw_nema_gfx_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t 
                            dsc->p[2].x - layer->buf_area.x1, dsc->p[2].y - layer->buf_area.y1, bg_color);
     }
 #if LV_USE_NEMA_VG
-    else {
+else {
 
         nema_vg_path_clear(draw_nema_gfx_unit->path);
         nema_vg_paint_clear(draw_nema_gfx_unit->paint);
@@ -167,7 +170,7 @@ void lv_draw_nema_gfx_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t 
     }
 #endif
 
-    nema_cl_submit(&(draw_nema_gfx_unit->cl));
+nema_cl_submit (&(draw_nema_gfx_unit->cl));
 
 }
 #endif

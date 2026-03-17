@@ -1,4 +1,5 @@
 # EVE2 / EVE3 / EVE4 code library
+
 This is a code library for EVE2/EVE3/EVE4 graphics controller ICs from FTDI/Bridgetek:
 
 http://www.ftdichip.com/EVE.htm  
@@ -73,14 +74,18 @@ The TFTs tested so far:
 
 This is version 5 of this code library and there are a couple of changes from V4.
 
-First of all, support for FT80x is gone. The main reason is that this allowed a nice speed improvement modification that only works with FT81x and beyond.
-Then there is a hard break from FT80x to FT81x with ony 256k of memory in FT80x but 1MB in FT81x. The memory map is different and all the registers are located elsewhere.
-FT810, FT811, FT812, FT813, BT815, BT816, BT817 and BT818 can use the exact same code as long none of the new features of BT81x are used - and there are plenty of modules with these available to choose from
+First of all, support for FT80x is gone. The main reason is that this allowed a nice speed improvement modification that
+only works with FT81x and beyond.
+Then there is a hard break from FT80x to FT81x with ony 256k of memory in FT80x but 1MB in FT81x. The memory map is
+different and all the registers are located elsewhere.
+FT810, FT811, FT812, FT813, BT815, BT816, BT817 and BT818 can use the exact same code as long none of the new features
+of BT81x are used - and there are plenty of modules with these available to choose from
 
-As a side effect all commands are automatically started now. 
+As a side effect all commands are automatically started now.
 
 Second is that there are two sets of display-list building command functions now: EVE_cmd_xxx() and EVE_cmd_xxx_burst().
-The EVE_cmd_xxx_burst() functions are optimized for speed, these are pure data transfer functions and do not even check anymore if burst mode is active.
+The EVE_cmd_xxx_burst() functions are optimized for speed, these are pure data transfer functions and do not even check
+anymore if burst mode is active.
 
 ## Structure
 
@@ -89,7 +94,8 @@ This library currently has nine files that I hope are named to make clear what t
 - EVE.h - this has all defines for FT81x / BT81x itself, so here are options, registers, commands and macros defined
 - EVE_commands.c - this has all the API functions that are to be called from an application
 - EVE_commands.h - this contains the prototypes for the functions in EVE_commands.c
-- EVE_config.h - this has all the parameters for the numerous supported display modules, here is definded which set of parameters is to be used
+- EVE_config.h - this has all the parameters for the numerous supported display modules, here is definded which set of
+  parameters is to be used
 - EVE_target.c - this has non-portable specific code for a number of supported controllers, mostly to support DMA
 - EVE_target.h - this has non-portable pin defines and code as "static inline" functions for all supported controllers
 - EVE_target.cpp - this is for Arduino C++ targets
@@ -97,10 +103,12 @@ This library currently has nine files that I hope are named to make clear what t
 - EVE_cpp_wrapper.h - this is for Arduino C++ targets
 
 Addtionally there are these two:
+
 - EVE_supplemental.c
 - EVE_suppplemental.h
 
 This has the prototype and implementation for extra functions, so far:
+
 - EVE_widget_circle() - widget function to draw a circle
 - EVE_widget_rectangle() - widget function to draw a rectangle
 - EVE_polar_cartesian() - calculate coordinates from an angle and a length
@@ -108,6 +116,7 @@ This has the prototype and implementation for extra functions, so far:
 ## Examples
 
 Generate a basic display list and tell EVE to use it:
+
 ````
 EVE_cmd_dl(CMD_DLSTART); // tells EVE to start a new display-list
 EVE_cmd_dl(DL_CLEAR_COLOR_RGB | WHITE); // sets the background color
@@ -119,9 +128,12 @@ EVE_cmd_dl(CMD_SWAP); // tell EVE to use the new display list
 while (EVE_busy());
 ````
 
-Note, these commands are executed one by one, for each command chip-select is pulled low, a three byte address is send, the data for the command and its parameters is send and then chip-select is pulled high again which also makes EVE execute the command.
+Note, these commands are executed one by one, for each command chip-select is pulled low, a three byte address is send,
+the data for the command and its parameters is send and then chip-select is pulled high again which also makes EVE
+execute the command.
 
 But there is a way to speed things up, we can get away with only sending the address once:
+
 ````
 EVE_start_cmd_burst();
 EVE_cmd_dl_burst(CMD_DLSTART);
@@ -137,21 +149,31 @@ while (EVE_busy());
 
 This does the same as the first example but faster.
 The preceding EVE_start_cmd_burst() either sets chip-select to low and sends out the three byte address.  
-Or if DMA is available for the target you are compiling for with support code in EVE_target.c / EVE_target.cpp and EVE_target.h, it writes the address to EVE_dma_buffer and sets EVE_dma_buffer_index to 1.
+Or if DMA is available for the target you are compiling for with support code in EVE_target.c / EVE_target.cpp and
+EVE_target.h, it writes the address to EVE_dma_buffer and sets EVE_dma_buffer_index to 1.
 
-Note the trailing "_burst" in the following functions, these are special versions of these commands that can only be used within an EVE_start_cmd_burst()/EVE_end_cmd_bust() pair.
+Note the trailing "_burst" in the following functions, these are special versions of these commands that can only be
+used within an EVE_start_cmd_burst()/EVE_end_cmd_bust() pair.
 These functions are optimized to push out data and nothing else.
 
 The final EVE_end_cmd_burst() either pulls back the chip-select to high.  
 Or if we have DMA it calls EVE_start_dma_transfer() to start pushing out the buffer in the background.
 
-As we have 7 commands for EVE in these simple examples, the second one has the address overhead removed from six commands and therefore needs to transfer 18 bytes less over SPI.  
-So even with a small 8-bit controller that does not support DMA this is a usefull optimization for building display lists.
+As we have 7 commands for EVE in these simple examples, the second one has the address overhead removed from six
+commands and therefore needs to transfer 18 bytes less over SPI.  
+So even with a small 8-bit controller that does not support DMA this is a usefull optimization for building display
+lists.
 
-Using DMA has one caveat: we need to limit the transfer to <4k as we are writing to the FIFO of EVEs command co-processor. This is usually not an issue though as we can shorten the display list generation with previously generated snippets that we attach to the current list with CMD_APPEND. And when we use widgets like CMD_BUTTON or CMD_CLOCK the generated display list grows by a larger amount than what we need to put into the command-FIFO so we likely reach the 8k limit of the display-list before we hit the 4k limit of the command-FIFO.
-It is possible to use two or more DMA transfers to the FIFO to build a single display list, either to get around the 4k limit of the FIFO or in order to distribute the workload better of the time necessary between two display renewals.
+Using DMA has one caveat: we need to limit the transfer to <4k as we are writing to the FIFO of EVEs command
+co-processor. This is usually not an issue though as we can shorten the display list generation with previously
+generated snippets that we attach to the current list with CMD_APPEND. And when we use widgets like CMD_BUTTON or
+CMD_CLOCK the generated display list grows by a larger amount than what we need to put into the command-FIFO so we
+likely reach the 8k limit of the display-list before we hit the 4k limit of the command-FIFO.
+It is possible to use two or more DMA transfers to the FIFO to build a single display list, either to get around the 4k
+limit of the FIFO or in order to distribute the workload better of the time necessary between two display renewals.
 
 You could for example do this, spread over three consecutive calls:
+
 ````
 EVE_start_cmd_burst();
 EVE_cmd_dl_burst(CMD_DLSTART);
@@ -179,8 +201,8 @@ Maybe similar like this never compiled pseudo-code:
 
 thread_1ms_update_display()
 {
-    static uint8_t state = 0;
-    static uint8_t count = 0;
+static uint8_t state = 0;
+static uint8_t count = 0;
 
     count++;
 
@@ -206,8 +228,8 @@ thread_1ms_update_display()
                 break;
         }
     }
-}
 
+}
 
 ## Remarks
 
@@ -219,11 +241,14 @@ The platform the code is compiled for is automatically detected thru compiler fl
 The desired TFT is selected by adding a define for it to the build-environment, e.g. -DEVE_EVE3_50G
 There is a list of available options at the start of EVE_config.h sorted by chipset.
 
-The pins used for Chip-Select and Power-Down setup in the EVE_target/EVE_target_XXXXX.h file for your target with defines and these defines can be bypassed with defines in the build-environment.  
+The pins used for Chip-Select and Power-Down setup in the EVE_target/EVE_target_XXXXX.h file for your target with
+defines and these defines can be bypassed with defines in the build-environment.  
 Check the apropriate header file for your desired target.
 
-When compiling for AVR you need to provide the clock it is running at in order to make the _delay_ms() calls used to initialize the TFT work with the intended timing.
-For other plattforms you need to provide a DELAY_MS(ms) function that works at least between 1ms and 56ms and is not performing these delays shorter than requested.
+When compiling for AVR you need to provide the clock it is running at in order to make the _delay_ms() calls used to
+initialize the TFT work with the intended timing.
+For other plattforms you need to provide a DELAY_MS(ms) function that works at least between 1ms and 56ms and is not
+performing these delays shorter than requested.
 The DELAY_MS(ms) is only used during initialization of the FT8xx/BT8xx.
 
 In Addition you need to initialize the pins used for Chip-Select and Power-Down in your hardware correctly to output.
@@ -238,7 +263,8 @@ This is optimized for speed, so the training wheels are off.
 
 ## Post questions here
 
-Originally the project went public in the German mikrocontroller.net forum, the thread contains some insight: https://www.mikrocontroller.net/topic/395608
+Originally the project went public in the German mikrocontroller.net forum, the thread contains some
+insight: https://www.mikrocontroller.net/topic/395608
 
 Feel free to add to the discussion with questions or remarks.
 

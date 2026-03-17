@@ -73,11 +73,12 @@
  *      TYPEDEFS
  **********************/
 
-typedef uint32_t(get_data_size_cb_t)(const void * data);
+typedef uint32_t (get_data_size_cb_t)(const void* data);
 
-typedef struct {
+typedef struct
+{
     lv_cache_t cache;
-    uint8_t * data;
+    uint8_t* data;
     size_t capacity;
 } lv_cache_sc_da_t;
 
@@ -85,38 +86,38 @@ typedef struct {
  *  STATIC PROTOTYPES
  **********************/
 
-static void * alloc_cb(void);
+static void* alloc_cb(void);
 static bool init_cnt_cb(lv_cache_t * cache);
-static void destroy_cb(lv_cache_t * cache, void * user_data);
+static void destroy_cb(lv_cache_t* cache, void* user_data);
 
-static lv_cache_entry_t * get_cb(lv_cache_t * cache, const void * key,
-                                 void * user_data);
-static lv_cache_entry_t * add_cb(lv_cache_t * cache, const void * key,
-                                 void * user_data);
-static void remove_cb(lv_cache_t * cache, lv_cache_entry_t * entry,
-                      void * user_data);
-static void drop_cb(lv_cache_t * cache, const void * key, void * user_data);
-static void drop_all_cb(lv_cache_t * cache, void * user_data);
-static lv_cache_entry_t * get_victim_cb(lv_cache_t * cache, void * user_data);
-static lv_cache_reserve_cond_res_t reserve_cond_cb(lv_cache_t * cache,
-                                                   const void * key,
+static lv_cache_entry_t* get_cb(lv_cache_t* cache, const void* key,
+                                void* user_data);
+static lv_cache_entry_t* add_cb(lv_cache_t* cache, const void* key,
+                                void* user_data);
+static void remove_cb(lv_cache_t* cache, lv_cache_entry_t* entry,
+                      void* user_data);
+static void drop_cb(lv_cache_t* cache, const void* key, void* user_data);
+static void drop_all_cb(lv_cache_t* cache, void* user_data);
+static lv_cache_entry_t* get_victim_cb(lv_cache_t* cache, void* user_data);
+static lv_cache_reserve_cond_res_t reserve_cond_cb(lv_cache_t* cache,
+                                                   const void* key,
                                                    size_t reserved_size,
-                                                   void * user_data);
+                                                   void* user_data);
 
-static void * alloc_new_entry(lv_cache_sc_da_t * da, const void * key,
-                              void * user_data);
+static void* alloc_new_entry(lv_cache_sc_da_t* da, const void* key,
+                             void* user_data);
 
-static lv_iter_t * cache_iter_create_cb(lv_cache_t * cache);
-static lv_result_t cache_iter_next_cb(void * instance, void * context,
-                                      void * elem);
+static lv_iter_t* cache_iter_create_cb(lv_cache_t * cache);
+static lv_result_t cache_iter_next_cb(void* instance, void* context,
+                                      void* elem);
 
-static lv_cache_entry_t * get_possible_victim(lv_cache_sc_da_t * da,
-                                              size_t index);
+static lv_cache_entry_t* get_possible_victim(lv_cache_sc_da_t* da,
+                                             size_t index);
 
-static inline void set_second_chance(lv_cache_entry_t * entry, bool value);
+static inline void set_second_chance(lv_cache_entry_t* entry, bool value);
 static inline bool has_second_chance(lv_cache_entry_t * entry);
-static inline void get_entry(lv_cache_sc_da_t * da, size_t index,
-                             void ** cache_data, lv_cache_entry_t ** cache_entry);
+static inline void get_entry(lv_cache_sc_da_t* da, size_t index,
+                             void** cache_data, lv_cache_entry_t** cache_entry);
 
 /**********************
  *  GLOBAL VARIABLES
@@ -154,44 +155,50 @@ const lv_cache_class_t lv_cache_class_sc_da = {
  *   STATIC FUNCTIONS
  **********************/
 
-static inline void get_entry(lv_cache_sc_da_t * da, size_t index,
-                             void ** cache_data, lv_cache_entry_t ** cache_entry)
+static inline void get_entry(lv_cache_sc_da_t* da, size_t index,
+                             void** cache_data, lv_cache_entry_t** cache_entry)
 {
     const size_t node_size = lv_cache_entry_get_size(da->cache.node_size);
     *cache_data = da->data + (index * node_size);
     *cache_entry =
         lv_cache_entry_get_entry(*cache_data, da->cache.node_size);
 }
-static inline void set_second_chance(lv_cache_entry_t * entry, bool value)
+
+static inline void set_second_chance(lv_cache_entry_t* entry, bool value)
 {
-    if(value) {
+    if (value)
+    {
         lv_cache_entry_set_flag(entry, LV_CACHE_ENTRY_FLAG_CLASS_CUSTOM);
     }
-    else {
+    else
+    {
         lv_cache_entry_remove_flag(entry, LV_CACHE_ENTRY_FLAG_CLASS_CUSTOM);
     }
 }
 
-static inline bool has_second_chance(lv_cache_entry_t * entry)
+static inline bool has_second_chance(lv_cache_entry_t* entry)
 {
     return lv_cache_entry_has_flag(entry, LV_CACHE_ENTRY_FLAG_CLASS_CUSTOM);
 }
 
-static void * alloc_new_entry(lv_cache_sc_da_t * da, const void * key,
-                              void * user_data)
+static void* alloc_new_entry(lv_cache_sc_da_t* da, const void* key,
+                             void* user_data)
 {
     LV_UNUSED(user_data);
 
     LV_ASSERT_NULL(da);
     LV_ASSERT_NULL(key);
 
-    if(da == NULL || key == NULL) {
+    if (da == NULL || key == NULL)
+    {
         return NULL;
     }
     const size_t node_size = lv_cache_entry_get_size(da->cache.node_size);
 
-    if(da->capacity == da->cache.size) {
-        if(da->capacity == da->cache.max_size) {
+    if (da->capacity == da->cache.size)
+    {
+        if (da->capacity == da->cache.max_size)
+        {
             LV_LOG_ERROR(
                 "Reached maximum size of cache. Unable to allocate a new entry");
             return NULL;
@@ -201,10 +208,11 @@ static void * alloc_new_entry(lv_cache_sc_da_t * da, const void * key,
             LV_MIN(da->capacity == 0 ? 1 : da->capacity * 2,
                    da->cache.max_size);
 
-        uint8_t * new_data = (uint8_t *)lv_realloc(
-                                 da->data, new_capacity * node_size);
+        uint8_t* new_data = (uint8_t*)lv_realloc(
+            da->data, new_capacity * node_size);
 
-        if(!new_data) {
+        if (!new_data)
+        {
             LV_LOG_ERROR("Failed to allocate new data for cache");
             return NULL;
         }
@@ -212,8 +220,8 @@ static void * alloc_new_entry(lv_cache_sc_da_t * da, const void * key,
         da->data = new_data;
         da->capacity = new_capacity;
     }
-    void * last_da_entry;
-    lv_cache_entry_t * last_cache_entry;
+    void* last_da_entry;
+    lv_cache_entry_t* last_cache_entry;
 
     get_entry(da, da->cache.size, &last_da_entry, &last_cache_entry);
 
@@ -226,28 +234,29 @@ static void * alloc_new_entry(lv_cache_sc_da_t * da, const void * key,
     return last_cache_entry;
 }
 
-static void * alloc_cb(void)
+static void* alloc_cb(void)
 {
     return lv_calloc(1, sizeof(lv_cache_sc_da_t));
 }
 
-static bool init_cnt_cb(lv_cache_t * cache)
+static bool init_cnt_cb(lv_cache_t* cache)
 {
     LV_ASSERT_NULL(cache);
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
     return da->cache.node_size > 0 && da->cache.ops.compare_cb &&
-           da->cache.ops.free_cb;
+        da->cache.ops.free_cb;
 }
 
-static void destroy_cb(lv_cache_t * cache, void * user_data)
+static void destroy_cb(lv_cache_t* cache, void* user_data)
 {
     LV_UNUSED(user_data);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
 
-    if(da == NULL) {
+    if (da == NULL)
+    {
         return;
     }
 
@@ -258,28 +267,31 @@ static void destroy_cb(lv_cache_t * cache, void * user_data)
     da->capacity = 0;
 }
 
-static lv_cache_entry_t * get_cb(lv_cache_t * cache, const void * key,
-                                 void * user_data)
+static lv_cache_entry_t* get_cb(lv_cache_t* cache, const void* key,
+                                void* user_data)
 {
     LV_UNUSED(user_data);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
     LV_ASSERT_NULL(key);
 
-    if(da == NULL || key == NULL) {
+    if (da == NULL || key == NULL)
+    {
         return NULL;
     }
 
     /* Linear search */
-    lv_cache_entry_t * cache_entry = NULL;
-    for(size_t i = 0; i < da->cache.size; ++i) {
-        void * curr_da_entry;
-        lv_cache_entry_t * curr_cache_entry;
+    lv_cache_entry_t* cache_entry = NULL;
+    for (size_t i = 0; i < da->cache.size; ++i)
+    {
+        void* curr_da_entry;
+        lv_cache_entry_t* curr_cache_entry;
         get_entry(da, i, &curr_da_entry, &curr_cache_entry);
 
-        if(da->cache.ops.compare_cb(curr_da_entry, key) == 0) {
+        if (da->cache.ops.compare_cb(curr_da_entry, key) == 0)
+        {
             cache_entry = curr_cache_entry;
             /*When an entry is used, we set it's second chance to true again*/
             set_second_chance(cache_entry, true);
@@ -289,22 +301,24 @@ static lv_cache_entry_t * get_cb(lv_cache_t * cache, const void * key,
     return cache_entry;
 }
 
-static lv_cache_entry_t * add_cb(lv_cache_t * cache, const void * key,
-                                 void * user_data)
+static lv_cache_entry_t* add_cb(lv_cache_t* cache, const void* key,
+                                void* user_data)
 {
     LV_UNUSED(user_data);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
     LV_ASSERT_NULL(key);
 
-    if(da == NULL || key == NULL) {
+    if (da == NULL || key == NULL)
+    {
         return NULL;
     }
 
-    lv_cache_entry_t * entry = alloc_new_entry(da, key, user_data);
-    if(entry == NULL) {
+    lv_cache_entry_t* entry = alloc_new_entry(da, key, user_data);
+    if (entry == NULL)
+    {
         return NULL;
     }
 
@@ -313,79 +327,87 @@ static lv_cache_entry_t * add_cb(lv_cache_t * cache, const void * key,
     return entry;
 }
 
-static void remove_cb(lv_cache_t * cache, lv_cache_entry_t * entry,
-                      void * user_data)
+static void remove_cb(lv_cache_t* cache, lv_cache_entry_t* entry,
+                      void* user_data)
 {
     LV_UNUSED(user_data);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
     LV_ASSERT_NULL(entry);
 
-    if(da == NULL || entry == NULL) {
+    if (da == NULL || entry == NULL)
+    {
         return;
     }
 
     const size_t entry_size = lv_cache_entry_get_size(da->cache.node_size);
-    uint8_t * da_entry_to_remove = (uint8_t *)lv_cache_entry_get_data(entry);
+    uint8_t* da_entry_to_remove = (uint8_t*)lv_cache_entry_get_data(entry);
 
-    void * last_da_entry;
-    lv_cache_entry_t * last_cache_entry;
+    void* last_da_entry;
+    lv_cache_entry_t* last_cache_entry;
     get_entry(da, cache->size - 1, &last_da_entry, &last_cache_entry);
 
-    if(da_entry_to_remove != last_da_entry) {
+    if (da_entry_to_remove != last_da_entry)
+    {
         lv_memcpy(da_entry_to_remove, last_da_entry, entry_size);
     }
     cache->size -= 1;
 }
 
-static void drop_cb(lv_cache_t * cache, const void * key, void * user_data)
+static void drop_cb(lv_cache_t* cache, const void* key, void* user_data)
 {
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
     LV_ASSERT_NULL(key);
 
-    if(da == NULL || key == NULL) {
+    if (da == NULL || key == NULL)
+    {
         return;
     }
-    lv_cache_entry_t * entry = cache->clz->get_cb(cache, key, user_data);
-    if(!entry) {
+    lv_cache_entry_t* entry = cache->clz->get_cb(cache, key, user_data);
+    if (!entry)
+    {
         return;
     }
 
     const size_t entry_size = lv_cache_entry_get_size(da->cache.node_size);
-    uint8_t * da_entry_to_remove = (uint8_t *)lv_cache_entry_get_data(entry);
+    uint8_t* da_entry_to_remove = (uint8_t*)lv_cache_entry_get_data(entry);
 
-    void * last_da_entry;
-    lv_cache_entry_t * last_cache_entry;
+    void* last_da_entry;
+    lv_cache_entry_t* last_cache_entry;
     get_entry(da, cache->size - 1, &last_da_entry, &last_cache_entry);
 
-    if(da_entry_to_remove != last_da_entry) {
+    if (da_entry_to_remove != last_da_entry)
+    {
         lv_memcpy(da_entry_to_remove, last_da_entry, entry_size);
     }
     cache->ops.free_cb(da_entry_to_remove, user_data);
     cache->size -= 1;
 }
 
-static void drop_all_cb(lv_cache_t * cache, void * user_data)
+static void drop_all_cb(lv_cache_t* cache, void* user_data)
 {
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
 
-    if(da == NULL) {
+    if (da == NULL)
+    {
         return;
     }
     uint32_t used_cnt = 0;
-    for(size_t i = 0; i < cache->size; ++i) {
-        void * da_entry;
-        lv_cache_entry_t * cache_entry;
+    for (size_t i = 0; i < cache->size; ++i)
+    {
+        void* da_entry;
+        lv_cache_entry_t* cache_entry;
         get_entry(da, i, &da_entry, &cache_entry);
         const int32_t refs = lv_cache_entry_get_ref(cache_entry);
 
-        if(refs > 0) {
+        if (refs > 0)
+        {
             LV_LOG_WARN(
                 "entry (%zu) is still referenced (%" LV_PRId32
                 ")",
@@ -395,7 +417,8 @@ static void drop_all_cb(lv_cache_t * cache, void * user_data)
         }
         da->cache.ops.free_cb(da_entry, user_data);
     }
-    if(used_cnt > 0) {
+    if (used_cnt > 0)
+    {
         LV_LOG_WARN("%" LV_PRId32 " entries are still referenced",
                     used_cnt);
     }
@@ -403,21 +426,23 @@ static void drop_all_cb(lv_cache_t * cache, void * user_data)
     cache->size = 0;
 }
 
-static lv_cache_entry_t * get_possible_victim(lv_cache_sc_da_t * da, size_t index)
+static lv_cache_entry_t* get_possible_victim(lv_cache_sc_da_t* da, size_t index)
 {
     LV_ASSERT(index < da->cache.size);
 
-    void * da_entry;
-    lv_cache_entry_t * cache_entry;
+    void* da_entry;
+    lv_cache_entry_t* cache_entry;
     get_entry(da, index, &da_entry, &cache_entry);
 
     const uint8_t sec_chance = has_second_chance(cache_entry);
     const int32_t refs = lv_cache_entry_get_ref(cache_entry);
 
-    if(sec_chance == 0 && refs == 0) {
+    if (sec_chance == 0 && refs == 0)
+    {
         return cache_entry;
     }
-    if(sec_chance == 0 && refs > 0) {
+    if (sec_chance == 0 && refs > 0)
+    {
         LV_LOG_INFO(
             "Entry %zu should be evicted but it's still referenced %" LV_PRId32
             " times\n",
@@ -430,11 +455,11 @@ static lv_cache_entry_t * get_possible_victim(lv_cache_sc_da_t * da, size_t inde
     return NULL;
 }
 
-static lv_cache_entry_t * get_victim_cb(lv_cache_t * cache, void * user_data)
+static lv_cache_entry_t* get_victim_cb(lv_cache_t* cache, void* user_data)
 {
     LV_UNUSED(user_data);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
     /*
@@ -453,10 +478,13 @@ static lv_cache_entry_t * get_victim_cb(lv_cache_t * cache, void * user_data)
          * This ensures we give all entries a proper second chance while respecting
          * active references that prevent immediate eviction.
          */
-    for(size_t i = 0; i < 2; ++i) {
-        for(size_t j = 0; j < da->cache.size; ++j) {
-            lv_cache_entry_t * victim = get_possible_victim(da, j);
-            if(victim) {
+    for (size_t i = 0; i < 2; ++i)
+    {
+        for (size_t j = 0; j < da->cache.size; ++j)
+        {
+            lv_cache_entry_t* victim = get_possible_victim(da, j);
+            if (victim)
+            {
                 return victim;
             }
         }
@@ -464,48 +492,52 @@ static lv_cache_entry_t * get_victim_cb(lv_cache_t * cache, void * user_data)
     return NULL;
 }
 
-static lv_cache_reserve_cond_res_t reserve_cond_cb(lv_cache_t * cache,
-                                                   const void * key,
+static lv_cache_reserve_cond_res_t reserve_cond_cb(lv_cache_t* cache,
+                                                   const void* key,
                                                    size_t reserved_size,
-                                                   void * user_data)
+                                                   void* user_data)
 {
     LV_UNUSED(user_data);
     LV_UNUSED(key);
 
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)cache;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)cache;
 
     LV_ASSERT_NULL(da);
 
-    if(da == NULL) {
+    if (da == NULL)
+    {
         return LV_CACHE_RESERVE_COND_ERROR;
     }
 
-    return cache->size + reserved_size + 1 > da->cache.max_size ?
-           LV_CACHE_RESERVE_COND_NEED_VICTIM :
-           LV_CACHE_RESERVE_COND_OK;
+    return cache->size + reserved_size + 1 > da->cache.max_size
+               ? LV_CACHE_RESERVE_COND_NEED_VICTIM
+               : LV_CACHE_RESERVE_COND_OK;
 }
 
-static lv_iter_t * cache_iter_create_cb(lv_cache_t * cache)
+static lv_iter_t* cache_iter_create_cb(lv_cache_t* cache)
 {
     return lv_iter_create(cache, lv_cache_entry_get_size(cache->node_size),
                           0, cache_iter_next_cb);
 }
 
-static lv_result_t cache_iter_next_cb(void * instance, void * context, void * elem)
+static lv_result_t cache_iter_next_cb(void* instance, void* context, void* elem)
 {
-    lv_cache_sc_da_t * da = (lv_cache_sc_da_t *)instance;
-    uint8_t ** da_entry = context;
+    lv_cache_sc_da_t* da = (lv_cache_sc_da_t*)instance;
+    uint8_t** da_entry = context;
     LV_ASSERT_NULL(da_entry);
     const size_t entry_size = lv_cache_entry_get_size(da->cache.node_size);
 
-    if(*da_entry == NULL) {
+    if (*da_entry == NULL)
+    {
         *da_entry = da->data;
     }
-    else {
+    else
+    {
         *da_entry += entry_size;
     }
 
-    if(*da_entry == NULL) {
+    if (*da_entry == NULL)
+    {
         return LV_RESULT_INVALID;
     }
 

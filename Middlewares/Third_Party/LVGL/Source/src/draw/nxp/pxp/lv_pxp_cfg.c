@@ -35,7 +35,7 @@
  *  STATIC VARIABLES
  **********************/
 
-static pxp_cfg_t * _pxp_cfg;
+static pxp_cfg_t* _pxp_cfg;
 
 /**********************
  *      MACROS

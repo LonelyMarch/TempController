@@ -50,7 +50,8 @@ extern "C" {
 /**
  * NXP PXP device configuration.
  */
-typedef struct {
+typedef struct
+{
     /** Callback for PXP interrupt initialization*/
     void (*pxp_interrupt_init)(void);
 

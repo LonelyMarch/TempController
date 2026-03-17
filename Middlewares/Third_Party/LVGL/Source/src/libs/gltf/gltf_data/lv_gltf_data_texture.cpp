@@ -37,13 +37,13 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_gltf_data_delete_textures(lv_gltf_model_t * data)
+void lv_gltf_data_delete_textures(lv_gltf_model_t* data)
 {
     glDeleteTextures(data->skin_tex.size(), data->skin_tex.data());
     data->skin_tex.clear();
 }
 
-GLuint lv_gltf_data_create_texture(lv_gltf_model_t * data)
+GLuint lv_gltf_data_create_texture(lv_gltf_model_t* data)
 {
     GLuint texture;
     GL_CALL(glGenTextures(1, &texture));
@@ -51,12 +51,14 @@ GLuint lv_gltf_data_create_texture(lv_gltf_model_t * data)
     return texture;
 }
 
-void lv_gltf_data_rgb_to_bgr(uint8_t * pixels, size_t byte_total_count, bool has_alpha)
+void lv_gltf_data_rgb_to_bgr(uint8_t* pixels, size_t byte_total_count, bool has_alpha)
 {
     size_t bytes_per_pixel = has_alpha ? 4 : 3;
     size_t pixel_count = (byte_total_count / bytes_per_pixel);
-    if(bytes_per_pixel == 4) {
-        for(size_t p = 0; p < pixel_count; p++) {
+    if (bytes_per_pixel == 4)
+    {
+        for (size_t p = 0; p < pixel_count; p++)
+        {
             size_t index = p << 2;
             uint8_t r = pixels[index + 0];
             uint8_t g = pixels[index + 1];
@@ -68,8 +70,10 @@ void lv_gltf_data_rgb_to_bgr(uint8_t * pixels, size_t byte_total_count, bool has
             pixels[index + 3] = a;
         }
     }
-    else {
-        for(size_t p = 0; p < pixel_count; p++) {
+    else
+    {
+        for (size_t p = 0; p < pixel_count; p++)
+        {
             size_t index = p * 3;
             uint8_t r = pixels[index + 0];
             uint8_t g = pixels[index + 1];

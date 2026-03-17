@@ -36,7 +36,7 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_3d_dsc_init(lv_draw_3d_dsc_t * dsc)
+void lv_draw_3d_dsc_init(lv_draw_3d_dsc_t* dsc)
 {
     lv_memzero(dsc, sizeof(lv_draw_3d_dsc_t));
     dsc->base.dsc_size = sizeof(lv_draw_3d_dsc_t);
@@ -46,16 +46,16 @@ void lv_draw_3d_dsc_init(lv_draw_3d_dsc_t * dsc)
     dsc->opa = LV_OPA_COVER;
 }
 
-lv_draw_3d_dsc_t * lv_draw_task_get_3d_dsc(lv_draw_task_t * task)
+lv_draw_3d_dsc_t* lv_draw_task_get_3d_dsc(lv_draw_task_t* task)
 {
-    return task->type == LV_DRAW_TASK_TYPE_3D ? (lv_draw_3d_dsc_t *)task->draw_dsc : NULL;
+    return task->type == LV_DRAW_TASK_TYPE_3D ? (lv_draw_3d_dsc_t*)task->draw_dsc : NULL;
 }
 
-void lv_draw_3d(lv_layer_t * layer, const lv_draw_3d_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_3d(lv_layer_t* layer, const lv_draw_3d_dsc_t* dsc, const lv_area_t* coords)
 {
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_draw_task_t * t = lv_draw_add_task(layer, coords, LV_DRAW_TASK_TYPE_3D);
+    lv_draw_task_t* t = lv_draw_add_task(layer, coords, LV_DRAW_TASK_TYPE_3D);
 
     lv_memcpy(t->draw_dsc, dsc, sizeof(*dsc));
 

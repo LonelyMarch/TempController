@@ -27,7 +27,7 @@ extern "C" {
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_WIDTH);
     return (int32_t)v.num;
@@ -40,7 +40,7 @@ static inline int32_t lv_obj_get_style_width(const lv_obj_t * obj, lv_part_t par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_min_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_min_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_WIDTH);
     return (int32_t)v.num;
@@ -53,7 +53,7 @@ static inline int32_t lv_obj_get_style_min_width(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_max_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_max_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_WIDTH);
     return (int32_t)v.num;
@@ -66,7 +66,7 @@ static inline int32_t lv_obj_get_style_max_width(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_height(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_height(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_HEIGHT);
     return (int32_t)v.num;
@@ -79,7 +79,7 @@ static inline int32_t lv_obj_get_style_height(const lv_obj_t * obj, lv_part_t pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_min_height(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_min_height(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_HEIGHT);
     return (int32_t)v.num;
@@ -92,7 +92,7 @@ static inline int32_t lv_obj_get_style_min_height(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_max_height(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_max_height(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_HEIGHT);
     return (int32_t)v.num;
@@ -105,7 +105,7 @@ static inline int32_t lv_obj_get_style_max_height(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_length(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_length(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LENGTH);
     return (int32_t)v.num;
@@ -119,7 +119,7 @@ static inline int32_t lv_obj_get_style_length(const lv_obj_t * obj, lv_part_t pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_X);
     return (int32_t)v.num;
@@ -133,7 +133,7 @@ static inline int32_t lv_obj_get_style_x(const lv_obj_t * obj, lv_part_t part)
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_Y);
     return (int32_t)v.num;
@@ -150,7 +150,7 @@ static inline int32_t lv_obj_get_style_y(const lv_obj_t * obj, lv_part_t part)
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_align_t lv_obj_get_style_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_align_t lv_obj_get_style_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ALIGN);
     return (lv_align_t)v.num;
@@ -163,7 +163,7 @@ static inline lv_align_t lv_obj_get_style_align(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_WIDTH);
     return (int32_t)v.num;
@@ -176,7 +176,7 @@ static inline int32_t lv_obj_get_style_transform_width(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_height(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_height(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_HEIGHT);
     return (int32_t)v.num;
@@ -190,7 +190,7 @@ static inline int32_t lv_obj_get_style_transform_height(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_translate_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_translate_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_X);
     return (int32_t)v.num;
@@ -204,7 +204,7 @@ static inline int32_t lv_obj_get_style_translate_x(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_translate_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_translate_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_Y);
     return (int32_t)v.num;
@@ -217,7 +217,7 @@ static inline int32_t lv_obj_get_style_translate_y(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_translate_radial(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_translate_radial(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_RADIAL);
     return (int32_t)v.num;
@@ -230,7 +230,7 @@ static inline int32_t lv_obj_get_style_translate_radial(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_scale_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_scale_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SCALE_X);
     return (int32_t)v.num;
@@ -243,7 +243,7 @@ static inline int32_t lv_obj_get_style_transform_scale_x(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_scale_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_scale_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SCALE_Y);
     return (int32_t)v.num;
@@ -255,7 +255,7 @@ static inline int32_t lv_obj_get_style_transform_scale_y(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_rotation(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_rotation(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_ROTATION);
     return (int32_t)v.num;
@@ -267,7 +267,7 @@ static inline int32_t lv_obj_get_style_transform_rotation(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_pivot_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_pivot_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_PIVOT_X);
     return (int32_t)v.num;
@@ -279,7 +279,7 @@ static inline int32_t lv_obj_get_style_transform_pivot_x(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_pivot_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_pivot_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_PIVOT_Y);
     return (int32_t)v.num;
@@ -292,7 +292,7 @@ static inline int32_t lv_obj_get_style_transform_pivot_y(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_skew_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_skew_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SKEW_X);
     return (int32_t)v.num;
@@ -305,7 +305,7 @@ static inline int32_t lv_obj_get_style_transform_skew_x(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_transform_skew_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_transform_skew_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SKEW_Y);
     return (int32_t)v.num;
@@ -317,7 +317,7 @@ static inline int32_t lv_obj_get_style_transform_skew_y(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_top(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_top(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_TOP);
     return (int32_t)v.num;
@@ -329,7 +329,7 @@ static inline int32_t lv_obj_get_style_pad_top(const lv_obj_t * obj, lv_part_t p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_bottom(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_bottom(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_BOTTOM);
     return (int32_t)v.num;
@@ -341,7 +341,7 @@ static inline int32_t lv_obj_get_style_pad_bottom(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_left(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_left(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_LEFT);
     return (int32_t)v.num;
@@ -353,7 +353,7 @@ static inline int32_t lv_obj_get_style_pad_left(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_right(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_right(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_RIGHT);
     return (int32_t)v.num;
@@ -365,7 +365,7 @@ static inline int32_t lv_obj_get_style_pad_right(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_row(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_row(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_ROW);
     return (int32_t)v.num;
@@ -377,7 +377,7 @@ static inline int32_t lv_obj_get_style_pad_row(const lv_obj_t * obj, lv_part_t p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_column(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_column(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_COLUMN);
     return (int32_t)v.num;
@@ -389,7 +389,7 @@ static inline int32_t lv_obj_get_style_pad_column(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_pad_radial(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_pad_radial(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_RADIAL);
     return (int32_t)v.num;
@@ -401,7 +401,7 @@ static inline int32_t lv_obj_get_style_pad_radial(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_margin_top(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_margin_top(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_TOP);
     return (int32_t)v.num;
@@ -413,7 +413,7 @@ static inline int32_t lv_obj_get_style_margin_top(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_margin_bottom(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_margin_bottom(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_BOTTOM);
     return (int32_t)v.num;
@@ -425,7 +425,7 @@ static inline int32_t lv_obj_get_style_margin_bottom(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_margin_left(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_margin_left(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_LEFT);
     return (int32_t)v.num;
@@ -437,7 +437,7 @@ static inline int32_t lv_obj_get_style_margin_left(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_margin_right(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_margin_right(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_RIGHT);
     return (int32_t)v.num;
@@ -449,7 +449,7 @@ static inline int32_t lv_obj_get_style_margin_right(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR);
     return v.color;
@@ -461,9 +461,10 @@ static inline lv_color_t lv_obj_get_style_bg_color(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR));
+    lv_style_value_t v =
+        lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR));
     return v.color;
 }
 
@@ -475,7 +476,7 @@ static inline lv_color_t lv_obj_get_style_bg_color_filtered(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_bg_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_bg_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_OPA);
     return (lv_opa_t)v.num;
@@ -487,7 +488,7 @@ static inline lv_opa_t lv_obj_get_style_bg_opa(const lv_obj_t * obj, lv_part_t p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_grad_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_grad_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR);
     return v.color;
@@ -499,9 +500,10 @@ static inline lv_color_t lv_obj_get_style_bg_grad_color(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_grad_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_grad_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR));
     return v.color;
 }
 
@@ -512,7 +514,7 @@ static inline lv_color_t lv_obj_get_style_bg_grad_color_filtered(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_grad_dir_t lv_obj_get_style_bg_grad_dir(const lv_obj_t * obj, lv_part_t part)
+static inline lv_grad_dir_t lv_obj_get_style_bg_grad_dir(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_DIR);
     return (lv_grad_dir_t)v.num;
@@ -525,7 +527,7 @@ static inline lv_grad_dir_t lv_obj_get_style_bg_grad_dir(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_bg_main_stop(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_bg_main_stop(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_MAIN_STOP);
     return (int32_t)v.num;
@@ -538,7 +540,7 @@ static inline int32_t lv_obj_get_style_bg_main_stop(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_bg_grad_stop(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_bg_grad_stop(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_STOP);
     return (int32_t)v.num;
@@ -550,7 +552,7 @@ static inline int32_t lv_obj_get_style_bg_grad_stop(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_bg_main_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_bg_main_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_MAIN_OPA);
     return (lv_opa_t)v.num;
@@ -562,7 +564,7 @@ static inline lv_opa_t lv_obj_get_style_bg_main_opa(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_bg_grad_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_bg_grad_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_OPA);
     return (lv_opa_t)v.num;
@@ -577,10 +579,10 @@ static inline lv_opa_t lv_obj_get_style_bg_grad_opa(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_grad_dsc_t * lv_obj_get_style_bg_grad(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_grad_dsc_t* lv_obj_get_style_bg_grad(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD);
-    return (const lv_grad_dsc_t *)v.ptr;
+    return (const lv_grad_dsc_t*)v.ptr;
 }
 
 /**
@@ -590,10 +592,10 @@ static inline const lv_grad_dsc_t * lv_obj_get_style_bg_grad(const lv_obj_t * ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const void * lv_obj_get_style_bg_image_src(const lv_obj_t * obj, lv_part_t part)
+static inline const void* lv_obj_get_style_bg_image_src(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_SRC);
-    return (const void *)v.ptr;
+    return (const void*)v.ptr;
 }
 
 /**
@@ -604,7 +606,7 @@ static inline const void * lv_obj_get_style_bg_image_src(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_bg_image_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_bg_image_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_OPA);
     return (lv_opa_t)v.num;
@@ -616,7 +618,7 @@ static inline lv_opa_t lv_obj_get_style_bg_image_opa(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_image_recolor(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_image_recolor(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR);
     return v.color;
@@ -628,9 +630,10 @@ static inline lv_color_t lv_obj_get_style_bg_image_recolor(const lv_obj_t * obj,
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_bg_image_recolor_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_bg_image_recolor_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR));
     return v.color;
 }
 
@@ -643,7 +646,7 @@ static inline lv_color_t lv_obj_get_style_bg_image_recolor_filtered(const lv_obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_bg_image_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_bg_image_recolor_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR_OPA);
     return (lv_opa_t)v.num;
@@ -655,7 +658,7 @@ static inline lv_opa_t lv_obj_get_style_bg_image_recolor_opa(const lv_obj_t * ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_bg_image_tiled(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_bg_image_tiled(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_TILED);
     return (bool)v.num;
@@ -667,7 +670,7 @@ static inline bool lv_obj_get_style_bg_image_tiled(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_border_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_border_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR);
     return v.color;
@@ -679,9 +682,10 @@ static inline lv_color_t lv_obj_get_style_border_color(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_border_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_border_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR));
     return v.color;
 }
 
@@ -693,7 +697,7 @@ static inline lv_color_t lv_obj_get_style_border_color_filtered(const lv_obj_t *
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_border_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_border_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_OPA);
     return (lv_opa_t)v.num;
@@ -705,7 +709,7 @@ static inline lv_opa_t lv_obj_get_style_border_opa(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_border_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_border_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_WIDTH);
     return (int32_t)v.num;
@@ -719,7 +723,7 @@ static inline int32_t lv_obj_get_style_border_width(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_border_side_t lv_obj_get_style_border_side(const lv_obj_t * obj, lv_part_t part)
+static inline lv_border_side_t lv_obj_get_style_border_side(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_SIDE);
     return (lv_border_side_t)v.num;
@@ -732,7 +736,7 @@ static inline lv_border_side_t lv_obj_get_style_border_side(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_border_post(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_border_post(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_POST);
     return (bool)v.num;
@@ -744,7 +748,7 @@ static inline bool lv_obj_get_style_border_post(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_outline_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_outline_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_WIDTH);
     return (int32_t)v.num;
@@ -756,7 +760,7 @@ static inline int32_t lv_obj_get_style_outline_width(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_outline_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_outline_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR);
     return v.color;
@@ -768,9 +772,10 @@ static inline lv_color_t lv_obj_get_style_outline_color(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_outline_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_outline_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR));
     return v.color;
 }
 
@@ -782,7 +787,7 @@ static inline lv_color_t lv_obj_get_style_outline_color_filtered(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_outline_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_outline_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_OPA);
     return (lv_opa_t)v.num;
@@ -794,7 +799,7 @@ static inline lv_opa_t lv_obj_get_style_outline_opa(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_outline_pad(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_outline_pad(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_PAD);
     return (int32_t)v.num;
@@ -806,7 +811,7 @@ static inline int32_t lv_obj_get_style_outline_pad(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_shadow_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_shadow_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_WIDTH);
     return (int32_t)v.num;
@@ -818,7 +823,7 @@ static inline int32_t lv_obj_get_style_shadow_width(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_shadow_offset_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_shadow_offset_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFFSET_X);
     return (int32_t)v.num;
@@ -830,7 +835,7 @@ static inline int32_t lv_obj_get_style_shadow_offset_x(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_shadow_offset_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_shadow_offset_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFFSET_Y);
     return (int32_t)v.num;
@@ -843,7 +848,7 @@ static inline int32_t lv_obj_get_style_shadow_offset_y(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_shadow_spread(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_shadow_spread(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_SPREAD);
     return (int32_t)v.num;
@@ -855,7 +860,7 @@ static inline int32_t lv_obj_get_style_shadow_spread(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_shadow_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_shadow_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR);
     return v.color;
@@ -867,9 +872,10 @@ static inline lv_color_t lv_obj_get_style_shadow_color(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_shadow_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_shadow_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR));
     return v.color;
 }
 
@@ -881,7 +887,7 @@ static inline lv_color_t lv_obj_get_style_shadow_color_filtered(const lv_obj_t *
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_shadow_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_shadow_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OPA);
     return (lv_opa_t)v.num;
@@ -895,7 +901,7 @@ static inline lv_opa_t lv_obj_get_style_shadow_opa(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_image_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_image_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_OPA);
     return (lv_opa_t)v.num;
@@ -907,7 +913,7 @@ static inline lv_opa_t lv_obj_get_style_image_opa(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_image_recolor(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_image_recolor(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR);
     return v.color;
@@ -919,9 +925,10 @@ static inline lv_color_t lv_obj_get_style_image_recolor(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_image_recolor_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_image_recolor_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR));
     return v.color;
 }
 
@@ -933,7 +940,7 @@ static inline lv_color_t lv_obj_get_style_image_recolor_filtered(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_image_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_image_recolor_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR_OPA);
     return (lv_opa_t)v.num;
@@ -947,10 +954,10 @@ static inline lv_opa_t lv_obj_get_style_image_recolor_opa(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_image_colorkey_t * lv_obj_get_style_image_colorkey(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_image_colorkey_t* lv_obj_get_style_image_colorkey(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_COLORKEY);
-    return (const lv_image_colorkey_t *)v.ptr;
+    return (const lv_image_colorkey_t*)v.ptr;
 }
 
 /**
@@ -959,7 +966,7 @@ static inline const lv_image_colorkey_t * lv_obj_get_style_image_colorkey(const 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_line_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_line_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_WIDTH);
     return (int32_t)v.num;
@@ -971,7 +978,7 @@ static inline int32_t lv_obj_get_style_line_width(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_line_dash_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_line_dash_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_WIDTH);
     return (int32_t)v.num;
@@ -984,7 +991,7 @@ static inline int32_t lv_obj_get_style_line_dash_width(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_line_dash_gap(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_line_dash_gap(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_GAP);
     return (int32_t)v.num;
@@ -996,7 +1003,7 @@ static inline int32_t lv_obj_get_style_line_dash_gap(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_line_rounded(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_line_rounded(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_ROUNDED);
     return (bool)v.num;
@@ -1008,7 +1015,7 @@ static inline bool lv_obj_get_style_line_rounded(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_line_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_line_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR);
     return v.color;
@@ -1020,9 +1027,10 @@ static inline lv_color_t lv_obj_get_style_line_color(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_line_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_line_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR));
     return v.color;
 }
 
@@ -1032,7 +1040,7 @@ static inline lv_color_t lv_obj_get_style_line_color_filtered(const lv_obj_t * o
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_line_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_line_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_OPA);
     return (lv_opa_t)v.num;
@@ -1044,7 +1052,7 @@ static inline lv_opa_t lv_obj_get_style_line_opa(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_arc_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_arc_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_WIDTH);
     return (int32_t)v.num;
@@ -1056,7 +1064,7 @@ static inline int32_t lv_obj_get_style_arc_width(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_arc_rounded(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_arc_rounded(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_ROUNDED);
     return (bool)v.num;
@@ -1068,7 +1076,7 @@ static inline bool lv_obj_get_style_arc_rounded(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_arc_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_arc_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR);
     return v.color;
@@ -1080,9 +1088,10 @@ static inline lv_color_t lv_obj_get_style_arc_color(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_arc_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_arc_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR));
     return v.color;
 }
 
@@ -1092,7 +1101,7 @@ static inline lv_color_t lv_obj_get_style_arc_color_filtered(const lv_obj_t * ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_arc_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_arc_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_OPA);
     return (lv_opa_t)v.num;
@@ -1105,10 +1114,10 @@ static inline lv_opa_t lv_obj_get_style_arc_opa(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const void * lv_obj_get_style_arc_image_src(const lv_obj_t * obj, lv_part_t part)
+static inline const void* lv_obj_get_style_arc_image_src(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_IMAGE_SRC);
-    return (const void *)v.ptr;
+    return (const void*)v.ptr;
 }
 
 /**
@@ -1117,7 +1126,7 @@ static inline const void * lv_obj_get_style_arc_image_src(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_text_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_text_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR);
     return v.color;
@@ -1129,9 +1138,10 @@ static inline lv_color_t lv_obj_get_style_text_color(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_text_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_text_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR));
     return v.color;
 }
 
@@ -1143,7 +1153,7 @@ static inline lv_color_t lv_obj_get_style_text_color_filtered(const lv_obj_t * o
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_text_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_text_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OPA);
     return (lv_opa_t)v.num;
@@ -1155,10 +1165,10 @@ static inline lv_opa_t lv_obj_get_style_text_opa(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_font_t * lv_obj_get_style_text_font(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_font_t* lv_obj_get_style_text_font(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_FONT);
-    return (const lv_font_t *)v.ptr;
+    return (const lv_font_t*)v.ptr;
 }
 
 /**
@@ -1167,7 +1177,7 @@ static inline const lv_font_t * lv_obj_get_style_text_font(const lv_obj_t * obj,
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_text_letter_space(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_text_letter_space(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LETTER_SPACE);
     return (int32_t)v.num;
@@ -1179,7 +1189,7 @@ static inline int32_t lv_obj_get_style_text_letter_space(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_text_line_space(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_text_line_space(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LINE_SPACE);
     return (int32_t)v.num;
@@ -1192,7 +1202,7 @@ static inline int32_t lv_obj_get_style_text_line_space(const lv_obj_t * obj, lv_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_text_decor_t lv_obj_get_style_text_decor(const lv_obj_t * obj, lv_part_t part)
+static inline lv_text_decor_t lv_obj_get_style_text_decor(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_DECOR);
     return (lv_text_decor_t)v.num;
@@ -1207,7 +1217,7 @@ static inline lv_text_decor_t lv_obj_get_style_text_decor(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_text_align_t lv_obj_get_style_text_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_text_align_t lv_obj_get_style_text_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_ALIGN);
     return (lv_text_align_t)v.num;
@@ -1219,7 +1229,7 @@ static inline lv_text_align_t lv_obj_get_style_text_align(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_text_outline_stroke_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_text_outline_stroke_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_COLOR);
     return v.color;
@@ -1231,9 +1241,10 @@ static inline lv_color_t lv_obj_get_style_text_outline_stroke_color(const lv_obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_text_outline_stroke_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_text_outline_stroke_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_COLOR));
     return v.color;
 }
 
@@ -1243,7 +1254,7 @@ static inline lv_color_t lv_obj_get_style_text_outline_stroke_color_filtered(con
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_text_outline_stroke_width(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_text_outline_stroke_width(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_WIDTH);
     return (int32_t)v.num;
@@ -1257,7 +1268,7 @@ static inline int32_t lv_obj_get_style_text_outline_stroke_width(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_text_outline_stroke_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_text_outline_stroke_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_OPA);
     return (lv_opa_t)v.num;
@@ -1270,7 +1281,7 @@ static inline lv_opa_t lv_obj_get_style_text_outline_stroke_opa(const lv_obj_t *
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_blur_radius(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_blur_radius(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BLUR_RADIUS);
     return (int32_t)v.num;
@@ -1284,7 +1295,7 @@ static inline int32_t lv_obj_get_style_blur_radius(const lv_obj_t * obj, lv_part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_blur_backdrop(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_blur_backdrop(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BLUR_BACKDROP);
     return (bool)v.num;
@@ -1298,7 +1309,7 @@ static inline bool lv_obj_get_style_blur_backdrop(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_blur_quality_t lv_obj_get_style_blur_quality(const lv_obj_t * obj, lv_part_t part)
+static inline lv_blur_quality_t lv_obj_get_style_blur_quality(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BLUR_QUALITY);
     return (lv_blur_quality_t)v.num;
@@ -1311,7 +1322,7 @@ static inline lv_blur_quality_t lv_obj_get_style_blur_quality(const lv_obj_t * o
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_drop_shadow_radius(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_drop_shadow_radius(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_RADIUS);
     return (int32_t)v.num;
@@ -1323,7 +1334,7 @@ static inline int32_t lv_obj_get_style_drop_shadow_radius(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_drop_shadow_offset_x(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_drop_shadow_offset_x(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_OFFSET_X);
     return (int32_t)v.num;
@@ -1335,7 +1346,7 @@ static inline int32_t lv_obj_get_style_drop_shadow_offset_x(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_drop_shadow_offset_y(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_drop_shadow_offset_y(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_OFFSET_Y);
     return (int32_t)v.num;
@@ -1347,7 +1358,7 @@ static inline int32_t lv_obj_get_style_drop_shadow_offset_y(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_drop_shadow_color(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_drop_shadow_color(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_COLOR);
     return v.color;
@@ -1359,9 +1370,10 @@ static inline lv_color_t lv_obj_get_style_drop_shadow_color(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_drop_shadow_color_filtered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_drop_shadow_color_filtered(const lv_obj_t* obj, lv_part_t part)
 {
-    lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_COLOR));
+    lv_style_value_t v = lv_obj_style_apply_color_filter(
+        obj, part, lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_COLOR));
     return v.color;
 }
 
@@ -1371,7 +1383,7 @@ static inline lv_color_t lv_obj_get_style_drop_shadow_color_filtered(const lv_ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_drop_shadow_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_drop_shadow_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_OPA);
     return (lv_opa_t)v.num;
@@ -1385,7 +1397,7 @@ static inline lv_opa_t lv_obj_get_style_drop_shadow_opa(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_blur_quality_t lv_obj_get_style_drop_shadow_quality(const lv_obj_t * obj, lv_part_t part)
+static inline lv_blur_quality_t lv_obj_get_style_drop_shadow_quality(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_DROP_SHADOW_QUALITY);
     return (lv_blur_quality_t)v.num;
@@ -1398,7 +1410,7 @@ static inline lv_blur_quality_t lv_obj_get_style_drop_shadow_quality(const lv_ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_radius(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_radius(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RADIUS);
     return (int32_t)v.num;
@@ -1410,7 +1422,7 @@ static inline int32_t lv_obj_get_style_radius(const lv_obj_t * obj, lv_part_t pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_radial_offset(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_radial_offset(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RADIAL_OFFSET);
     return (int32_t)v.num;
@@ -1423,7 +1435,7 @@ static inline int32_t lv_obj_get_style_radial_offset(const lv_obj_t * obj, lv_pa
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline bool lv_obj_get_style_clip_corner(const lv_obj_t * obj, lv_part_t part)
+static inline bool lv_obj_get_style_clip_corner(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_CLIP_CORNER);
     return (bool)v.num;
@@ -1437,7 +1449,7 @@ static inline bool lv_obj_get_style_clip_corner(const lv_obj_t * obj, lv_part_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OPA);
     return (lv_opa_t)v.num;
@@ -1452,7 +1464,7 @@ static inline lv_opa_t lv_obj_get_style_opa(const lv_obj_t * obj, lv_part_t part
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_opa_layered(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_opa_layered(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OPA_LAYERED);
     return (lv_opa_t)v.num;
@@ -1464,10 +1476,10 @@ static inline lv_opa_t lv_obj_get_style_opa_layered(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_color_filter_dsc_t * lv_obj_get_style_color_filter_dsc(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_color_filter_dsc_t* lv_obj_get_style_color_filter_dsc(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_COLOR_FILTER_DSC);
-    return (const lv_color_filter_dsc_t *)v.ptr;
+    return (const lv_color_filter_dsc_t*)v.ptr;
 }
 
 /**
@@ -1476,7 +1488,7 @@ static inline const lv_color_filter_dsc_t * lv_obj_get_style_color_filter_dsc(co
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_color_filter_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_color_filter_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_COLOR_FILTER_OPA);
     return (lv_opa_t)v.num;
@@ -1488,7 +1500,7 @@ static inline lv_opa_t lv_obj_get_style_color_filter_opa(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_color_t lv_obj_get_style_recolor(const lv_obj_t * obj, lv_part_t part)
+static inline lv_color_t lv_obj_get_style_recolor(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RECOLOR);
     return v.color;
@@ -1503,7 +1515,7 @@ static inline lv_color_t lv_obj_get_style_recolor(const lv_obj_t * obj, lv_part_
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_opa_t lv_obj_get_style_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+static inline lv_opa_t lv_obj_get_style_recolor_opa(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RECOLOR_OPA);
     return (lv_opa_t)v.num;
@@ -1518,10 +1530,10 @@ static inline lv_opa_t lv_obj_get_style_recolor_opa(const lv_obj_t * obj, lv_par
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_anim_t * lv_obj_get_style_anim(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_anim_t* lv_obj_get_style_anim(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ANIM);
-    return (const lv_anim_t *)v.ptr;
+    return (const lv_anim_t*)v.ptr;
 }
 
 /**
@@ -1532,7 +1544,7 @@ static inline const lv_anim_t * lv_obj_get_style_anim(const lv_obj_t * obj, lv_p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline uint32_t lv_obj_get_style_anim_duration(const lv_obj_t * obj, lv_part_t part)
+static inline uint32_t lv_obj_get_style_anim_duration(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ANIM_DURATION);
     return (uint32_t)v.num;
@@ -1544,10 +1556,10 @@ static inline uint32_t lv_obj_get_style_anim_duration(const lv_obj_t * obj, lv_p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const lv_style_transition_dsc_t * lv_obj_get_style_transition(const lv_obj_t * obj, lv_part_t part)
+static inline const lv_style_transition_dsc_t* lv_obj_get_style_transition(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSITION);
-    return (const lv_style_transition_dsc_t *)v.ptr;
+    return (const lv_style_transition_dsc_t*)v.ptr;
 }
 
 /**
@@ -1557,7 +1569,7 @@ static inline const lv_style_transition_dsc_t * lv_obj_get_style_transition(cons
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_blend_mode_t lv_obj_get_style_blend_mode(const lv_obj_t * obj, lv_part_t part)
+static inline lv_blend_mode_t lv_obj_get_style_blend_mode(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BLEND_MODE);
     return (lv_blend_mode_t)v.num;
@@ -1570,7 +1582,7 @@ static inline lv_blend_mode_t lv_obj_get_style_blend_mode(const lv_obj_t * obj, 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline uint16_t lv_obj_get_style_layout(const lv_obj_t * obj, lv_part_t part)
+static inline uint16_t lv_obj_get_style_layout(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LAYOUT);
     return (uint16_t)v.num;
@@ -1582,7 +1594,7 @@ static inline uint16_t lv_obj_get_style_layout(const lv_obj_t * obj, lv_part_t p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_base_dir_t lv_obj_get_style_base_dir(const lv_obj_t * obj, lv_part_t part)
+static inline lv_base_dir_t lv_obj_get_style_base_dir(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BASE_DIR);
     return (lv_base_dir_t)v.num;
@@ -1595,10 +1607,10 @@ static inline lv_base_dir_t lv_obj_get_style_base_dir(const lv_obj_t * obj, lv_p
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const void * lv_obj_get_style_bitmap_mask_src(const lv_obj_t * obj, lv_part_t part)
+static inline const void* lv_obj_get_style_bitmap_mask_src(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BITMAP_MASK_SRC);
-    return (const void *)v.ptr;
+    return (const void*)v.ptr;
 }
 
 /**
@@ -1608,7 +1620,7 @@ static inline const void * lv_obj_get_style_bitmap_mask_src(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline uint32_t lv_obj_get_style_rotary_sensitivity(const lv_obj_t * obj, lv_part_t part)
+static inline uint32_t lv_obj_get_style_rotary_sensitivity(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ROTARY_SENSITIVITY);
     return (uint32_t)v.num;
@@ -1621,7 +1633,7 @@ static inline uint32_t lv_obj_get_style_rotary_sensitivity(const lv_obj_t * obj,
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_flex_flow_t lv_obj_get_style_flex_flow(const lv_obj_t * obj, lv_part_t part)
+static inline lv_flex_flow_t lv_obj_get_style_flex_flow(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_FLEX_FLOW);
     return (lv_flex_flow_t)v.num;
@@ -1633,7 +1645,7 @@ static inline lv_flex_flow_t lv_obj_get_style_flex_flow(const lv_obj_t * obj, lv
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_flex_align_t lv_obj_get_style_flex_main_place(const lv_obj_t * obj, lv_part_t part)
+static inline lv_flex_align_t lv_obj_get_style_flex_main_place(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_FLEX_MAIN_PLACE);
     return (lv_flex_align_t)v.num;
@@ -1645,7 +1657,7 @@ static inline lv_flex_align_t lv_obj_get_style_flex_main_place(const lv_obj_t * 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_flex_align_t lv_obj_get_style_flex_cross_place(const lv_obj_t * obj, lv_part_t part)
+static inline lv_flex_align_t lv_obj_get_style_flex_cross_place(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_FLEX_CROSS_PLACE);
     return (lv_flex_align_t)v.num;
@@ -1657,7 +1669,7 @@ static inline lv_flex_align_t lv_obj_get_style_flex_cross_place(const lv_obj_t *
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_flex_align_t lv_obj_get_style_flex_track_place(const lv_obj_t * obj, lv_part_t part)
+static inline lv_flex_align_t lv_obj_get_style_flex_track_place(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_FLEX_TRACK_PLACE);
     return (lv_flex_align_t)v.num;
@@ -1669,7 +1681,7 @@ static inline lv_flex_align_t lv_obj_get_style_flex_track_place(const lv_obj_t *
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline uint8_t lv_obj_get_style_flex_grow(const lv_obj_t * obj, lv_part_t part)
+static inline uint8_t lv_obj_get_style_flex_grow(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_FLEX_GROW);
     return (uint8_t)v.num;
@@ -1684,10 +1696,10 @@ static inline uint8_t lv_obj_get_style_flex_grow(const lv_obj_t * obj, lv_part_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const int32_t * lv_obj_get_style_grid_column_dsc_array(const lv_obj_t * obj, lv_part_t part)
+static inline const int32_t* lv_obj_get_style_grid_column_dsc_array(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_COLUMN_DSC_ARRAY);
-    return (const int32_t *)v.ptr;
+    return (const int32_t*)v.ptr;
 }
 
 /**
@@ -1696,7 +1708,7 @@ static inline const int32_t * lv_obj_get_style_grid_column_dsc_array(const lv_ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_grid_align_t lv_obj_get_style_grid_column_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_grid_align_t lv_obj_get_style_grid_column_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_COLUMN_ALIGN);
     return (lv_grid_align_t)v.num;
@@ -1708,10 +1720,10 @@ static inline lv_grid_align_t lv_obj_get_style_grid_column_align(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline const int32_t * lv_obj_get_style_grid_row_dsc_array(const lv_obj_t * obj, lv_part_t part)
+static inline const int32_t* lv_obj_get_style_grid_row_dsc_array(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_ROW_DSC_ARRAY);
-    return (const int32_t *)v.ptr;
+    return (const int32_t*)v.ptr;
 }
 
 /**
@@ -1720,7 +1732,7 @@ static inline const int32_t * lv_obj_get_style_grid_row_dsc_array(const lv_obj_t
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_grid_align_t lv_obj_get_style_grid_row_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_grid_align_t lv_obj_get_style_grid_row_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_ROW_ALIGN);
     return (lv_grid_align_t)v.num;
@@ -1732,7 +1744,7 @@ static inline lv_grid_align_t lv_obj_get_style_grid_row_align(const lv_obj_t * o
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_grid_cell_column_pos(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_grid_cell_column_pos(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_COLUMN_POS);
     return (int32_t)v.num;
@@ -1744,7 +1756,7 @@ static inline int32_t lv_obj_get_style_grid_cell_column_pos(const lv_obj_t * obj
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_grid_align_t lv_obj_get_style_grid_cell_x_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_grid_align_t lv_obj_get_style_grid_cell_x_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_X_ALIGN);
     return (lv_grid_align_t)v.num;
@@ -1756,7 +1768,7 @@ static inline lv_grid_align_t lv_obj_get_style_grid_cell_x_align(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_grid_cell_column_span(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_grid_cell_column_span(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_COLUMN_SPAN);
     return (int32_t)v.num;
@@ -1768,7 +1780,7 @@ static inline int32_t lv_obj_get_style_grid_cell_column_span(const lv_obj_t * ob
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_grid_cell_row_pos(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_grid_cell_row_pos(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_ROW_POS);
     return (int32_t)v.num;
@@ -1780,7 +1792,7 @@ static inline int32_t lv_obj_get_style_grid_cell_row_pos(const lv_obj_t * obj, l
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline lv_grid_align_t lv_obj_get_style_grid_cell_y_align(const lv_obj_t * obj, lv_part_t part)
+static inline lv_grid_align_t lv_obj_get_style_grid_cell_y_align(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_Y_ALIGN);
     return (lv_grid_align_t)v.num;
@@ -1792,7 +1804,7 @@ static inline lv_grid_align_t lv_obj_get_style_grid_cell_y_align(const lv_obj_t 
  * @param  obj    Pointer to Widget
  * @param  part   One of the `LV_PART_...` enum values
  */
-static inline int32_t lv_obj_get_style_grid_cell_row_span(const lv_obj_t * obj, lv_part_t part)
+static inline int32_t lv_obj_get_style_grid_cell_row_span(const lv_obj_t* obj, lv_part_t part)
 {
     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_GRID_CELL_ROW_SPAN);
     return (int32_t)v.num;
@@ -1812,7 +1824,7 @@ static inline int32_t lv_obj_get_style_grid_cell_row_span(const lv_obj_t * obj, 
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets a minimal width. Pixel and percentage values can be used. Percentage values
@@ -1826,7 +1838,7 @@ void lv_obj_set_style_width(lv_obj_t * obj, int32_t value, lv_style_selector_t s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_min_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_min_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets a maximal width. Pixel and percentage values can be used. Percentage values
@@ -1840,7 +1852,7 @@ void lv_obj_set_style_min_width(lv_obj_t * obj, int32_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_max_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_max_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets height of Widget. Pixel, percentage and `LV_SIZE_CONTENT` can be used.
@@ -1854,7 +1866,7 @@ void lv_obj_set_style_max_width(lv_obj_t * obj, int32_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_height(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_height(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets a minimal height. Pixel and percentage values can be used. Percentage values
@@ -1868,7 +1880,7 @@ void lv_obj_set_style_height(lv_obj_t * obj, int32_t value, lv_style_selector_t 
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_min_height(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_min_height(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets a maximal height. Pixel and percentage values can be used. Percentage values
@@ -1882,7 +1894,7 @@ void lv_obj_set_style_min_height(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_max_height(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_max_height(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Its meaning depends on the type of Widget. For example in case of lv_scale it means
@@ -1896,7 +1908,7 @@ void lv_obj_set_style_max_height(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_length(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_length(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set X coordinate of Widget considering the ``align`` setting. Pixel and percentage
@@ -1911,7 +1923,7 @@ void lv_obj_set_style_length(lv_obj_t * obj, int32_t value, lv_style_selector_t 
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set Y coordinate of Widget considering the ``align`` setting. Pixel and percentage
@@ -1926,7 +1938,7 @@ void lv_obj_set_style_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set the alignment which tells from which point of the parent the X and Y
@@ -1944,7 +1956,7 @@ void lv_obj_set_style_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_align(lv_obj_t * obj, lv_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_align(lv_obj_t* obj, lv_align_t value, lv_style_selector_t selector);
 
 /**
  * Make Widget wider on both sides with this value. Pixel and percentage (with
@@ -1958,7 +1970,7 @@ void lv_obj_set_style_align(lv_obj_t * obj, lv_align_t value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Make Widget higher on both sides with this value. Pixel and percentage (with
@@ -1972,7 +1984,7 @@ void lv_obj_set_style_transform_width(lv_obj_t * obj, int32_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_height(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_height(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Move Widget with this value in X direction. Applied after layouts, aligns and other
@@ -1987,7 +1999,7 @@ void lv_obj_set_style_transform_height(lv_obj_t * obj, int32_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_translate_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_translate_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Move Widget with this value in Y direction. Applied after layouts, aligns and other
@@ -2002,7 +2014,7 @@ void lv_obj_set_style_translate_x(lv_obj_t * obj, int32_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_translate_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_translate_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Move object around the centre of the parent object (e.g. around the circumference
@@ -2016,7 +2028,7 @@ void lv_obj_set_style_translate_y(lv_obj_t * obj, int32_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_translate_radial(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_translate_radial(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Zoom Widget horizontally. The value 256 (or `LV_SCALE_NONE`) means normal size, 128
@@ -2030,7 +2042,7 @@ void lv_obj_set_style_translate_radial(lv_obj_t * obj, int32_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_scale_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_scale_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Zoom Widget vertically. The value 256 (or `LV_SCALE_NONE`) means normal size, 128
@@ -2044,7 +2056,7 @@ void lv_obj_set_style_transform_scale_x(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_scale_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_scale_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Rotate Widget. The value is interpreted in 0.1 degree units. E.g. 450 means 45 deg.
@@ -2057,7 +2069,7 @@ void lv_obj_set_style_transform_scale_y(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_rotation(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_rotation(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set pivot point's X coordinate for transformations. Relative to Widget's top left corner.
@@ -2070,7 +2082,7 @@ void lv_obj_set_style_transform_rotation(lv_obj_t * obj, int32_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_pivot_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_pivot_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set pivot point's Y coordinate for transformations. Relative to Widget's top left corner.
@@ -2083,7 +2095,7 @@ void lv_obj_set_style_transform_pivot_x(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_pivot_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_pivot_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Skew Widget horizontally. The value is interpreted in 0.1 degree units. E.g. 450
@@ -2097,7 +2109,7 @@ void lv_obj_set_style_transform_pivot_y(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_skew_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_skew_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Skew Widget vertically. The value is interpreted in 0.1 degree units. E.g. 450
@@ -2111,7 +2123,7 @@ void lv_obj_set_style_transform_skew_x(lv_obj_t * obj, int32_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transform_skew_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_transform_skew_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding on the top. It makes the content area smaller in this direction.
@@ -2124,7 +2136,7 @@ void lv_obj_set_style_transform_skew_y(lv_obj_t * obj, int32_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_top(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_top(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding on the bottom. It makes the content area smaller in this direction.
@@ -2137,7 +2149,7 @@ void lv_obj_set_style_pad_top(lv_obj_t * obj, int32_t value, lv_style_selector_t
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_bottom(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_bottom(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding on the left. It makes the content area smaller in this direction.
@@ -2150,7 +2162,7 @@ void lv_obj_set_style_pad_bottom(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_left(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_left(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding on the right. It makes the content area smaller in this direction.
@@ -2163,7 +2175,7 @@ void lv_obj_set_style_pad_left(lv_obj_t * obj, int32_t value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_right(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_right(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding between the rows. Used by the layouts.
@@ -2176,7 +2188,7 @@ void lv_obj_set_style_pad_right(lv_obj_t * obj, int32_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_row(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_row(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets the padding between the columns. Used by the layouts.
@@ -2189,7 +2201,7 @@ void lv_obj_set_style_pad_row(lv_obj_t * obj, int32_t value, lv_style_selector_t
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_column(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_column(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Pad text labels away from the scale ticks/remainder of the ``LV_PART_``.
@@ -2202,7 +2214,7 @@ void lv_obj_set_style_pad_column(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_pad_radial(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_pad_radial(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets margin on the top. Widget will keep this space from its siblings in layouts.
@@ -2215,7 +2227,7 @@ void lv_obj_set_style_pad_radial(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_margin_top(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_margin_top(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets margin on the bottom. Widget will keep this space from its siblings in layouts.
@@ -2228,7 +2240,7 @@ void lv_obj_set_style_margin_top(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_margin_bottom(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_margin_bottom(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets margin on the left. Widget will keep this space from its siblings in layouts.
@@ -2241,7 +2253,7 @@ void lv_obj_set_style_margin_bottom(lv_obj_t * obj, int32_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_margin_left(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_margin_left(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Sets margin on the right. Widget will keep this space from its siblings in layouts.
@@ -2254,7 +2266,7 @@ void lv_obj_set_style_margin_left(lv_obj_t * obj, int32_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_margin_right(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_margin_right(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set background color of Widget.
@@ -2267,7 +2279,7 @@ void lv_obj_set_style_margin_right(lv_obj_t * obj, int32_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of the background. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2282,7 +2294,7 @@ void lv_obj_set_style_bg_color(lv_obj_t * obj, lv_color_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set gradient color of the background. Used only if `grad_dir` is not `LV_GRAD_DIR_NONE`.
@@ -2295,7 +2307,7 @@ void lv_obj_set_style_bg_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_grad_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_grad_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set direction of the gradient of the background. Possible values are
@@ -2309,7 +2321,7 @@ void lv_obj_set_style_bg_grad_color(lv_obj_t * obj, lv_color_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_grad_dir(lv_obj_t * obj, lv_grad_dir_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_grad_dir(lv_obj_t* obj, lv_grad_dir_t value, lv_style_selector_t selector);
 
 /**
  * Set point from which background color should start for gradients. 0 means to
@@ -2323,7 +2335,7 @@ void lv_obj_set_style_bg_grad_dir(lv_obj_t * obj, lv_grad_dir_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_main_stop(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_main_stop(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set point from which background's gradient color should start. 0 means to top/left
@@ -2337,7 +2349,7 @@ void lv_obj_set_style_bg_main_stop(lv_obj_t * obj, int32_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_grad_stop(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_grad_stop(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of the first gradient color.
@@ -2350,7 +2362,7 @@ void lv_obj_set_style_bg_grad_stop(lv_obj_t * obj, int32_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_main_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_main_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of the second gradient color.
@@ -2363,7 +2375,7 @@ void lv_obj_set_style_bg_main_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_grad_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_grad_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set gradient definition. The pointed instance must exist while Widget is alive.
@@ -2379,7 +2391,7 @@ void lv_obj_set_style_bg_grad_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_grad(lv_obj_t * obj, const lv_grad_dsc_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_grad(lv_obj_t* obj, const lv_grad_dsc_t* value, lv_style_selector_t selector);
 
 /**
  * Set a background image. Can be a pointer to `lv_image_dsc_t`, a path to a file or
@@ -2393,7 +2405,7 @@ void lv_obj_set_style_bg_grad(lv_obj_t * obj, const lv_grad_dsc_t * value, lv_st
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_image_src(lv_obj_t * obj, const void * value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_image_src(lv_obj_t* obj, const void* value, lv_style_selector_t selector);
 
 /**
  * Set opacity of the background image. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means
@@ -2408,7 +2420,7 @@ void lv_obj_set_style_bg_image_src(lv_obj_t * obj, const void * value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_image_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_image_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set a color to mix to the background image.
@@ -2421,7 +2433,7 @@ void lv_obj_set_style_bg_image_opa(lv_obj_t * obj, lv_opa_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_image_recolor(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_image_recolor(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set intensity of background image recoloring. Value 0, `LV_OPA_0` or
@@ -2437,7 +2449,7 @@ void lv_obj_set_style_bg_image_recolor(lv_obj_t * obj, lv_color_t value, lv_styl
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_image_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_image_recolor_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * If enabled the background image will be tiled. Possible values are `true` or `false`.
@@ -2450,7 +2462,7 @@ void lv_obj_set_style_bg_image_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_st
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bg_image_tiled(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_bg_image_tiled(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Set color of the border.
@@ -2463,7 +2475,7 @@ void lv_obj_set_style_bg_image_tiled(lv_obj_t * obj, bool value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_border_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_border_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of the border. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2478,7 +2490,7 @@ void lv_obj_set_style_border_color(lv_obj_t * obj, lv_color_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_border_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_border_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set width of the border. Only pixel values can be used.
@@ -2491,7 +2503,7 @@ void lv_obj_set_style_border_opa(lv_obj_t * obj, lv_opa_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_border_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_border_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set only which side(s) the border should be drawn. Possible values are
@@ -2506,7 +2518,7 @@ void lv_obj_set_style_border_width(lv_obj_t * obj, int32_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_border_side(lv_obj_t * obj, lv_border_side_t value, lv_style_selector_t selector);
+void lv_obj_set_style_border_side(lv_obj_t* obj, lv_border_side_t value, lv_style_selector_t selector);
 
 /**
  * Sets whether the border should be drawn before or after the children are drawn.
@@ -2520,7 +2532,7 @@ void lv_obj_set_style_border_side(lv_obj_t * obj, lv_border_side_t value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_border_post(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_border_post(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Set width of outline in pixels.
@@ -2533,7 +2545,7 @@ void lv_obj_set_style_border_post(lv_obj_t * obj, bool value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_outline_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_outline_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set color of outline.
@@ -2546,7 +2558,7 @@ void lv_obj_set_style_outline_width(lv_obj_t * obj, int32_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_outline_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_outline_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of outline. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2561,7 +2573,7 @@ void lv_obj_set_style_outline_color(lv_obj_t * obj, lv_color_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_outline_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_outline_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set padding of outline, i.e. the gap between Widget and the outline.
@@ -2574,7 +2586,7 @@ void lv_obj_set_style_outline_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_outline_pad(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_outline_pad(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set width of the shadow in pixels. The value should be >= 0.
@@ -2587,7 +2599,7 @@ void lv_obj_set_style_outline_pad(lv_obj_t * obj, int32_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set an offset on the shadow in pixels in X direction.
@@ -2600,7 +2612,7 @@ void lv_obj_set_style_shadow_width(lv_obj_t * obj, int32_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_offset_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_offset_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set an offset on the shadow in pixels in Y direction.
@@ -2613,7 +2625,7 @@ void lv_obj_set_style_shadow_offset_x(lv_obj_t * obj, int32_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_offset_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_offset_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Make shadow calculation to use a larger or smaller rectangle as base. The value can
@@ -2627,7 +2639,7 @@ void lv_obj_set_style_shadow_offset_y(lv_obj_t * obj, int32_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_spread(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_spread(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set color of shadow.
@@ -2640,7 +2652,7 @@ void lv_obj_set_style_shadow_spread(lv_obj_t * obj, int32_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of shadow. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2655,7 +2667,7 @@ void lv_obj_set_style_shadow_color(lv_obj_t * obj, lv_color_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_shadow_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_shadow_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of an image. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2670,7 +2682,7 @@ void lv_obj_set_style_shadow_opa(lv_obj_t * obj, lv_opa_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_image_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_image_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set color to mix with the image.
@@ -2683,7 +2695,7 @@ void lv_obj_set_style_image_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_image_recolor(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_image_recolor(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set intensity of color mixing. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2698,7 +2710,7 @@ void lv_obj_set_style_image_recolor(lv_obj_t * obj, lv_color_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_image_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_image_recolor_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set image colorkey definition. The lv_image_colorkey_t contains two color values:
@@ -2713,7 +2725,7 @@ void lv_obj_set_style_image_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_image_colorkey(lv_obj_t * obj, const lv_image_colorkey_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_image_colorkey(lv_obj_t* obj, const lv_image_colorkey_t* value, lv_style_selector_t selector);
 
 /**
  * Set width of lines in pixels.
@@ -2726,7 +2738,7 @@ void lv_obj_set_style_image_colorkey(lv_obj_t * obj, const lv_image_colorkey_t *
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_line_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set width of dashes in pixels. Note that dash works only on horizontal and vertical lines.
@@ -2739,7 +2751,7 @@ void lv_obj_set_style_line_width(lv_obj_t * obj, int32_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_dash_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_line_dash_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set gap between dashes in pixels. Note that dash works only on horizontal and
@@ -2753,7 +2765,7 @@ void lv_obj_set_style_line_dash_width(lv_obj_t * obj, int32_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_dash_gap(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_line_dash_gap(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Make end points of the lines rounded. `true`: rounded, `false`: perpendicular line ending.
@@ -2766,7 +2778,7 @@ void lv_obj_set_style_line_dash_gap(lv_obj_t * obj, int32_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_rounded(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_line_rounded(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Set color of lines.
@@ -2779,7 +2791,7 @@ void lv_obj_set_style_line_rounded(lv_obj_t * obj, bool value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_line_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of lines.
@@ -2792,7 +2804,7 @@ void lv_obj_set_style_line_color(lv_obj_t * obj, lv_color_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_line_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_line_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set width (thickness) of arcs in pixels.
@@ -2805,7 +2817,7 @@ void lv_obj_set_style_line_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_arc_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_arc_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Make end points of arcs rounded. `true`: rounded, `false`: perpendicular line ending.
@@ -2818,7 +2830,7 @@ void lv_obj_set_style_arc_width(lv_obj_t * obj, int32_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_arc_rounded(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_arc_rounded(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Set color of arc.
@@ -2831,7 +2843,7 @@ void lv_obj_set_style_arc_rounded(lv_obj_t * obj, bool value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_arc_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_arc_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of arcs.
@@ -2844,7 +2856,7 @@ void lv_obj_set_style_arc_color(lv_obj_t * obj, lv_color_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_arc_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_arc_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set an image from which arc will be masked out. It's useful to display complex
@@ -2858,7 +2870,7 @@ void lv_obj_set_style_arc_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_arc_image_src(lv_obj_t * obj, const void * value, lv_style_selector_t selector);
+void lv_obj_set_style_arc_image_src(lv_obj_t* obj, const void* value, lv_style_selector_t selector);
 
 /**
  * Sets color of text.
@@ -2871,7 +2883,7 @@ void lv_obj_set_style_arc_image_src(lv_obj_t * obj, const void * value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set opacity of text. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means fully
@@ -2886,7 +2898,7 @@ void lv_obj_set_style_text_color(lv_obj_t * obj, lv_color_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set font of text (a pointer `lv_font_t *`).
@@ -2899,7 +2911,7 @@ void lv_obj_set_style_text_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_font(lv_obj_t * obj, const lv_font_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_text_font(lv_obj_t* obj, const lv_font_t* value, lv_style_selector_t selector);
 
 /**
  * Set letter space in pixels.
@@ -2912,7 +2924,7 @@ void lv_obj_set_style_text_font(lv_obj_t * obj, const lv_font_t * value, lv_styl
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_letter_space(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_letter_space(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set line space in pixels.
@@ -2925,7 +2937,7 @@ void lv_obj_set_style_text_letter_space(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_line_space(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_line_space(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set decoration for the text. Possible values are
@@ -2939,7 +2951,7 @@ void lv_obj_set_style_text_line_space(lv_obj_t * obj, int32_t value, lv_style_se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_decor(lv_obj_t * obj, lv_text_decor_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_decor(lv_obj_t* obj, lv_text_decor_t value, lv_style_selector_t selector);
 
 /**
  * Set how to align the lines of the text. Note that it doesn't align the Widget
@@ -2955,7 +2967,7 @@ void lv_obj_set_style_text_decor(lv_obj_t * obj, lv_text_decor_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_align(lv_obj_t * obj, lv_text_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_align(lv_obj_t* obj, lv_text_align_t value, lv_style_selector_t selector);
 
 /**
  * Sets the color of letter outline stroke.
@@ -2968,7 +2980,7 @@ void lv_obj_set_style_text_align(lv_obj_t * obj, lv_text_align_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_outline_stroke_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_outline_stroke_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set the letter outline stroke width in pixels.
@@ -2981,7 +2993,7 @@ void lv_obj_set_style_text_outline_stroke_color(lv_obj_t * obj, lv_color_t value
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_outline_stroke_width(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_outline_stroke_width(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set the opacity of the letter outline stroke. Value 0, `LV_OPA_0` or
@@ -2996,7 +3008,7 @@ void lv_obj_set_style_text_outline_stroke_width(lv_obj_t * obj, int32_t value, l
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_text_outline_stroke_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_text_outline_stroke_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Sets the intensity of blurring. Applied on each lv_part separately before the
@@ -3010,7 +3022,7 @@ void lv_obj_set_style_text_outline_stroke_opa(lv_obj_t * obj, lv_opa_t value, lv
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_blur_radius(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_blur_radius(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * If `true` the background of the widget will be blurred. The part should have < 100%
@@ -3025,7 +3037,7 @@ void lv_obj_set_style_blur_radius(lv_obj_t * obj, int32_t value, lv_style_select
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_blur_backdrop(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_blur_backdrop(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Setting to `LV_BLUR_QUALITY_SPEED` the blurring algorithm will prefer speed over
@@ -3040,7 +3052,7 @@ void lv_obj_set_style_blur_backdrop(lv_obj_t * obj, bool value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_blur_quality(lv_obj_t * obj, lv_blur_quality_t value, lv_style_selector_t selector);
+void lv_obj_set_style_blur_quality(lv_obj_t* obj, lv_blur_quality_t value, lv_style_selector_t selector);
 
 /**
  * Sets the intensity of blurring. Applied on each lv_part separately before the
@@ -3054,7 +3066,7 @@ void lv_obj_set_style_blur_quality(lv_obj_t * obj, lv_blur_quality_t value, lv_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_radius(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_radius(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set an offset on the shadow in pixels in X direction.
@@ -3067,7 +3079,7 @@ void lv_obj_set_style_drop_shadow_radius(lv_obj_t * obj, int32_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_offset_x(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_offset_x(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set an offset on the shadow in pixels in Y direction.
@@ -3080,7 +3092,7 @@ void lv_obj_set_style_drop_shadow_offset_x(lv_obj_t * obj, int32_t value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_offset_y(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_offset_y(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set the color of the shadow.
@@ -3093,7 +3105,7 @@ void lv_obj_set_style_drop_shadow_offset_y(lv_obj_t * obj, int32_t value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_color(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_color(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Set the opacity of the shadow.
@@ -3106,7 +3118,7 @@ void lv_obj_set_style_drop_shadow_color(lv_obj_t * obj, lv_color_t value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Setting to `LV_BLUR_QUALITY_SPEED` the blurring algorithm will prefer speed over
@@ -3121,7 +3133,7 @@ void lv_obj_set_style_drop_shadow_opa(lv_obj_t * obj, lv_opa_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_drop_shadow_quality(lv_obj_t * obj, lv_blur_quality_t value, lv_style_selector_t selector);
+void lv_obj_set_style_drop_shadow_quality(lv_obj_t* obj, lv_blur_quality_t value, lv_style_selector_t selector);
 
 /**
  * Set radius on every corner. The value is interpreted in pixels (>= 0) or
@@ -3135,7 +3147,7 @@ void lv_obj_set_style_drop_shadow_quality(lv_obj_t * obj, lv_blur_quality_t valu
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_radius(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_radius(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Move start point of object (e.g. scale tick) radially.
@@ -3148,7 +3160,7 @@ void lv_obj_set_style_radius(lv_obj_t * obj, int32_t value, lv_style_selector_t 
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_radial_offset(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_radial_offset(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Enable clipping of content that overflows rounded corners of parent Widget. Can be
@@ -3162,7 +3174,7 @@ void lv_obj_set_style_radial_offset(lv_obj_t * obj, int32_t value, lv_style_sele
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_clip_corner(lv_obj_t * obj, bool value, lv_style_selector_t selector);
+void lv_obj_set_style_clip_corner(lv_obj_t* obj, bool value, lv_style_selector_t selector);
 
 /**
  * Scale down all opacity values of the Widget by this factor. Value 0, `LV_OPA_0` or
@@ -3177,7 +3189,7 @@ void lv_obj_set_style_clip_corner(lv_obj_t * obj, bool value, lv_style_selector_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * First draw Widget on the layer, then scale down layer opacity factor. Value 0,
@@ -3193,7 +3205,7 @@ void lv_obj_set_style_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t se
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_opa_layered(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_opa_layered(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Mix a color with all colors of the Widget.
@@ -3206,7 +3218,7 @@ void lv_obj_set_style_opa_layered(lv_obj_t * obj, lv_opa_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_color_filter_dsc(lv_obj_t * obj, const lv_color_filter_dsc_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_color_filter_dsc(lv_obj_t* obj, const lv_color_filter_dsc_t* value, lv_style_selector_t selector);
 
 /**
  * The intensity of mixing of color filter.
@@ -3219,7 +3231,7 @@ void lv_obj_set_style_color_filter_dsc(lv_obj_t * obj, const lv_color_filter_dsc
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_color_filter_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_color_filter_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Set a color to mix to the obj.
@@ -3232,7 +3244,7 @@ void lv_obj_set_style_color_filter_opa(lv_obj_t * obj, lv_opa_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_recolor(lv_obj_t * obj, lv_color_t value, lv_style_selector_t selector);
+void lv_obj_set_style_recolor(lv_obj_t* obj, lv_color_t value, lv_style_selector_t selector);
 
 /**
  * Sets the intensity of color mixing. Value 0, `LV_OPA_0` or `LV_OPA_TRANSP` means
@@ -3248,7 +3260,7 @@ void lv_obj_set_style_recolor(lv_obj_t * obj, lv_color_t value, lv_style_selecto
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selector_t selector);
+void lv_obj_set_style_recolor_opa(lv_obj_t* obj, lv_opa_t value, lv_style_selector_t selector);
 
 /**
  * Animation template for Widget's animation. Should be a pointer to `lv_anim_t`. The
@@ -3264,7 +3276,7 @@ void lv_obj_set_style_recolor_opa(lv_obj_t * obj, lv_opa_t value, lv_style_selec
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_anim(lv_obj_t * obj, const lv_anim_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_anim(lv_obj_t* obj, const lv_anim_t* value, lv_style_selector_t selector);
 
 /**
  * Animation duration in milliseconds. Its meaning is widget specific. E.g. blink time
@@ -3279,7 +3291,7 @@ void lv_obj_set_style_anim(lv_obj_t * obj, const lv_anim_t * value, lv_style_sel
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_anim_duration(lv_obj_t * obj, uint32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_anim_duration(lv_obj_t* obj, uint32_t value, lv_style_selector_t selector);
 
 /**
  * An initialized ``lv_style_transition_dsc_t`` to describe a transition.
@@ -3292,7 +3304,7 @@ void lv_obj_set_style_anim_duration(lv_obj_t * obj, uint32_t value, lv_style_sel
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_transition(lv_obj_t * obj, const lv_style_transition_dsc_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_transition(lv_obj_t* obj, const lv_style_transition_dsc_t* value, lv_style_selector_t selector);
 
 /**
  * Describes how to blend the colors to the background. Possible values are
@@ -3306,7 +3318,7 @@ void lv_obj_set_style_transition(lv_obj_t * obj, const lv_style_transition_dsc_t
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_blend_mode(lv_obj_t * obj, lv_blend_mode_t value, lv_style_selector_t selector);
+void lv_obj_set_style_blend_mode(lv_obj_t* obj, lv_blend_mode_t value, lv_style_selector_t selector);
 
 /**
  * Set layout of Widget. Children will be repositioned and resized according to
@@ -3320,7 +3332,7 @@ void lv_obj_set_style_blend_mode(lv_obj_t * obj, lv_blend_mode_t value, lv_style
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_layout(lv_obj_t * obj, uint16_t value, lv_style_selector_t selector);
+void lv_obj_set_style_layout(lv_obj_t* obj, uint16_t value, lv_style_selector_t selector);
 
 /**
  * Set base direction of Widget. Possible values are `LV_BIDI_DIR_LTR/RTL/AUTO`.
@@ -3333,7 +3345,7 @@ void lv_obj_set_style_layout(lv_obj_t * obj, uint16_t value, lv_style_selector_t
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_base_dir(lv_obj_t * obj, lv_base_dir_t value, lv_style_selector_t selector);
+void lv_obj_set_style_base_dir(lv_obj_t* obj, lv_base_dir_t value, lv_style_selector_t selector);
 
 /**
  * If set, a layer will be created for the widget and the layer will be masked with
@@ -3347,7 +3359,7 @@ void lv_obj_set_style_base_dir(lv_obj_t * obj, lv_base_dir_t value, lv_style_sel
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_bitmap_mask_src(lv_obj_t * obj, const void * value, lv_style_selector_t selector);
+void lv_obj_set_style_bitmap_mask_src(lv_obj_t* obj, const void* value, lv_style_selector_t selector);
 
 /**
  * Adjust sensitivity for rotary encoders in 1/256 unit. It means, 128: slow down the
@@ -3361,7 +3373,7 @@ void lv_obj_set_style_bitmap_mask_src(lv_obj_t * obj, const void * value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_rotary_sensitivity(lv_obj_t * obj, uint32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_rotary_sensitivity(lv_obj_t* obj, uint32_t value, lv_style_selector_t selector);
 
 #if LV_USE_FLEX
 /**
@@ -3375,7 +3387,7 @@ void lv_obj_set_style_rotary_sensitivity(lv_obj_t * obj, uint32_t value, lv_styl
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_flex_flow(lv_obj_t * obj, lv_flex_flow_t value, lv_style_selector_t selector);
+void lv_obj_set_style_flex_flow(lv_obj_t* obj, lv_flex_flow_t value, lv_style_selector_t selector);
 
 /**
  * Defines how to align the children in the direction of flex flow.
@@ -3388,7 +3400,7 @@ void lv_obj_set_style_flex_flow(lv_obj_t * obj, lv_flex_flow_t value, lv_style_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_flex_main_place(lv_obj_t * obj, lv_flex_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_flex_main_place(lv_obj_t* obj, lv_flex_align_t value, lv_style_selector_t selector);
 
 /**
  * Defines how to align the children perpendicular to the direction of flex flow.
@@ -3401,7 +3413,7 @@ void lv_obj_set_style_flex_main_place(lv_obj_t * obj, lv_flex_align_t value, lv_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_flex_cross_place(lv_obj_t * obj, lv_flex_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_flex_cross_place(lv_obj_t* obj, lv_flex_align_t value, lv_style_selector_t selector);
 
 /**
  * Defines how to align the tracks of the flow.
@@ -3414,7 +3426,7 @@ void lv_obj_set_style_flex_cross_place(lv_obj_t * obj, lv_flex_align_t value, lv
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_flex_track_place(lv_obj_t * obj, lv_flex_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_flex_track_place(lv_obj_t* obj, lv_flex_align_t value, lv_style_selector_t selector);
 
 /**
  * Defines how much space to take proportionally from the free space of the Widget's track.
@@ -3427,7 +3439,7 @@ void lv_obj_set_style_flex_track_place(lv_obj_t * obj, lv_flex_align_t value, lv
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_flex_grow(lv_obj_t * obj, uint8_t value, lv_style_selector_t selector);
+void lv_obj_set_style_flex_grow(lv_obj_t* obj, uint8_t value, lv_style_selector_t selector);
 
 #endif /* LV_USE_FLEX */
 
@@ -3443,7 +3455,7 @@ void lv_obj_set_style_flex_grow(lv_obj_t * obj, uint8_t value, lv_style_selector
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_column_dsc_array(lv_obj_t * obj, const int32_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_column_dsc_array(lv_obj_t* obj, const int32_t* value, lv_style_selector_t selector);
 
 /**
  * Defines how to distribute the columns.
@@ -3456,7 +3468,7 @@ void lv_obj_set_style_grid_column_dsc_array(lv_obj_t * obj, const int32_t * valu
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_column_align(lv_obj_t * obj, lv_grid_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_column_align(lv_obj_t* obj, lv_grid_align_t value, lv_style_selector_t selector);
 
 /**
  * An array to describe the rows of the grid. Should be LV_GRID_TEMPLATE_LAST terminated.
@@ -3469,7 +3481,7 @@ void lv_obj_set_style_grid_column_align(lv_obj_t * obj, lv_grid_align_t value, l
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_row_dsc_array(lv_obj_t * obj, const int32_t * value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_row_dsc_array(lv_obj_t* obj, const int32_t* value, lv_style_selector_t selector);
 
 /**
  * Defines how to distribute the rows.
@@ -3482,7 +3494,7 @@ void lv_obj_set_style_grid_row_dsc_array(lv_obj_t * obj, const int32_t * value, 
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_row_align(lv_obj_t * obj, lv_grid_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_row_align(lv_obj_t* obj, lv_grid_align_t value, lv_style_selector_t selector);
 
 /**
  * Set column in which Widget should be placed.
@@ -3495,7 +3507,7 @@ void lv_obj_set_style_grid_row_align(lv_obj_t * obj, lv_grid_align_t value, lv_s
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_column_pos(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_column_pos(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set how to align Widget horizontally.
@@ -3508,7 +3520,7 @@ void lv_obj_set_style_grid_cell_column_pos(lv_obj_t * obj, int32_t value, lv_sty
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_x_align(lv_obj_t * obj, lv_grid_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_x_align(lv_obj_t* obj, lv_grid_align_t value, lv_style_selector_t selector);
 
 /**
  * Set how many columns Widget should span. Needs to be >= 1.
@@ -3521,7 +3533,7 @@ void lv_obj_set_style_grid_cell_x_align(lv_obj_t * obj, lv_grid_align_t value, l
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_column_span(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_column_span(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set row in which Widget should be placed.
@@ -3534,7 +3546,7 @@ void lv_obj_set_style_grid_cell_column_span(lv_obj_t * obj, int32_t value, lv_st
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_row_pos(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_row_pos(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 /**
  * Set how to align Widget vertically.
@@ -3547,7 +3559,7 @@ void lv_obj_set_style_grid_cell_row_pos(lv_obj_t * obj, int32_t value, lv_style_
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_y_align(lv_obj_t * obj, lv_grid_align_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_y_align(lv_obj_t* obj, lv_grid_align_t value, lv_style_selector_t selector);
 
 /**
  * Set how many rows Widget should span. Needs to be >= 1.
@@ -3560,7 +3572,7 @@ void lv_obj_set_style_grid_cell_y_align(lv_obj_t * obj, lv_grid_align_t value, l
  *                        - `LV_PART_KNOB`
  *                        - `LV_PART_KNOB | LV_STATE_PRESSED | LV_STATE_CHECKED`
  */
-void lv_obj_set_style_grid_cell_row_span(lv_obj_t * obj, int32_t value, lv_style_selector_t selector);
+void lv_obj_set_style_grid_cell_row_span(lv_obj_t* obj, int32_t value, lv_style_selector_t selector);
 
 #endif /* LV_USE_GRID */
 

@@ -7,7 +7,8 @@ extern "C" {
 
 #include "main.h"
 
-typedef enum {
+typedef enum
+{
     JOYSTICK_DIR_NONE = 0,
     JOYSTICK_DIR_LEFT,
     JOYSTICK_DIR_RIGHT,

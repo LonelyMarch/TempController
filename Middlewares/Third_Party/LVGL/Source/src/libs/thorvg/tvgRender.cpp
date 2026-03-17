@@ -68,11 +68,13 @@ void RenderRegion::intersect(const RenderRegion& rhs)
 
 void RenderRegion::add(const RenderRegion& rhs)
 {
-    if (rhs.x < x) {
+    if (rhs.x < x)
+    {
         w += (x - rhs.x);
         x = rhs.x;
     }
-    if (rhs.y < y) {
+    if (rhs.y < y)
+    {
         h += (y - rhs.y);
         y = rhs.y;
     }
@@ -81,4 +83,3 @@ void RenderRegion::add(const RenderRegion& rhs)
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

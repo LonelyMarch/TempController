@@ -39,21 +39,20 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-void lv_draw_nema_gfx_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_nema_gfx_arc(lv_draw_task_t* t, const lv_draw_arc_dsc_t* dsc, const lv_area_t* coords)
 {
-
     LV_UNUSED(coords);
 
-    if(dsc->opa <= (lv_opa_t)LV_OPA_MIN)
+    if (dsc->opa <= (lv_opa_t)LV_OPA_MIN)
         return;
-    if(dsc->width == 0)
+    if (dsc->width == 0)
         return;
-    if(dsc->start_angle == dsc->end_angle)
+    if (dsc->start_angle == dsc->end_angle)
         return;
 
-    lv_draw_nema_gfx_unit_t * draw_nema_gfx_unit = (lv_draw_nema_gfx_unit_t *)t->draw_unit;
+    lv_draw_nema_gfx_unit_t* draw_nema_gfx_unit = (lv_draw_nema_gfx_unit_t*)t->draw_unit;
 
-    lv_layer_t * layer = t->target_layer;
+    lv_layer_t* layer = t->target_layer;
     lv_point_t center = {dsc->center.x - layer->buf_area.x1, dsc->center.y - layer->buf_area.y1};
 
     lv_area_t clip_area;
@@ -65,16 +64,20 @@ void lv_draw_nema_gfx_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, con
     lv_value_precise_t start_angle = dsc->start_angle;
     lv_value_precise_t end_angle = dsc->end_angle;
 
-    if(start_angle >= end_angle) {
+    if (start_angle >= end_angle)
+    {
         end_angle += 360.0f;
     }
 
-    if(end_angle - start_angle > 360.0f) {
+    if (end_angle - start_angle > 360.0f)
+    {
         start_angle = 0.0f;
         end_angle = 360.0f;
     }
-    else {
-        while(end_angle > 360.0f) {
+    else
+    {
+        while (end_angle > 360.0f)
+        {
             start_angle -= 360.0f;
             end_angle -= 360.0f;
         }
@@ -88,18 +91,18 @@ void lv_draw_nema_gfx_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, con
     nema_vg_paint_set_stroke_width(draw_nema_gfx_unit->paint, dsc->width);
     nema_vg_set_blend(NEMA_BL_SRC_OVER | NEMA_BLOP_SRC_PREMULT);
 
-    if(dsc->rounded == 1) {
+    if (dsc->rounded == 1)
+    {
         nema_vg_draw_ring(center.x, center.y, (float)dsc->radius - (float)dsc->width * 0.5f, start_angle, end_angle,
                           draw_nema_gfx_unit->paint);
     }
-    else {
+    else
+    {
         nema_vg_draw_ring_generic(center.x, center.y, (float)dsc->radius - (float)dsc->width * 0.5f, start_angle,
                                   end_angle, draw_nema_gfx_unit->paint, 0U);
     }
 
     nema_cl_submit(&(draw_nema_gfx_unit->cl));
-
 }
 
 #endif
-

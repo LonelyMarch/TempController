@@ -49,8 +49,8 @@
 
 /* Ensure definitions are only used by the compiler, and not by the assembler. */
 #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
-  #include <stdint.h>
-  extern uint32_t SystemCoreClock;
+#include <stdint.h>
+extern uint32_t SystemCoreClock;
 #endif
 #ifndef CMSIS_device_header
 #define CMSIS_device_header "stm32h7xx.h"
@@ -93,6 +93,9 @@
 #define configTIMER_QUEUE_LENGTH                 10
 #define configTIMER_TASK_STACK_DEPTH             256
 
+/* The following flag must be enabled only when using newlib */
+#define configUSE_NEWLIB_REENTRANT          1
+
 /* CMSIS-RTOS V2 flags */
 #define configUSE_OS2_THREAD_SUSPEND_RESUME  1
 #define configUSE_OS2_THREAD_ENUMERATE       1
@@ -125,10 +128,10 @@ to exclude the API function. */
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
- /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
- #define configPRIO_BITS         __NVIC_PRIO_BITS
+/* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
+#define configPRIO_BITS         __NVIC_PRIO_BITS
 #else
- #define configPRIO_BITS         4
+#define configPRIO_BITS         4
 #endif
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"
@@ -165,7 +168,7 @@ standard names. */
 
 /* USER CODE BEGIN Defines */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
-void lv_freertos_task_switch_in(const char * name);
+void lv_freertos_task_switch_in(const char* name);
 void lv_freertos_task_switch_out(void);
 
 #define traceTASK_SWITCHED_IN()   lv_freertos_task_switch_in(pxCurrentTCB->pcTaskName);

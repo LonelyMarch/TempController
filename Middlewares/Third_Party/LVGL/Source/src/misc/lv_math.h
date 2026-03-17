@@ -26,6 +26,7 @@ extern "C" {
 #define LV_BEZIER_VAL_MAX (1L << LV_BEZIER_VAL_SHIFT) /**< Max time in Bezier functions (not [0..1] to use integers)*/
 #define LV_BEZIER_VAL_FLOAT(f) ((int32_t)((f) * LV_BEZIER_VAL_MAX)) /**< Convert const float number cubic-bezier values to fix-point value*/
 
+
 /** Align up value x to align, align must be a power of two */
 #define LV_ALIGN_UP(x, align) (((x) + ((align) - 1)) & ~((align) - 1))
 
@@ -36,7 +37,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     uint16_t i;
     uint16_t f;
 } lv_sqrt_res_t;
@@ -95,7 +97,7 @@ uint16_t lv_atan2(int x, int y);
  * If root < 256: mask = 0x800
  * Else: mask = 0x8000
  */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_sqrt(uint32_t x, lv_sqrt_res_t * q, uint32_t mask);
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_sqrt(uint32_t x, lv_sqrt_res_t* q, uint32_t mask);
 
 /**
  * Alternative (fast, approximate) implementation for getting the square root of an integer.

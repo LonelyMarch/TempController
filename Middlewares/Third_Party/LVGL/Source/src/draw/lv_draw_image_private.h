@@ -28,10 +28,11 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-struct _lv_draw_image_sup_t {
+struct _lv_draw_image_sup_t
+{
     lv_color_t alpha_color;
-    const lv_color32_t * palette;
-    uint32_t palette_size   : 9;
+    const lv_color32_t* palette;
+    uint32_t palette_size : 9;
 };
 
 
@@ -48,9 +49,9 @@ struct _lv_draw_image_sup_t {
  * @param draw_core_cb  a callback to perform the actual rendering
  * @param decoder_args  the args passed to image decoders, or NULL for defaults
  */
-void lv_draw_image_normal_helper(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc,
-                                 const lv_area_t * coords, lv_draw_image_core_cb draw_core_cb,
-                                 const lv_image_decoder_args_t * decoder_args);
+void lv_draw_image_normal_helper(lv_draw_task_t* t, const lv_draw_image_dsc_t* draw_dsc,
+                                 const lv_area_t* coords, lv_draw_image_core_cb draw_core_cb,
+                                 const lv_image_decoder_args_t* decoder_args);
 
 /**
  * Can be used by draw units for TILED images to handle the decoding and
@@ -61,9 +62,9 @@ void lv_draw_image_normal_helper(lv_draw_task_t * t, const lv_draw_image_dsc_t *
  * @param draw_core_cb  a callback to perform the actual rendering
  * @param decoder_args  the args passed to image decoders, or NULL for defaults
  */
-void lv_draw_image_tiled_helper(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc,
-                                const lv_area_t * coords, lv_draw_image_core_cb draw_core_cb,
-                                const lv_image_decoder_args_t * decoder_args);
+void lv_draw_image_tiled_helper(lv_draw_task_t* t, const lv_draw_image_dsc_t* draw_dsc,
+                                const lv_area_t* coords, lv_draw_image_core_cb draw_core_cb,
+                                const lv_image_decoder_args_t* decoder_args);
 
 /**
  * Get the area of a rectangle if its rotated and scaled
@@ -75,8 +76,8 @@ void lv_draw_image_tiled_helper(lv_draw_task_t * t, const lv_draw_image_dsc_t * 
  * @param scale_y zoom in y direction, (256 no zoom)
  * @param pivot x,y pivot coordinates of rotation
  */
-void lv_image_buf_get_transformed_area(lv_area_t * res, int32_t w, int32_t h, int32_t angle,
-                                       uint16_t scale_x, uint16_t scale_y, const lv_point_t * pivot);
+void lv_image_buf_get_transformed_area(lv_area_t* res, int32_t w, int32_t h, int32_t angle,
+                                       uint16_t scale_x, uint16_t scale_y, const lv_point_t* pivot);
 
 /**********************
  *      MACROS

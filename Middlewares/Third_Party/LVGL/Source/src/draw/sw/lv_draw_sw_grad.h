@@ -26,9 +26,10 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
-    lv_color_t   *  color_map;
-    lv_opa_t   *  opa_map;
+typedef struct
+{
+    lv_color_t* color_map;
+    lv_opa_t* opa_map;
     uint32_t size;
 } lv_draw_sw_grad_calc_t;
 
@@ -46,17 +47,18 @@ typedef struct {
  * @param opa_out   Calculated opacity
  */
 
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_color_calculate(const lv_grad_dsc_t * dsc, int32_t range,
-                                                                 int32_t frac, lv_color_t * color_out, lv_opa_t * opa_out);
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_color_calculate(const lv_grad_dsc_t* dsc, int32_t range,
+                                                                 int32_t frac, lv_color_t* color_out,
+                                                                 lv_opa_t* opa_out);
 
 /** Get a gradient cache from the given parameters */
-lv_draw_sw_grad_calc_t * lv_draw_sw_grad_get(const lv_grad_dsc_t * gradient, int32_t w, int32_t h);
+lv_draw_sw_grad_calc_t* lv_draw_sw_grad_get(const lv_grad_dsc_t* gradient, int32_t w, int32_t h);
 
 /**
  * Clean up the gradient item after it was get with `lv_grad_get_from_cache`.
  * @param grad      pointer to a gradient
  */
-void lv_draw_sw_grad_cleanup(lv_draw_sw_grad_calc_t * grad);
+void lv_draw_sw_grad_cleanup(lv_draw_sw_grad_calc_t* grad);
 
 #if LV_USE_DRAW_SW_COMPLEX_GRADIENTS
 
@@ -66,7 +68,7 @@ void lv_draw_sw_grad_cleanup(lv_draw_sw_grad_calc_t * grad);
  * @param dsc      gradient descriptor
  * @param coords    the area where to draw the gradient
  */
-void lv_draw_sw_grad_linear_setup(lv_grad_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_sw_grad_linear_setup(lv_grad_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Free up the allocated memory for the gradient calculation
@@ -82,16 +84,16 @@ void lv_draw_sw_grad_linear_cleanup(lv_grad_dsc_t * dsc);
  * @param width     width of the line segment in pixels
  * @param result    color buffer for the resulting line segment
  */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_linear_get_line(lv_grad_dsc_t * dsc, int32_t xp, int32_t yp,
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_linear_get_line(lv_grad_dsc_t* dsc, int32_t xp, int32_t yp,
                                                                  int32_t width,
-                                                                 lv_draw_sw_grad_calc_t * result);
+                                                                 lv_draw_sw_grad_calc_t* result);
 
 /**
  * Calculate constants from the given parameters that are used during rendering
  * @param dsc       gradient descriptor
  * @param coords    the area where to draw the gradient
  */
-void lv_draw_sw_grad_radial_setup(lv_grad_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_sw_grad_radial_setup(lv_grad_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Free up the allocated memory for the gradient calculation
@@ -107,16 +109,16 @@ void lv_draw_sw_grad_radial_cleanup(lv_grad_dsc_t * dsc);
  * @param width     width of the line segment in pixels
  * @param result    color buffer for the resulting line segment
  */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_radial_get_line(lv_grad_dsc_t * dsc, int32_t xp, int32_t yp,
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_radial_get_line(lv_grad_dsc_t* dsc, int32_t xp, int32_t yp,
                                                                  int32_t width,
-                                                                 lv_draw_sw_grad_calc_t * result);
+                                                                 lv_draw_sw_grad_calc_t* result);
 
 /**
  * Calculate constants from the given parameters that are used during rendering
  * @param dsc      gradient descriptor
  * @param coords    the area where to draw the gradient
  */
-void lv_draw_sw_grad_conical_setup(lv_grad_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_sw_grad_conical_setup(lv_grad_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Free up the allocated memory for the gradient calculation
@@ -132,9 +134,9 @@ void lv_draw_sw_grad_conical_cleanup(lv_grad_dsc_t * dsc);
  * @param width     width of the line segment in pixels
  * @param result    color buffer for the resulting line segment
  */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_conical_get_line(lv_grad_dsc_t * dsc, int32_t xp, int32_t yp,
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_grad_conical_get_line(lv_grad_dsc_t* dsc, int32_t xp, int32_t yp,
                                                                   int32_t width,
-                                                                  lv_draw_sw_grad_calc_t * result);
+                                                                  lv_draw_sw_grad_calc_t* result);
 
 #endif /*LV_USE_DRAW_SW_COMPLEX_GRADIENTS*/
 

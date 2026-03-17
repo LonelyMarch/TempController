@@ -45,37 +45,36 @@ extern "C" {
   */
 typedef struct
 {
-  uint32_t PLLState;   /*!< The new state of the PLL.
+    uint32_t PLLState; /*!< The new state of the PLL.
                             This parameter can be a value of @ref RCC_PLL_Config                      */
 
-  uint32_t PLLSource;  /*!< RCC_PLLSource: PLL entry clock source.
+    uint32_t PLLSource; /*!< RCC_PLLSource: PLL entry clock source.
                             This parameter must be a value of @ref RCC_PLL_Clock_Source               */
 
-  uint32_t PLLM;       /*!< PLLM: Division factor for PLL VCO input clock.
+    uint32_t PLLM; /*!< PLLM: Division factor for PLL VCO input clock.
                             This parameter must be a number between Min_Data = 1 and Max_Data = 63    */
 
-  uint32_t PLLN;       /*!< PLLN: Multiplication factor for PLL VCO output clock.
+    uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output clock.
                             This parameter must be a number between Min_Data = 4 and Max_Data = 512
                             or between Min_Data = 8 and Max_Data = 420(*)
                             (*) : For stm32h7a3xx and stm32h7b3xx family lines.                       */
 
-  uint32_t PLLP;       /*!< PLLP: Division factor for system clock.
+    uint32_t PLLP; /*!< PLLP: Division factor for system clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 128
                           odd division factors are not allowed                                        */
 
-  uint32_t PLLQ;       /*!< PLLQ: Division factor for peripheral clocks.
+    uint32_t PLLQ; /*!< PLLQ: Division factor for peripheral clocks.
                             This parameter must be a number between Min_Data = 1 and Max_Data = 128   */
 
-  uint32_t PLLR;       /*!< PLLR: Division factor for peripheral clocks.
+    uint32_t PLLR; /*!< PLLR: Division factor for peripheral clocks.
                             This parameter must be a number between Min_Data = 1 and Max_Data = 128   */
-  uint32_t PLLRGE;     /*!<PLLRGE: PLL1 clock Input range
+    uint32_t PLLRGE; /*!<PLLRGE: PLL1 clock Input range
                          This parameter must be a value of @ref RCC_PLL1_VCI_Range                    */
-  uint32_t PLLVCOSEL;  /*!<PLLVCOSEL: PLL1 clock Output range
+    uint32_t PLLVCOSEL; /*!<PLLVCOSEL: PLL1 clock Output range
                          This parameter must be a value of @ref RCC_PLL1_VCO_Range                    */
 
-  uint32_t PLLFRACN;   /*!<PLLFRACN: Specifies Fractional Part Of The Multiplication Factor for
+    uint32_t PLLFRACN; /*!<PLLFRACN: Specifies Fractional Part Of The Multiplication Factor for
                         PLL1 VCO It should be a value between 0 and 8191                              */
-
 } RCC_PLLInitTypeDef;
 
 /**
@@ -83,37 +82,36 @@ typedef struct
   */
 typedef struct
 {
-  uint32_t OscillatorType;       /*!< The oscillators to be configured.
+    uint32_t OscillatorType; /*!< The oscillators to be configured.
                                       This parameter can be a value of @ref RCC_Oscillator_Type                   */
 
-  uint32_t HSEState;             /*!< The new state of the HSE.
+    uint32_t HSEState; /*!< The new state of the HSE.
                                       This parameter can be a value of @ref RCC_HSE_Config                        */
 
-  uint32_t LSEState;             /*!< The new state of the LSE.
+    uint32_t LSEState; /*!< The new state of the LSE.
                                       This parameter can be a value of @ref RCC_LSE_Config                        */
 
-  uint32_t HSIState;             /*!< The new state of the HSI.
+    uint32_t HSIState; /*!< The new state of the HSI.
                                       This parameter can be a value of @ref RCC_HSI_Config                        */
 
-  uint32_t HSICalibrationValue;  /*!< The calibration trimming value.
+    uint32_t HSICalibrationValue; /*!< The calibration trimming value.
                                       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0x3F for STM32H7 rev.Y
                                       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0x7F for STM32H7 rev.B and above */
 
-  uint32_t LSIState;             /*!< The new state of the LSI.
+    uint32_t LSIState; /*!< The new state of the LSI.
                                       This parameter can be a value of @ref RCC_LSI_Config                        */
 
-  uint32_t HSI48State;            /*!< The new state of the HSI48.
+    uint32_t HSI48State; /*!< The new state of the HSI48.
                                       This parameter can be a value of @ref RCC_HSI48_Config                      */
 
-  uint32_t CSIState;             /*!< The new state of the CSI.
+    uint32_t CSIState; /*!< The new state of the CSI.
                                       This parameter can be a value of @ref RCC_CSI_Config */
 
-  uint32_t CSICalibrationValue;  /*!< The calibration trimming value.
+    uint32_t CSICalibrationValue; /*!< The calibration trimming value.
                                       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0x1F for STM32H7 rev.Y
                                       This parameter must be a number between Min_Data = 0x00 and Max_Data = 0x3F for STM32H7 rev.B and above */
 
-  RCC_PLLInitTypeDef PLL;        /*!< PLL structure parameters                                                    */
-
+    RCC_PLLInitTypeDef PLL; /*!< PLL structure parameters                                                    */
 } RCC_OscInitTypeDef;
 
 /**
@@ -121,26 +119,26 @@ typedef struct
   */
 typedef struct
 {
-  uint32_t ClockType;             /*!< The clock to be configured.
+    uint32_t ClockType; /*!< The clock to be configured.
                                        This parameter can be a value of @ref RCC_System_Clock_Type                          */
 
-  uint32_t SYSCLKSource;          /*!< The clock source (SYSCLKS) used as system clock.
+    uint32_t SYSCLKSource; /*!< The clock source (SYSCLKS) used as system clock.
                                        This parameter can be a value of @ref RCC_System_Clock_Source                        */
 
-  uint32_t SYSCLKDivider;         /*!< The system clock  divider. This parameter can be
+    uint32_t SYSCLKDivider; /*!< The system clock  divider. This parameter can be
                                        a value of @ref RCC_SYS_Clock_Source                                                 */
 
-  uint32_t AHBCLKDivider;         /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
+    uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
                                        This parameter can be a value of @ref RCC_HCLK_Clock_Source                          */
 
-  uint32_t APB3CLKDivider;        /*!< The APB3 clock (D1PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB3CLKDivider; /*!< The APB3 clock (D1PCLK1) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB3_Clock_Source                        */
 
-  uint32_t APB1CLKDivider;        /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB1_Clock_Source                        */
-  uint32_t APB2CLKDivider;        /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB2_Clock_Source                        */
-  uint32_t APB4CLKDivider;      /*!< The APB4 clock (D3PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB4CLKDivider; /*!< The APB4 clock (D3PCLK1) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB4_Clock_Source                        */
 } RCC_ClkInitTypeDef;
 
@@ -210,6 +208,7 @@ typedef struct
 
 
 #define RCC_HSICALIBRATION_DEFAULT       (0x40U)         /* Default HSI calibration trimming value for STM32H7 rev.V and above. (0x20 value for rev.Y handled within __HAL_RCC_HSI_CALIBRATIONVALUE_ADJUST macro ) */
+
 /**
   * @}
   */
@@ -241,6 +240,7 @@ typedef struct
 #define RCC_CSI_ON                     RCC_CR_CSION
 
 #define RCC_CSICALIBRATION_DEFAULT     (0x20U)         /* Default CSI calibration trimming value for STM32H7 rev.V and above. (0x10 value for rev.Y handled within __HAL_RCC_CSI_CALIBRATIONVALUE_ADJUST macro ) */
+
 /**
   * @}
   */
@@ -278,7 +278,6 @@ typedef struct
 /**
   * @}
   */
-
 
 
 /** @defgroup RCC_PLL1_VCI_Range  RCC PLL1 VCI Range
@@ -1337,6 +1336,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_IS_CLK_ENABLED()         ((RCC->AHB2ENR & RCC_AHB2ENR_DCMI_PSSIEN)    != 0U)
 #define __HAL_RCC_DCMI_IS_CLK_ENABLED()              __HAL_RCC_DCMI_PSSI_IS_CLK_ENABLED()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_IS_CLK_ENABLED()              ((RCC->AHB2ENR & RCC_AHB2ENR_DCMIEN)    != 0U)
 #endif /* DCMI && PSSI */
@@ -1377,6 +1377,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_IS_CLK_DISABLED()        ((RCC->AHB2ENR & RCC_AHB2ENR_DCMI_PSSIEN)    == 0U)
 #define __HAL_RCC_DCMI_IS_CLK_DISABLED()             __HAL_RCC_DCMI_PSSI_IS_CLK_DISABLED()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_IS_CLK_DISABLED()             ((RCC->AHB2ENR & RCC_AHB2ENR_DCMIEN)    == 0U)
 #endif /* DCMI && PSSI */
@@ -1672,6 +1673,7 @@ typedef struct
 #if defined(BDMA2)
 #define __HAL_RCC_BDMA2_IS_CLK_DISABLED()            ((RCC->AHB4ENR & RCC_AHB4ENR_BDMA2EN)   == 0U)
 #define __HAL_RCC_BDMA_IS_CLK_DISABLED()  __HAL_RCC_BDMA2_IS_CLK_DISABLED()           /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_BDMA_IS_CLK_DISABLED()            ((RCC->AHB4ENR & RCC_AHB4ENR_BDMAEN)   == 0U)
 #endif
@@ -2695,16 +2697,12 @@ typedef struct
                                        } while(0)
 
 
-
-
 #define __HAL_RCC_C1_MDMA_CLK_DISABLE()            (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_MDMAEN))
 #define __HAL_RCC_C1_DMA2D_CLK_DISABLE()           (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_DMA2DEN))
 #define __HAL_RCC_C1_JPGDECEN_CLK_DISABLE()        (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_JPGDECEN))
 #define __HAL_RCC_C1_FMC_CLK_DISABLE()             (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_FMCEN))
 #define __HAL_RCC_C1_QSPI_CLK_DISABLE()            (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_QSPIEN))
 #define __HAL_RCC_C1_SDMMC1_CLK_DISABLE()          (RCC_C1->AHB3ENR &= ~ (RCC_AHB3ENR_SDMMC1EN))
-
-
 
 
 /** @brief  Enable or disable the AHB1 peripheral clock.
@@ -3722,8 +3720,6 @@ typedef struct
                                        } while(0)
 
 
-
-
 #define __HAL_RCC_C2_MDMA_CLK_DISABLE()            (RCC_C2->AHB3ENR &= ~ (RCC_AHB3ENR_MDMAEN))
 #define __HAL_RCC_C2_DMA2D_CLK_DISABLE()           (RCC_C2->AHB3ENR &= ~ (RCC_AHB3ENR_DMA2DEN))
 #define __HAL_RCC_C2_JPGDECEN_CLK_DISABLE()        (RCC_C2->AHB3ENR &= ~ (RCC_AHB3ENR_JPGDECEN))
@@ -4640,7 +4636,6 @@ typedef struct
                                        } while(0)
 
 
-
 #define __HAL_RCC_C2_SYSCFG_CLK_DISABLE()           (RCC_C2->APB4ENR) &= ~ (RCC_APB4ENR_SYSCFGEN)
 #define __HAL_RCC_C2_LPUART1_CLK_DISABLE()          (RCC_C2->APB4ENR) &= ~ (RCC_APB4ENR_LPUART1EN)
 #define __HAL_RCC_C2_SPI6_CLK_DISABLE()             (RCC_C2->APB4ENR) &= ~ (RCC_APB4ENR_SPI6EN)
@@ -4661,10 +4656,13 @@ typedef struct
 
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_AHB3_FORCE_RESET()          (RCC->AHB3RSTR = 0x00015031U)  /* Resets MDMA, DMA2D, JPEG, FMC, QSPI and SDMMC1 */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_AHB3_FORCE_RESET()          (RCC->AHB3RSTR = 0x01E95031U)  /* Resets MDMA, DMA2D, JPEG, FMC, OSPI1, SDMMC1, OSPI2, IOMNGR, OTFD1, OTFD2 and GFXMMU */
+
 #else
 #define __HAL_RCC_AHB3_FORCE_RESET()          (RCC->AHB3RSTR = 0x00E95011U)  /* Resets MDMA, DMA2D, FMC, OSPI1, SDMMC1, OSPI2, IOMNGR, OTFD1, OTFD2 */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_MDMA_FORCE_RESET()          (RCC->AHB3RSTR |= (RCC_AHB3RSTR_MDMARST))
 #define __HAL_RCC_DMA2D_FORCE_RESET()         (RCC->AHB3RSTR |= (RCC_AHB3RSTR_DMA2DRST))
@@ -4726,15 +4724,17 @@ typedef struct
 #endif /*GFXMMU*/
 
 
-
 /** @brief  Force or release the AHB1 peripheral reset.
   */
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_AHB1_FORCE_RESET()             (RCC->AHB1RSTR = 0x0A00C023U)  /* Resets DMA1, DMA2, ADC12, ART, ETHMAC, USB1OTG and USB2OTG */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_AHB1_FORCE_RESET()             (RCC->AHB1RSTR = 0x02000223U)  /* Resets DMA1, DMA2, ADC12, CRC and USB1OTG */
+
 #else
 #define __HAL_RCC_AHB1_FORCE_RESET()             (RCC->AHB1RSTR = 0x02008023U)  /* Resets DMA1, DMA2, ADC12, ETHMAC and USB1OTG */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_DMA1_FORCE_RESET()             (RCC->AHB1RSTR |= (RCC_AHB1RSTR_DMA1RST))
 #define __HAL_RCC_DMA2_FORCE_RESET()             (RCC->AHB1RSTR |= (RCC_AHB1RSTR_DMA2RST))
@@ -4775,10 +4775,13 @@ typedef struct
   */
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_AHB2_FORCE_RESET()             (RCC->AHB2RSTR = 0x00000271U)  /* Resets DCMI, CRYPT, HASH, RNG and SDMMC2 */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_AHB2_FORCE_RESET()             (RCC->AHB2RSTR = 0x00000A75U)  /* Resets DCMI_PSSI, HSEM, CRYPT, HASH, RNG, SDMMC2 and BDMA1 */
+
 #else
 #define __HAL_RCC_AHB2_FORCE_RESET()             (RCC->AHB2RSTR = 0x00030271U)  /* Resets DCMI_PSSI, CRYPT, HASH, RNG, SDMMC2, FMAC and CORDIC */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_FORCE_RESET()        (RCC->AHB2RSTR |= (RCC_AHB2RSTR_DCMI_PSSIRST))
@@ -4811,6 +4814,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_RELEASE_RESET()        (RCC->AHB2RSTR &= ~ (RCC_AHB2RSTR_DCMI_PSSIRST))
 #define __HAL_RCC_DCMI_RELEASE_RESET()             __HAL_RCC_DCMI_PSSI_RELEASE_RESET()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_RELEASE_RESET()             (RCC->AHB2RSTR &= ~ (RCC_AHB2RSTR_DCMIRST))
 #endif /* DCMI && PSSI */
@@ -4841,10 +4845,12 @@ typedef struct
 
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_AHB4_FORCE_RESET()            (RCC->AHB4RSTR = 0x032807FFU)  /* Resets GPIOA..GPIOK, CRC, BDMA, ADC3 and HSEM */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_AHB4_FORCE_RESET()            (RCC->AHB4RSTR = 0x002007FFU)  /* Resets GPIOA..GPIOK and BDMA2 */
 #else
 #define __HAL_RCC_AHB4_FORCE_RESET()            (RCC->AHB4RSTR = 0x032806FFU)  /* Resets GPIOA..GPIOH, GPIOJ, GPIOK, CRC, BDMA, ADC3 and HSEM */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_GPIOA_FORCE_RESET()           (RCC->AHB4RSTR) |= (RCC_AHB4RSTR_GPIOARST)
 #define __HAL_RCC_GPIOB_FORCE_RESET()           (RCC->AHB4RSTR) |= (RCC_AHB4RSTR_GPIOBRST)
@@ -4865,6 +4871,7 @@ typedef struct
 #if defined(BDMA2)
 #define __HAL_RCC_BDMA2_FORCE_RESET()           (RCC->AHB4RSTR) |= (RCC_AHB4RSTR_BDMA2RST)
 #define __HAL_RCC_BDMA_FORCE_RESET()            __HAL_RCC_BDMA2_FORCE_RESET()         /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_BDMA_FORCE_RESET()            (RCC->AHB4RSTR) |= (RCC_AHB4RSTR_BDMARST)
 #endif /*BDMA2*/
@@ -4931,13 +4938,17 @@ typedef struct
   */
 #if (STM32H7_DEV_ID == 0x450UL) || (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_APB1L_FORCE_RESET()          (RCC->APB1LRSTR = 0xE8FFC3FFU) /* Resets TIM2..TIM7, TIM12..TIM14, LPTIM1, SPI2, SPI3, SPDIFRX, USART2, USART3, UART4, UART5, I2C1..I2C3, CEC, DAC1(2), UART7 and UART8 */
+
 #else
 #define __HAL_RCC_APB1L_FORCE_RESET()          (RCC->APB1LRSTR = 0xEAFFC3FFU) /* Resets TIM2..TIM7, TIM12..TIM14, LPTIM1, SPI2, SPI3, SPDIFRX, USART2, USART3, UART4, UART5, I2C1..I2C3, I2C5, CEC, DAC12, UART7 and UART8 */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #if (STM32H7_DEV_ID == 0x450UL) || (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_APB1H_FORCE_RESET()          (RCC->APB1HRSTR = 0x00000136U) /* Resets CRS, SWP, OPAMP, MDIOS and FDCAN */
+
 #else
 #define __HAL_RCC_APB1H_FORCE_RESET()          (RCC->APB1HRSTR = 0x03000136U) /* Resets CRS, SWP, OPAMP, MDIOS, FDCAN, TIM23 and TIM24 */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_TIM2_FORCE_RESET()           (RCC->APB1LRSTR) |= (RCC_APB1LRSTR_TIM2RST)
 #define __HAL_RCC_TIM3_FORCE_RESET()           (RCC->APB1LRSTR) |= (RCC_APB1LRSTR_TIM3RST)
@@ -5023,10 +5034,13 @@ typedef struct
   */
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_APB2_FORCE_RESET()            (RCC->APB2RSTR = 0x31D73033U)  /* Resets TIM1, TIM8, USART1, USART6, SPI1, SPI4, TIM15..TIM17, SPI5, SAI1..SAI3, DFSDM1 and HRTIM */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_APB2_FORCE_RESET()            (RCC->APB2RSTR = 0x40D730F3U)  /* Resets TIM1, TIM8, USART1, USART6, UART9, USART10, SPI1, SPI4, TIM15..TIM17, SPI5, SAI1, SAI2 and DFSDM1 */
+
 #else
 #define __HAL_RCC_APB2_FORCE_RESET()            (RCC->APB2RSTR = 0x405730F3U)  /* Resets TIM1, TIM8, USART1, USART6, UART9, USART10, SPI1, SPI4, TIM15..TIM17, SPI5, SAI1 and DFSDM1 */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_TIM1_FORCE_RESET()           (RCC->APB2RSTR) |= (RCC_APB2RSTR_TIM1RST)
 #define __HAL_RCC_TIM8_FORCE_RESET()           (RCC->APB2RSTR) |= (RCC_APB2RSTR_TIM8RST)
@@ -5090,10 +5104,13 @@ typedef struct
 
 #if (STM32H7_DEV_ID == 0x450UL)
 #define __HAL_RCC_APB4_FORCE_RESET()            (RCC->APB4RSTR = 0x0020DEAAU)  /* Resets SYSCFG, LPUART1, SPI6, I2C4, LPTIM2..LPTIM5, COMP12, VREF and SAI4 */
+
 #elif  (STM32H7_DEV_ID == 0x480UL)
 #define __HAL_RCC_APB4_FORCE_RESET()            (RCC->APB4RSTR = 0x0C00E6AAU)  /* Resets SYSCFG, LPUART1, SPI6, I2C4, LPTIM2, LPTIM3, DAC2, COMP12, VREF, DTS and DFSDM2 */
+
 #else
 #define __HAL_RCC_APB4_FORCE_RESET()            (RCC->APB4RSTR = 0x0420DEAAU)  /* Resets SYSCFG, LPUART1, SPI6, I2C4, LPTIM2..LPTIM5, COMP12, VREF, SAI4 and DTS */
+
 #endif /* STM32H7_DEV_ID == 0x450UL */
 #define __HAL_RCC_SYSCFG_FORCE_RESET()           (RCC->APB4RSTR) |= (RCC_APB4RSTR_SYSCFGRST)
 #define __HAL_RCC_LPUART1_FORCE_RESET()          (RCC->APB4RSTR) |= (RCC_APB4RSTR_LPUART1RST)
@@ -5202,6 +5219,7 @@ typedef struct
 #else
 #define __HAL_RCC_AXISRAM1_CLK_SLEEP_ENABLE()        (RCC->AHB3LPENR |= (RCC_AHB3LPENR_AXISRAM1LPEN))
 #define __HAL_RCC_D1SRAM1_CLK_SLEEP_ENABLE           __HAL_RCC_AXISRAM1_CLK_SLEEP_ENABLE  /* For backward compatibility */
+
 #endif /* RCC_AHB3LPENR_AXISRAMLPEN */
 
 #define __HAL_RCC_MDMA_CLK_SLEEP_DISABLE()            (RCC->AHB3LPENR &= ~ (RCC_AHB3LPENR_MDMALPEN))
@@ -5248,6 +5266,7 @@ typedef struct
 #else
 #define __HAL_RCC_AXISRAM1_CLK_SLEEP_DISABLE()        (RCC->AHB3LPENR &= ~ (RCC_AHB3LPENR_AXISRAM1LPEN))
 #define __HAL_RCC_D1SRAM1_CLK_SLEEP_DISABLE          __HAL_RCC_AXISRAM1_CLK_SLEEP_DISABLE      /* For backward compatibility */
+
 #endif  /* RCC_AHB3LPENR_AXISRAMLPEN */
 
 /** @brief  Get the enable or disable status of the AHB3 peripheral clock during Low Poser (Sleep) mode.
@@ -5462,6 +5481,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_CLK_SLEEP_ENABLE()        (RCC->AHB2LPENR |= (RCC_AHB2LPENR_DCMI_PSSILPEN))
 #define __HAL_RCC_DCMI_CLK_SLEEP_ENABLE()             __HAL_RCC_DCMI_PSSI_CLK_SLEEP_ENABLE()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_CLK_SLEEP_ENABLE()             (RCC->AHB2LPENR |= (RCC_AHB2LPENR_DCMILPEN))
 #endif /* DCMI && PSSI */
@@ -5499,6 +5519,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_CLK_SLEEP_DISABLE()        (RCC->AHB2LPENR &= ~ (RCC_AHB2LPENR_DCMI_PSSILPEN))
 #define __HAL_RCC_DCMI_CLK_SLEEP_DISABLE()             __HAL_RCC_DCMI_PSSI_CLK_SLEEP_DISABLE()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_CLK_SLEEP_DISABLE()             (RCC->AHB2LPENR &= ~ (RCC_AHB2LPENR_DCMILPEN))
 #endif /* DCMI && PSSI */
@@ -5543,6 +5564,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_IS_CLK_SLEEP_ENABLED()         ((RCC->AHB2LPENR & (RCC_AHB2LPENR_DCMI_PSSILPEN))    != 0U)
 #define __HAL_RCC_DCMI_IS_CLK_SLEEP_ENABLED()              __HAL_RCC_DCMI_PSSI_IS_CLK_SLEEP_ENABLED()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_IS_CLK_SLEEP_ENABLED()              ((RCC->AHB2LPENR & (RCC_AHB2LPENR_DCMILPEN))    != 0U)
 #endif /* DCMI && PSSI */
@@ -5580,6 +5602,7 @@ typedef struct
 #if defined(DCMI) && defined(PSSI)
 #define __HAL_RCC_DCMI_PSSI_IS_CLK_SLEEP_DISABLED()        ((RCC->AHB2LPENR & (RCC_AHB2LPENR_DCMI_PSSILPEN))    == 0U)
 #define __HAL_RCC_DCMI_IS_CLK_SLEEP_DISABLED()             __HAL_RCC_DCMI_PSSI_IS_CLK_SLEEP_DISABLED()  /* for API backward compatibility*/
+
 #else
 #define __HAL_RCC_DCMI_IS_CLK_SLEEP_DISABLED()             ((RCC->AHB2LPENR & (RCC_AHB2LPENR_DCMILPEN))    == 0U)
 #endif /* DCMI && PSSI */
@@ -5725,6 +5748,7 @@ typedef struct
 #if defined(RCC_AHB4LPENR_SRDSRAMLPEN)
 #define __HAL_RCC_SRDSRAM_IS_CLK_SLEEP_ENABLED()          ((RCC->AHB4LPENR & (RCC_AHB4LPENR_SRDSRAMLPEN)) != 0U)
 #define __HAL_RCC_D3SRAM1_IS_CLK_SLEEP_ENABLED  __HAL_RCC_SRDSRAM_IS_CLK_SLEEP_ENABLED  /* For API backward compatibility*/
+
 #else
 #define __HAL_RCC_D3SRAM1_IS_CLK_SLEEP_ENABLED()          ((RCC->AHB4LPENR & (RCC_AHB4LPENR_D3SRAM1LPEN)) != 0U)
 #endif
@@ -5758,6 +5782,7 @@ typedef struct
 #if defined(RCC_AHB4LPENR_SRDSRAMLPEN)
 #define __HAL_RCC_SRDSRAM_IS_CLK_SLEEP_DISABLED()         ((RCC->AHB4LPENR & (RCC_AHB4LPENR_SRDSRAMLPEN)) == 0U)
 #define __HAL_RCC_D3SRAM1_IS_CLK_SLEEP_DISABLED  __HAL_RCC_SRDSRAM_IS_CLK_SLEEP_DISABLED  /* For API backward compatibility*/
+
 #else
 #define __HAL_RCC_D3SRAM1_IS_CLK_SLEEP_DISABLED()         ((RCC->AHB4LPENR & (RCC_AHB4LPENR_D3SRAM1LPEN)) == 0U)
 #endif
@@ -6289,7 +6314,6 @@ typedef struct
 #define __HAL_RCC_C1_D1SRAM1_CLK_SLEEP_DISABLE()         (RCC_C1->AHB3LPENR &= ~ (RCC_AHB3LPENR_AXISRAMLPEN))
 
 
-
 /** @brief  ENABLE or disable the AHB1 peripheral clock during Low Power (Sleep) mode.
   * @note   Peripheral clock gating in SLEEP mode can be used to further reduce
   *         power consumption.
@@ -6583,7 +6607,6 @@ typedef struct
 #define __HAL_RCC_C2_DTCM2_CLK_SLEEP_DISABLE()           (RCC_C2->AHB3LPENR &= ~ (RCC_AHB3LPENR_DTCM2LPEN))
 #define __HAL_RCC_C2_ITCM_CLK_SLEEP_DISABLE()            (RCC_C2->AHB3LPENR &= ~ (RCC_AHB3LPENR_ITCMLPEN))
 #define __HAL_RCC_C2_D1SRAM1_CLK_SLEEP_DISABLE()         (RCC_C2->AHB3LPENR &= ~ (RCC_AHB3LPENR_AXISRAMLPEN))
-
 
 
 /** @brief  ENABLE or disable the AHB1 peripheral clock during Low Power (Sleep) mode.
@@ -7105,8 +7128,6 @@ typedef struct
 #define __HAL_RCC_JTAG_CLKGA_DISABLE()            (RCC->CKGAENR) &= ~ (RCC_CKGAENR_JTAGCKG)
 
 #endif /* RCC_CKGAENR_AXICKG */
-
-
 
 
 /** @brief  Macro to enable or disable the Internal High Speed oscillator (HSI).
@@ -7653,7 +7674,6 @@ typedef struct
                   MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLL1VCOSEL, (__RCC_PLL1VCORange__))
 
 
-
 /** @brief  Macro to get the clock source used as system clock.
   * @retval The clock source used as system clock. The returned value can be one
   *         of the following:
@@ -7967,8 +7987,8 @@ typedef struct
   */
 /* Initialization and de-initialization functions  ******************************/
 HAL_StatusTypeDef HAL_RCC_DeInit(void);
-HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct);
-HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency);
+HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef* RCC_OscInitStruct);
+HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef* RCC_ClkInitStruct, uint32_t FLatency);
 
 /**
   * @}
@@ -7978,19 +7998,19 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruc
   * @{
   */
 /* Peripheral Control functions  ************************************************/
-void     HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
-void     HAL_RCC_EnableCSS(void);
-void     HAL_RCC_DisableCSS(void);
+void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
+void HAL_RCC_EnableCSS(void);
+void HAL_RCC_DisableCSS(void);
 uint32_t HAL_RCC_GetSysClockFreq(void);
 uint32_t HAL_RCC_GetHCLKFreq(void);
 uint32_t HAL_RCC_GetPCLK1Freq(void);
 uint32_t HAL_RCC_GetPCLK2Freq(void);
-void     HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct);
-void     HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFLatency);
+void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef* RCC_OscInitStruct);
+void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef * RCC_ClkInitStruct, uint32_t * pFLatency);
 /* CSS NMI IRQ handler */
-void     HAL_RCC_NMI_IRQHandler(void);
+void HAL_RCC_NMI_IRQHandler(void);
 /* User Callbacks in non blocking mode (IT mode) */
-void     HAL_RCC_CSSCallback(void);
+void HAL_RCC_CSSCallback(void);
 
 /**
   * @}
@@ -8263,4 +8283,3 @@ void     HAL_RCC_CSSCallback(void);
 #endif
 
 #endif /* STM32H7xx_HAL_RCC_H */
-

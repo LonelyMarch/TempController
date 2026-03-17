@@ -63,22 +63,23 @@ extern "C" {
 struct _lv_pending_t;
 struct NVGLUframebuffer;
 
-typedef struct _lv_draw_nanovg_unit_t {
+typedef struct _lv_draw_nanovg_unit_t
+{
     lv_draw_unit_t base_unit;
-    lv_layer_t * current_layer;
-    NVGcontext * vg;
+    lv_layer_t* current_layer;
+    NVGcontext* vg;
     bool is_started;
-    lv_draw_buf_t * image_buf;
+    lv_draw_buf_t* image_buf;
 
-    lv_cache_t * image_cache;
-    struct _lv_pending_t * image_pending;
+    lv_cache_t* image_cache;
+    struct _lv_pending_t* image_pending;
     lv_ll_t image_drop_ll;
-    const void * image_drop_src;
+    const void* image_drop_src;
 
-    lv_cache_t * letter_cache;
-    struct _lv_pending_t * letter_pending;
+    lv_cache_t* letter_cache;
+    struct _lv_pending_t* letter_pending;
 
-    lv_cache_t * fbo_cache;
+    lv_cache_t* fbo_cache;
 } lv_draw_nanovg_unit_t;
 
 /**********************
@@ -92,7 +93,7 @@ typedef struct _lv_draw_nanovg_unit_t {
  * @param dsc pointer to a 3D draw descriptor
  * @param coords the coordinates of the 3D texture
  */
-void lv_draw_nanovg_3d(lv_draw_task_t * t, const lv_draw_3d_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_3d(lv_draw_task_t* t, const lv_draw_3d_dsc_t* dsc, const lv_area_t* coords);
 #endif
 
 /**
@@ -101,7 +102,7 @@ void lv_draw_nanovg_3d(lv_draw_task_t * t, const lv_draw_3d_dsc_t * dsc, const l
  * @param dsc pointer to an arc descriptor
  * @param coords the coordinates of the arc
  */
-void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_arc(lv_draw_task_t* t, const lv_draw_arc_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Draw border on a NanoVG context
@@ -109,7 +110,7 @@ void lv_draw_nanovg_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
  * @param dsc pointer to a border descriptor
  * @param coords the coordinates of the border
  */
-void lv_draw_nanovg_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_border(lv_draw_task_t* t, const lv_draw_border_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Draw box on a NanoVG context
@@ -117,7 +118,7 @@ void lv_draw_nanovg_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc,
  * @param dsc pointer to a box descriptor
  * @param coords the coordinates of the box
  */
-void lv_draw_nanovg_box_shadow(lv_draw_task_t * t, const lv_draw_box_shadow_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_box_shadow(lv_draw_task_t* t, const lv_draw_box_shadow_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Fill a rectangle on a NanoVG context
@@ -125,7 +126,7 @@ void lv_draw_nanovg_box_shadow(lv_draw_task_t * t, const lv_draw_box_shadow_dsc_
  * @param dsc pointer to a fill descriptor
  * @param coords the coordinates of the rectangle
  */
-void lv_draw_nanovg_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_fill(lv_draw_task_t* t, const lv_draw_fill_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Draw image on a NanoVG context
@@ -134,7 +135,7 @@ void lv_draw_nanovg_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, con
  * @param coords the coordinates of the image
  * @param image_handle the handle of the image to draw
  */
-void lv_draw_nanovg_image(lv_draw_task_t * t, const lv_draw_image_dsc_t * dsc, const lv_area_t * coords,
+void lv_draw_nanovg_image(lv_draw_task_t* t, const lv_draw_image_dsc_t* dsc, const lv_area_t* coords,
                           int image_handle);
 
 /**
@@ -155,7 +156,7 @@ void lv_draw_nanovg_label_deinit(lv_draw_nanovg_unit_t * u);
  * @param dsc pointer to a letter descriptor
  * @param coords the coordinates of the letter
  */
-void lv_draw_nanovg_letter(lv_draw_task_t * t, const lv_draw_letter_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_letter(lv_draw_task_t* t, const lv_draw_letter_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Draw label on a NanoVG context
@@ -163,7 +164,7 @@ void lv_draw_nanovg_letter(lv_draw_task_t * t, const lv_draw_letter_dsc_t * dsc,
  * @param dsc pointer to a label descriptor
  * @param coords the coordinates of the label
  */
-void lv_draw_nanovg_label(lv_draw_task_t * t, const lv_draw_label_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_nanovg_label(lv_draw_task_t* t, const lv_draw_label_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Draw layer on a NanoVG context
@@ -171,35 +172,35 @@ void lv_draw_nanovg_label(lv_draw_task_t * t, const lv_draw_label_dsc_t * dsc, c
  * @param draw_dsc pointer to an image descriptor
  * @param coords the coordinates of the layer
  */
-void lv_draw_nanovg_layer(lv_draw_task_t * t, const lv_draw_image_dsc_t * draw_dsc, const lv_area_t * coords);
+void lv_draw_nanovg_layer(lv_draw_task_t* t, const lv_draw_image_dsc_t* draw_dsc, const lv_area_t* coords);
 
 /**
  * Draw line on a NanoVG context
  * @param t pointer to a drawing task
  * @param dsc pointer to a line descriptor
  */
-void lv_draw_nanovg_line(lv_draw_task_t * t, const lv_draw_line_dsc_t * dsc);
+void lv_draw_nanovg_line(lv_draw_task_t* t, const lv_draw_line_dsc_t* dsc);
 
 /**
  * Draw triangle on a NanoVG context
  * @param t pointer to a drawing task
  * @param dsc pointer to a triangle descriptor
  */
-void lv_draw_nanovg_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc);
+void lv_draw_nanovg_triangle(lv_draw_task_t* t, const lv_draw_triangle_dsc_t* dsc);
 
 /**
  * Draw mask rectangles on a NanoVG context
  * @param t pointer to a drawing task
  * @param dsc pointer to a mask descriptor
  */
-void lv_draw_nanovg_mask_rect(lv_draw_task_t * t, const lv_draw_mask_rect_dsc_t * dsc);
+void lv_draw_nanovg_mask_rect(lv_draw_task_t* t, const lv_draw_mask_rect_dsc_t* dsc);
 
 /**
  * Get image handle from framebuffer
  * @param fb the framebuffer to get the image handle from
  * @return the image handle
  */
-int lv_nanovg_fb_get_image_handle(struct NVGLUframebuffer * fb);
+int lv_nanovg_fb_get_image_handle(struct NVGLUframebuffer* fb);
 
 #if LV_USE_VECTOR_GRAPHIC
 /**
@@ -207,7 +208,7 @@ int lv_nanovg_fb_get_image_handle(struct NVGLUframebuffer * fb);
  * @param t pointer to a drawing task
  * @param dsc pointer to a vector descriptor
  */
-void lv_draw_nanovg_vector(lv_draw_task_t * t, const lv_draw_vector_dsc_t * dsc);
+void lv_draw_nanovg_vector(lv_draw_task_t* t, const lv_draw_vector_dsc_t* dsc);
 
 /**
  * @brief Convert a gradient to a paint
@@ -215,7 +216,7 @@ void lv_draw_nanovg_vector(lv_draw_task_t * t, const lv_draw_vector_dsc_t * dsc)
  * @param grad the gradient descriptor
  * @param paint the paint to store the result
  */
-bool lv_nanovg_grad_to_paint(NVGcontext * ctx, const lv_vector_gradient_t * grad, NVGpaint * paint);
+bool lv_nanovg_grad_to_paint(NVGcontext* ctx, const lv_vector_gradient_t* grad, NVGpaint* paint);
 
 /**
  * @brief Draw a gradient
@@ -225,8 +226,8 @@ bool lv_nanovg_grad_to_paint(NVGcontext * ctx, const lv_vector_gradient_t * grad
  * @param composite_operation the blend mode
  */
 void lv_nanovg_draw_grad(
-    NVGcontext * ctx,
-    const lv_vector_gradient_t * grad,
+    NVGcontext* ctx,
+    const lv_vector_gradient_t* grad,
     enum NVGwinding winding,
     enum NVGcompositeOperation composite_operation);
 
@@ -239,9 +240,9 @@ void lv_nanovg_draw_grad(
  * @param composite_operation the blend mode
  */
 void lv_nanovg_draw_grad_helper(
-    NVGcontext * ctx,
-    const lv_area_t * area,
-    const lv_grad_dsc_t * grad_dsc,
+    NVGcontext* ctx,
+    const lv_area_t* area,
+    const lv_grad_dsc_t* grad_dsc,
     enum NVGwinding winding,
     enum NVGcompositeOperation composite_operation);
 

@@ -36,10 +36,13 @@
 void LottieLoader::run(unsigned tid)
 {
     //update frame
-    if (comp) {
+    if (comp)
+    {
         builder->update(comp, frameNo);
-    //initial loading
-    } else {
+        //initial loading
+    }
+    else
+    {
         LottieParser parser(content, dirName);
         if (!parser.parse()) return;
         {
@@ -56,7 +59,8 @@ void LottieLoader::run(unsigned tid)
 
 void LottieLoader::release()
 {
-    if (copy) {
+    if (copy)
+    {
         lv_free((char*)content);
         content = nullptr;
     }
@@ -71,7 +75,6 @@ void LottieLoader::release()
 
 LottieLoader::LottieLoader() : FrameModule(FileType::Lottie), builder(new LottieBuilder)
 {
-
 }
 
 
@@ -90,17 +93,21 @@ LottieLoader::~LottieLoader()
 bool LottieLoader::header()
 {
     //A single thread doesn't need to perform intensive tasks.
-    if (TaskScheduler::threads() == 0) {
+    if (TaskScheduler::threads() == 0)
+    {
         LoadModule::read();
         run(0);
-        if (comp) {
+        if (comp)
+        {
             w = static_cast<float>(comp->w);
             h = static_cast<float>(comp->h);
             frameDuration = comp->duration();
             frameCnt = comp->frameCnt();
             frameRate = comp->frameRate;
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
@@ -112,29 +119,35 @@ bool LottieLoader::header()
 
     auto p = content;
 
-    while (*p != '\0') {
-        if (*p == '{') {
+    while (*p != '\0')
+    {
+        if (*p == '{')
+        {
             ++depth;
             ++p;
             continue;
         }
-        if (*p == '}') {
+        if (*p == '}')
+        {
             --depth;
             ++p;
             continue;
         }
-        if (depth != 1) {
+        if (depth != 1)
+        {
             ++p;
             continue;
         }
         //version.
-        if (!strncmp(p, "\"v\":", 4)) {
+        if (!strncmp(p, "\"v\":", 4))
+        {
             p += 4;
             continue;
         }
 
         //framerate
-        if (!strncmp(p, "\"fr\":", 5)) {
+        if (!strncmp(p, "\"fr\":", 5))
+        {
             p += 5;
             auto e = strstr(p, ",");
             if (!e) e = strstr(p, "}");
@@ -144,7 +157,8 @@ bool LottieLoader::header()
         }
 
         //start frame
-        if (!strncmp(p, "\"ip\":", 5)) {
+        if (!strncmp(p, "\"ip\":", 5))
+        {
             p += 5;
             auto e = strstr(p, ",");
             if (!e) e = strstr(p, "}");
@@ -154,7 +168,8 @@ bool LottieLoader::header()
         }
 
         //end frame
-        if (!strncmp(p, "\"op\":", 5)) {
+        if (!strncmp(p, "\"op\":", 5))
+        {
             p += 5;
             auto e = strstr(p, ",");
             if (!e) e = strstr(p, "}");
@@ -164,7 +179,8 @@ bool LottieLoader::header()
         }
 
         //width
-        if (!strncmp(p, "\"w\":", 4)) {
+        if (!strncmp(p, "\"w\":", 4))
+        {
             p += 4;
             auto e = strstr(p, ",");
             if (!e) e = strstr(p, "}");
@@ -173,7 +189,8 @@ bool LottieLoader::header()
             continue;
         }
         //height
-        if (!strncmp(p, "\"h\":", 4)) {
+        if (!strncmp(p, "\"h\":", 4))
+        {
             p += 4;
             auto e = strstr(p, ",");
             if (!e) e = strstr(p, "}");
@@ -184,7 +201,8 @@ bool LottieLoader::header()
         ++p;
     }
 
-    if (frameRate < FLOAT_EPSILON) {
+    if (frameRate < FLOAT_EPSILON)
+    {
         TVGLOG("LOTTIE", "Not a Lottie file? Frame rate is 0!");
         return false;
     }
@@ -200,13 +218,15 @@ bool LottieLoader::header()
 
 bool LottieLoader::open(const char* data, uint32_t size, bool copy)
 {
-    if (copy) {
+    if (copy)
+    {
         content = (char*)lv_malloc(size + 1);
         LV_ASSERT_MALLOC(content);
         if (!content) return false;
         memcpy((char*)content, data, size);
         const_cast<char*>(content)[size] = '\0';
-    } else content = data;
+    }
+    else content = data;
 
     this->dirName = lv_strdup(".");
 
@@ -225,7 +245,8 @@ bool LottieLoader::open(const string& path)
     fseek(f, 0, SEEK_END);
 
     size = ftell(f);
-    if (size == 0) {
+    if (size == 0)
+    {
         fclose(f);
         return false;
     }
@@ -234,7 +255,8 @@ bool LottieLoader::open(const string& path)
     LV_ASSERT_MALLOC(content);
     fseek(f, 0, SEEK_SET);
     auto ret = fread(content, sizeof(char), size, f);
-    if (ret < size) {
+    if (ret < size)
+    {
         fclose(f);
         return false;
     }
@@ -298,7 +320,8 @@ bool LottieLoader::override(const char* slot)
     auto success = true;
 
     //override slots
-    if (slot) {
+    if (slot)
+    {
         //Copy the input data because the JSON parser will encode the data immediately.
         auto temp = lv_strdup(slot);
 
@@ -307,8 +330,10 @@ bool LottieLoader::override(const char* slot)
         parser.comp = comp;
 
         auto idx = 0;
-        while (auto sid = parser.sid(idx == 0)) {
-            for (auto s = comp->slots.begin(); s < comp->slots.end(); ++s) {
+        while (auto sid = parser.sid(idx == 0))
+        {
+            for (auto s = comp->slots.begin(); s < comp->slots.end(); ++s)
+            {
                 if (strcmp((*s)->sid, sid)) continue;
                 if (!parser.apply(*s)) success = false;
                 break;
@@ -319,9 +344,12 @@ bool LottieLoader::override(const char* slot)
         if (idx < 1) success = false;
         lv_free(temp);
         rebuild = overridden = success;
-    //reset slots
-    } else if (overridden) {
-        for (auto s = comp->slots.begin(); s < comp->slots.end(); ++s) {
+        //reset slots
+    }
+    else if (overridden)
+    {
+        for (auto s = comp->slots.begin(); s < comp->slots.end(); ++s)
+        {
             (*s)->reset();
         }
         overridden = false;
@@ -404,8 +432,10 @@ bool LottieLoader::segment(const char* marker, float& begin, float& end)
 {
     if (!ready() || comp->markers.count == 0) return false;
 
-    for (auto m = comp->markers.begin(); m < comp->markers.end(); ++m) {
-        if (!strcmp(marker, (*m)->name)) {
+    for (auto m = comp->markers.begin(); m < comp->markers.end(); ++m)
+    {
+        if (!strcmp(marker, (*m)->name))
+        {
             begin = (*m)->time / frameCnt;
             end = ((*m)->time + (*m)->duration) / frameCnt;
             return true;
@@ -427,4 +457,3 @@ bool LottieLoader::ready()
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

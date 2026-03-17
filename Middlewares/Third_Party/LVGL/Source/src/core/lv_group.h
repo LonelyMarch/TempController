@@ -22,29 +22,31 @@ extern "C" {
  *      DEFINES
  *********************/
 /** Predefined keys to control which Widget has focus via lv_group_send(group, c) */
-typedef enum {
-    LV_KEY_UP        = 17,  /*0x11*/
-    LV_KEY_DOWN      = 18,  /*0x12*/
-    LV_KEY_RIGHT     = 19,  /*0x13*/
-    LV_KEY_LEFT      = 20,  /*0x14*/
-    LV_KEY_ESC       = 27,  /*0x1B*/
-    LV_KEY_DEL       = 127, /*0x7F*/
-    LV_KEY_BACKSPACE = 8,   /*0x08*/
-    LV_KEY_ENTER     = 10,  /*0x0A, '\n'*/
-    LV_KEY_NEXT      = 9,   /*0x09, '\t'*/
-    LV_KEY_PREV      = 11,  /*0x0B, '*/
-    LV_KEY_HOME      = 2,   /*0x02, STX*/
-    LV_KEY_END       = 3,   /*0x03, ETX*/
+typedef enum
+{
+    LV_KEY_UP = 17, /*0x11*/
+    LV_KEY_DOWN = 18, /*0x12*/
+    LV_KEY_RIGHT = 19, /*0x13*/
+    LV_KEY_LEFT = 20, /*0x14*/
+    LV_KEY_ESC = 27, /*0x1B*/
+    LV_KEY_DEL = 127, /*0x7F*/
+    LV_KEY_BACKSPACE = 8, /*0x08*/
+    LV_KEY_ENTER = 10, /*0x0A, '\n'*/
+    LV_KEY_NEXT = 9, /*0x09, '\t'*/
+    LV_KEY_PREV = 11, /*0x0B, '*/
+    LV_KEY_HOME = 2, /*0x02, STX*/
+    LV_KEY_END = 3, /*0x03, ETX*/
 } lv_key_t;
 
 /**********************
  *      TYPEDEFS
  **********************/
 
-typedef void (*lv_group_focus_cb_t)(lv_group_t *);
-typedef void (*lv_group_edge_cb_t)(lv_group_t *, bool);
+typedef void (*lv_group_focus_cb_t)(lv_group_t*);
+typedef void (*lv_group_edge_cb_t)(lv_group_t*, bool);
 
-typedef enum {
+typedef enum
+{
     LV_GROUP_REFOCUS_POLICY_NEXT = 0,
     LV_GROUP_REFOCUS_POLICY_PREV = 1
 } lv_group_refocus_policy_t;
@@ -57,7 +59,7 @@ typedef enum {
  * Create new Widget group.
  * @return          pointer to the new Widget group
  */
-lv_group_t * lv_group_create(void);
+lv_group_t* lv_group_create(void);
 
 /**
  * Delete group object.
@@ -76,7 +78,7 @@ void lv_group_set_default(lv_group_t * group);
  * Get default group.
  * @return          pointer to the default group
  */
-lv_group_t * lv_group_get_default(void);
+lv_group_t* lv_group_get_default(void);
 
 /**
  * Add an Widget to group.
@@ -127,7 +129,7 @@ void lv_group_focus_prev(lv_group_t * group);
  * @param group     pointer to a group
  * @param en        true: freeze, false: release freezing (normal mode)
  */
-void lv_group_focus_freeze(lv_group_t * group, bool en);
+void lv_group_focus_freeze(lv_group_t* group, bool en);
 
 /**
  * Send a control character to Widget that has focus in a group.
@@ -135,21 +137,21 @@ void lv_group_focus_freeze(lv_group_t * group, bool en);
  * @param c         a character (use LV_KEY_.. to navigate)
  * @return          result of Widget with focus in group.
  */
-lv_result_t lv_group_send_data(lv_group_t * group, uint32_t c);
+lv_result_t lv_group_send_data(lv_group_t* group, uint32_t c);
 
 /**
  * Set a function for a group which will be called when a new Widget has focus.
  * @param group         pointer to a group
  * @param focus_cb      the call back function or NULL if unused
  */
-void lv_group_set_focus_cb(lv_group_t * group, lv_group_focus_cb_t focus_cb);
+void lv_group_set_focus_cb(lv_group_t* group, lv_group_focus_cb_t focus_cb);
 
 /**
  * Set a function for a group which will be called when a focus edge is reached
  * @param group         pointer to a group
  * @param edge_cb      the call back function or NULL if unused
  */
-void lv_group_set_edge_cb(lv_group_t * group, lv_group_edge_cb_t edge_cb);
+void lv_group_set_edge_cb(lv_group_t* group, lv_group_edge_cb_t edge_cb);
 
 /**
  * Set whether the next or previous Widget in a group gets focus when Widget that has
@@ -157,14 +159,14 @@ void lv_group_set_edge_cb(lv_group_t * group, lv_group_edge_cb_t edge_cb);
  * @param group         pointer to a group
  * @param policy        new refocus policy enum
  */
-void lv_group_set_refocus_policy(lv_group_t * group, lv_group_refocus_policy_t policy);
+void lv_group_set_refocus_policy(lv_group_t* group, lv_group_refocus_policy_t policy);
 
 /**
  * Manually set the current mode (edit or navigate).
  * @param group         pointer to group
  * @param edit          true: edit mode; false: navigate mode
  */
-void lv_group_set_editing(lv_group_t * group, bool edit);
+void lv_group_set_editing(lv_group_t* group, bool edit);
 
 /**
  * Set whether moving focus to next/previous Widget will allow wrapping from
@@ -172,35 +174,35 @@ void lv_group_set_editing(lv_group_t * group, bool edit);
  * @param group         pointer to group
  * @param               en true: wrapping enabled; false: wrapping disabled
  */
-void lv_group_set_wrap(lv_group_t * group, bool en);
+void lv_group_set_wrap(lv_group_t* group, bool en);
 
 /**
  * Get Widget that has focus, or NULL if there isn't one.
  * @param group         pointer to a group
  * @return              pointer to Widget with focus
  */
-lv_obj_t * lv_group_get_focused(const lv_group_t * group);
+lv_obj_t* lv_group_get_focused(const lv_group_t* group);
 
 /**
  * Get focus callback function of a group.
  * @param group pointer to a group
  * @return the call back function or NULL if not set
  */
-lv_group_focus_cb_t lv_group_get_focus_cb(const lv_group_t * group);
+lv_group_focus_cb_t lv_group_get_focus_cb(const lv_group_t* group);
 
 /**
  * Get edge callback function of a group.
  * @param group pointer to a group
  * @return the call back function or NULL if not set
  */
-lv_group_edge_cb_t lv_group_get_edge_cb(const lv_group_t * group);
+lv_group_edge_cb_t lv_group_get_edge_cb(const lv_group_t* group);
 
 /**
  * Get current mode (edit or navigate).
  * @param group         pointer to group
  * @return              true: edit mode; false: navigate mode
  */
-bool lv_group_get_editing(const lv_group_t * group);
+bool lv_group_get_editing(const lv_group_t* group);
 
 /**
  * Get whether moving focus to next/previous Widget will allow wrapping from
@@ -222,7 +224,7 @@ uint32_t lv_group_get_obj_count(lv_group_t * group);
  * @param index         index of Widget within the group
  * @return              pointer to Widget
  */
-lv_obj_t * lv_group_get_obj_by_index(lv_group_t * group, uint32_t index);
+lv_obj_t* lv_group_get_obj_by_index(lv_group_t* group, uint32_t index);
 
 /**
  * Get the number of groups.
@@ -235,7 +237,7 @@ uint32_t lv_group_get_count(void);
  * @param index         index of the group
  * @return              pointer to the group
  */
-lv_group_t  * lv_group_by_index(uint32_t index);
+lv_group_t* lv_group_by_index(uint32_t index);
 
 #if LV_USE_EXT_DATA
 /**
@@ -250,7 +252,7 @@ lv_group_t  * lv_group_by_index(uint32_t index);
  * @param free_cb    Callback function for cleaning up ext_data when group is deleted.
  *                   Receives ext_data as parameter. NULL means no cleanup required.
  */
-void lv_group_set_external_data(lv_group_t * group, void * data, void (* free_cb)(void * data));
+void lv_group_set_external_data(lv_group_t* group, void* data, void (*free_cb)(void* data));
 #endif
 
 /**
@@ -258,14 +260,14 @@ void lv_group_set_external_data(lv_group_t * group, void * data, void (* free_cb
  * @param group pointer to a group
  * @param user_data pointer to user data
  */
-void lv_group_set_user_data(lv_group_t * group, void * user_data);
+void lv_group_set_user_data(lv_group_t* group, void* user_data);
 
 /**
  * Get a pointer to the user data of the group
  * @param indev pointer to a group
  * @return pointer to the user data or NULL if group is NULL
  */
-void * lv_group_get_user_data(const lv_group_t * group);
+void* lv_group_get_user_data(const lv_group_t* group);
 
 /**********************
  *      MACROS

@@ -35,7 +35,6 @@
 /************************************************************************/
 
 
-
 /************************************************************************/
 /* External Class Implementation                                        */
 /************************************************************************/
@@ -44,27 +43,32 @@ void LottieSlot::reset()
 {
     if (!overridden) return;
 
-    for (auto pair = pairs.begin(); pair < pairs.end(); ++pair) {
-        switch (type) {
-            case LottieProperty::Type::ColorStop: {
+    for (auto pair = pairs.begin(); pair < pairs.end(); ++pair)
+    {
+        switch (type)
+        {
+        case LottieProperty::Type::ColorStop:
+            {
                 static_cast<LottieGradient*>(pair->obj)->colorStops.release();
                 static_cast<LottieGradient*>(pair->obj)->colorStops = *static_cast<LottieColorStop*>(pair->prop);
                 static_cast<LottieColorStop*>(pair->prop)->frames = nullptr;
                 break;
             }
-            case LottieProperty::Type::Color: {
+        case LottieProperty::Type::Color:
+            {
                 static_cast<LottieSolid*>(pair->obj)->color.release();
                 static_cast<LottieSolid*>(pair->obj)->color = *static_cast<LottieColor*>(pair->prop);
                 static_cast<LottieColor*>(pair->prop)->frames = nullptr;
                 break;
             }
-            case LottieProperty::Type::TextDoc: {
+        case LottieProperty::Type::TextDoc:
+            {
                 static_cast<LottieText*>(pair->obj)->doc.release();
                 static_cast<LottieText*>(pair->obj)->doc = *static_cast<LottieTextDoc*>(pair->prop);
                 static_cast<LottieTextDoc*>(pair->prop)->frames = nullptr;
                 break;
             }
-            default: break;
+        default: break;
         }
         delete(pair->prop);
         pair->prop = nullptr;
@@ -76,11 +80,15 @@ void LottieSlot::reset()
 void LottieSlot::assign(LottieObject* target)
 {
     //apply slot object to all targets
-    for (auto pair = pairs.begin(); pair < pairs.end(); ++pair) {
+    for (auto pair = pairs.begin(); pair < pairs.end(); ++pair)
+    {
         //backup the original properties before overwriting
-        switch (type) {
-            case LottieProperty::Type::ColorStop: {
-                if (!overridden) {
+        switch (type)
+        {
+        case LottieProperty::Type::ColorStop:
+            {
+                if (!overridden)
+                {
                     pair->prop = new LottieColorStop;
                     *static_cast<LottieColorStop*>(pair->prop) = static_cast<LottieGradient*>(pair->obj)->colorStops;
                 }
@@ -88,8 +96,10 @@ void LottieSlot::assign(LottieObject* target)
                 pair->obj->override(&static_cast<LottieGradient*>(target)->colorStops);
                 break;
             }
-            case LottieProperty::Type::Color: {
-                if (!overridden) {
+        case LottieProperty::Type::Color:
+            {
+                if (!overridden)
+                {
                     pair->prop = new LottieColor;
                     *static_cast<LottieColor*>(pair->prop) = static_cast<LottieSolid*>(pair->obj)->color;
                 }
@@ -97,8 +107,10 @@ void LottieSlot::assign(LottieObject* target)
                 pair->obj->override(&static_cast<LottieSolid*>(target)->color);
                 break;
             }
-            case LottieProperty::Type::TextDoc: {
-                if (!overridden) {
+        case LottieProperty::Type::TextDoc:
+            {
+                if (!overridden)
+                {
                     pair->prop = new LottieTextDoc;
                     *static_cast<LottieTextDoc*>(pair->prop) = static_cast<LottieText*>(pair->obj)->doc;
                 }
@@ -106,7 +118,7 @@ void LottieSlot::assign(LottieObject* target)
                 pair->obj->override(&static_cast<LottieText*>(target)->doc);
                 break;
             }
-            default: break;
+        default: break;
         }
     }
     overridden = true;
@@ -166,15 +178,17 @@ void LottieTrimpath::segment(float frameNo, float& start, float& end, LottieExpr
     end = this->end(frameNo, exps) * 0.01f;
     tvg::clamp(end, 0.0f, 1.0f);
 
-    auto o = fmodf(this->offset(frameNo, exps), 360.0f) / 360.0f;  //0 ~ 1
+    auto o = fmodf(this->offset(frameNo, exps), 360.0f) / 360.0f; //0 ~ 1
 
     auto diff = fabs(start - end);
-    if (tvg::zero(diff)) {
+    if (tvg::zero(diff))
+    {
         start = 0.0f;
         end = 0.0f;
         return;
     }
-    if (tvg::equal(diff, 1.0f) || tvg::equal(diff, 2.0f)) {
+    if (tvg::equal(diff, 1.0f) || tvg::equal(diff, 2.0f))
+    {
         start = 0.0f;
         end = 1.0f;
         return;
@@ -192,16 +206,18 @@ uint32_t LottieGradient::populate(ColorStop& color, size_t count)
 
     uint32_t alphaCnt = (color.input->count - (count * 4)) / 2;
     Array<Fill::ColorStop> output(count + alphaCnt);
-    uint32_t cidx = 0;               //color count
+    uint32_t cidx = 0; //color count
     uint32_t clast = count * 4;
     if (clast > color.input->count) clast = color.input->count;
-    uint32_t aidx = clast;           //alpha count
+    uint32_t aidx = clast; //alpha count
     Fill::ColorStop cs;
 
     //merge color stops.
-    for (uint32_t i = 0; i < color.input->count; ++i) {
+    for (uint32_t i = 0; i < color.input->count; ++i)
+    {
         if (cidx == clast || aidx == color.input->count) break;
-        if ((*color.input)[cidx] == (*color.input)[aidx]) {
+        if ((*color.input)[cidx] == (*color.input)[aidx])
+        {
             cs.offset = (*color.input)[cidx];
             cs.r = (uint8_t)nearbyint((*color.input)[cidx + 1] * 255.0f);
             cs.g = (uint8_t)nearbyint((*color.input)[cidx + 2] * 255.0f);
@@ -209,27 +225,36 @@ uint32_t LottieGradient::populate(ColorStop& color, size_t count)
             cs.a = (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f);
             cidx += 4;
             aidx += 2;
-        } else if ((*color.input)[cidx] < (*color.input)[aidx]) {
+        }
+        else if ((*color.input)[cidx] < (*color.input)[aidx])
+        {
             cs.offset = (*color.input)[cidx];
             cs.r = (uint8_t)nearbyint((*color.input)[cidx + 1] * 255.0f);
             cs.g = (uint8_t)nearbyint((*color.input)[cidx + 2] * 255.0f);
             cs.b = (uint8_t)nearbyint((*color.input)[cidx + 3] * 255.0f);
             //generate alpha value
-            if (output.count > 0) {
+            if (output.count > 0)
+            {
                 auto p = ((*color.input)[cidx] - output.last().offset) / ((*color.input)[aidx] - output.last().offset);
                 cs.a = lerp<uint8_t>(output.last().a, (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f), p);
-            } else cs.a = (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f);
+            }
+            else cs.a = (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f);
             cidx += 4;
-        } else {
+        }
+        else
+        {
             cs.offset = (*color.input)[aidx];
             cs.a = (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f);
             //generate color value
-            if (output.count > 0) {
+            if (output.count > 0)
+            {
                 auto p = ((*color.input)[aidx] - output.last().offset) / ((*color.input)[cidx] - output.last().offset);
                 cs.r = lerp<uint8_t>(output.last().r, (uint8_t)nearbyint((*color.input)[cidx + 1] * 255.0f), p);
                 cs.g = lerp<uint8_t>(output.last().g, (uint8_t)nearbyint((*color.input)[cidx + 2] * 255.0f), p);
                 cs.b = lerp<uint8_t>(output.last().b, (uint8_t)nearbyint((*color.input)[cidx + 3] * 255.0f), p);
-            } else {
+            }
+            else
+            {
                 cs.r = (uint8_t)nearbyint((*color.input)[cidx + 1] * 255.0f);
                 cs.g = (uint8_t)nearbyint((*color.input)[cidx + 2] * 255.0f);
                 cs.b = (uint8_t)nearbyint((*color.input)[cidx + 3] * 255.0f);
@@ -240,7 +265,8 @@ uint32_t LottieGradient::populate(ColorStop& color, size_t count)
     }
 
     //color remains
-    while (cidx + 3 < clast) {
+    while (cidx + 3 < clast)
+    {
         cs.offset = (*color.input)[cidx];
         cs.r = (uint8_t)nearbyint((*color.input)[cidx + 1] * 255.0f);
         cs.g = (uint8_t)nearbyint((*color.input)[cidx + 2] * 255.0f);
@@ -251,14 +277,17 @@ uint32_t LottieGradient::populate(ColorStop& color, size_t count)
     }
 
     //alpha remains
-    while (aidx < color.input->count) {
+    while (aidx < color.input->count)
+    {
         cs.offset = (*color.input)[aidx];
         cs.a = (uint8_t)nearbyint((*color.input)[aidx + 1] * 255.0f);
-        if (output.count > 0) {
+        if (output.count > 0)
+        {
             cs.r = output.last().r;
             cs.g = output.last().g;
             cs.b = output.last().b;
-        } else cs.r = cs.g = cs.b = 255;
+        }
+        else cs.r = cs.g = cs.b = 255;
         output.push(cs);
         aidx += 2;
     }
@@ -283,12 +312,14 @@ Fill* LottieGradient::fill(float frameNo, LottieExpressions* exps)
     auto e = end(frameNo, exps);
 
     //Linear Graident
-    if (id == 1) {
+    if (id == 1)
+    {
         fill = LinearGradient::gen().release();
         static_cast<LinearGradient*>(fill)->linear(s.x, s.y, e.x, e.y);
     }
     //Radial Gradient
-    if (id == 2) {
+    if (id == 2)
+    {
         fill = RadialGradient::gen().release();
 
         auto w = fabsf(e.x - s.x);
@@ -296,9 +327,12 @@ Fill* LottieGradient::fill(float frameNo, LottieExpressions* exps)
         auto r = (w > h) ? (w + 0.375f * h) : (h + 0.375f * w);
         auto progress = this->height(frameNo, exps) * 0.01f;
 
-        if (tvg::zero(progress)) {
+        if (tvg::zero(progress))
+        {
             P(static_cast<RadialGradient*>(fill))->radial(s.x, s.y, r, s.x, s.y, 0.0f);
-        } else {
+        }
+        else
+        {
             if (tvg::equal(progress, 1.0f)) progress = 0.99f;
             auto startAngle = rad2deg(tvg::atan2(e.y - s.y, e.x - s.x));
             auto angle = deg2rad((startAngle + this->angle(frameNo, exps)));
@@ -314,10 +348,12 @@ Fill* LottieGradient::fill(float frameNo, LottieExpressions* exps)
     colorStops(frameNo, fill, exps);
 
     //multiply the current opacity with the fill
-    if (opacity < 255) {
+    if (opacity < 255)
+    {
         const Fill::ColorStop* colorStops;
         auto cnt = fill->colorStops(&colorStops);
-        for (uint32_t i = 0; i < cnt; ++i) {
+        for (uint32_t i = 0; i < cnt; ++i)
+        {
             const_cast<Fill::ColorStop*>(&colorStops[i])->a = MULTIPLY(colorStops[i].a, opacity);
         }
     }
@@ -345,7 +381,8 @@ void LottieGroup::prepare(LottieObject::Type type)
     size_t strokeCnt = 0;
     size_t fillCnt = 0;
 
-    for (auto c = children.end() - 1; c >= children.begin(); --c) {
+    for (auto c = children.end() - 1; c >= children.begin(); --c)
+    {
         auto child = static_cast<LottieObject*>(*c);
 
         if (child->type == LottieObject::Type::Trimpath) trimpath = true;
@@ -355,21 +392,24 @@ void LottieGroup::prepare(LottieObject::Type type)
         if (allowMerge && (child->type == LottieObject::Group || !child->mergeable())) allowMerge = false;
 
         //Figure out this group has visible contents
-        switch (child->type) {
-            case LottieObject::Group: {
+        switch (child->type)
+        {
+        case LottieObject::Group:
+            {
                 visible |= static_cast<LottieGroup*>(child)->visible;
                 break;
             }
-            case LottieObject::Rect:
-            case LottieObject::Ellipse:
-            case LottieObject::Path:
-            case LottieObject::Polystar:
-            case LottieObject::Image:
-            case LottieObject::Text: {
+        case LottieObject::Rect:
+        case LottieObject::Ellipse:
+        case LottieObject::Path:
+        case LottieObject::Polystar:
+        case LottieObject::Image:
+        case LottieObject::Text:
+            {
                 visible = true;
                 break;
             }
-            default: break;
+        default: break;
         }
 
         if (reqFragment) continue;
@@ -377,12 +417,17 @@ void LottieGroup::prepare(LottieObject::Type type)
         /* Figure out if the rendering context should be fragmented.
            Multiple stroking or grouping with a stroking would occur this.
            This fragment resolves the overlapped stroke outlines. */
-        if (child->type == LottieObject::Group && !child->mergeable()) {
+        if (child->type == LottieObject::Group && !child->mergeable())
+        {
             if (strokeCnt > 0 || fillCnt > 0) reqFragment = true;
-        } else if (child->type == LottieObject::SolidStroke || child->type == LottieObject::GradientStroke) {
+        }
+        else if (child->type == LottieObject::SolidStroke || child->type == LottieObject::GradientStroke)
+        {
             if (strokeCnt > 0) reqFragment = true;
             else ++strokeCnt;
-        } else if (child->type == LottieObject::SolidFill || child->type == LottieObject::GradientFill) {
+        }
+        else if (child->type == LottieObject::SolidFill || child->type == LottieObject::GradientFill)
+        {
             if (fillCnt > 0) reqFragment = true;
             else ++fillCnt;
         }
@@ -391,14 +436,17 @@ void LottieGroup::prepare(LottieObject::Type type)
     //Reverse the drawing order if this group has a trimpath.
     if (!trimpath) return;
 
-    for (uint32_t i = 0; i < children.count - 1; ) {
+    for (uint32_t i = 0; i < children.count - 1;)
+    {
         auto child2 = children[i + 1];
-        if (!child2->mergeable() || child2->type == LottieObject::Transform) {
+        if (!child2->mergeable() || child2->type == LottieObject::Transform)
+        {
             i += 2;
             continue;
         }
         auto child = children[i];
-        if (!child->mergeable() || child->type == LottieObject::Transform) {
+        if (!child->mergeable() || child->type == LottieObject::Transform)
+        {
             i++;
             continue;
         }
@@ -414,11 +462,13 @@ LottieLayer::~LottieLayer()
     //No need to free assets children because the Composition owns them.
     if (rid) children.clear();
 
-    for (auto m = masks.begin(); m < masks.end(); ++m) {
+    for (auto m = masks.begin(); m < masks.end(); ++m)
+    {
         delete(*m);
     }
 
-    for (auto e = effects.begin(); e < effects.end(); ++e) {
+    for (auto e = effects.begin(); e < effects.end(); ++e)
+    {
         delete(*e);
     }
 
@@ -431,7 +481,8 @@ void LottieLayer::prepare(RGB24* color)
 {
     /* if layer is hidden, only useful data is its transform matrix.
        so force it to be a Null Layer and release all resource. */
-    if (hidden) {
+    if (hidden)
+    {
         type = LottieLayer::Null;
         for (auto p = children.begin(); p < children.end(); ++p) delete(*p);
         children.reset();
@@ -439,13 +490,16 @@ void LottieLayer::prepare(RGB24* color)
     }
 
     //prepare the viewport clipper
-    if (type == LottieLayer::Precomp) {
+    if (type == LottieLayer::Precomp)
+    {
         auto clipper = Shape::gen().release();
         clipper->appendRect(0.0f, 0.0f, w, h);
         PP(clipper)->ref();
         statical.pooler.push(clipper);
-    //prepare solid fill in advance if it is a layer type.
-    } else if (color && type == LottieLayer::Solid) {
+        //prepare solid fill in advance if it is a layer type.
+    }
+    else if (color && type == LottieLayer::Solid)
+    {
         auto solidFill = Shape::gen().release();
         solidFill->appendRect(0, 0, static_cast<float>(w), static_cast<float>(h));
         solidFill->fill(color->rgb[0], color->rgb[1], color->rgb[2]);
@@ -459,9 +513,12 @@ void LottieLayer::prepare(RGB24* color)
 
 float LottieLayer::remap(LottieComposition* comp, float frameNo, LottieExpressions* exp)
 {
-    if (timeRemap.frames || timeRemap.value) {
+    if (timeRemap.frames || timeRemap.value)
+    {
         frameNo = comp->frameAtTime(timeRemap(frameNo, exp));
-    } else {
+    }
+    else
+    {
         frameNo -= startFrame;
     }
     return (frameNo / timeStretch);
@@ -477,30 +534,34 @@ LottieComposition::~LottieComposition()
     lv_free(name);
 
     //delete interpolators
-    for (auto i = interpolators.begin(); i < interpolators.end(); ++i) {
-    	lv_free((*i)->key);
-    	lv_free(*i);
+    for (auto i = interpolators.begin(); i < interpolators.end(); ++i)
+    {
+        lv_free((*i)->key);
+        lv_free(*i);
     }
 
     //delete assets
-    for (auto a = assets.begin(); a < assets.end(); ++a) {
+    for (auto a = assets.begin(); a < assets.end(); ++a)
+    {
         delete(*a);
     }
 
     //delete fonts
-    for (auto f = fonts.begin(); f < fonts.end(); ++f) {
+    for (auto f = fonts.begin(); f < fonts.end(); ++f)
+    {
         delete(*f);
     }
 
     //delete slots
-    for (auto s = slots.begin(); s < slots.end(); ++s) {
+    for (auto s = slots.begin(); s < slots.end(); ++s)
+    {
         delete(*s);
     }
 
-    for (auto m = markers.begin(); m < markers.end(); ++m) {
+    for (auto m = markers.begin(); m < markers.end(); ++m)
+    {
         delete(*m);
     }
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

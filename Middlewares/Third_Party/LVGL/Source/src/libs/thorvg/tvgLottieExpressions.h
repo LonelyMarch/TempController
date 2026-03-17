@@ -43,30 +43,36 @@ struct LottieOffsetModifier;
 struct LottieExpressions
 {
 public:
-    template<typename Property, typename NumType>
+    template <typename Property, typename NumType>
     bool result(float frameNo, NumType& out, LottieExpression* exp)
     {
         auto bm_rt = evaluate(frameNo, exp);
         if (jerry_value_is_undefined(bm_rt)) return false;
 
-        if (jerry_value_is_number(bm_rt)) {
-            out = (NumType) jerry_value_as_number(bm_rt);
-        } else if (auto prop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr))) {
+        if (jerry_value_is_number(bm_rt))
+        {
+            out = (NumType)jerry_value_as_number(bm_rt);
+        }
+        else if (auto prop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr)))
+        {
             out = (*prop)(frameNo);
         }
         jerry_value_free(bm_rt);
         return true;
     }
 
-    template<typename Property>
+    template <typename Property>
     bool result(float frameNo, Point& out, LottieExpression* exp)
     {
         auto bm_rt = evaluate(frameNo, exp);
         if (jerry_value_is_undefined(bm_rt)) return false;
 
-        if (auto prop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr))) {
+        if (auto prop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr)))
+        {
             out = (*prop)(frameNo);
-        } else {
+        }
+        else
+        {
             auto x = jerry_object_get_index(bm_rt, 0);
             auto y = jerry_object_get_index(bm_rt, 1);
             out.x = jerry_value_as_number(x);
@@ -78,15 +84,18 @@ public:
         return true;
     }
 
-    template<typename Property>
+    template <typename Property>
     bool result(float frameNo, RGB24& out, LottieExpression* exp)
     {
         auto bm_rt = evaluate(frameNo, exp);
         if (jerry_value_is_undefined(bm_rt)) return false;
 
-        if (auto color = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr))) {
+        if (auto color = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr)))
+        {
             out = (*color)(frameNo);
-        } else {
+        }
+        else
+        {
             auto r = jerry_object_get_index(bm_rt, 0);
             auto g = jerry_object_get_index(bm_rt, 1);
             auto b = jerry_object_get_index(bm_rt, 2);
@@ -101,26 +110,29 @@ public:
         return true;
     }
 
-    template<typename Property>
+    template <typename Property>
     bool result(float frameNo, Fill* fill, LottieExpression* exp)
     {
         auto bm_rt = evaluate(frameNo, exp);
         if (jerry_value_is_undefined(bm_rt)) return false;
 
-        if (auto colorStop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr))) {
+        if (auto colorStop = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr)))
+        {
             (*colorStop)(frameNo, fill, this);
         }
         jerry_value_free(bm_rt);
         return true;
     }
 
-    template<typename Property>
-    bool result(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform, const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath, LottieExpression* exp)
+    template <typename Property>
+    bool result(float frameNo, Array<PathCommand>& cmds, Array<Point>& pts, Matrix* transform,
+                const LottieRoundnessModifier* roundness, const LottieOffsetModifier* offsetPath, LottieExpression* exp)
     {
         auto bm_rt = evaluate(frameNo, exp);
         if (jerry_value_is_undefined(bm_rt)) return false;
 
-        if (auto pathset = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr))) {
+        if (auto pathset = static_cast<Property*>(jerry_object_get_native_ptr(bm_rt, nullptr)))
+        {
             (*pathset)(frameNo, cmds, pts, transform, roundness, offsetPath);
         }
         jerry_value_free(bm_rt);
@@ -156,14 +168,32 @@ private:
 
 struct LottieExpressions
 {
-    template<typename Property, typename NumType> bool result(TVG_UNUSED float, TVG_UNUSED NumType&, TVG_UNUSED LottieExpression*) { return false; }
-    template<typename Property> bool result(TVG_UNUSED float, TVG_UNUSED Point&, LottieExpression*) { return false; }
-    template<typename Property> bool result(TVG_UNUSED float, TVG_UNUSED RGB24&, TVG_UNUSED LottieExpression*) { return false; }
-    template<typename Property> bool result(TVG_UNUSED float, TVG_UNUSED Fill*, TVG_UNUSED LottieExpression*) { return false; }
-    template<typename Property> bool result(TVG_UNUSED float, TVG_UNUSED Array<PathCommand>&, TVG_UNUSED Array<Point>&, TVG_UNUSED Matrix* transform, TVG_UNUSED const LottieRoundnessModifier*, TVG_UNUSED const LottieOffsetModifier*, TVG_UNUSED LottieExpression*) { return false; }
-    void update(TVG_UNUSED float) {}
+    template <typename Property, typename NumType>
+    bool result(TVG_UNUSEDfloat, TVG_UNUSED NumType&, TVG_UNUSED LottieExpression*) { return false; }
+
+    template <typename Property>
+    bool result(TVG_UNUSEDfloat, TVG_UNUSED Point&, LottieExpression*) { return false; }
+
+    template <typename Property>
+    bool result(TVG_UNUSEDfloat, TVG_UNUSED RGB24&, TVG_UNUSED LottieExpression*) { return false; }
+
+    template <typename Property>
+    bool result(TVG_UNUSEDfloat, TVG_UNUSED Fill*, TVG_UNUSED LottieExpression*) { return false; }
+
+    template <typename Property>
+    bool result(TVG_UNUSEDfloat, TVG_UNUSED Array<PathCommand>&, TVG_UNUSED Array<Point>&, TVG_UNUSED Matrix* transform,
+                TVG_UNUSED const LottieRoundnessModifier*, TVG_UNUSED const LottieOffsetModifier*,
+                TVG_UNUSED LottieExpression*) { return false; }
+
+    void update(TVG_UNUSEDfloat)
+    {
+    }
+
     static LottieExpressions* instance() { return nullptr; }
-    static void retrieve(TVG_UNUSED LottieExpressions* instance) {}
+
+    static void retrieve(TVG_UNUSED LottieExpressions* instance)
+    {
+    }
 };
 
 #endif //THORVG_LOTTIE_EXPRESSIONS_SUPPORT
@@ -171,4 +201,3 @@ struct LottieExpressions
 #endif //_TVG_LOTTIE_EXPRESSIONS_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

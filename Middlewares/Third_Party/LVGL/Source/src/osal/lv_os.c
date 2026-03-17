@@ -76,5 +76,3 @@ void lv_sleep_ms(uint32_t ms)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
-
-

@@ -32,14 +32,21 @@
 
 RenderUpdateFlag Picture::Impl::load()
 {
-    if (loader) {
-        if (paint) {
+    if (loader)
+    {
+        if (paint)
+        {
             loader->sync();
-        } else {
+        }
+        else
+        {
             paint = loader->paint();
-            if (paint) {
-                if (w != loader->w || h != loader->h) {
-                    if (!resizing) {
+            if (paint)
+            {
+                if (w != loader->w || h != loader->h)
+                {
+                    if (!resizing)
+                    {
                         w = loader->w;
                         h = loader->h;
                     }
@@ -49,8 +56,10 @@ RenderUpdateFlag Picture::Impl::load()
                 return RenderUpdateFlag::None;
             }
         }
-        if (!surface) {
-            if ((surface = loader->bitmap())) {
+        if (!surface)
+        {
+            if ((surface = loader->bitmap()))
+            {
                 return RenderUpdateFlag::Image;
             }
         }
@@ -80,9 +89,11 @@ bool Picture::Impl::render(RenderMethod* renderer)
     renderer->blend(PP(picture)->blendMethod);
 
     if (surface) return renderer->renderImage(rd);
-    else if (paint) {
+    else if (paint)
+    {
         RenderCompositor* cmp = nullptr;
-        if (needComp) {
+        if (needComp)
+        {
             cmp = renderer->target(bounds(renderer), renderer->colorSpace());
             renderer->beginComposite(cmp, CompositeMethod::None, 255);
         }
@@ -113,10 +124,13 @@ RenderRegion Picture::Impl::bounds(RenderMethod* renderer)
 Result Picture::Impl::load(ImageLoader* loader)
 {
     //Same resource has been loaded.
-    if (this->loader == loader) {
-        this->loader->sharing--;  //make it sure the reference counting.
+    if (this->loader == loader)
+    {
+        this->loader->sharing--; //make it sure the reference counting.
         return Result::Success;
-    } else if (this->loader) {
+    }
+    else if (this->loader)
+    {
         LoaderMgr::retrieve(this->loader);
     }
 
@@ -125,11 +139,10 @@ Result Picture::Impl::load(ImageLoader* loader)
     if (!loader->read()) return Result::Unknown;
 
     this->w = loader->w;
-    this->h = loader->h;    
+    this->h = loader->h;
 
     return Result::Success;
 }
-
 
 
 /************************************************************************/
@@ -149,13 +162,13 @@ Picture::~Picture()
 
 unique_ptr<Picture> Picture::gen() noexcept
 {
-    return unique_ptr<Picture>(new Picture);
+    return unique_ptr < Picture > (new Picture);
 }
 
 
 TVG_DEPRECATED uint32_t Picture::identifier() noexcept
 {
-    return (uint32_t) Type::Picture;
+    return (uint32_t)Type::Picture;
 }
 
 
@@ -222,7 +235,8 @@ const Paint* Picture::paint(uint32_t id) noexcept
     auto cb = [](const tvg::Paint* paint, void* data) -> bool
     {
         auto p = static_cast<Value*>(data);
-        if (p->id == paint->id) {
+        if (p->id == paint->id)
+        {
             p->ret = paint;
             return false;
         }
@@ -234,4 +248,3 @@ const Paint* Picture::paint(uint32_t id) noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

@@ -35,50 +35,53 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-lv_gltf_primitive_t * lv_gltf_data_get_primitive_from_mesh(lv_gltf_mesh_data_t * mesh, size_t index)
+lv_gltf_primitive_t* lv_gltf_data_get_primitive_from_mesh(lv_gltf_mesh_data_t* mesh, size_t index)
 {
     return &(mesh->primitives[index]);
 }
 
-void lv_gltf_data_add_opaque_node_primitive(lv_gltf_model_t * data, size_t index,
-                                            fastgltf::Node * node, size_t primitive_index)
+void lv_gltf_data_add_opaque_node_primitive(lv_gltf_model_t* data, size_t index,
+                                            fastgltf::Node* node, size_t primitive_index)
 {
     data->opaque_nodes_by_material_index[index].emplace_back(
         std::make_pair(node, primitive_index));
 }
 
-void lv_gltf_data_add_blended_node_primitive(lv_gltf_model_t * data, size_t index,
-                                             fastgltf::Node * node, size_t primitive_index)
+void lv_gltf_data_add_blended_node_primitive(lv_gltf_model_t* data, size_t index,
+                                             fastgltf::Node* node, size_t primitive_index)
 {
     data->blended_nodes_by_material_index[index].push_back(
         std::make_pair(node, primitive_index));
 }
 
-fastgltf::math::fvec4 lv_gltf_get_primitive_centerpoint(lv_gltf_model_t * data,
-                                                        fastgltf::Mesh & mesh,
+fastgltf::math::fvec4 lv_gltf_get_primitive_centerpoint(lv_gltf_model_t* data,
+                                                        fastgltf::Mesh& mesh,
                                                         uint32_t prim_num)
 {
-    fastgltf::math::fvec4 result{ 0.f };
-    fastgltf::math::fvec3 v_min{ 999999999.f };
-    fastgltf::math::fvec3 v_max{ -999999999.f };
-    fastgltf::math::fvec3 v_cen{ 0.f };
+    fastgltf::math::fvec4 result{0.f};
+    fastgltf::math::fvec3 v_min{999999999.f};
+    fastgltf::math::fvec3 v_max{-999999999.f};
+    fastgltf::math::fvec3 v_cen{0.f};
     float radius = 0.f;
 
-    if(mesh.primitives.size() <= prim_num) {
+    if (mesh.primitives.size() <= prim_num)
+    {
         return result;
     }
-    const auto & it = mesh.primitives[prim_num];
-    const auto & asset = data->asset;
+    const auto& it = mesh.primitives[prim_num];
+    const auto& asset = data->asset;
 
-    const auto * positionIt = it.findAttribute("POSITION");
-    const auto & positionAccessor =
+    const auto* positionIt = it.findAttribute("POSITION");
+    const auto& positionAccessor =
         asset.accessors[positionIt->accessorIndex];
-    if(!positionAccessor.bufferViewIndex.has_value()) {
+    if (!positionAccessor.bufferViewIndex.has_value())
+    {
         return result;
     }
 
-    if(!(positionAccessor.min.has_value() &&
-         positionAccessor.max.has_value())) {
+    if (!(positionAccessor.min.has_value() &&
+        positionAccessor.max.has_value()))
+    {
         LV_LOG_ERROR(
             "Could not get primitive center point. Missing min/max values");
         return result;
@@ -110,8 +113,8 @@ fastgltf::math::fvec4 lv_gltf_get_primitive_centerpoint(lv_gltf_model_t * data,
     float size_y = v_max[1] - v_min[1];
     float size_z = v_max[2] - v_min[2];
     radius = std::sqrt((size_x * size_x) + (size_y * size_y) +
-                       (size_z * size_z)) /
-             2.0f;
+            (size_z * size_z)) /
+        2.0f;
     result[0] = v_cen[0];
     result[1] = v_cen[1];
     result[2] = v_cen[2];

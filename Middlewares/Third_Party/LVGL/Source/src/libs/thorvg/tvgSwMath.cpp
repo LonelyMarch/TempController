@@ -53,36 +53,57 @@ int mathCubicAngle(const SwPoint* base, SwFixed& angleIn, SwFixed& angleMid, SwF
     auto d2 = base[1] - base[2];
     auto d3 = base[0] - base[1];
 
-    if (d1.small()) {
-        if (d2.small()) {
-            if (d3.small()) {
+    if (d1.small())
+    {
+        if (d2.small())
+        {
+            if (d3.small())
+            {
                 angleIn = angleMid = angleOut = 0;
-                return -1;  //ignoreable
-            } else {
+                return -1; //ignoreable
+            }
+            else
+            {
                 angleIn = angleMid = angleOut = mathAtan(d3);
             }
-        } else {
-            if (d3.small()) {
+        }
+        else
+        {
+            if (d3.small())
+            {
                 angleIn = angleMid = angleOut = mathAtan(d2);
-            } else {
+            }
+            else
+            {
                 angleIn = angleMid = mathAtan(d2);
                 angleOut = mathAtan(d3);
             }
         }
-    } else {
-        if (d2.small()) {
-            if (d3.small()) {
+    }
+    else
+    {
+        if (d2.small())
+        {
+            if (d3.small())
+            {
                 angleIn = angleMid = angleOut = mathAtan(d1);
-            } else {
+            }
+            else
+            {
                 angleIn = mathAtan(d1);
                 angleOut = mathAtan(d3);
                 angleMid = mathMean(angleIn, angleOut);
             }
-        } else {
-            if (d3.small()) {
+        }
+        else
+        {
+            if (d3.small())
+            {
                 angleIn = mathAtan(d1);
                 angleMid = angleOut = mathAtan(d2);
-            } else {
+            }
+            else
+            {
                 angleIn = mathAtan(d1);
                 angleMid = mathAtan(d2);
                 angleOut = mathAtan(d3);
@@ -103,11 +124,13 @@ int64_t mathMultiply(int64_t a, int64_t b)
     int32_t s = 1;
 
     //move sign
-    if (a < 0) {
+    if (a < 0)
+    {
         a = -a;
         s = -s;
     }
-    if (b < 0) {
+    if (b < 0)
+    {
         b = -b;
         s = -s;
     }
@@ -121,11 +144,13 @@ int64_t mathDivide(int64_t a, int64_t b)
     int32_t s = 1;
 
     //move sign
-    if (a < 0) {
+    if (a < 0)
+    {
         a = -a;
         s = -s;
     }
-    if (b < 0) {
+    if (b < 0)
+    {
         b = -b;
         s = -s;
     }
@@ -139,15 +164,18 @@ int64_t mathMulDiv(int64_t a, int64_t b, int64_t c)
     int32_t s = 1;
 
     //move sign
-    if (a < 0) {
+    if (a < 0)
+    {
         a = -a;
         s = -s;
     }
-    if (b < 0) {
+    if (b < 0)
+    {
         b = -b;
         s = -s;
     }
-    if (c < 0) {
+    if (c < 0)
+    {
         c = -c;
         s = -s;
     }
@@ -287,7 +315,8 @@ bool mathClipBBox(const SwBBox& clipper, SwBBox& clippee)
 
     //Check boundary
     if (clippee.min.x >= clipper.max.x || clippee.min.y >= clipper.max.y ||
-        clippee.max.x <= clipper.min.x || clippee.max.y <= clipper.min.y) return false;
+        clippee.max.x <= clipper.min.x || clippee.max.y <= clipper.min.y)
+        return false;
 
     return true;
 }
@@ -297,7 +326,8 @@ bool mathUpdateOutlineBBox(const SwOutline* outline, const SwBBox& clipRegion, S
 {
     if (!outline) return false;
 
-    if (outline->pts.empty() || outline->cntrs.empty()) {
+    if (outline->pts.empty() || outline->cntrs.empty())
+    {
         renderRegion.reset();
         return false;
     }
@@ -309,19 +339,23 @@ bool mathUpdateOutlineBBox(const SwOutline* outline, const SwBBox& clipRegion, S
     auto yMin = pt->y;
     auto yMax = pt->y;
 
-    for (++pt; pt < outline->pts.end(); ++pt) {
+    for (++pt; pt < outline->pts.end(); ++pt)
+    {
         if (xMin > pt->x) xMin = pt->x;
         if (xMax < pt->x) xMax = pt->x;
         if (yMin > pt->y) yMin = pt->y;
         if (yMax < pt->y) yMax = pt->y;
     }
 
-    if (fastTrack) {
+    if (fastTrack)
+    {
         renderRegion.min.x = static_cast<SwCoord>(nearbyint(xMin / 64.0f));
         renderRegion.max.x = static_cast<SwCoord>(nearbyint(xMax / 64.0f));
         renderRegion.min.y = static_cast<SwCoord>(nearbyint(yMin / 64.0f));
         renderRegion.max.y = static_cast<SwCoord>(nearbyint(yMax / 64.0f));
-    } else {
+    }
+    else
+    {
         renderRegion.min.x = xMin >> 6;
         renderRegion.max.x = (xMax + 63) >> 6;
         renderRegion.min.y = yMin >> 6;
@@ -331,4 +365,3 @@ bool mathUpdateOutlineBBox(const SwOutline* outline, const SwBBox& clipRegion, S
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

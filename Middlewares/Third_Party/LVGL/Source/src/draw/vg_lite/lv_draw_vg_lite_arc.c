@@ -49,13 +49,14 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
-                         const lv_area_t * coords)
+void lv_draw_vg_lite_arc(lv_draw_task_t* t, const lv_draw_arc_dsc_t* dsc,
+                         const lv_area_t* coords)
 {
-    lv_draw_vg_lite_unit_t * u = (lv_draw_vg_lite_unit_t *)t->draw_unit;
+    lv_draw_vg_lite_unit_t* u = (lv_draw_vg_lite_unit_t*)t->draw_unit;
 
     lv_area_t clip_area;
-    if(!lv_area_intersect(&clip_area, coords, &t->clip_area)) {
+    if (!lv_area_intersect(&clip_area, coords, &t->clip_area))
+    {
         /*Fully clipped, nothing to do*/
         return;
     }
@@ -64,22 +65,25 @@ void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
     float end_angle = dsc->end_angle;
     float sweep_angle = end_angle - start_angle;
 
-    while(sweep_angle < 0) {
+    while (sweep_angle < 0)
+    {
         sweep_angle += 360;
     }
 
-    while(sweep_angle > 360) {
+    while (sweep_angle > 360)
+    {
         sweep_angle -= 360;
     }
 
     /*If the angles are the same then there is nothing to draw*/
-    if(math_zero(sweep_angle)) {
+    if (math_zero(sweep_angle))
+    {
         return;
     }
 
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_vg_lite_path_t * path = lv_vg_lite_path_get(u, VG_LITE_FP32);
+    lv_vg_lite_path_t* path = lv_vg_lite_path_get(u, VG_LITE_FP32);
     lv_vg_lite_path_set_bounding_box_area(path, &clip_area);
 
     float radius_out = dsc->radius;
@@ -89,20 +93,24 @@ void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
 
     vg_lite_fill_t fill = VG_LITE_FILL_NON_ZERO;
 
-    if(math_equal(sweep_angle, 360)) {
+    if (math_equal(sweep_angle, 360))
+    {
         lv_vg_lite_path_append_circle(path, cx, cy, radius_out, radius_out);
 
         /* radius_in <= 0, normal fill circle */
-        if(radius_in > 0) {
+        if (radius_in > 0)
+        {
             lv_vg_lite_path_append_circle(path, cx, cy, radius_in, radius_in);
         }
         fill = VG_LITE_FILL_EVEN_ODD;
     }
-    else {
+    else
+    {
         float start_angle_rad = MATH_RADIANS(start_angle);
         float end_angle_rad = MATH_RADIANS(end_angle);
 
-        if(radius_in > 0) {
+        if (radius_in > 0)
+        {
             /* radius_out start point */
             float start_x = radius_out * MATH_COSF(start_angle_rad) + cx;
             float start_y = radius_out * MATH_SINF(start_angle_rad) + cy;
@@ -135,13 +143,15 @@ void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
             /* close arc */
             lv_vg_lite_path_close(path);
         }
-        else {
+        else
+        {
             /* draw a normal arc pie shape */
             lv_vg_lite_path_append_arc(path, cx, cy, radius_out, start_angle, sweep_angle, true);
         }
 
         /* draw round */
-        if(dsc->rounded && dsc->width > 0) {
+        if (dsc->rounded && dsc->width > 0)
+        {
             float round_radius = radius_out > dsc->width ? dsc->width / 2.0f : radius_out / 2.0f;
             float round_center = radius_out - round_radius;
             float rcx1 = cx + round_center * MATH_COSF(end_angle_rad);
@@ -158,13 +168,15 @@ void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
 
     vg_lite_matrix_t matrix = u->global_matrix;
 
-    if(dsc->img_src) {
+    if (dsc->img_src)
+    {
         vg_lite_buffer_t src_buf;
         lv_image_decoder_dsc_t decoder_dsc;
-        if(lv_vg_lite_buffer_open_image(&src_buf, &decoder_dsc, dsc->img_src, false, true)) {
-
+        if (lv_vg_lite_buffer_open_image(&src_buf, &decoder_dsc, dsc->img_src, false, true))
+        {
             vg_lite_color_t img_color = 0;
-            if(dsc->opa < LV_OPA_COVER) {
+            if (dsc->opa < LV_OPA_COVER)
+            {
                 /* normal image opa */
                 src_buf.image_mode = VG_LITE_MULTIPLY_IMAGE_MODE;
                 lv_memset(&img_color, dsc->opa, sizeof(img_color));
@@ -193,7 +205,8 @@ void lv_draw_vg_lite_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc,
             lv_vg_lite_pending_add(u->image_dsc_pending, &decoder_dsc);
         }
     }
-    else {
+    else
+    {
         /* normal color fill */
         lv_vg_lite_draw(
             &u->target_buffer,

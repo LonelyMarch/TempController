@@ -22,7 +22,7 @@
 #define STM32H7xx_HAL_DEF
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -38,10 +38,10 @@
   */
 typedef enum
 {
-  HAL_OK       = 0x00,
-  HAL_ERROR    = 0x01,
-  HAL_BUSY     = 0x02,
-  HAL_TIMEOUT  = 0x03
+    HAL_OK = 0x00,
+    HAL_ERROR = 0x01,
+    HAL_BUSY = 0x02,
+    HAL_TIMEOUT = 0x03
 } HAL_StatusTypeDef;
 
 /**
@@ -49,8 +49,8 @@ typedef enum
   */
 typedef enum
 {
-  HAL_UNLOCKED = 0x00,
-  HAL_LOCKED   = 0x01
+    HAL_UNLOCKED = 0x00,
+    HAL_LOCKED = 0x01
 } HAL_LockTypeDef;
 
 /* Exported macro ------------------------------------------------------------*/
@@ -88,9 +88,9 @@ typedef enum
 #define __HAL_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = 0)
 
 #if (USE_RTOS == 1)
-  #error " USE_RTOS should be 0 in the current HAL release "
+#error " USE_RTOS should be 0 in the current HAL release "
 #else
-  #define __HAL_LOCK(__HANDLE__)                                           \
+#define __HAL_LOCK(__HANDLE__)                                           \
                                 do{                                        \
                                     if((__HANDLE__)->Lock == HAL_LOCKED)   \
                                     {                                      \
@@ -102,7 +102,7 @@ typedef enum
                                     }                                      \
                                   }while (0)
 
-  #define __HAL_UNLOCK(__HANDLE__)                                          \
+#define __HAL_UNLOCK(__HANDLE__)                                          \
                                   do{                                       \
                                       (__HANDLE__)->Lock = HAL_UNLOCKED;    \
                                     }while (0)
@@ -110,57 +110,57 @@ typedef enum
 
 
 #if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
-  #ifndef __weak
-    #define __weak  __attribute__((weak))
-  #endif
-  #ifndef __packed
-    #define __packed  __attribute__((packed))
-  #endif
+#ifndef __weak
+#define __weak  __attribute__((weak))
+#endif
+#ifndef __packed
+#define __packed  __attribute__((packed))
+#endif
 #elif defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
-  #ifndef __weak
-    #define __weak   __attribute__((weak))
-  #endif /* __weak */
-  #ifndef __packed
-    #define __packed __attribute__((__packed__))
-  #endif /* __packed */
+#ifndef __weak
+#define __weak   __attribute__((weak))
+#endif /* __weak */
+#ifndef __packed
+#define __packed __attribute__((__packed__))
+#endif /* __packed */
 #endif /* __GNUC__ */
 
 
 /* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive "#pragma data_alignment=4" must be used instead */
 #if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
-  #ifndef __ALIGN_BEGIN
-    #define __ALIGN_BEGIN
-  #endif
-  #ifndef __ALIGN_END
-    #define __ALIGN_END      __attribute__ ((aligned (4)))
-  #endif
+#ifndef __ALIGN_BEGIN
+#define __ALIGN_BEGIN
+#endif
+#ifndef __ALIGN_END
+#define __ALIGN_END      __attribute__ ((aligned (4)))
+#endif
 #elif defined ( __GNUC__ ) && !defined (__CC_ARM) /* GNU Compiler */
-  #ifndef __ALIGN_END
-    #define __ALIGN_END    __attribute__ ((aligned (4)))
-  #endif /* __ALIGN_END */
-  #ifndef __ALIGN_BEGIN
-    #define __ALIGN_BEGIN
-  #endif /* __ALIGN_BEGIN */
+#ifndef __ALIGN_END
+#define __ALIGN_END    __attribute__ ((aligned (4)))
+#endif /* __ALIGN_END */
+#ifndef __ALIGN_BEGIN
+#define __ALIGN_BEGIN
+#endif /* __ALIGN_BEGIN */
 #else
-  #ifndef __ALIGN_END
-    #define __ALIGN_END
-  #endif /* __ALIGN_END */
-  #ifndef __ALIGN_BEGIN
-    #if defined   (__CC_ARM)      /* ARM Compiler V5 */
-      #define __ALIGN_BEGIN    __align(4)
-    #elif defined (__ICCARM__)    /* IAR Compiler */
-      #define __ALIGN_BEGIN
-    #endif /* __CC_ARM */
-  #endif /* __ALIGN_BEGIN */
+#ifndef __ALIGN_END
+#define __ALIGN_END
+#endif /* __ALIGN_END */
+#ifndef __ALIGN_BEGIN
+#if defined   (__CC_ARM)      /* ARM Compiler V5 */
+#define __ALIGN_BEGIN    __align(4)
+#elif defined (__ICCARM__)    /* IAR Compiler */
+#define __ALIGN_BEGIN
+#endif /* __CC_ARM */
+#endif /* __ALIGN_BEGIN */
 #endif /* __GNUC__ */
 
 /* Macro to get variable aligned on 32-bytes,needed for cache maintenance purpose */
 #if defined   (__GNUC__)        /* GNU Compiler */
-  #define ALIGN_32BYTES(buf)  buf __attribute__ ((aligned (32)))                                    
+#define ALIGN_32BYTES(buf)  buf __attribute__ ((aligned (32)))
 #elif defined (__ICCARM__)    /* IAR Compiler */
-  #define ALIGN_32BYTES(buf) _Pragma("data_alignment=32") buf  
+#define ALIGN_32BYTES(buf) _Pragma("data_alignment=32") buf
 #elif defined   (__CC_ARM)      /* ARM Compiler */
-  #define ALIGN_32BYTES(buf) __align(32) buf  
+#define ALIGN_32BYTES(buf) __align(32) buf
 #endif
 
 /**
@@ -218,5 +218,3 @@ typedef enum
 #endif
 
 #endif /* STM32H7xx_HAL_DEF */
-
-

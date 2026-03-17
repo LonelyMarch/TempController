@@ -100,7 +100,8 @@ SwMpool* mpoolInit(uint32_t threads)
 
 bool mpoolClear(SwMpool* mpool)
 {
-    for (unsigned i = 0; i < mpool->allocSize; ++i) {
+    for (unsigned i = 0; i < mpool->allocSize; ++i)
+    {
         mpool->outline[i].pts.reset();
         mpool->outline[i].cntrs.reset();
         mpool->outline[i].types.reset();
@@ -136,4 +137,3 @@ bool mpoolTerm(SwMpool* mpool)
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

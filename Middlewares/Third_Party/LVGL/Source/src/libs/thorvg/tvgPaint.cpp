@@ -44,14 +44,16 @@
     }
 
 
-static Result _clipRect(RenderMethod* renderer, const Point* pts, const Matrix& pm, const Matrix& rm, RenderRegion& before)
+static Result _clipRect(RenderMethod* renderer, const Point* pts, const Matrix& pm, const Matrix& rm,
+                        RenderRegion& before)
 {
     //sorting
     Point tmp[4];
     Point min = {FLT_MAX, FLT_MAX};
     Point max = {0.0f, 0.0f};
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         tmp[i] = pts[i];
         tmp[i] *= rm;
         tmp[i] *= pm;
@@ -64,11 +66,14 @@ static Result _clipRect(RenderMethod* renderer, const Point* pts, const Matrix& 
     float region[4] = {float(before.x), float(before.x + before.w), float(before.y), float(before.y + before.h)};
 
     //figure out if the clipper is a superset of the current viewport(before) region
-    if (min.x <= region[0] && max.x >= region[1] && min.y <= region[2] && max.y >= region[3]) {
+    if (min.x <= region[0] && max.x >= region[1] && min.y <= region[2] && max.y >= region[3])
+    {
         //viewport region is same, nothing to do.
         return Result::Success;
-    //figure out if the clipper is totally outside of the viewport
-    } else if (max.x <= region[0] || min.x >= region[1] || max.y <= region[2] || min.y >= region[3]) {
+        //figure out if the clipper is totally outside of the viewport
+    }
+    else if (max.x <= region[0] || min.x >= region[1] || max.y <= region[2] || min.y >= region[3])
+    {
         renderer->viewport({0, 0, 0, 0});
         return Result::Success;
     }
@@ -105,9 +110,11 @@ static Result _compFastTrack(RenderMethod* renderer, Paint* cmpTarget, const Mat
     auto pt3 = pts + 2;
     auto pt4 = pts + 3;
 
-    if ((tvg::equal(pt1->x, pt2->x) && tvg::equal(pt2->y, pt3->y) && tvg::equal(pt3->x, pt4->x) && tvg::equal(pt1->y, pt4->y)) ||
-        (tvg::equal(pt2->x, pt3->x) && tvg::equal(pt1->y, pt2->y) && tvg::equal(pt1->x, pt4->x) && tvg::equal(pt3->y, pt4->y))) {
-
+    if ((tvg::equal(pt1->x, pt2->x) && tvg::equal(pt2->y, pt3->y) && tvg::equal(pt3->x, pt4->x) &&
+            tvg::equal(pt1->y, pt4->y)) ||
+        (tvg::equal(pt2->x, pt3->x) && tvg::equal(pt1->y, pt2->y) && tvg::equal(pt1->x, pt4->x) && tvg::equal(
+            pt3->y, pt4->y)))
+    {
         RenderRegion after;
 
         auto v1 = *pt1;
@@ -213,14 +220,16 @@ bool Paint::Impl::render(RenderMethod* renderer)
 
     RenderCompositor* cmp = nullptr;
 
-    if (compData && !(compData->target->pImpl->ctxFlag & ContextFlag::FastTrack)) {
+    if (compData && !(compData->target->pImpl->ctxFlag & ContextFlag::FastTrack))
+    {
         RenderRegion region;
         PAINT_METHOD(region, bounds(renderer));
 
         if (MASK_REGION_MERGING(compData->method)) region.add(P(compData->target)->bounds(renderer));
         if (region.w == 0 || region.h == 0) return true;
         cmp = renderer->target(region, COMPOSITE_TO_COLORSPACE(renderer, compData->method));
-        if (renderer->beginComposite(cmp, CompositeMethod::None, 255)) {
+        if (renderer->beginComposite(cmp, CompositeMethod::None, 255))
+        {
             compData->target->pImpl->render(renderer);
         }
     }
@@ -236,57 +245,70 @@ bool Paint::Impl::render(RenderMethod* renderer)
 }
 
 
-RenderData Paint::Impl::update(RenderMethod* renderer, const Matrix& pm, Array<RenderData>& clips, uint8_t opacity, RenderUpdateFlag pFlag, bool clipper)
+RenderData Paint::Impl::update(RenderMethod* renderer, const Matrix& pm, Array<RenderData>& clips, uint8_t opacity,
+                               RenderUpdateFlag pFlag, bool clipper)
 {
-    if (this->renderer != renderer) {
+    if (this->renderer != renderer)
+    {
         if (this->renderer) TVGERR("RENDERER", "paint's renderer has been changed!");
         renderer->ref();
         this->renderer = renderer;
     }
 
-    if (renderFlag & RenderUpdateFlag::Transform) tr.update();
+    if (renderFlag& RenderUpdateFlag::Transform) tr.update();
 
     /* 1. Composition Pre Processing */
-    RenderData trd = nullptr;                 //composite target render data
+    RenderData trd = nullptr; //composite target render data
     RenderRegion viewport;
     Result compFastTrack = Result::InsufficientCondition;
 
-    if (compData) {
+    if (compData)
+    {
         auto target = compData->target;
         auto method = compData->method;
-        P(target)->ctxFlag &= ~ContextFlag::FastTrack;   //reset
+        P(target)->ctxFlag &= ~ContextFlag::FastTrack; //reset
 
         /* If the transformation has no rotational factors and the Alpha(InvAlpha)Masking involves a simple rectangle,
            we can optimize by using the viewport instead of the regular AlphaMasking sequence for improved performance. */
-        if (target->type() == Type::Shape) {
+        if (target->type() == Type::Shape)
+        {
             auto shape = static_cast<Shape*>(target);
             uint8_t a;
             shape->fillColor(nullptr, nullptr, nullptr, &a);
             //no gradient fill & no compositions of the composition target.
-            if (!shape->fill() && !(PP(shape)->compData)) {
-                if ((method == CompositeMethod::AlphaMask && a == 255 && PP(shape)->opacity == 255) || (method == CompositeMethod::InvAlphaMask && (a == 0 || PP(shape)->opacity == 0))) {
+            if (!shape->fill() && !(PP(shape)->compData))
+            {
+                if ((method == CompositeMethod::AlphaMask && a == 255 && PP(shape)->opacity == 255) || (method ==
+                    CompositeMethod::InvAlphaMask && (a == 0 || PP(shape)->opacity == 0)))
+                {
                     viewport = renderer->viewport();
-                    if ((compFastTrack = _compFastTrack(renderer, target, pm, viewport)) == Result::Success) {
+                    if ((compFastTrack = _compFastTrack(renderer, target, pm, viewport)) == Result::Success)
+                    {
                         P(target)->ctxFlag |= ContextFlag::FastTrack;
                     }
                 }
             }
         }
-        if (compFastTrack == Result::InsufficientCondition) {
+        if (compFastTrack == Result::InsufficientCondition)
+        {
             trd = P(target)->update(renderer, pm, clips, 255, pFlag, false);
         }
     }
 
     /* 2. Clipping */
-    if (this->clipper) {
-        P(this->clipper)->ctxFlag &= ~ContextFlag::FastTrack;   //reset
+    if (this->clipper)
+    {
+        P(this->clipper)->ctxFlag &= ~ContextFlag::FastTrack; //reset
         viewport = renderer->viewport();
         /* TODO: Intersect the clipper's clipper, if both are FastTrack.
            Update the subsequent clipper first and check its ctxFlag. */
-        if (!P(this->clipper)->clipper && (compFastTrack = _compFastTrack(renderer, this->clipper, pm, viewport)) == Result::Success) {
+        if (!P(this->clipper)->clipper && (compFastTrack = _compFastTrack(renderer, this->clipper, pm, viewport)) ==
+            Result::Success)
+        {
             P(this->clipper)->ctxFlag |= ContextFlag::FastTrack;
         }
-        if (compFastTrack == Result::InsufficientCondition) {
+        if (compFastTrack == Result::InsufficientCondition)
+        {
             trd = P(this->clipper)->update(renderer, pm, clips, 255, pFlag, true);
             clips.push(trd);
         }
@@ -316,7 +338,8 @@ bool Paint::Impl::bounds(float* x, float* y, float* w, float* h, bool transforme
     const auto& m = this->transform(origin);
 
     //Case: No transformed, quick return!
-    if (!transformed || identity(&m)) {
+    if (!transformed || identity(&m))
+    {
         PAINT_METHOD(ret, bounds(x, y, w, h, stroking));
         return ret;
     }
@@ -339,7 +362,8 @@ bool Paint::Impl::bounds(float* x, float* y, float* w, float* h, bool transforme
     auto y2 = -FLT_MAX;
 
     //Compute the AABB after transformation
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         pt[i] *= m;
 
         if (pt[i].x < x1) x1 = pt[i].x;
@@ -359,12 +383,14 @@ bool Paint::Impl::bounds(float* x, float* y, float* w, float* h, bool transforme
 
 void Paint::Impl::reset()
 {
-    if (clipper) {
+    if (clipper)
+    {
         delete(clipper);
         clipper = nullptr;
     }
 
-    if (compData) {
+    if (compData)
+    {
         if (P(compData->target)->unref() == 0) delete(compData->target);
         lv_free(compData);
         compData = nullptr;
@@ -387,12 +413,12 @@ void Paint::Impl::reset()
 /* External Class Implementation                                        */
 /************************************************************************/
 
-Paint :: Paint() : pImpl(new Impl(this))
+Paint::Paint() : pImpl(new Impl(this))
 {
 }
 
 
-Paint :: ~Paint()
+Paint::~Paint()
 {
     delete(pImpl);
 }
@@ -455,7 +481,8 @@ Result Paint::clip(std::unique_ptr<Paint> clipper) noexcept
 {
     auto p = clipper.release();
 
-    if (p && p->type() != Type::Shape) {
+    if (p && p->type() != Type::Shape)
+    {
         TVGERR("RENDERER", "Clipping only supports the Shape!");
         return Result::NonSupport;
     }
@@ -479,12 +506,16 @@ Result Paint::composite(std::unique_ptr<Paint> target, CompositeMethod method) n
 
 CompositeMethod Paint::composite(const Paint** target) const noexcept
 {
-    if (pImpl->compData) {
+    if (pImpl->compData)
+    {
         if (target) *target = pImpl->compData->target;
         return pImpl->compData->method;
-    } else {
+    }
+    else
+    {
         //TODO: remove. Keep this for the backward compatibility
-        if (pImpl->clipper) {
+        if (pImpl->clipper)
+        {
             if (target) *target = pImpl->clipper;
             return CompositeMethod::ClipPath;
         }
@@ -513,16 +544,18 @@ uint8_t Paint::opacity() const noexcept
 
 TVG_DEPRECATED uint32_t Paint::identifier() const noexcept
 {
-    return (uint32_t) type();
+    return (uint32_t)type();
 }
 
 
 Result Paint::blend(BlendMethod method) noexcept
 {
     //TODO: Remove later
-    if (method == BlendMethod::Hue || method == BlendMethod::Saturation || method == BlendMethod::Color || method == BlendMethod::Luminosity || method == BlendMethod::HardMix) return Result::NonSupport;
+    if (method == BlendMethod::Hue || method == BlendMethod::Saturation || method == BlendMethod::Color || method ==
+        BlendMethod::Luminosity || method == BlendMethod::HardMix) return Result::NonSupport;
 
-    if (pImpl->blendMethod != method) {
+    if (pImpl->blendMethod != method)
+    {
         pImpl->blendMethod = method;
         pImpl->renderFlag |= RenderUpdateFlag::Blend;
     }
@@ -531,4 +564,3 @@ Result Paint::blend(BlendMethod method) noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

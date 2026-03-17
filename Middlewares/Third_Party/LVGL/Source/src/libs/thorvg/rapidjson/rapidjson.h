@@ -407,18 +407,18 @@
 #define RAPIDJSON_NO_SIZETYPEDEFINE
 #endif
 RAPIDJSON_NAMESPACE_BEGIN
-//! Size type (for string lengths, array sizes, etc.)
-/*! RapidJSON uses 32-bit array/string indices even on 64-bit platforms,
+    //! Size type (for string lengths, array sizes, etc.)
+    /*! RapidJSON uses 32-bit array/string indices even on 64-bit platforms,
     instead of using \c size_t. Users may override the SizeType by defining
     \ref RAPIDJSON_NO_SIZETYPEDEFINE.
 */
-typedef unsigned SizeType;
+    typedef unsigned SizeType;
 RAPIDJSON_NAMESPACE_END
 #endif
 
 // always import std::size_t to rapidjson namespace
 RAPIDJSON_NAMESPACE_BEGIN
-using std::size_t;
+    using std::size_t;
 RAPIDJSON_NAMESPACE_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -453,10 +453,17 @@ RAPIDJSON_NAMESPACE_END
 #ifndef __clang__
 //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
 #endif
-RAPIDJSON_NAMESPACE_BEGIN
-template <bool x> struct STATIC_ASSERTION_FAILURE;
-template <> struct STATIC_ASSERTION_FAILURE<true> { enum { value = 1 }; };
-template <size_t x> struct StaticAssertTest {};
+RAPIDJSON_NAMESPACE_BEGIN template <bool x>
+struct STATIC_ASSERTION_FAILURE;
+template <>
+struct STATIC_ASSERTION_FAILURE<true>
+{
+    enum { value = 1 };
+};
+template <size_t x>
+struct StaticAssertTest
+{
+};
 RAPIDJSON_NAMESPACE_END
 
 #if defined(__GNUC__) || defined(__clang__)
@@ -535,7 +542,7 @@ RAPIDJSON_NAMESPACE_END
     RAPIDJSON_VERSION_CODE(__GNUC__,__GNUC_MINOR__,__GNUC_PATCHLEVEL__)
 #endif
 
-#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,2,0))
+#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 2, 0))
 
 #define RAPIDJSON_PRAGMA(x) _Pragma(RAPIDJSON_STRINGIFY(x))
 #define RAPIDJSON_DIAG_PRAGMA(x) RAPIDJSON_PRAGMA(GCC diagnostic x)
@@ -543,7 +550,7 @@ RAPIDJSON_NAMESPACE_END
     RAPIDJSON_DIAG_PRAGMA(ignored RAPIDJSON_STRINGIFY(RAPIDJSON_JOIN(-W,x)))
 
 // push/pop support in Clang and GCC>=4.6
-#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,6,0))
+#if defined(__clang__) || (defined(RAPIDJSON_GNUC) && RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4, 6, 0))
 #define RAPIDJSON_DIAG_PUSH RAPIDJSON_DIAG_PRAGMA(push)
 #define RAPIDJSON_DIAG_POP  RAPIDJSON_DIAG_PRAGMA(pop)
 #else // GCC >= 4.2, < 4.6
@@ -633,7 +640,8 @@ RAPIDJSON_NAMESPACE_END
 #ifndef RAPIDJSON_HAS_CXX11_RANGE_FOR
 #if defined(__clang__)
 #define RAPIDJSON_HAS_CXX11_RANGE_FOR __has_feature(cxx_range_for)
-#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(4,6,0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
+#elif (defined(RAPIDJSON_GNUC) && (RAPIDJSON_GNUC >= RAPIDJSON_VERSION_CODE(
+    4, 6, 0)) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || \
       (defined(_MSC_VER) && _MSC_VER >= 1700) || \
       (defined(__SUNPRO_CC) && __SUNPRO_CC >= 0x5140 && defined(__GXX_EXPERIMENTAL_CXX0X__))
 #define RAPIDJSON_HAS_CXX11_RANGE_FOR 1
@@ -666,7 +674,7 @@ RAPIDJSON_NAMESPACE_END
 //!@endcond
 
 //! Assertion (in non-throwing contexts).
- /*! \ingroup RAPIDJSON_CONFIG
+/*! \ingroup RAPIDJSON_CONFIG
     Some functions provide a \c noexcept guarantee, if the compiler supports it.
     In these cases, the \ref RAPIDJSON_ASSERT macro cannot be overridden to
     throw an exception.  This macro adds a separate customization point for
@@ -724,17 +732,17 @@ RAPIDJSON_NAMESPACE_END
     \see RAPIDJSON_NAMESPACE
 */
 RAPIDJSON_NAMESPACE_BEGIN
-
-//! Type of JSON value
-enum Type {
-    kNullType = 0,      //!< null
-    kFalseType = 1,     //!< false
-    kTrueType = 2,      //!< true
-    kObjectType = 3,    //!< object
-    kArrayType = 4,     //!< array
-    kStringType = 5,    //!< string
-    kNumberType = 6     //!< number
-};
+    //! Type of JSON value
+    enum Type
+    {
+        kNullType = 0, //!< null
+        kFalseType = 1, //!< false
+        kTrueType = 2, //!< true
+        kObjectType = 3, //!< object
+        kArrayType = 4, //!< array
+        kStringType = 5, //!< string
+        kNumberType = 6 //!< number
+    };
 
 RAPIDJSON_NAMESPACE_END
 

@@ -36,9 +36,12 @@
 
 lv_3dplane_t lv_get_ground_plane(float elevation)
 {
-    return (lv_3dplane_t) {
-        .origin = {0.f, elevation, 0.f},
-        .direction = {0.f, 1.f, 0.f}
+    return (lv_3dplane_t)
+    {
+        .
+        origin = {0.f, elevation, 0.f},
+        .
+        direction = {0.f, 1.f, 0.f}
     };
 }
 

@@ -5,10 +5,11 @@
 #include "LittleFS.h"
 
 #if !LV_FS_IS_VALID_LETTER(LV_FS_ARDUINO_ESP_LITTLEFS_LETTER)
-    #error "Invalid drive letter"
+#error "Invalid drive letter"
 #endif
 
-typedef struct ArduinoEspLittleFile {
+typedef struct ArduinoEspLittleFile
+{
     File file;
 } ArduinoEspLittleFile;
 
@@ -16,12 +17,12 @@ typedef struct ArduinoEspLittleFile {
  *  STATIC PROTOTYPES
  **********************/
 static void fs_init(void);
-static void * fs_open(lv_fs_drv_t * drv, const char * path, lv_fs_mode_t mode);
-static lv_fs_res_t fs_close(lv_fs_drv_t * drv, void * file_p);
-static lv_fs_res_t fs_read(lv_fs_drv_t * drv, void * file_p, void * buf, uint32_t btr, uint32_t * br);
-static lv_fs_res_t fs_write(lv_fs_drv_t * drv, void * file_p, const void * buf, uint32_t btw, uint32_t * bw);
-static lv_fs_res_t fs_seek(lv_fs_drv_t * drv, void * file_p, uint32_t pos, lv_fs_whence_t whence);
-static lv_fs_res_t fs_tell(lv_fs_drv_t * drv, void * file_p, uint32_t * pos_p);
+static void* fs_open(lv_fs_drv_t* drv, const char* path, lv_fs_mode_t mode);
+static lv_fs_res_t fs_close(lv_fs_drv_t* drv, void* file_p);
+static lv_fs_res_t fs_read(lv_fs_drv_t* drv, void* file_p, void* buf, uint32_t btr, uint32_t* br);
+static lv_fs_res_t fs_write(lv_fs_drv_t* drv, void* file_p, const void* buf, uint32_t btw, uint32_t* bw);
+static lv_fs_res_t fs_seek(lv_fs_drv_t* drv, void* file_p, uint32_t pos, lv_fs_whence_t whence);
+static lv_fs_res_t fs_tell(lv_fs_drv_t* drv, void* file_p, uint32_t* pos_p);
 
 /**
  * Register a driver for the LittleFS File System interface
@@ -30,7 +31,7 @@ extern "C" void lv_fs_arduino_esp_littlefs_init(void)
 {
     fs_init();
 
-    lv_fs_drv_t * fs_drv = &(LV_GLOBAL_DEFAULT()->arduino_esp_littlefs_fs_drv);
+    lv_fs_drv_t* fs_drv = &(LV_GLOBAL_DEFAULT()->arduino_esp_littlefs_fs_drv);
     lv_fs_drv_init(fs_drv);
 
     fs_drv->letter = LV_FS_ARDUINO_ESP_LITTLEFS_LETTER;
@@ -65,29 +66,30 @@ static void fs_init(void)
  * @param mode      read: FS_MODE_RD, write: FS_MODE_WR, both: FS_MODE_RD | FS_MODE_WR
  * @return          a file descriptor or NULL on error
  */
-static void * fs_open(lv_fs_drv_t * drv, const char * path, lv_fs_mode_t mode)
+static void* fs_open(lv_fs_drv_t* drv, const char* path, lv_fs_mode_t mode)
 {
     LV_UNUSED(drv);
 
-    const char * flags;
-    if(mode == LV_FS_MODE_WR)
+    const char* flags;
+    if (mode == LV_FS_MODE_WR)
         flags = FILE_WRITE;
-    else if(mode == LV_FS_MODE_RD)
+    else if (mode == LV_FS_MODE_RD)
         flags = FILE_READ;
-    else if(mode == (LV_FS_MODE_WR | LV_FS_MODE_RD))
+    else if (mode == (LV_FS_MODE_WR | LV_FS_MODE_RD))
         flags = FILE_WRITE;
 
     char buf[LV_FS_MAX_PATH_LEN];
     lv_snprintf(buf, sizeof(buf), LV_FS_ARDUINO_ESP_LITTLEFS_PATH "%s", path);
 
     File file = LittleFS.open(buf, flags);
-    if(!file) {
+    if (!file)
+    {
         return NULL;
     }
 
-    ArduinoEspLittleFile * lf = new ArduinoEspLittleFile{file};
+    ArduinoEspLittleFile* lf = new ArduinoEspLittleFile{file};
 
-    return (void *)lf;
+    return (void*)lf;
 }
 
 /**
@@ -96,10 +98,10 @@ static void * fs_open(lv_fs_drv_t * drv, const char * path, lv_fs_mode_t mode)
  * @param file_p    pointer to a file_t variable. (opened with fs_open)
  * @return          LV_FS_RES_OK: no error or  any error from @lv_fs_res_t enum
  */
-static lv_fs_res_t fs_close(lv_fs_drv_t * drv, void * file_p)
+static lv_fs_res_t fs_close(lv_fs_drv_t* drv, void* file_p)
 {
     LV_UNUSED(drv);
-    ArduinoEspLittleFile * lf = (ArduinoEspLittleFile *)file_p;
+    ArduinoEspLittleFile* lf = (ArduinoEspLittleFile*)file_p;
     lf->file.close();
     delete lf;
 
@@ -115,11 +117,11 @@ static lv_fs_res_t fs_close(lv_fs_drv_t * drv, void * file_p)
  * @param br        the real number of read bytes (Byte Read)
  * @return          LV_FS_RES_OK: no error or any error from @lv_fs_res_t enum
  */
-static lv_fs_res_t fs_read(lv_fs_drv_t * drv, void * file_p, void * buf, uint32_t btr, uint32_t * br)
+static lv_fs_res_t fs_read(lv_fs_drv_t* drv, void* file_p, void* buf, uint32_t btr, uint32_t* br)
 {
     LV_UNUSED(drv);
-    ArduinoEspLittleFile * lf = (ArduinoEspLittleFile *)file_p;
-    *br = lf->file.read((uint8_t *)buf, btr);
+    ArduinoEspLittleFile* lf = (ArduinoEspLittleFile*)file_p;
+    *br = lf->file.read((uint8_t*)buf, btr);
 
     return (int32_t)(*br) < 0 ? LV_FS_RES_UNKNOWN : LV_FS_RES_OK;
 }
@@ -133,11 +135,11 @@ static lv_fs_res_t fs_read(lv_fs_drv_t * drv, void * file_p, void * buf, uint32_
  * @param bw        the number of real written bytes (Bytes Written)
  * @return          LV_FS_RES_OK: no error or  any error from @lv_fs_res_t enum
  */
-static lv_fs_res_t fs_write(lv_fs_drv_t * drv, void * file_p, const void * buf, uint32_t btw, uint32_t * bw)
+static lv_fs_res_t fs_write(lv_fs_drv_t* drv, void* file_p, const void* buf, uint32_t btw, uint32_t* bw)
 {
     LV_UNUSED(drv);
-    ArduinoEspLittleFile * lf = (ArduinoEspLittleFile *)file_p;
-    *bw = lf->file.write((uint8_t *)buf, btw);
+    ArduinoEspLittleFile* lf = (ArduinoEspLittleFile*)file_p;
+    *bw = lf->file.write((uint8_t*)buf, btw);
 
     return (int32_t)(*bw) < 0 ? LV_FS_RES_UNKNOWN : LV_FS_RES_OK;
 }
@@ -150,18 +152,18 @@ static lv_fs_res_t fs_write(lv_fs_drv_t * drv, void * file_p, const void * buf, 
  * @param whence    tells from where to interpret the `pos`. See @lv_fs_whence_t
  * @return          LV_FS_RES_OK: no error or any error from @lv_fs_res_t enum
  */
-static lv_fs_res_t fs_seek(lv_fs_drv_t * drv, void * file_p, uint32_t pos, lv_fs_whence_t whence)
+static lv_fs_res_t fs_seek(lv_fs_drv_t* drv, void* file_p, uint32_t pos, lv_fs_whence_t whence)
 {
     LV_UNUSED(drv);
     SeekMode mode;
-    if(whence == LV_FS_SEEK_SET)
+    if (whence == LV_FS_SEEK_SET)
         mode = SeekSet;
-    else if(whence == LV_FS_SEEK_CUR)
+    else if (whence == LV_FS_SEEK_CUR)
         mode = SeekCur;
-    else if(whence == LV_FS_SEEK_END)
+    else if (whence == LV_FS_SEEK_END)
         mode = SeekEnd;
 
-    ArduinoEspLittleFile * lf = (ArduinoEspLittleFile *)file_p;
+    ArduinoEspLittleFile* lf = (ArduinoEspLittleFile*)file_p;
 
     int rc = lf->file.seek(pos, mode);
 
@@ -175,10 +177,10 @@ static lv_fs_res_t fs_seek(lv_fs_drv_t * drv, void * file_p, uint32_t pos, lv_fs
  * @param pos_p     pointer to store the result
  * @return          LV_FS_RES_OK: no error or any error from @lv_fs_res_t enum
  */
-static lv_fs_res_t fs_tell(lv_fs_drv_t * drv, void * file_p, uint32_t * pos_p)
+static lv_fs_res_t fs_tell(lv_fs_drv_t* drv, void* file_p, uint32_t* pos_p)
 {
     LV_UNUSED(drv);
-    ArduinoEspLittleFile * lf = (ArduinoEspLittleFile *)file_p;
+    ArduinoEspLittleFile* lf = (ArduinoEspLittleFile*)file_p;
 
     *pos_p = lf->file.position();
 
@@ -188,7 +190,7 @@ static lv_fs_res_t fs_tell(lv_fs_drv_t * drv, void * file_p, uint32_t * pos_p)
 #else /*LV_USE_FS_ARDUINO_ESP_LITTLEFS == 0*/
 
 #if defined(LV_FS_ARDUINO_ESP_LITTLEFS_LETTER) && LV_FS_ARDUINO_ESP_LITTLEFS_LETTER != '\0'
-    #warning "LV_USE_FS_ARDUINO_ESP_LITTLEFS is not enabled but LV_FS_ARDUINO_ESP_LITTLEFS_LETTER is set"
+#warning "LV_USE_FS_ARDUINO_ESP_LITTLEFS is not enabled but LV_FS_ARDUINO_ESP_LITTLEFS_LETTER is set"
 #endif
 
 #endif /*LV_USE_FS_ARDUINO_ESP_LITTLEFS*/

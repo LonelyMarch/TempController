@@ -35,11 +35,11 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void * _buf_malloc(size_t size_bytes, lv_color_format_t color_format);
+static void* _buf_malloc(size_t size_bytes, lv_color_format_t color_format);
 
-static void _buf_free(void * buf);
+static void _buf_free(void* buf);
 
-static void _invalidate_cache(const lv_draw_buf_t * draw_buf, const lv_area_t * area);
+static void _invalidate_cache(const lv_draw_buf_t* draw_buf, const lv_area_t* area);
 
 /**********************
  *  STATIC VARIABLES
@@ -55,7 +55,7 @@ static void _invalidate_cache(const lv_draw_buf_t * draw_buf, const lv_area_t * 
 
 void lv_draw_buf_g2d_init_handlers(void)
 {
-    lv_draw_buf_handlers_t * handlers = lv_draw_buf_get_handlers();
+    lv_draw_buf_handlers_t* handlers = lv_draw_buf_get_handlers();
 
     handlers->buf_malloc_cb = _buf_malloc;
     handlers->buf_free_cb = _buf_free;
@@ -66,26 +66,26 @@ void lv_draw_buf_g2d_init_handlers(void)
  *   STATIC FUNCTIONS
  **********************/
 
-static void * _buf_malloc(size_t size_bytes, lv_color_format_t color_format)
+static void* _buf_malloc(size_t size_bytes, lv_color_format_t color_format)
 {
     LV_UNUSED(color_format);
 
     size_bytes += LV_DRAW_BUF_ALIGN - 1;
-    struct g2d_buf * buf = g2d_alloc(size_bytes, 1);
+    struct g2d_buf* buf = g2d_alloc(size_bytes, 1);
     G2D_ASSERT_MSG(buf, "Failed to alloc buffer.");
     g2d_insert_buf_map(buf->buf_vaddr, buf);
     return buf->buf_vaddr;
 }
 
-static void _buf_free(void * buf)
+static void _buf_free(void* buf)
 {
     g2d_free_item(buf);
 }
 
-static void _invalidate_cache(const lv_draw_buf_t * draw_buf, const lv_area_t * area)
+static void _invalidate_cache(const lv_draw_buf_t* draw_buf, const lv_area_t* area)
 {
     LV_UNUSED(area);
-    struct g2d_buf * buf = g2d_search_buf_map(draw_buf->data);
+    struct g2d_buf* buf = g2d_search_buf_map(draw_buf->data);
     G2D_ASSERT_MSG(buf, "Failed to find buffer in map.");
     g2d_cache_op(buf, G2D_CACHE_FLUSH);
 }

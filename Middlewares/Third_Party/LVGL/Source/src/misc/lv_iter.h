@@ -25,8 +25,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef lv_result_t (*lv_iter_next_cb)(void * instance, void * context, void * elem);
-typedef void (*lv_iter_inspect_cb)(void * elem);
+typedef lv_result_t (*lv_iter_next_cb)(void* instance, void* context, void* elem);
+typedef void (*lv_iter_inspect_cb)(void* elem);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -41,14 +41,14 @@ typedef void (*lv_iter_inspect_cb)(void * elem);
  * @param next_cb        The callback function to get the next element
  * @return               The iterator object
  */
-lv_iter_t * lv_iter_create(void * instance, uint32_t elem_size, uint32_t context_size, lv_iter_next_cb next_cb);
+lv_iter_t* lv_iter_create(void* instance, uint32_t elem_size, uint32_t context_size, lv_iter_next_cb next_cb);
 
 /**
  * Get the context of the iterator. You can use it to store some temporary variables associated with current iterator..
  * @param iter           `lv_iter_t` object create before
  * @return the iter context
  */
-void * lv_iter_get_context(const lv_iter_t * iter);
+void* lv_iter_get_context(const lv_iter_t* iter);
 
 /**
  * Destroy the iterator object, and release the context. Other resources allocated by the user are not released.
@@ -64,14 +64,14 @@ void lv_iter_destroy(lv_iter_t * iter);
  * @return              LV_RESULT_OK: Get the next element successfully
  *                      LV_RESULT_INVALID: The next element is invalid
  */
-lv_result_t lv_iter_next(lv_iter_t * iter, void * elem);
+lv_result_t lv_iter_next(lv_iter_t* iter, void* elem);
 
 /**
  * Make the iterator peekable, which means that the user can peek the next element without advancing the iterator.
  * @param iter          `lv_iter_t` object create before
  * @param capacity      The capacity of the peek buffer
  */
-void lv_iter_make_peekable(lv_iter_t * iter, uint32_t capacity);
+void lv_iter_make_peekable(lv_iter_t* iter, uint32_t capacity);
 
 /**
  * Peek the next element of the iterator without advancing the iterator.
@@ -80,7 +80,7 @@ void lv_iter_make_peekable(lv_iter_t * iter, uint32_t capacity);
  * @return              LV_RESULT_OK: Peek the next element successfully
  *                      LV_RESULT_INVALID: The next element is invalid
  */
-lv_result_t lv_iter_peek(lv_iter_t * iter, void * elem);
+lv_result_t lv_iter_peek(lv_iter_t* iter, void* elem);
 
 /**
  * Only advance the iterator without getting the next element.
@@ -103,7 +103,7 @@ lv_result_t lv_iter_peek_reset(lv_iter_t * iter);
  * @param iter          `lv_iter_t` object create before
  * @param inspect_cb    The callback function to inspect the element
  */
-void lv_iter_inspect(lv_iter_t * iter, lv_iter_inspect_cb inspect_cb);
+void lv_iter_inspect(lv_iter_t* iter, lv_iter_inspect_cb inspect_cb);
 
 /*************************
  *    GLOBAL VARIABLES

@@ -46,22 +46,23 @@
 *   GLOBAL FUNCTIONS
 **********************/
 
-void lv_nanovg_utils_init(struct _lv_draw_nanovg_unit_t * u)
+void lv_nanovg_utils_init(struct _lv_draw_nanovg_unit_t* u)
 {
     LV_ASSERT_NULL(u);
 }
 
-void lv_nanovg_utils_deinit(struct _lv_draw_nanovg_unit_t * u)
+void lv_nanovg_utils_deinit(struct _lv_draw_nanovg_unit_t* u)
 {
     LV_ASSERT_NULL(u);
 
-    if(u->image_buf) {
+    if (u->image_buf)
+    {
         lv_draw_buf_destroy(u->image_buf);
         u->image_buf = NULL;
     }
 }
 
-void lv_nanovg_transform(NVGcontext * ctx, const lv_matrix_t * matrix)
+void lv_nanovg_transform(NVGcontext* ctx, const lv_matrix_t* matrix)
 {
     LV_ASSERT_NULL(ctx);
     LV_ASSERT_NULL(matrix);
@@ -78,7 +79,7 @@ void lv_nanovg_transform(NVGcontext * ctx, const lv_matrix_t * matrix)
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_set_clip_area(NVGcontext * ctx, const lv_area_t * area)
+void lv_nanovg_set_clip_area(NVGcontext* ctx, const lv_area_t* area)
 {
     LV_ASSERT_NULL(ctx);
     LV_ASSERT_NULL(area);
@@ -91,13 +92,14 @@ void lv_nanovg_set_clip_area(NVGcontext * ctx, const lv_area_t * area)
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_path_append_rect(NVGcontext * ctx, float x, float y, float w, float h, float r)
+void lv_nanovg_path_append_rect(NVGcontext* ctx, float x, float y, float w, float h, float r)
 {
     LV_ASSERT_NULL(ctx);
 
     LV_PROFILER_DRAW_BEGIN;
 
-    if(r > 0) {
+    if (r > 0)
+    {
         const float half_w = w / 2.0f;
         const float half_h = h / 2.0f;
 
@@ -114,7 +116,7 @@ void lv_nanovg_path_append_rect(NVGcontext * ctx, float x, float y, float w, flo
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_path_append_area(NVGcontext * ctx, const lv_area_t * area)
+void lv_nanovg_path_append_area(NVGcontext* ctx, const lv_area_t* area)
 {
     LV_ASSERT_NULL(ctx);
     LV_ASSERT_NULL(area);
@@ -125,7 +127,7 @@ void lv_nanovg_path_append_area(NVGcontext * ctx, const lv_area_t * area)
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_path_append_arc_right_angle(NVGcontext * ctx,
+void lv_nanovg_path_append_arc_right_angle(NVGcontext* ctx,
                                            float start_x, float start_y,
                                            float center_x, float center_y,
                                            float end_x, float end_y)
@@ -145,7 +147,7 @@ void lv_nanovg_path_append_arc_right_angle(NVGcontext * ctx,
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_path_append_arc(NVGcontext * ctx,
+void lv_nanovg_path_append_arc(NVGcontext* ctx,
                                float cx, float cy,
                                float radius,
                                float start_angle,
@@ -154,13 +156,15 @@ void lv_nanovg_path_append_arc(NVGcontext * ctx,
 {
     LV_PROFILER_DRAW_BEGIN;
 
-    if(radius <= 0) {
+    if (radius <= 0)
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
 
     /* just circle */
-    if(sweep >= 360.0f || sweep <= -360.0f) {
+    if (sweep >= 360.0f || sweep <= -360.0f)
+    {
         nvgCircle(ctx, cx, cy, radius);
         LV_PROFILER_DRAW_END;
         return;
@@ -178,12 +182,14 @@ void lv_nanovg_path_append_arc(NVGcontext * ctx,
     float start_x = radius * NVG_MATH_COSF(start_angle);
     float start_y = radius * NVG_MATH_SINF(start_angle);
 
-    if(pie) {
+    if (pie)
+    {
         nvgMoveTo(ctx, cx, cy);
         nvgLineTo(ctx, start_x + cx, start_y + cy);
     }
 
-    for(int i = 0; i < n_curves; ++i) {
+    for (int i = 0; i < n_curves; ++i)
+    {
         float end_angle = start_angle + ((i != n_curves - 1) ? NVG_MATH_HALF_PI * sweep_sign : fract);
         float end_x = radius * NVG_MATH_COSF(end_angle);
         float end_y = radius * NVG_MATH_SINF(end_angle);
@@ -217,14 +223,15 @@ void lv_nanovg_path_append_arc(NVGcontext * ctx,
         start_angle = end_angle;
     }
 
-    if(pie) {
+    if (pie)
+    {
         nvgClosePath(ctx);
     }
 
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_fill(NVGcontext * ctx, enum NVGwinding winding, enum NVGcompositeOperation composite_operation,
+void lv_nanovg_fill(NVGcontext* ctx, enum NVGwinding winding, enum NVGcompositeOperation composite_operation,
                     NVGcolor color)
 {
     LV_ASSERT_NULL(ctx);
@@ -236,12 +243,13 @@ void lv_nanovg_fill(NVGcontext * ctx, enum NVGwinding winding, enum NVGcomposite
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_end_frame(struct _lv_draw_nanovg_unit_t * u)
+void lv_nanovg_end_frame(struct _lv_draw_nanovg_unit_t* u)
 {
     LV_ASSERT_NULL(u);
     LV_PROFILER_DRAW_BEGIN;
 
-    if(!u->is_started) {
+    if (!u->is_started)
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -255,7 +263,7 @@ void lv_nanovg_end_frame(struct _lv_draw_nanovg_unit_t * u)
     LV_PROFILER_DRAW_END;
 }
 
-void lv_nanovg_clean_up(struct _lv_draw_nanovg_unit_t * u)
+void lv_nanovg_clean_up(struct _lv_draw_nanovg_unit_t* u)
 {
     LV_ASSERT_NULL(u);
     LV_PROFILER_DRAW_BEGIN;
@@ -267,24 +275,27 @@ void lv_nanovg_clean_up(struct _lv_draw_nanovg_unit_t * u)
     LV_PROFILER_DRAW_END;
 }
 
-lv_draw_buf_t * lv_nanovg_reshape_global_image(struct _lv_draw_nanovg_unit_t * u,
-                                               lv_color_format_t cf,
-                                               uint32_t w,
-                                               uint32_t h)
+lv_draw_buf_t* lv_nanovg_reshape_global_image(struct _lv_draw_nanovg_unit_t* u,
+                                              lv_color_format_t cf,
+                                              uint32_t w,
+                                              uint32_t h)
 {
     LV_ASSERT_NULL(u);
 
     uint32_t stride = (w * lv_color_format_get_bpp(cf) + 7) >> 3;
-    lv_draw_buf_t * tmp_buf = lv_draw_buf_reshape(u->image_buf, cf, w, h, stride);
+    lv_draw_buf_t* tmp_buf = lv_draw_buf_reshape(u->image_buf, cf, w, h, stride);
 
-    if(!tmp_buf) {
-        if(u->image_buf) {
+    if (!tmp_buf)
+    {
+        if (u->image_buf)
+        {
             lv_draw_buf_destroy(u->image_buf);
             u->image_buf = NULL;
         }
 
         tmp_buf = lv_draw_buf_create(w, h, cf, stride);
-        if(!tmp_buf) {
+        if (!tmp_buf)
+        {
             return NULL;
         }
     }

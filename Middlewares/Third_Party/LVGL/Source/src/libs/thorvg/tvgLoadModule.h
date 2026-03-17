@@ -35,17 +35,21 @@ struct LoadModule
     INLIST_ITEM(LoadModule);
 
     //Use either hashkey(data) or hashpath(path)
-    union {
+    union
+    {
         uintptr_t hashkey;
         char* hashpath = nullptr;
     };
 
-    FileType type;                                  //current loader file type
-    uint16_t sharing = 0;                           //reference count
-    bool readied = false;                           //read done already.
-    bool pathcache = false;                         //cached by path
+    FileType type; //current loader file type
+    uint16_t sharing = 0; //reference count
+    bool readied = false; //read done already.
+    bool pathcache = false; //cached by path
 
-    LoadModule(FileType type) : type(type) {}
+    LoadModule(FileType type) : type(type)
+    {
+    }
+
     virtual ~LoadModule()
     {
         if (pathcache) lv_free(hashpath);
@@ -54,7 +58,10 @@ struct LoadModule
     virtual bool open(const string& path) { return false; }
     virtual bool open(const char* data, uint32_t size, bool copy) { return false; }
     virtual bool resize(Paint* paint, float w, float h) { return false; }
-    virtual void sync() {};  //finish immediately if any async update jobs.
+
+    virtual void sync()
+    {
+    }; //finish immediately if any async update jobs.
 
     virtual bool read()
     {
@@ -80,14 +87,16 @@ struct LoadModule
 
 struct ImageLoader : LoadModule
 {
-    static ColorSpace cs;                           //desired value
+    static ColorSpace cs; //desired value
 
-    float w = 0, h = 0;                             //default image size
+    float w = 0, h = 0; //default image size
     RenderSurface surface;
 
-    ImageLoader(FileType type) : LoadModule(type) {}
+    ImageLoader(FileType type) : LoadModule(type)
+    {
+    }
 
-    virtual bool animatable() { return false; }  //true if this loader supports animation.
+    virtual bool animatable() { return false; } //true if this loader supports animation.
     virtual Paint* paint() { return nullptr; }
 
     virtual RenderSurface* bitmap()
@@ -102,7 +111,9 @@ struct FontLoader : LoadModule
 {
     float scale = 1.0f;
 
-    FontLoader(FileType type) : LoadModule(type) {}
+    FontLoader(FileType type) : LoadModule(type)
+    {
+    }
 
     virtual bool request(Shape* shape, char* text) = 0;
     virtual bool transform(Paint* paint, float fontSize, bool italic) = 0;
@@ -111,4 +122,3 @@ struct FontLoader : LoadModule
 #endif //_TVG_LOAD_MODULE_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

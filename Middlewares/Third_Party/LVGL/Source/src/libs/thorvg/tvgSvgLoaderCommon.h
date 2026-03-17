@@ -226,9 +226,9 @@ enum class SvgParserLengthType
 enum class SvgViewFlag
 {
     None = 0x0,
-    Width = 0x01,   //viewPort width
-    Height = 0x02,  //viewPort height
-    Viewbox = 0x04,  //viewBox x,y,w,h - used only if all 4 are correctly set
+    Width = 0x01, //viewPort width
+    Height = 0x02, //viewPort height
+    Viewbox = 0x04, //viewBox x,y,w,h - used only if all 4 are correctly set
     WidthInPercent = 0x08,
     HeightInPercent = 0x10
 };
@@ -270,8 +270,8 @@ enum class AspectRatioMeetOrSlice
 
 struct SvgDocNode
 {
-    float w;       //unit: point or in percentage see: SvgViewFlag
-    float h;       //unit: point or in percentage see: SvgViewFlag
+    float w; //unit: point or in percentage see: SvgViewFlag
+    float h; //unit: point or in percentage see: SvgViewFlag
     float vx;
     float vy;
     float vw;
@@ -416,9 +416,9 @@ struct SvgRadialGradient
 
 struct SvgComposite
 {
-    char *url;
+    char* url;
     SvgNode* node;
-    bool applying;              //flag for checking circular dependency.
+    bool applying; //flag for checking circular dependency.
 };
 
 struct SvgColor
@@ -431,7 +431,7 @@ struct SvgColor
 struct SvgPaint
 {
     SvgStyleGradient* gradient;
-    char *url;
+    char* url;
     SvgColor color;
     bool none;
     bool curColor;
@@ -499,7 +499,8 @@ struct SvgStyleProperty
     SvgColor color;
     char* cssClass;
     SvgStyleFlags flags;
-    SvgStyleFlags flagsImportance; //indicates the importance of the flag - if set, higher priority is applied (https://drafts.csswg.org/css-cascade-4/#importance)
+    SvgStyleFlags flagsImportance;
+    //indicates the importance of the flag - if set, higher priority is applied (https://drafts.csswg.org/css-cascade-4/#importance)
     bool curColorSet;
     bool paintOrder; //true if default (fill, stroke), false otherwise
     bool display;
@@ -510,10 +511,12 @@ struct SvgNode
     SvgNodeType type;
     SvgNode* parent;
     Array<SvgNode*> child;
-    char *id;
-    SvgStyleProperty *style;
+    char* id;
+    SvgStyleProperty* style;
     Matrix* transform;
-    union {
+
+    union
+    {
         SvgGNode g;
         SvgDocNode doc;
         SvgDefsNode defs;
@@ -532,6 +535,7 @@ struct SvgNode
         SvgSymbolNode symbol;
         SvgTextNode text;
     } node;
+
     ~SvgNode();
 };
 
@@ -541,10 +545,12 @@ struct SvgParser
     SvgStyleGradient* styleGrad;
     Fill::ColorStop gradStop;
     SvgStopStyleFlags flags;
+
     struct
     {
         float x, y, w, h;
     } global;
+
     struct
     {
         bool parsedFx;
@@ -555,7 +561,7 @@ struct SvgParser
 struct SvgNodeIdPair
 {
     SvgNode* node;
-    char *id;
+    char* id;
 };
 
 enum class OpenedTagType : uint8_t
@@ -576,7 +582,7 @@ struct SvgLoaderData
     SvgParser* svgParse = nullptr;
     Array<SvgNodeIdPair> cloneNodes;
     Array<SvgNodeIdPair> nodesToStyle;
-    Array<char*> images;        //embedded images
+    Array<char*> images; //embedded images
     int level = 0;
     bool result = false;
     OpenedTagType openedTag = OpenedTagType::Other;
@@ -591,4 +597,3 @@ struct Box
 #endif
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

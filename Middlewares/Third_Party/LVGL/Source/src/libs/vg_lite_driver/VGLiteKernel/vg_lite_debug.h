@@ -35,6 +35,7 @@
 
 #ifdef __cplusplus
 extern "C" {
+
 #endif
 
 #define vg_lite_kernel_print   vg_lite_hal_trace

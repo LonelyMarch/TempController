@@ -31,7 +31,8 @@ typedef HANDLE lv_thread_t;
 
 typedef CRITICAL_SECTION lv_mutex_t;
 
-typedef struct {
+typedef struct
+{
     CRITICAL_SECTION cs;
     CONDITION_VARIABLE cv;
     bool v;

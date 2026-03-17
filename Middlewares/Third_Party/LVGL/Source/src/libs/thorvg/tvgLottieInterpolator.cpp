@@ -67,11 +67,12 @@ float LottieInterpolator::getTForX(float aX)
     auto currentSample = &samples[1];
     auto lastSample = &samples[SPLINE_TABLE_SIZE - 1];
 
-    for (; currentSample != lastSample && *currentSample <= aX; ++currentSample) {
+    for (; currentSample != lastSample && *currentSample <= aX; ++currentSample)
+    {
         intervalStart += SAMPLE_STEP_SIZE;
     }
 
-    --currentSample;  // t now lies between *currentSample and *currentSample+1
+    --currentSample; // t now lies between *currentSample and *currentSample+1
 
     // Interpolate to provide an initial guess for t
     auto dist = (aX - *currentSample) / (*(currentSample + 1) - *currentSample);
@@ -92,12 +93,14 @@ float LottieInterpolator::binarySubdivide(float aX, float aA, float aB)
     float x, t;
     int i = 0;
 
-    do {
+    do
+    {
         t = aA + (aB - aA) / 2.0f;
         x = _calcBezier(t, outTangent.x, inTangent.x) - aX;
         if (x > 0.0f) aB = t;
         else aA = t;
-    } while (fabsf(x) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+    }
+    while (fabsf(x) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
     return t;
 }
 
@@ -105,7 +108,8 @@ float LottieInterpolator::binarySubdivide(float aX, float aA, float aB)
 float LottieInterpolator::NewtonRaphsonIterate(float aX, float aGuessT)
 {
     // Refine guess with Newton-Raphson iteration
-    for (int i = 0; i < NEWTON_ITERATIONS; ++i) {
+    for (int i = 0; i < NEWTON_ITERATIONS; ++i)
+    {
         // We're trying to find where f(t) = aX,
         // so we're actually looking for a root for: CalcBezier(t) - aX
         auto currentX = _calcBezier(aGuessT, outTangent.x, inTangent.x) - aX;
@@ -137,10 +141,10 @@ void LottieInterpolator::set(const char* key, Point& inTangent, Point& outTangen
     if (outTangent.x == outTangent.y && inTangent.x == inTangent.y) return;
 
     //calculates sample values
-    for (int i = 0; i < SPLINE_TABLE_SIZE; ++i) {
+    for (int i = 0; i < SPLINE_TABLE_SIZE; ++i)
+    {
         samples[i] = _calcBezier(float(i) * SAMPLE_STEP_SIZE, outTangent.x, inTangent.x);
     }
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

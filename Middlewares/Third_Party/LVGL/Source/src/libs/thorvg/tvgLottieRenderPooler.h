@@ -31,14 +31,15 @@
 #include "tvgPaint.h"
 
 
-template<typename T>
+template <typename T>
 struct LottieRenderPooler
 {
     Array<T*> pooler;
 
     ~LottieRenderPooler()
     {
-        for (auto p = pooler.begin(); p < pooler.end(); ++p) {
+        for (auto p = pooler.begin(); p < pooler.end(); ++p)
+        {
             if (PP(*p)->unref() == 0) delete(*p);
         }
     }
@@ -46,7 +47,8 @@ struct LottieRenderPooler
     T* pooling(bool copy = false)
     {
         //return available one.
-        for (auto p = pooler.begin(); p < pooler.end(); ++p) {
+        for (auto p = pooler.begin(); p < pooler.end(); ++p)
+        {
             if (PP(*p)->refCnt == 1) return *p;
         }
 
@@ -61,4 +63,3 @@ struct LottieRenderPooler
 #endif //_TVG_LOTTIE_RENDER_POOLER_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

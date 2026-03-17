@@ -28,7 +28,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef enum {
+typedef enum
+{
     /**
      * Code 128 with GS1 encoding. Strips `[FCN1]` and spaces.
      */
@@ -50,49 +51,49 @@ LV_ATTRIBUTE_EXTERN_DATA extern const lv_obj_class_t lv_barcode_class;
  * @param parent point to an object where to create the barcode
  * @return pointer to the created barcode object
  */
-lv_obj_t * lv_barcode_create(lv_obj_t * parent);
+lv_obj_t* lv_barcode_create(lv_obj_t * parent);
 
 /**
  * Set the dark color of a barcode object
  * @param obj pointer to barcode object
  * @param color dark color of the barcode
  */
-void lv_barcode_set_dark_color(lv_obj_t * obj, lv_color_t color);
+void lv_barcode_set_dark_color(lv_obj_t* obj, lv_color_t color);
 
 /**
  * Set the light color of a barcode object
  * @param obj pointer to barcode object
  * @param color light color of the barcode
  */
-void lv_barcode_set_light_color(lv_obj_t * obj, lv_color_t color);
+void lv_barcode_set_light_color(lv_obj_t* obj, lv_color_t color);
 
 /**
  * Set the scale of a barcode object
  * @param obj pointer to barcode object
  * @param scale scale factor
  */
-void lv_barcode_set_scale(lv_obj_t * obj, uint16_t scale);
+void lv_barcode_set_scale(lv_obj_t* obj, uint16_t scale);
 
 /**
  * Set the direction of a barcode object
  * @param obj pointer to barcode object
  * @param direction draw direction (`LV_DIR_HOR` or `LB_DIR_VER`)
  */
-void lv_barcode_set_direction(lv_obj_t * obj, lv_dir_t direction);
+void lv_barcode_set_direction(lv_obj_t* obj, lv_dir_t direction);
 
 /**
  * Set the tiled mode of a barcode object
  * @param obj pointer to barcode object
  * @param tiled true: tiled mode, false: normal mode (default)
  */
-void lv_barcode_set_tiled(lv_obj_t * obj, bool tiled);
+void lv_barcode_set_tiled(lv_obj_t* obj, bool tiled);
 
 /**
  * Set the encoding of a barcode object
  * @param obj pointer to barcode object
  * @param encoding encoding (default is `LV_BARCODE_CODE128_GS1`)
  */
-void lv_barcode_set_encoding(lv_obj_t * obj, lv_barcode_encoding_t encoding);
+void lv_barcode_set_encoding(lv_obj_t* obj, lv_barcode_encoding_t encoding);
 
 /**
  * Set the data of a barcode object
@@ -100,7 +101,7 @@ void lv_barcode_set_encoding(lv_obj_t * obj, lv_barcode_encoding_t encoding);
  * @param data data to display
  * @return LV_RESULT_OK: if no error; LV_RESULT_INVALID: on error
  */
-lv_result_t lv_barcode_update(lv_obj_t * obj, const char * data);
+lv_result_t lv_barcode_update(lv_obj_t* obj, const char* data);
 
 /**
  * Get the dark color of a barcode object
@@ -128,7 +129,7 @@ uint16_t lv_barcode_get_scale(lv_obj_t * obj);
  * @param obj pointer to barcode object
  * @return encoding
  */
-lv_barcode_encoding_t lv_barcode_get_encoding(const lv_obj_t * obj);
+lv_barcode_encoding_t lv_barcode_get_encoding(const lv_obj_t* obj);
 
 /**********************
  *      MACROS

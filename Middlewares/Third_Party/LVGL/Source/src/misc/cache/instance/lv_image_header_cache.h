@@ -48,7 +48,7 @@ void lv_image_header_cache_resize(uint32_t count, bool evict_now);
  * It's also automatically called when an image is invalidated.
  * @param src pointer to an image source.
  */
-void lv_image_header_cache_drop(const void * src);
+void lv_image_header_cache_drop(const void* src);
 
 /**
  * Return true if the image header cache is enabled.
@@ -60,7 +60,7 @@ bool lv_image_header_cache_is_enabled(void);
  * Create an iterator to iterate over the image header cache.
  * @return an iterator to iterate over the image header cache.
  */
-lv_iter_t * lv_image_header_cache_iter_create(void);
+lv_iter_t* lv_image_header_cache_iter_create(void);
 
 /**
  * Dump the content of the image header cache in a human-readable format with cache order.

@@ -24,17 +24,19 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-typedef struct {
-    SDL_Thread * thread;
-    void (*callback)(void *);
-    void * user_data;
+typedef struct
+{
+    SDL_Thread* thread;
+    void (*callback)(void*);
+    void* user_data;
 } lv_thread_t;
 
-typedef SDL_mutex * lv_mutex_t;
+typedef SDL_mutex* lv_mutex_t;
 
-typedef struct {
-    SDL_mutex * mutex;
-    SDL_cond * cond;
+typedef struct
+{
+    SDL_mutex* mutex;
+    SDL_cond* cond;
     bool v;
 } lv_thread_sync_t;
 

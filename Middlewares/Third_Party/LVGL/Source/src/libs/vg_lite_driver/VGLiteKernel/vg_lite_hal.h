@@ -64,6 +64,7 @@
 
 #ifdef __cplusplus
 extern "C" {
+
 #endif
 /*!
  @brief Wait a number of milliseconds.
@@ -126,8 +127,8 @@ void vg_lite_hal_deinitialize(void);
  A pointer to an opaque structure that will be used as the memory handle. NULL should be returned if there is not
  enough memory.
  */
-vg_lite_error_t vg_lite_hal_allocate_contiguous(unsigned long size, vg_lite_vidmem_pool_t pool, void ** logical,
-                                                void ** klogical, uint32_t * physical, void ** node);
+vg_lite_error_t vg_lite_hal_allocate_contiguous(unsigned long size, vg_lite_vidmem_pool_t pool, void** logical,
+                                                void** klogical, uint32_t* physical, void** node);
 
 /*!
  @brief Free contiguous video memory.
@@ -139,7 +140,7 @@ vg_lite_error_t vg_lite_hal_allocate_contiguous(unsigned long size, vg_lite_vidm
  @param memory_handle
  A pointer to an opaque structure returned by {@link vg_lite_hal_allocate_contiguous}.
  */
-void vg_lite_hal_free_contiguous(void * memory_handle);
+void vg_lite_hal_free_contiguous(void* memory_handle);
 
 /*!
  @brief remove unfree node when continuously allocate buffer without free buffer.
@@ -176,8 +177,8 @@ void vg_lite_hal_free_os_heap(void);
  A pointer to an opaque structure that will be used as the memory handle. NULL should be returned if there is
  not enough system resources to map the region.
  */
-void * vg_lite_hal_map(uint32_t flags, uint32_t bytes, void * logical, uint32_t physical, int32_t dma_buf_fd,
-                       uint32_t * gpu);
+void* vg_lite_hal_map(uint32_t flags, uint32_t bytes, void* logical, uint32_t physical, int32_t dma_buf_fd,
+                      uint32_t* gpu);
 
 /*!
  @brief Unmap a previously mapped region.
@@ -189,7 +190,7 @@ void * vg_lite_hal_map(uint32_t flags, uint32_t bytes, void * logical, uint32_t 
  @param memory_handle
  A pointer to an opaque structure returned by {@link vg_lite_hal_map}.
  */
-void vg_lite_hal_unmap(void * memory_handle);
+void vg_lite_hal_unmap(void* memory_handle);
 
 /*!
  @brief Execute a memory barrier.
@@ -278,13 +279,13 @@ vg_lite_error_t vg_lite_hal_unmap_memory(vg_lite_kernel_unmap_memory_t * node);
  @result
  A boolean value indicating whether the interrupt was received (1) or not (0).
  */
-int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * value);
+int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t* value);
 
 /*!
  @brief After call vg_lite_hal_map(), flush cpu cache according the direction
  spicified by parameter cache_op.
  */
-vg_lite_error_t vg_lite_hal_operation_cache(void * handle, vg_lite_cache_op_t cache_op);
+vg_lite_error_t vg_lite_hal_operation_cache(void* handle, vg_lite_cache_op_t cache_op);
 
 /*!
  @brief export memory to dma buf, and get the dma buf fd
@@ -294,27 +295,27 @@ vg_lite_error_t vg_lite_hal_memory_export(int32_t * fd);
 /*!
  @brief print message
  */
-void vg_lite_hal_print(char * format, ...);
+void vg_lite_hal_print(char* format, ...);
 
 /*!
  @brief trace message
  */
-void vg_lite_hal_trace(char * format, ...);
+void vg_lite_hal_trace(char* format, ...);
 
 /*!
  @brief error number to string
  */
-const char * vg_lite_hal_Status2Name(vg_lite_error_t status);
+const char* vg_lite_hal_Status2Name(vg_lite_error_t status);
 
 /*!
  @brief allocate virtual memory from os
  */
-vg_lite_error_t vg_lite_hal_allocate(uint32_t size, void ** memory);
+vg_lite_error_t vg_lite_hal_allocate(uint32_t size, void** memory);
 
 /*!
  @brief free virtual memory
  */
-vg_lite_error_t vg_lite_hal_free(void * memory);
+vg_lite_error_t vg_lite_hal_free(void* memory);
 
 /*!
  @brief set gpu execute state
@@ -328,5 +329,3 @@ void vg_lite_set_gpu_execute_state(vg_lite_gpu_execute_state_t state);
 #endif /* LV_USE_VG_LITE_DRIVER */
 
 #endif /* VG_LITE_HAL_H */
-
-

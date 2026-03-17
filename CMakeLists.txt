@@ -14,9 +14,9 @@ set(CMAKE_C_EXTENSIONS ON)
 
 
 # Define the build type
-if(NOT CMAKE_BUILD_TYPE)
+if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
-endif()
+endif ()
 
 # Set the project name
 set(CMAKE_PROJECT_NAME TempController)
@@ -45,27 +45,29 @@ add_subdirectory(Middlewares/Third_Party/LVGL/Source)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library search paths
+        # Add user defined library search paths
 )
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user sources here
-    Core/Src/lcd.c
-    Core/Src/mipi.c
-    Core/Src/joystick.c
-    Middlewares/Third_Party/LVGL/Apps/ui/ui_temp_scale.c
+        # Add user sources here
+        Core/Src/lcd.c
+        Core/Src/joystick.c
+        Middlewares/Third_Party/LVGL/Apps/ui/ui_temp_scale.c
+        Middlewares/Third_Party/LVGL/Apps/ui/ui.c
+        # Middlewares/Third_Party/LVGL/Apps/porting/lv_port_disp.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined include paths
-    ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/ui
+        # Add user defined include paths
+        ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/ui
+        # ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/porting
 )
 
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined symbols
+        # Add user defined symbols
 )
 
 # Remove wrong libob.a library dependency when using cpp files
@@ -73,8 +75,8 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    stm32cubemx
-    LVGL
+        stm32cubemx
+        LVGL
 
-    # Add user defined libraries
+        # Add user defined libraries
 )

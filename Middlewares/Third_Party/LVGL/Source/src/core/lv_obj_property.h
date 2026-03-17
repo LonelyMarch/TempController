@@ -88,62 +88,68 @@ extern "C" {
 /**
  * Group of predefined widget ID start value.
  */
-enum _lv_prop_id_range_boundary_t {
-    LV_PROPERTY_ID_INVALID      = 0,
+enum _lv_prop_id_range_boundary_t
+{
+    LV_PROPERTY_ID_INVALID = 0,
 
     /*ID 0x01 to 0xff are style ID, check lv_style_prop_t*/
-    LV_PROPERTY_STYLE_START     = 0x00,
+    LV_PROPERTY_STYLE_START = 0x00,
 
-    LV_PROPERTY_ID_START        = 0x0100, /*ID smaller than 0xff is style ID*/
+    LV_PROPERTY_ID_START = 0x0100, /*ID smaller than 0xff is style ID*/
     /*Define the property ID for every widget here. */
-    LV_PROPERTY_OBJ_START       = 0x0100, /* lv_obj.c */
-    LV_PROPERTY_IMAGE_START     = 0x0200, /* lv_image.c */
-    LV_PROPERTY_LABEL_START     = 0x0300, /* lv_label.c */
-    LV_PROPERTY_KEYBOARD_START  = 0x0400, /* lv_keyboard.c */
-    LV_PROPERTY_TEXTAREA_START  = 0x0500, /* lv_textarea.c */
-    LV_PROPERTY_ROLLER_START    = 0x0600, /* lv_roller.c */
-    LV_PROPERTY_DROPDOWN_START  = 0x0700, /* lv_dropdown.c */
-    LV_PROPERTY_SLIDER_START    = 0x0800, /* lv_slider.c */
+    LV_PROPERTY_OBJ_START = 0x0100, /* lv_obj.c */
+    LV_PROPERTY_IMAGE_START = 0x0200, /* lv_image.c */
+    LV_PROPERTY_LABEL_START = 0x0300, /* lv_label.c */
+    LV_PROPERTY_KEYBOARD_START = 0x0400, /* lv_keyboard.c */
+    LV_PROPERTY_TEXTAREA_START = 0x0500, /* lv_textarea.c */
+    LV_PROPERTY_ROLLER_START = 0x0600, /* lv_roller.c */
+    LV_PROPERTY_DROPDOWN_START = 0x0700, /* lv_dropdown.c */
+    LV_PROPERTY_SLIDER_START = 0x0800, /* lv_slider.c */
     LV_PROPERTY_ANIMIMAGE_START = 0x0900, /* lv_animimage.c */
-    LV_PROPERTY_ARC_START       = 0x0a00, /* lv_arc.c */
-    LV_PROPERTY_BAR_START       = 0x0b00, /* lv_bar.c */
-    LV_PROPERTY_SWITCH_START    = 0x0c00, /* lv_switch.c */
-    LV_PROPERTY_CHECKBOX_START  = 0x0d00, /* lv_checkbox.c */
-    LV_PROPERTY_LED_START       = 0x0e00, /* lv_led.c */
-    LV_PROPERTY_LINE_START      = 0x0f00, /* lv_line.c */
-    LV_PROPERTY_SCALE_START     = 0x1000, /* lv_scale.c */
-    LV_PROPERTY_SPINBOX_START   = 0x1100, /* lv_spinbox.c */
-    LV_PROPERTY_SPINNER_START   = 0x1200, /* lv_spinner.c */
-    LV_PROPERTY_TABLE_START     = 0x1300, /* lv_table.c */
-    LV_PROPERTY_TABVIEW_START   = 0x1400, /* lv_tabview.c */
+    LV_PROPERTY_ARC_START = 0x0a00, /* lv_arc.c */
+    LV_PROPERTY_BAR_START = 0x0b00, /* lv_bar.c */
+    LV_PROPERTY_SWITCH_START = 0x0c00, /* lv_switch.c */
+    LV_PROPERTY_CHECKBOX_START = 0x0d00, /* lv_checkbox.c */
+    LV_PROPERTY_LED_START = 0x0e00, /* lv_led.c */
+    LV_PROPERTY_LINE_START = 0x0f00, /* lv_line.c */
+    LV_PROPERTY_SCALE_START = 0x1000, /* lv_scale.c */
+    LV_PROPERTY_SPINBOX_START = 0x1100, /* lv_spinbox.c */
+    LV_PROPERTY_SPINNER_START = 0x1200, /* lv_spinner.c */
+    LV_PROPERTY_TABLE_START = 0x1300, /* lv_table.c */
+    LV_PROPERTY_TABVIEW_START = 0x1400, /* lv_tabview.c */
     LV_PROPERTY_BUTTONMATRIX_START = 0x1500, /* lv_buttonmatrix.c */
-    LV_PROPERTY_SPAN_START      = 0x1600, /* lv_span.c */
-    LV_PROPERTY_MENU_START      = 0x1700, /* lv_menu.c */
-    LV_PROPERTY_CHART_START     = 0x1800, /* lv_chart.c */
+    LV_PROPERTY_SPAN_START = 0x1600, /* lv_span.c */
+    LV_PROPERTY_MENU_START = 0x1700, /* lv_menu.c */
+    LV_PROPERTY_CHART_START = 0x1800, /* lv_chart.c */
 
     /*Special ID, use it to extend ID and make sure it's unique and compile time determinant*/
     LV_PROPERTY_ID_BUILTIN_LAST = 0xffff, /*ID of 0x10000 ~ 0xfffffff is reserved for user*/
 
-    LV_PROPERTY_ID_ANY          = 0x7ffffffe, /*Special ID used by lvgl to intercept all setter/getter call.*/
+    LV_PROPERTY_ID_ANY = 0x7ffffffe, /*Special ID used by lvgl to intercept all setter/getter call.*/
 };
 
-struct _lv_property_name_t {
-    const char * name;
+struct _lv_property_name_t
+{
+    const char* name;
     lv_prop_id_t id;
 };
 
-typedef struct {
+typedef struct
+{
     lv_prop_id_t id;
-    union {
-        int32_t num;                /**< Signed integer number (enums or "normal" numbers)*/
-        uint32_t num_u;             /**< Unsigned integer number (opacity, Booleans)  */
-        bool enable;                /**< Booleans */
-        const void * ptr;           /**< Constant pointers  (font, cone text, etc.) */
-        lv_color_t color;           /**< Colors */
+
+    union
+    {
+        int32_t num; /**< Signed integer number (enums or "normal" numbers)*/
+        uint32_t num_u; /**< Unsigned integer number (opacity, Booleans)  */
+        bool enable; /**< Booleans */
+        const void* ptr; /**< Constant pointers  (font, cone text, etc.) */
+        lv_color_t color; /**< Colors */
         lv_value_precise_t precise; /**< float or int for precise value */
-        lv_point_t point;           /**< Point, contains two int32_t */
+        lv_point_t point; /**< Point, contains two int32_t */
 
-        struct {
+        struct
+        {
             /**
              * Note that place struct member `style` at first place is intended.
              * `style` shares same memory with `num`, `ptr`, `color`.
@@ -165,19 +171,21 @@ typedef struct {
              * }
              */
             lv_style_value_t style; /**< Make sure it's the first element in struct. */
-            uint32_t selector;      /**< Style selector, lv_part_t | lv_state_t */
+            uint32_t selector; /**< Style selector, lv_part_t | lv_state_t */
         };
 
         /**
          * For some properties like slider range, it contains two simple (4-byte) values
          * so we can use `arg1.num` and `arg2.num` to set the argument.
          */
-        struct {
-            union {
+        struct
+        {
+            union
+            {
                 int32_t num;
                 uint32_t num_u;
                 bool enable;
-                const void * ptr;
+                const void* ptr;
                 lv_color_t color;
                 lv_value_precise_t precise;
             } arg1, arg2;
@@ -185,11 +193,12 @@ typedef struct {
     };
 } lv_property_t;
 
-typedef struct {
+typedef struct
+{
     lv_prop_id_t id;
 
-    void * setter;      /**< Callback used to set property. */
-    void * getter;      /**< Callback used to get property. */
+    void* setter; /**< Callback used to set property. */
+    void* getter; /**< Callback used to get property. */
 } lv_property_ops_t;
 
 /**********************
@@ -206,7 +215,7 @@ typedef struct {
  * @param value     property value to set
  * @return          return LV_RESULT_OK if call succeeded
  */
-lv_result_t lv_obj_set_property(lv_obj_t * obj, const lv_property_t * value);
+lv_result_t lv_obj_set_property(lv_obj_t* obj, const lv_property_t* value);
 
 /**
  * Set multiple Widget properties. Helper `LV_OBJ_SET_PROPERTY_ARRAY` can be used for constant property array.
@@ -215,7 +224,7 @@ lv_result_t lv_obj_set_property(lv_obj_t * obj, const lv_property_t * value);
  * @param count     number of array elements
  * @return          return LV_RESULT_OK if call succeeded
  */
-lv_result_t lv_obj_set_properties(lv_obj_t * obj, const lv_property_t * value, uint32_t count);
+lv_result_t lv_obj_set_properties(lv_obj_t* obj, const lv_property_t* value, uint32_t count);
 
 /*=====================
  * Getter functions
@@ -228,7 +237,7 @@ lv_result_t lv_obj_set_properties(lv_obj_t * obj, const lv_property_t * value, u
  * @param id        ID of property to read
  * @return          return property value read. The returned property ID is set to `LV_PROPERTY_ID_INVALID` if read failed.
  */
-lv_property_t lv_obj_get_property(lv_obj_t * obj, lv_prop_id_t id);
+lv_property_t lv_obj_get_property(lv_obj_t* obj, lv_prop_id_t id);
 
 /**
  * Read style property value from Widget
@@ -237,7 +246,7 @@ lv_property_t lv_obj_get_property(lv_obj_t * obj, lv_prop_id_t id);
  * @param part      part for which the style property should be computed
  * @return          return property value read. The returned property ID is set to `LV_PROPERTY_ID_INVALID` if read failed.
  */
-lv_property_t lv_obj_get_style_property(lv_obj_t * obj, lv_prop_id_t id, lv_part_t part);
+lv_property_t lv_obj_get_style_property(lv_obj_t* obj, lv_prop_id_t id, lv_part_t part);
 
 /**
  * Get property ID by recursively searching for name in Widget's class hierarchy, and
@@ -247,7 +256,7 @@ lv_property_t lv_obj_get_style_property(lv_obj_t * obj, lv_prop_id_t id, lv_part
  * @param name      property name
  * @return          property ID found or `LV_PROPERTY_ID_INVALID` if not found.
  */
-lv_prop_id_t lv_obj_property_get_id(const lv_obj_t * obj, const char * name);
+lv_prop_id_t lv_obj_property_get_id(const lv_obj_t* obj, const char* name);
 
 /**
  * Get property ID by doing a non-recursive search for name directly in Widget class properties.
@@ -256,14 +265,14 @@ lv_prop_id_t lv_obj_property_get_id(const lv_obj_t * obj, const char * name);
  * @param name      property name
  * @return          property ID found or `LV_PROPERTY_ID_INVALID` if not found.
  */
-lv_prop_id_t lv_obj_class_property_get_id(const lv_obj_class_t * clz, const char * name);
+lv_prop_id_t lv_obj_class_property_get_id(const lv_obj_class_t* clz, const char* name);
 
 /**
  * Get style property ID by name. Requires enabling `LV_USE_OBJ_PROPERTY_NAME`.
  * @param name      property name
  * @return          property ID found or `LV_PROPERTY_ID_INVALID` if not found.
  */
-lv_prop_id_t lv_style_property_get_id(const char * name);
+lv_prop_id_t lv_style_property_get_id(const char* name);
 
 /**********************
  *      MACROS

@@ -58,6 +58,8 @@
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 extern DMA2D_HandleTypeDef hdma2d;
+extern DMA_HandleTypeDef hdma_spi1_tx;
+extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim8;
 
 /* USER CODE BEGIN EV */
@@ -72,14 +74,14 @@ extern TIM_HandleTypeDef htim8;
   */
 void NMI_Handler(void)
 {
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+    /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-   while (1)
-  {
-  }
-  /* USER CODE END NonMaskableInt_IRQn 1 */
+    /* USER CODE END NonMaskableInt_IRQn 0 */
+    /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+    while (1)
+    {
+    }
+    /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
 /**
@@ -87,14 +89,14 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  /* USER CODE BEGIN HardFault_IRQn 0 */
+    /* USER CODE BEGIN HardFault_IRQn 0 */
 
-  /* USER CODE END HardFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-    /* USER CODE END W1_HardFault_IRQn 0 */
-  }
+    /* USER CODE END HardFault_IRQn 0 */
+    while (1)
+    {
+        /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+        /* USER CODE END W1_HardFault_IRQn 0 */
+    }
 }
 
 /**
@@ -102,14 +104,14 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+    /* USER CODE BEGIN MemoryManagement_IRQn 0 */
 
-  /* USER CODE END MemoryManagement_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
-    /* USER CODE END W1_MemoryManagement_IRQn 0 */
-  }
+    /* USER CODE END MemoryManagement_IRQn 0 */
+    while (1)
+    {
+        /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+        /* USER CODE END W1_MemoryManagement_IRQn 0 */
+    }
 }
 
 /**
@@ -117,14 +119,14 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  /* USER CODE BEGIN BusFault_IRQn 0 */
+    /* USER CODE BEGIN BusFault_IRQn 0 */
 
-  /* USER CODE END BusFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    /* USER CODE END W1_BusFault_IRQn 0 */
-  }
+    /* USER CODE END BusFault_IRQn 0 */
+    while (1)
+    {
+        /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+        /* USER CODE END W1_BusFault_IRQn 0 */
+    }
 }
 
 /**
@@ -132,14 +134,14 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  /* USER CODE BEGIN UsageFault_IRQn 0 */
+    /* USER CODE BEGIN UsageFault_IRQn 0 */
 
-  /* USER CODE END UsageFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    /* USER CODE END W1_UsageFault_IRQn 0 */
-  }
+    /* USER CODE END UsageFault_IRQn 0 */
+    while (1)
+    {
+        /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+        /* USER CODE END W1_UsageFault_IRQn 0 */
+    }
 }
 
 /**
@@ -147,12 +149,12 @@ void UsageFault_Handler(void)
   */
 void DebugMon_Handler(void)
 {
-  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+    /* USER CODE BEGIN DebugMonitor_IRQn 0 */
 
-  /* USER CODE END DebugMonitor_IRQn 0 */
-  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+    /* USER CODE END DebugMonitor_IRQn 0 */
+    /* USER CODE BEGIN DebugMonitor_IRQn 1 */
 
-  /* USER CODE END DebugMonitor_IRQn 1 */
+    /* USER CODE END DebugMonitor_IRQn 1 */
 }
 
 /******************************************************************************/
@@ -167,13 +169,27 @@ void DebugMon_Handler(void)
   */
 void DMA1_Stream0_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Stream0_IRQn 0 */
+    /* USER CODE BEGIN DMA1_Stream0_IRQn 0 */
 
-  /* USER CODE END DMA1_Stream0_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_adc1);
-  /* USER CODE BEGIN DMA1_Stream0_IRQn 1 */
+    /* USER CODE END DMA1_Stream0_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_adc1);
+    /* USER CODE BEGIN DMA1_Stream0_IRQn 1 */
 
-  /* USER CODE END DMA1_Stream0_IRQn 1 */
+    /* USER CODE END DMA1_Stream0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SPI1 global interrupt.
+  */
+void SPI1_IRQHandler(void)
+{
+    /* USER CODE BEGIN SPI1_IRQn 0 */
+
+    /* USER CODE END SPI1_IRQn 0 */
+    HAL_SPI_IRQHandler(&hspi1);
+    /* USER CODE BEGIN SPI1_IRQn 1 */
+
+    /* USER CODE END SPI1_IRQn 1 */
 }
 
 /**
@@ -181,13 +197,27 @@ void DMA1_Stream0_IRQHandler(void)
   */
 void TIM8_UP_TIM13_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
+    /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
 
-  /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim8);
-  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
+    /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
+    HAL_TIM_IRQHandler(&htim8);
+    /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
 
-  /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
+    /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream0 global interrupt.
+  */
+void DMA2_Stream0_IRQHandler(void)
+{
+    /* USER CODE BEGIN DMA2_Stream0_IRQn 0 */
+
+    /* USER CODE END DMA2_Stream0_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_spi1_tx);
+    /* USER CODE BEGIN DMA2_Stream0_IRQn 1 */
+
+    /* USER CODE END DMA2_Stream0_IRQn 1 */
 }
 
 /**
@@ -195,13 +225,13 @@ void TIM8_UP_TIM13_IRQHandler(void)
   */
 void DMA2D_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA2D_IRQn 0 */
-  lv_draw_dma2d_transfer_complete_interrupt_handler();
-  /* USER CODE END DMA2D_IRQn 0 */
-  HAL_DMA2D_IRQHandler(&hdma2d);
-  /* USER CODE BEGIN DMA2D_IRQn 1 */
+    /* USER CODE BEGIN DMA2D_IRQn 0 */
+    lv_draw_dma2d_transfer_complete_interrupt_handler();
+    /* USER CODE END DMA2D_IRQn 0 */
+    HAL_DMA2D_IRQHandler(&hdma2d);
+    /* USER CODE BEGIN DMA2D_IRQn 1 */
 
-  /* USER CODE END DMA2D_IRQn 1 */
+    /* USER CODE END DMA2D_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -35,21 +35,23 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-typedef enum {
+typedef enum
+{
     LV_EVE_PRIMITIVE_ZERO_VALUE,
-    LV_EVE_PRIMITIVE_BITMAPS = 1UL,      /* Bitmap drawing primitive */
-    LV_EVE_PRIMITIVE_POINTS = 2UL,       /* Point drawing primitive */
-    LV_EVE_PRIMITIVE_LINES = 3UL,        /* Line drawing primitive */
-    LV_EVE_PRIMITIVE_LINE_STRIP = 4UL,   /* Line strip drawing primitive */
+    LV_EVE_PRIMITIVE_BITMAPS = 1UL, /* Bitmap drawing primitive */
+    LV_EVE_PRIMITIVE_POINTS = 2UL, /* Point drawing primitive */
+    LV_EVE_PRIMITIVE_LINES = 3UL, /* Line drawing primitive */
+    LV_EVE_PRIMITIVE_LINE_STRIP = 4UL, /* Line strip drawing primitive */
     LV_EVE_PRIMITIVE_EDGE_STRIP_R = 5UL, /* Edge strip right side drawing primitive */
     LV_EVE_PRIMITIVE_EDGE_STRIP_L = 6UL, /* Edge strip left side drawing primitive */
     LV_EVE_PRIMITIVE_EDGE_STRIP_A = 7UL, /* Edge strip above drawing primitive */
     LV_EVE_PRIMITIVE_EDGE_STRIP_B = 8UL, /* Edge strip below side drawing primitive */
-    LV_EVE_PRIMITIVE_RECTS = 9UL,        /* Rectangle drawing primitive */
+    LV_EVE_PRIMITIVE_RECTS = 9UL, /* Rectangle drawing primitive */
 } lv_eve_primitive_t;
 
 
-typedef struct {
+typedef struct
+{
     lv_eve_primitive_t primitive;
     lv_color_t color;
     lv_opa_t opa;
@@ -66,7 +68,8 @@ typedef struct {
 /* drawing context that is not saved and restored
  * by SAVE_CONTEXT and RESTORE_CONTEXT
  */
-typedef struct {
+typedef struct
+{
     uint32_t bitmap_source;
     uint32_t bitmap_size;
     uint32_t bitmap_size_h;

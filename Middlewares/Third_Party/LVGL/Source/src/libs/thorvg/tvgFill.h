@@ -30,20 +30,28 @@
 #include <cstring>
 #include "tvgCommon.h"
 
-template<typename T>
+template <typename T>
 struct DuplicateMethod
 {
-    virtual ~DuplicateMethod() {}
+    virtual ~DuplicateMethod()
+    {
+    }
+
     virtual T* duplicate() = 0;
 };
 
-template<class T>
+template <class T>
 struct FillDup : DuplicateMethod<Fill>
 {
     T* inst = nullptr;
 
-    FillDup(T* _inst) : inst(_inst) {}
-    ~FillDup() {}
+    FillDup(T* _inst) : inst(_inst)
+    {
+    }
+
+    ~FillDup()
+    {
+    }
 
     Fill* duplicate() override
     {
@@ -81,9 +89,10 @@ struct Fill::Impl
         ret->pImpl->colorStops = static_cast<ColorStop*>(lv_malloc(sizeof(ColorStop) * cnt));
         LV_ASSERT_MALLOC(ret->pImpl->colorStops);
         memcpy(ret->pImpl->colorStops, colorStops, sizeof(ColorStop) * cnt);
-        if (transform) {
+        if (transform)
+        {
             ret->pImpl->transform = static_cast<Matrix*>(lv_malloc(sizeof(Matrix)));
-			LV_ASSERT_MALLOC(ret->pImpl->transform);
+            LV_ASSERT_MALLOC(ret->pImpl->transform);
             *ret->pImpl->transform = *transform;
         }
         return ret;
@@ -116,4 +125,3 @@ struct LinearGradient::Impl
 #endif  //_TVG_FILL_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

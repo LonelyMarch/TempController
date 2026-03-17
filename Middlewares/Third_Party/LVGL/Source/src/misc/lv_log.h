@@ -31,12 +31,24 @@ extern "C" {
 #define LV_LOG_LEVEL_NONE  5 /**< Do not log anything. */
 #define LV_LOG_LEVEL_NUM   5 /**< Number of log levels */
 
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_TRACE);
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_INFO);
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_WARN);
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_ERROR);
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_USER);
-LV_EXPORT_CONST_INT(LV_LOG_LEVEL_NONE);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_TRACE
+
+);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_INFO
+
+);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_WARN
+
+);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_ERROR
+
+);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_USER
+
+);
+LV_EXPORT_CONST_INT (LV_LOG_LEVEL_NONE
+
+);
 
 typedef int8_t lv_log_level_t;
 
@@ -57,7 +69,7 @@ typedef int8_t lv_log_level_t;
 /**
  * Log print function. Receives a string buffer to print".
  */
-typedef void (*lv_log_print_g_cb_t)(lv_log_level_t level, const char * buf);
+typedef void (*lv_log_print_g_cb_t)(lv_log_level_t level, const char* buf);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -77,7 +89,7 @@ void lv_log_register_print_cb(lv_log_print_g_cb_t print_cb);
  * @param format    printf-like format string
  * @param ...       parameters for `format`
  */
-void lv_log(const char * format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
+void lv_log(const char* format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
 
 /**
  * Add a log
@@ -88,8 +100,8 @@ void lv_log(const char * format, ...) LV_FORMAT_ATTRIBUTE(1, 2);
  * @param format    printf-like format string
  * @param ...       parameters for `format`
  */
-void lv_log_add(lv_log_level_t level, const char * file, int line,
-                const char * func, const char * format, ...) LV_FORMAT_ATTRIBUTE(5, 6);
+void lv_log_add(lv_log_level_t level, const char* file, int line,
+                const char* func, const char* format, ...) LV_FORMAT_ATTRIBUTE(5, 6);
 
 /**********************
  *      MACROS

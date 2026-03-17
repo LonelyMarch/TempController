@@ -40,7 +40,8 @@ static inline void EVE_pdn_clear(void)
 static inline void spi_transmit(uint8_t data)
 {
 #if LV_DRAW_EVE_WRITE_BUFFER_SIZE_INTERNAL
-    if(lv_eve_write_buf_len == sizeof(lv_eve_write_buf)) {
+    if (lv_eve_write_buf_len == sizeof(lv_eve_write_buf))
+    {
         lv_eve_target_flush_write_buf();
     }
     lv_eve_write_buf[lv_eve_write_buf_len++] = data;
@@ -55,10 +56,11 @@ static inline void spi_transmit_32(uint32_t data)
     data = lv_swap_bytes_32(data);
 #endif
 #if LV_DRAW_EVE_WRITE_BUFFER_SIZE_INTERNAL
-    if(lv_eve_write_buf_len + 4 > sizeof(lv_eve_write_buf)) {
+    if (lv_eve_write_buf_len + 4 > sizeof(lv_eve_write_buf))
+    {
         lv_eve_target_flush_write_buf();
     }
-    uint8_t * buf4 = (uint8_t *) &data;
+    uint8_t* buf4 = (uint8_t*)&data;
     lv_eve_write_buf[lv_eve_write_buf_len++] = buf4[0];
     lv_eve_write_buf[lv_eve_write_buf_len++] = buf4[1];
     lv_eve_write_buf[lv_eve_write_buf_len++] = buf4[2];
@@ -68,19 +70,21 @@ static inline void spi_transmit_32(uint32_t data)
 #endif
 }
 
-static inline void lv_eve_target_spi_transmit_buf(const void * data, uint32_t size)
+static inline void lv_eve_target_spi_transmit_buf(const void* data, uint32_t size)
 {
     lv_eve_target_flush_write_buf();
-    lv_draw_eve_unit_g->op_cb(lv_draw_eve_unit_g->disp, LV_DRAW_EVE_OPERATION_SPI_SEND, (void *) data, size);
+    lv_draw_eve_unit_g->op_cb(lv_draw_eve_unit_g->disp, LV_DRAW_EVE_OPERATION_SPI_SEND, (void*)data, size);
 }
 
 static inline void lv_eve_target_flush_write_buf(void)
 {
 #if LV_DRAW_EVE_WRITE_BUFFER_SIZE_INTERNAL
-    if(lv_eve_write_buf_len == 0) {
+    if (lv_eve_write_buf_len == 0)
+    {
         return;
     }
-    lv_draw_eve_unit_g->op_cb(lv_draw_eve_unit_g->disp, LV_DRAW_EVE_OPERATION_SPI_SEND, lv_eve_write_buf, lv_eve_write_buf_len);
+    lv_draw_eve_unit_g->op_cb(lv_draw_eve_unit_g->disp, LV_DRAW_EVE_OPERATION_SPI_SEND, lv_eve_write_buf,
+                              lv_eve_write_buf_len);
     lv_eve_write_buf_len = 0;
 #endif
 }
@@ -103,7 +107,7 @@ static inline uint8_t spi_receive(uint8_t data)
     return byte;
 }
 
-static inline uint8_t fetch_flash_byte(const uint8_t *p_data)
+static inline uint8_t fetch_flash_byte(const uint8_t* p_data)
 {
     return (*p_data);
 }

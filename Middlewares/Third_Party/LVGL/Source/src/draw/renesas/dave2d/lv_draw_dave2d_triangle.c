@@ -3,14 +3,14 @@
 
 #include "../../../misc/lv_area_private.h"
 
-void lv_draw_dave2d_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * dsc)
+void lv_draw_dave2d_triangle(lv_draw_task_t* t, const lv_draw_triangle_dsc_t* dsc)
 {
     lv_area_t clipped_area;
-    d2_u32      flags = 0;
+    d2_u32 flags = 0;
     d2_u8 current_alpha_mode = 0;
     int32_t x;
     int32_t y;
-    lv_draw_dave2d_unit_t * u = (lv_draw_dave2d_unit_t *)t->draw_unit;
+    lv_draw_dave2d_unit_t* u = (lv_draw_dave2d_unit_t*)t->draw_unit;
 
     lv_area_t tri_area;
     tri_area.x1 = LV_MIN3(dsc->p[0].x, dsc->p[1].x, dsc->p[2].x);
@@ -18,30 +18,30 @@ void lv_draw_dave2d_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * 
     tri_area.x2 = LV_MAX3(dsc->p[0].x, dsc->p[1].x, dsc->p[2].x);
     tri_area.y2 = LV_MAX3(dsc->p[0].y, dsc->p[1].y, dsc->p[2].y);
 
-    if(!lv_area_intersect(&clipped_area, &tri_area, &t->clip_area)) return;
+    if (!lv_area_intersect(&clipped_area, &tri_area, &t->clip_area)) return;
 
 #if LV_USE_OS
-    lv_result_t  status;
-    status = lv_mutex_lock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+lv_result_t status;
+status= lv_mutex_lock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 
-    x = 0 - t->target_layer->buf_area.x1;
-    y = 0 - t->target_layer->buf_area.y1;
+x=0 - t->target_layer->buf_area.x1;
+y=0 - t->target_layer->buf_area.y1;
 
-    lv_area_move(&clipped_area, x, y);
+lv_area_move (&clipped_area, x, y);
 
-    lv_point_precise_t p[3];
-    p[0] = dsc->p[0];
-    p[1] = dsc->p[1];
-    p[2] = dsc->p[2];
+lv_point_precise_t p[3];
+p [0] = dsc->p [0];
+p [1] = dsc->p [1];
+p [2] = dsc->p [2];
 
-    /*Order the points like this:
+/*Order the points like this:
      * [0]: top
      * [1]: right bottom
      * [2]: left bottom */
 
-    if(dsc->p[0].y <= dsc->p[1].y && dsc->p[0].y <= dsc->p[2].y) {
+    if(dsc->p [0].y<= dsc->p [1].y&& dsc->p [0].y<= dsc->p [2].y) {
         p[0] = dsc->p[0];
         if(dsc->p[1].x < dsc->p[2].x) {
             p[2] = dsc->p[1];
@@ -52,7 +52,7 @@ void lv_draw_dave2d_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * 
             p[1] = dsc->p[1];
         }
     }
-    else if(dsc->p[1].y <= dsc->p[0].y && dsc->p[1].y <= dsc->p[2].y) {
+    else if(dsc->p [1].y<= dsc->p [0].y&& dsc->p [1].y<= dsc->p [2].y) {
         p[0] = dsc->p[1];
         if(dsc->p[0].x < dsc->p[2].x) {
             p[2] = dsc->p[0];
@@ -75,21 +75,21 @@ void lv_draw_dave2d_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * 
         }
     }
 
-    p[0].x -= t->target_layer->buf_area.x1;
-    p[1].x -= t->target_layer->buf_area.x1;
-    p[2].x -= t->target_layer->buf_area.x1;
+p [0].x-= t->target_layer->buf_area.x1;
+p [1].x-= t->target_layer->buf_area.x1;
+p [2].x-= t->target_layer->buf_area.x1;
 
-    p[0].y -= t->target_layer->buf_area.y1;
-    p[1].y -= t->target_layer->buf_area.y1;
-    p[2].y -= t->target_layer->buf_area.y1;
+p [0].y-= t->target_layer->buf_area.y1;
+p [1].y-= t->target_layer->buf_area.y1;
+p [2].y-= t->target_layer->buf_area.y1;
 
-    p[1].y -= 1;
-    p[2].y -= 1;
+p [1].y-= 1;
+p [2].y-= 1;
 
-    d2_u8 current_alpha = d2_getalpha(u->d2_handle);
-    current_alpha_mode = d2_getalphamode(u->d2_handle);
+d2_u8 current_alpha = d2_getalpha(u->d2_handle);
+current_alpha_mode= d2_getalphamode(u->d2_handle);
 
-    if(LV_GRAD_DIR_NONE != dsc->grad.dir) {
+    if(LV_GRAD_DIR_NONE!= dsc->grad.dir) {
         float a1;
         float a2;
 
@@ -135,26 +135,26 @@ void lv_draw_dave2d_triangle(lv_draw_task_t * t, const lv_draw_triangle_dsc_t * 
 
     }
 
-    d2_framebuffer_from_layer(u->d2_handle, t->target_layer);
+d2_framebuffer_from_layer (u->d2_handle, t->target_layer);
 
-    d2_cliprect(u->d2_handle, (d2_border)clipped_area.x1, (d2_border)clipped_area.y1, (d2_border)clipped_area.x2,
-                (d2_border)clipped_area.y2);
+d2_cliprect (u->d2_handle, (d2_border)clipped_area.x1, (d2_border)clipped_area.y1, (d2_border)clipped_area.x2,
+(d2_border)clipped_area.y2);
 
-    d2_rendertri(u->d2_handle,
-                 (d2_point)      D2_FIX4(p[0].x),
-                 (d2_point)      D2_FIX4(p[0].y),
-                 (d2_point)      D2_FIX4(p[1].x),
-                 (d2_point)      D2_FIX4(p[1].y),
-                 (d2_point)      D2_FIX4(p[2].x),
-                 (d2_point)      D2_FIX4(p[2].y),
-                 flags);
+d2_rendertri (u->d2_handle,
+(d2_point) D2_FIX4(p[0].x),
+    (d2_point) D2_FIX4(p[0].y),
+    (d2_point) D2_FIX4(p[1].x),
+    (d2_point) D2_FIX4(p[1].y),
+    (d2_point) D2_FIX4(p[2].x),
+    (d2_point) D2_FIX4(p[2].y),
+    flags);
 
-    d2_setalphamode(u->d2_handle, current_alpha_mode);
-    d2_setalpha(u->d2_handle, current_alpha);
+d2_setalphamode (u->d2_handle, current_alpha_mode);
+d2_setalpha (u->d2_handle, current_alpha);
 
 #if LV_USE_OS
-    status = lv_mutex_unlock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+status= lv_mutex_unlock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 
 }

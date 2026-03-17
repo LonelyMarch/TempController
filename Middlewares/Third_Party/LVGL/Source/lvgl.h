@@ -208,7 +208,7 @@ static inline int lv_version_patch(void)
     return LVGL_VERSION_PATCH;
 }
 
-static inline const char * lv_version_info(void)
+static inline const char* lv_version_info(void)
 {
     return LVGL_VERSION_INFO;
 }

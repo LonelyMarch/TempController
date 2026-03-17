@@ -13,12 +13,13 @@
 #define SCALE_PIXEL_PER_MINOR    10
 #define SCALE_VISIBLE_MINOR     14
 
-typedef struct {
-    lv_obj_t * label_curr_value;
-    lv_obj_t * label_set_value;
-    lv_obj_t * scale;
-    lv_obj_t * marker;
-    lv_timer_t * timer;
+typedef struct
+{
+    lv_obj_t* label_curr_value;
+    lv_obj_t* label_set_value;
+    lv_obj_t* scale;
+    lv_obj_t* marker;
+    lv_timer_t* timer;
 } ui_ctx_t;
 
 static ui_ctx_t s_ui;
@@ -30,10 +31,12 @@ static ui_ctx_t s_ui;
  */
 static float clamp_temp(float value)
 {
-    if(value < UI_TEMP_MIN_C) {
+    if (value < UI_TEMP_MIN_C)
+    {
         return UI_TEMP_MIN_C;
     }
-    if(value > UI_TEMP_MAX_C) {
+    if (value > UI_TEMP_MAX_C)
+    {
         return UI_TEMP_MAX_C;
     }
     return value;
@@ -44,11 +47,13 @@ static float clamp_temp(float value)
  */
 static void update_labels(void)
 {
-    if(s_ui.label_curr_value != NULL) {
+    if (s_ui.label_curr_value != NULL)
+    {
         lv_label_set_text_fmt(s_ui.label_curr_value, "%.1f C", g_temp_current_c);
     }
 
-    if(s_ui.label_set_value != NULL) {
+    if (s_ui.label_set_value != NULL)
+    {
         lv_label_set_text_fmt(s_ui.label_set_value, "%.1f C", g_temp_setpoint_c);
     }
 }
@@ -57,10 +62,10 @@ static void update_labels(void)
  * @brief 绘制横向刻度尺（指南针刻度风格）。
  * @param e LVGL 绘制事件参数。
  */
-static void scale_draw_event_cb(lv_event_t * e)
+static void scale_draw_event_cb(lv_event_t* e)
 {
-    lv_obj_t * obj = lv_event_get_target_obj(e);
-    lv_layer_t * layer = lv_event_get_layer(e);
+    lv_obj_t* obj = lv_event_get_target_obj(e);
+    lv_layer_t* layer = lv_event_get_layer(e);
     lv_area_t coords;
     lv_draw_line_dsc_t line_dsc;
     lv_draw_label_dsc_t text_dsc;
@@ -89,7 +94,8 @@ static void scale_draw_event_cb(lv_event_t * e)
 
     set_minor_index = (int32_t)(g_temp_setpoint_c * (float)SCALE_MINOR_PER_C);
 
-    for(i = -SCALE_VISIBLE_MINOR; i <= SCALE_VISIBLE_MINOR; i++) {
+    for (i = -SCALE_VISIBLE_MINOR; i <= SCALE_VISIBLE_MINOR; i++)
+    {
         int32_t x = center_x + i * SCALE_PIXEL_PER_MINOR;
         int32_t minor_index = set_minor_index + i;
         /* 每 2 摄氏度画一根主刻度，其余为次刻度。 */
@@ -97,7 +103,8 @@ static void scale_draw_event_cb(lv_event_t * e)
         int32_t dist = (i < 0) ? -i : i;
         uint8_t opa = (dist > 10) ? 50U : (uint8_t)(255U - (uint8_t)(dist * 16U));
 
-        if(x < coords.x1 + 2 || x > coords.x2 - 2) {
+        if (x < coords.x1 + 2 || x > coords.x2 - 2)
+        {
             continue;
         }
 
@@ -110,7 +117,8 @@ static void scale_draw_event_cb(lv_event_t * e)
         line_dsc.width = major ? 3 : 2;
         lv_draw_line(layer, &line_dsc);
 
-        if(major) {
+        if (major)
+        {
             char txt[8];
             lv_area_t txt_area;
             int32_t temp_i = minor_index / SCALE_MINOR_PER_C;
@@ -132,7 +140,7 @@ static void scale_draw_event_cb(lv_event_t * e)
  * @brief UI 定时轮询：读取摇杆并更新设定温度。
  * @param timer LVGL 定时器参数（未使用）。
  */
-static void ui_tick_cb(lv_timer_t * timer)
+static void ui_tick_cb(lv_timer_t* timer)
 {
     int16_t step;
     joystick_dir_t dir;
@@ -141,7 +149,8 @@ static void ui_tick_cb(lv_timer_t * timer)
 
     /* 左右细调：一次 0.5 度。 */
     step = Joystick_GetEncoderStep();
-    if(step != 0) {
+    if (step != 0)
+    {
         g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c + (float)step * UI_TEMP_FINE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
@@ -149,17 +158,20 @@ static void ui_tick_cb(lv_timer_t * timer)
 
     /* 上下粗调：一次 1.0 度；按压回到当前温度。 */
     dir = Joystick_GetDirection();
-    if(dir == JOYSTICK_DIR_UP) {
+    if (dir == JOYSTICK_DIR_UP)
+    {
         g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c + UI_TEMP_COARSE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
-    else if(dir == JOYSTICK_DIR_DOWN) {
+    else if (dir == JOYSTICK_DIR_DOWN)
+    {
         g_temp_setpoint_c = clamp_temp(g_temp_setpoint_c - UI_TEMP_COARSE_STEP_C);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
     }
-    else if(dir == JOYSTICK_DIR_PRESS) {
+    else if (dir == JOYSTICK_DIR_PRESS)
+    {
         g_temp_setpoint_c = clamp_temp(g_temp_current_c);
         update_labels();
         lv_obj_invalidate(s_ui.scale);
@@ -171,9 +183,9 @@ static void ui_tick_cb(lv_timer_t * timer)
  */
 void UI_TempScale_Create(void)
 {
-    lv_obj_t * scr = lv_screen_active();
-    lv_obj_t * title_curr;
-    lv_obj_t * title_set;
+    lv_obj_t* scr = lv_screen_active();
+    lv_obj_t* title_curr;
+    lv_obj_t* title_set;
 
     /* 暗色线性风格背景。 */
     lv_obj_set_style_bg_color(scr, lv_color_hex(0x060B1A), 0);
@@ -224,7 +236,8 @@ void UI_TempScale_Create(void)
     update_labels();
 
     /* 避免重复创建定时器导致多重轮询。 */
-    if(s_ui.timer != NULL) {
+    if (s_ui.timer != NULL)
+    {
         lv_timer_delete(s_ui.timer);
     }
     s_ui.timer = lv_timer_create(ui_tick_cb, 60, NULL);
@@ -248,7 +261,8 @@ void UI_TempScale_SetSetpointTemp(float value_c)
 {
     g_temp_setpoint_c = clamp_temp(value_c);
     update_labels();
-    if(s_ui.scale != NULL) {
+    if (s_ui.scale != NULL)
+    {
         lv_obj_invalidate(s_ui.scale);
     }
 }

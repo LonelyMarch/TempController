@@ -32,7 +32,8 @@ extern "C" {
  **********************/
 
 /** Store the type of layer required to render a widget.*/
-typedef enum {
+typedef enum
+{
     /**No layer is needed. */
     LV_LAYER_TYPE_NONE,
 
@@ -65,7 +66,7 @@ typedef enum {
  * @note Only the relevant fields will be set.
  *       E.g. if `border width == 0` the other border properties won't be evaluated.
  */
-void lv_obj_init_draw_rect_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_rect_dsc_t * draw_dsc);
+void lv_obj_init_draw_rect_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_rect_dsc_t* draw_dsc);
 
 /**
  * Initialize a label draw descriptor from an object's styles in its current state
@@ -75,7 +76,7 @@ void lv_obj_init_draw_rect_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_rect_dsc_
  *                  If the `opa` field is set to or the property is equal to `LV_OPA_TRANSP` the rest won't be initialized.
  *                  Should be initialized with `lv_draw_label_dsc_init(draw_dsc)`.
  */
-void lv_obj_init_draw_label_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_label_dsc_t * draw_dsc);
+void lv_obj_init_draw_label_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_label_dsc_t* draw_dsc);
 
 /**
  * Initialize an image draw descriptor from an object's styles in its current state
@@ -84,7 +85,7 @@ void lv_obj_init_draw_label_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_label_ds
  * @param draw_dsc  the descriptor to initialize.
  *                  Should be initialized with `lv_draw_image_dsc_init(draw_dsc)`.
  */
-void lv_obj_init_draw_image_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_image_dsc_t * draw_dsc);
+void lv_obj_init_draw_image_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_image_dsc_t* draw_dsc);
 
 /**
  * Initialize a line draw descriptor from an object's styles in its current state
@@ -93,7 +94,7 @@ void lv_obj_init_draw_image_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_image_ds
  * @param draw_dsc  the descriptor to initialize.
  *                  Should be initialized with `lv_draw_line_dsc_init(draw_dsc)`.
  */
-void lv_obj_init_draw_line_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_line_dsc_t * draw_dsc);
+void lv_obj_init_draw_line_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_line_dsc_t* draw_dsc);
 
 /**
  * Initialize an arc draw descriptor from an object's styles in its current state
@@ -102,7 +103,7 @@ void lv_obj_init_draw_line_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_line_dsc_
  * @param draw_dsc  the descriptor to initialize.
  *                  Should be initialized with `lv_draw_arc_dsc_init(draw_dsc)`.
  */
-void lv_obj_init_draw_arc_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_arc_dsc_t * draw_dsc);
+void lv_obj_init_draw_arc_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_arc_dsc_t* draw_dsc);
 
 
 /**
@@ -114,7 +115,7 @@ void lv_obj_init_draw_arc_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_arc_dsc_t 
  * @param draw_dsc  the descriptor to initialize.
  *                  Should be initialized with `lv_draw_blur_dsc_init(draw_dsc)`.
  */
-void lv_obj_init_draw_blur_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_blur_dsc_t * draw_dsc);
+void lv_obj_init_draw_blur_dsc(lv_obj_t* obj, lv_part_t part, lv_draw_blur_dsc_t* draw_dsc);
 
 /**
  * Get the required extra size (around the object's part) to draw shadow, outline, value etc.
@@ -122,7 +123,7 @@ void lv_obj_init_draw_blur_dsc(lv_obj_t * obj, lv_part_t part, lv_draw_blur_dsc_
  * @param part      part of the object
  * @return          the extra size required around the object
  */
-int32_t lv_obj_calculate_ext_draw_size(lv_obj_t * obj, lv_part_t part);
+int32_t lv_obj_calculate_ext_draw_size(lv_obj_t* obj, lv_part_t part);
 
 /**
  * Send a 'LV_EVENT_REFR_EXT_DRAW_SIZE' Call the ancestor's event handler to the object to refresh the value of the extended draw size.

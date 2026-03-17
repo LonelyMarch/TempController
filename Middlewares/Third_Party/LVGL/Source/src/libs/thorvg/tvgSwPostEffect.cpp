@@ -40,11 +40,13 @@ struct SwGaussianBlur
 static void _gaussianExtendRegion(RenderRegion& region, int extra, int8_t direction)
 {
     //bbox region expansion for feathering
-    if (direction != 2) {
+    if (direction != 2)
+    {
         region.x = -extra;
         region.w = extra * 2;
     }
-    if (direction != 1) {
+    if (direction != 1)
+    {
         region.y = -extra;
         region.h = extra * 2;
     }
@@ -64,27 +66,33 @@ static int _gaussianRemap(int end, int idx, int border)
 
 
 //TODO: SIMD OPTIMIZATION?
-static void _gaussianBlur(uint8_t* src, uint8_t* dst, int32_t stride, int32_t w, int32_t h, const SwBBox& bbox, int32_t dimension, int border, bool flipped)
+static void _gaussianBlur(uint8_t* src, uint8_t* dst, int32_t stride, int32_t w, int32_t h, const SwBBox& bbox,
+                          int32_t dimension, int border, bool flipped)
 {
-    if (flipped) {
+    if (flipped)
+    {
         src += ((bbox.min.x * stride) + bbox.min.y) << 2;
         dst += ((bbox.min.x * stride) + bbox.min.y) << 2;
-    } else {
+    }
+    else
+    {
         src += ((bbox.min.y * stride) + bbox.min.x) << 2;
         dst += ((bbox.min.y * stride) + bbox.min.x) << 2;
     }
 
     auto iarr = 1.0f / (dimension + dimension + 1);
 
-    for (int x = 0; x < h; x++) {
+    for (int x = 0; x < h; x++)
+    {
         auto p = x * stride;
-        auto i = p * 4;                 //current index
-        auto l = -(dimension + 1);      //left index
-        auto r = dimension;             //right index
-        int acc[4] = {0, 0, 0, 0};      //sliding accumulator
+        auto i = p * 4; //current index
+        auto l = -(dimension + 1); //left index
+        auto r = dimension; //right index
+        int acc[4] = {0, 0, 0, 0}; //sliding accumulator
 
         //initial acucmulation
-        for (int x2 = l; x2 < r; ++x2) {
+        for (int x2 = l; x2 < r; ++x2)
+        {
             auto id = (_gaussianRemap(w, x2, border) + p) * 4;
             acc[0] += src[id++];
             acc[1] += src[id++];
@@ -92,7 +100,8 @@ static void _gaussianBlur(uint8_t* src, uint8_t* dst, int32_t stride, int32_t w,
             acc[3] += src[id];
         }
         //perform filtering
-        for (int x2 = 0; x2 < w; ++x2, ++r, ++l) {
+        for (int x2 = 0; x2 < w; ++x2, ++r, ++l)
+        {
             auto rid = (_gaussianRemap(w, r, border) + p) * 4;
             auto lid = (_gaussianRemap(w, l, border) + p) * 4;
             acc[0] += src[rid++] - src[lid++];
@@ -113,14 +122,15 @@ static int _gaussianInit(int* kernel, float sigma, int level)
     const auto MAX_LEVEL = SwGaussianBlur::MAX_LEVEL;
 
     //compute the kernel
-    auto wl = (int) sqrt((12 * sigma / MAX_LEVEL) + 1);
+    auto wl = (int)sqrt((12 * sigma / MAX_LEVEL) + 1);
     if (wl % 2 == 0) --wl;
     auto wu = wl + 2;
     auto mi = (12 * sigma - MAX_LEVEL * wl * wl - 4 * MAX_LEVEL * wl - 3 * MAX_LEVEL) / (-4 * wl - 4);
     auto m = int(mi + 0.5f);
     auto extends = 0;
 
-    for (int i = 0; i < level; i++) {
+    for (int i = 0; i < level; i++)
+    {
         kernel[i] = ((i < m ? wl : wu) - 1) / 2;
         extends += kernel[i];
     }
@@ -139,7 +149,8 @@ bool effectGaussianPrepare(RenderEffectGaussian* params)
     auto extends = _gaussianInit(data->kernel, params->sigma * params->sigma, data->level);
 
     //skip, if the parameters are invalid.
-    if (extends == 0) {
+    if (extends == 0)
+    {
         params->invalid = true;
         lv_free(data);
         return false;
@@ -160,7 +171,8 @@ bool effectGaussianBlur(SwImage& image, SwImage& buffer, const SwBBox& bbox, con
 {
     if (params->invalid) return false;
 
-    if (image.channelSize != sizeof(uint32_t)) {
+    if (image.channelSize != sizeof(uint32_t))
+    {
         TVGERR("SW_ENGINE", "Not supported grayscale Gaussian Blur!");
         return false;
     }
@@ -176,11 +188,14 @@ bool effectGaussianBlur(SwImage& image, SwImage& buffer, const SwBBox& bbox, con
     //fine-tuning for low-quality (experimental)
     auto threshold = (std::min(w, h) < 300) ? 2 : 1;
 
-    TVGLOG("SW_ENGINE", "GaussianFilter region(%ld, %ld, %ld, %ld) params(%f %d %d), level(%d)", bbox.min.x, bbox.min.y, bbox.max.x, bbox.max.y, params->sigma, params->direction, params->border, data->level);
+    TVGLOG("SW_ENGINE", "GaussianFilter region(%ld, %ld, %ld, %ld) params(%f %d %d), level(%d)", bbox.min.x, bbox.min.y,
+           bbox.max.x, bbox.max.y, params->sigma, params->direction, params->border, data->level);
 
     //horizontal
-    if (params->direction == 0 || params->direction == 1) {
-        for (int i = 0; i < data->level; ++i) {
+    if (params->direction == 0 || params->direction == 1)
+    {
+        for (int i = 0; i < data->level; ++i)
+        {
             auto k = data->kernel[i] / threshold;
             if (k == 0) continue;
             _gaussianBlur(front, back, stride, w, h, bbox, k, params->border, false);
@@ -190,11 +205,13 @@ bool effectGaussianBlur(SwImage& image, SwImage& buffer, const SwBBox& bbox, con
     }
 
     //vertical. x/y flipping and horionztal access is pretty compatible with the memory architecture.
-    if (params->direction == 0 || params->direction == 2) {
+    if (params->direction == 0 || params->direction == 2)
+    {
         rasterXYFlip(reinterpret_cast<uint32_t*>(front), reinterpret_cast<uint32_t*>(back), stride, w, h, bbox, false);
         std::swap(front, back);
 
-        for (int i = 0; i < data->level; ++i) {
+        for (int i = 0; i < data->level; ++i)
+        {
             auto k = data->kernel[i] / threshold;
             if (k == 0) continue;
             _gaussianBlur(front, back, stride, h, w, bbox, k, params->border, true);
@@ -212,4 +229,3 @@ bool effectGaussianBlur(SwImage& image, SwImage& buffer, const SwBBox& bbox, con
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

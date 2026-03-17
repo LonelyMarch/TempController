@@ -24,10 +24,11 @@ extern "C" {
  **********************/
 
 
-typedef struct {
+typedef struct
+{
     uint32_t font_size; /**< Size of the font in pixels*/
-    const char * path; /**< Path to font file*/
-    const void * buffer; /**< Address of the font file in the memory*/
+    const char* path; /**< Path to font file*/
+    const void* buffer; /**< Address of the font file in the memory*/
     uint32_t buffer_size; /**< Size of the font file buffer*/
 } lv_binfont_font_src_t;
 
@@ -42,7 +43,7 @@ LV_ATTRIBUTE_EXTERN_DATA extern const lv_font_class_t lv_binfont_font_class;
  * @param path   path to font file
  * @return  pointer to font where to load
  */
-lv_font_t * lv_binfont_create(const char * path);
+lv_font_t* lv_binfont_create(const char* path);
 
 #if LV_USE_FS_MEMFS
 /**
@@ -52,7 +53,7 @@ lv_font_t * lv_binfont_create(const char * path);
  * @param size          size of the font file buffer
  * @return              pointer to font where to load
  */
-lv_font_t * lv_binfont_create_from_buffer(void * buffer, uint32_t size);
+lv_font_t* lv_binfont_create_from_buffer(void* buffer, uint32_t size);
 #endif
 
 /**

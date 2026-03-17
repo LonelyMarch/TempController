@@ -21,7 +21,7 @@ extern "C" {
 /*********************
  *      DEFINES
  *********************/
-LV_EXPORT_CONST_INT(LV_COLOR_DEPTH);
+LV_EXPORT_CONST_INT (LV_COLOR_DEPTH);
 
 #if LV_COLOR_DEPTH == 8
 #define LV_COLOR_NATIVE_WITH_ALPHA_SIZE 2
@@ -37,20 +37,21 @@ LV_EXPORT_CONST_INT(LV_COLOR_DEPTH);
  * Opacity percentages.
  */
 
-enum _lv_opacity_level_t {
+enum _lv_opacity_level_t
+{
     LV_OPA_TRANSP = 0,
-    LV_OPA_0      = 0,
-    LV_OPA_10     = 25,
-    LV_OPA_20     = 51,
-    LV_OPA_30     = 76,
-    LV_OPA_40     = 102,
-    LV_OPA_50     = 127,
-    LV_OPA_60     = 153,
-    LV_OPA_70     = 178,
-    LV_OPA_80     = 204,
-    LV_OPA_90     = 229,
-    LV_OPA_100    = 255,
-    LV_OPA_COVER  = 255,
+    LV_OPA_0 = 0,
+    LV_OPA_10 = 25,
+    LV_OPA_20 = 51,
+    LV_OPA_30 = 76,
+    LV_OPA_40 = 102,
+    LV_OPA_50 = 127,
+    LV_OPA_60 = 153,
+    LV_OPA_70 = 178,
+    LV_OPA_80 = 204,
+    LV_OPA_90 = 229,
+    LV_OPA_100 = 255,
+    LV_OPA_COVER = 255,
 };
 
 #define LV_OPA_MIN 2    /**< Fully transparent if opa <= LV_OPA_MIN */
@@ -106,118 +107,123 @@ enum _lv_opacity_level_t {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     uint8_t blue;
     uint8_t green;
     uint8_t red;
 } lv_color_t;
 
-typedef struct {
+typedef struct
+{
     uint16_t blue : 5;
     uint16_t green : 6;
     uint16_t red : 5;
 } lv_color16_t;
 
-typedef struct {
+typedef struct
+{
     uint8_t blue;
     uint8_t green;
     uint8_t red;
     uint8_t alpha;
 } lv_color32_t;
 
-typedef struct {
+typedef struct
+{
     uint16_t h;
     uint8_t s;
     uint8_t v;
 } lv_color_hsv_t;
 
-typedef struct {
+typedef struct
+{
     uint8_t lumi;
     uint8_t alpha;
 } lv_color16a_t;
 
-typedef enum {
-    LV_COLOR_FORMAT_UNKNOWN           = 0,
+typedef enum
+{
+    LV_COLOR_FORMAT_UNKNOWN = 0,
 
-    LV_COLOR_FORMAT_RAW               = 0x01,
-    LV_COLOR_FORMAT_RAW_ALPHA         = 0x02,
+    LV_COLOR_FORMAT_RAW = 0x01,
+    LV_COLOR_FORMAT_RAW_ALPHA = 0x02,
 
     /*<=1 byte (+alpha) formats*/
-    LV_COLOR_FORMAT_L8                = 0x06,
-    LV_COLOR_FORMAT_I1                = 0x07,
-    LV_COLOR_FORMAT_I2                = 0x08,
-    LV_COLOR_FORMAT_I4                = 0x09,
-    LV_COLOR_FORMAT_I8                = 0x0A,
-    LV_COLOR_FORMAT_A8                = 0x0E,
+    LV_COLOR_FORMAT_L8 = 0x06,
+    LV_COLOR_FORMAT_I1 = 0x07,
+    LV_COLOR_FORMAT_I2 = 0x08,
+    LV_COLOR_FORMAT_I4 = 0x09,
+    LV_COLOR_FORMAT_I8 = 0x0A,
+    LV_COLOR_FORMAT_A8 = 0x0E,
 
     /*2 byte (+alpha) formats*/
-    LV_COLOR_FORMAT_RGB565            = 0x12,
-    LV_COLOR_FORMAT_ARGB8565          = 0x13,   /**< Not supported by sw renderer yet. */
-    LV_COLOR_FORMAT_RGB565A8          = 0x14,   /**< Color array followed by Alpha array*/
-    LV_COLOR_FORMAT_AL88              = 0x15,   /**< L8 with alpha >*/
-    LV_COLOR_FORMAT_RGB565_SWAPPED    = 0x1B,
+    LV_COLOR_FORMAT_RGB565 = 0x12,
+    LV_COLOR_FORMAT_ARGB8565 = 0x13, /**< Not supported by sw renderer yet. */
+    LV_COLOR_FORMAT_RGB565A8 = 0x14, /**< Color array followed by Alpha array*/
+    LV_COLOR_FORMAT_AL88 = 0x15, /**< L8 with alpha >*/
+    LV_COLOR_FORMAT_RGB565_SWAPPED = 0x1B,
 
     /*3 byte (+alpha) formats*/
-    LV_COLOR_FORMAT_RGB888            = 0x0F,
-    LV_COLOR_FORMAT_ARGB8888          = 0x10,
-    LV_COLOR_FORMAT_XRGB8888          = 0x11,
-    LV_COLOR_FORMAT_ARGB8888_PREMULTIPLIED          = 0x1A,
+    LV_COLOR_FORMAT_RGB888 = 0x0F,
+    LV_COLOR_FORMAT_ARGB8888 = 0x10,
+    LV_COLOR_FORMAT_XRGB8888 = 0x11,
+    LV_COLOR_FORMAT_ARGB8888_PREMULTIPLIED = 0x1A,
 
     /*Formats not supported by software renderer but kept here so GPU can use it*/
-    LV_COLOR_FORMAT_A1                = 0x0B,
-    LV_COLOR_FORMAT_A2                = 0x0C,
-    LV_COLOR_FORMAT_A4                = 0x0D,
-    LV_COLOR_FORMAT_ARGB1555          = 0x16,
-    LV_COLOR_FORMAT_ARGB4444          = 0x17,
-    LV_COLOR_FORMAT_ARGB2222          = 0X18,
+    LV_COLOR_FORMAT_A1 = 0x0B,
+    LV_COLOR_FORMAT_A2 = 0x0C,
+    LV_COLOR_FORMAT_A4 = 0x0D,
+    LV_COLOR_FORMAT_ARGB1555 = 0x16,
+    LV_COLOR_FORMAT_ARGB4444 = 0x17,
+    LV_COLOR_FORMAT_ARGB2222 = 0X18,
 
     /* reference to https://wiki.videolan.org/YUV/ */
     /*YUV planar formats*/
-    LV_COLOR_FORMAT_YUV_START         = 0x20,
-    LV_COLOR_FORMAT_I420              = LV_COLOR_FORMAT_YUV_START,  /*YUV420 planar(3 plane)*/
-    LV_COLOR_FORMAT_I422              = 0x21,  /*YUV422 planar(3 plane)*/
-    LV_COLOR_FORMAT_I444              = 0x22,  /*YUV444 planar(3 plane)*/
-    LV_COLOR_FORMAT_I400              = 0x23,  /*YUV400 no chroma channel*/
-    LV_COLOR_FORMAT_NV21              = 0x24,  /*YUV420 planar(2 plane), UV plane in 'V, U, V, U'*/
-    LV_COLOR_FORMAT_NV12              = 0x25,  /*YUV420 planar(2 plane), UV plane in 'U, V, U, V'*/
+    LV_COLOR_FORMAT_YUV_START = 0x20,
+    LV_COLOR_FORMAT_I420 = LV_COLOR_FORMAT_YUV_START, /*YUV420 planar(3 plane)*/
+    LV_COLOR_FORMAT_I422 = 0x21, /*YUV422 planar(3 plane)*/
+    LV_COLOR_FORMAT_I444 = 0x22, /*YUV444 planar(3 plane)*/
+    LV_COLOR_FORMAT_I400 = 0x23, /*YUV400 no chroma channel*/
+    LV_COLOR_FORMAT_NV21 = 0x24, /*YUV420 planar(2 plane), UV plane in 'V, U, V, U'*/
+    LV_COLOR_FORMAT_NV12 = 0x25, /*YUV420 planar(2 plane), UV plane in 'U, V, U, V'*/
 
     /*YUV packed formats*/
-    LV_COLOR_FORMAT_YUY2              = 0x26,  /*YUV422 packed like 'Y U Y V'*/
-    LV_COLOR_FORMAT_UYVY              = 0x27,  /*YUV422 packed like 'U Y V Y'*/
+    LV_COLOR_FORMAT_YUY2 = 0x26, /*YUV422 packed like 'Y U Y V'*/
+    LV_COLOR_FORMAT_UYVY = 0x27, /*YUV422 packed like 'U Y V Y'*/
 
-    LV_COLOR_FORMAT_YUV_END           = LV_COLOR_FORMAT_UYVY,
+    LV_COLOR_FORMAT_YUV_END = LV_COLOR_FORMAT_UYVY,
 
     LV_COLOR_FORMAT_PROPRIETARY_START = 0x30,
 
-    LV_COLOR_FORMAT_NEMA_TSC_START    = LV_COLOR_FORMAT_PROPRIETARY_START,
-    LV_COLOR_FORMAT_NEMA_TSC4         = LV_COLOR_FORMAT_NEMA_TSC_START,
-    LV_COLOR_FORMAT_NEMA_TSC6         = 0x31,
-    LV_COLOR_FORMAT_NEMA_TSC6A        = 0x32,
-    LV_COLOR_FORMAT_NEMA_TSC6AP       = 0x33,
-    LV_COLOR_FORMAT_NEMA_TSC12        = 0x34,
-    LV_COLOR_FORMAT_NEMA_TSC12A       = 0x35,
-    LV_COLOR_FORMAT_NEMA_TSC_END      = LV_COLOR_FORMAT_NEMA_TSC12A,
+    LV_COLOR_FORMAT_NEMA_TSC_START = LV_COLOR_FORMAT_PROPRIETARY_START,
+    LV_COLOR_FORMAT_NEMA_TSC4 = LV_COLOR_FORMAT_NEMA_TSC_START,
+    LV_COLOR_FORMAT_NEMA_TSC6 = 0x31,
+    LV_COLOR_FORMAT_NEMA_TSC6A = 0x32,
+    LV_COLOR_FORMAT_NEMA_TSC6AP = 0x33,
+    LV_COLOR_FORMAT_NEMA_TSC12 = 0x34,
+    LV_COLOR_FORMAT_NEMA_TSC12A = 0x35,
+    LV_COLOR_FORMAT_NEMA_TSC_END = LV_COLOR_FORMAT_NEMA_TSC12A,
 
     /*Color formats in which LVGL can render*/
 #if LV_COLOR_DEPTH == 1
-    LV_COLOR_FORMAT_NATIVE            = LV_COLOR_FORMAT_I1,
-    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA = LV_COLOR_FORMAT_I1,
+    LV_COLOR_FORMAT_NATIVE= LV_COLOR_FORMAT_I1,
+    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA= LV_COLOR_FORMAT_I1,
 #elif LV_COLOR_DEPTH == 8
-    LV_COLOR_FORMAT_NATIVE            = LV_COLOR_FORMAT_L8,
-    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA = LV_COLOR_FORMAT_AL88,
+    LV_COLOR_FORMAT_NATIVE= LV_COLOR_FORMAT_L8,
+    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA= LV_COLOR_FORMAT_AL88,
 #elif LV_COLOR_DEPTH == 16
-    LV_COLOR_FORMAT_NATIVE            = LV_COLOR_FORMAT_RGB565,
-    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA = LV_COLOR_FORMAT_RGB565A8,
+    LV_COLOR_FORMAT_NATIVE= LV_COLOR_FORMAT_RGB565,
+    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA= LV_COLOR_FORMAT_RGB565A8,
 #elif LV_COLOR_DEPTH == 24
-    LV_COLOR_FORMAT_NATIVE            = LV_COLOR_FORMAT_RGB888,
-    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA = LV_COLOR_FORMAT_ARGB8888,
+    LV_COLOR_FORMAT_NATIVE= LV_COLOR_FORMAT_RGB888,
+    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA= LV_COLOR_FORMAT_ARGB8888,
 #elif LV_COLOR_DEPTH == 32
-    LV_COLOR_FORMAT_NATIVE            = LV_COLOR_FORMAT_XRGB8888,
-    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA = LV_COLOR_FORMAT_ARGB8888,
+    LV_COLOR_FORMAT_NATIVE= LV_COLOR_FORMAT_XRGB8888,
+    LV_COLOR_FORMAT_NATIVE_WITH_ALPHA= LV_COLOR_FORMAT_ARGB8888,
 #else
 #error "LV_COLOR_DEPTH should be 1, 8, 16, 24 or 32"
 #endif
-
 } lv_color_format_t;
 
 #define LV_COLOR_FORMAT_IS_ALPHA_ONLY(cf) ((cf) >= LV_COLOR_FORMAT_A1 && (cf) <= LV_COLOR_FORMAT_A8)
@@ -338,11 +344,11 @@ lv_color_t lv_color_hex3(uint32_t c);
 static inline bool lv_color_is_in_range(lv_color_t color, lv_color_t l_color, lv_color_t h_color)
 {
     return (color.red <= h_color.red &&
-            color.green <= h_color.green &&
-            color.blue <= h_color.blue &&
-            color.red >= l_color.red &&
-            color.green >= l_color.green &&
-            color.blue >= l_color.blue);
+        color.green <= h_color.green &&
+        color.blue <= h_color.blue &&
+        color.red >= l_color.red &&
+        color.green >= l_color.green &&
+        color.blue >= l_color.blue);
 }
 
 /**
@@ -435,9 +441,9 @@ lv_color_t lv_color_white(void);
  */
 lv_color_t lv_color_black(void);
 
-void lv_color_premultiply(lv_color32_t * c);
+void lv_color_premultiply(lv_color32_t* c);
 
-void lv_color16_premultiply(lv_color16_t * c, lv_opa_t a);
+void lv_color16_premultiply(lv_color16_t* c, lv_opa_t a);
 
 /**
  * Get the luminance of a color: luminance = 0.3 R + 0.59 G + 0.11 B
@@ -458,7 +464,7 @@ uint8_t lv_color16_luminance(const lv_color16_t c);
  * @param c a color
  * @return the brightness [0..255]
  */
-uint8_t lv_color24_luminance(const uint8_t * c);
+uint8_t lv_color24_luminance(const uint8_t* c);
 
 /**
  * Get the luminance of a color32: luminance = 0.3 R + 0.59 G + 0.11 B

@@ -22,20 +22,23 @@ extern "C" {
  *      DEFINES
  *********************/
 #define LV_RADIUS_CIRCLE        0x7FFF /**< A very big radius to always draw as circle*/
-LV_EXPORT_CONST_INT(LV_RADIUS_CIRCLE);
+LV_EXPORT_CONST_INT (LV_RADIUS_CIRCLE
+
+);
 
 /**********************
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     lv_draw_dsc_base_t base;
 
     int32_t radius;
 
     /*Background img*/
-    const void * bg_image_src;
-    const void * bg_image_symbol_font;
+    const void* bg_image_src;
+    const void* bg_image_symbol_font;
     lv_color_t bg_image_recolor;
     lv_opa_t bg_image_opa;
     lv_opa_t bg_image_recolor_opa;
@@ -50,10 +53,10 @@ typedef struct {
     lv_opa_t shadow_opa;
 
     /*Background*/
-    lv_color_t bg_color;        /**< First element of a gradient is a color, so it maps well here*/
+    lv_color_t bg_color; /**< First element of a gradient is a color, so it maps well here*/
     lv_grad_dsc_t bg_grad;
 
-    const lv_image_colorkey_t * bg_image_colorkey;
+    const lv_image_colorkey_t* bg_image_colorkey;
 
     /*Border*/
     lv_color_t border_color;
@@ -74,7 +77,8 @@ typedef struct {
     int32_t shadow_spread;
 } lv_draw_rect_dsc_t;
 
-typedef struct {
+typedef struct
+{
     lv_draw_dsc_base_t base;
 
     /**Radius, LV_RADIUS_CIRCLE for max. radius */
@@ -92,7 +96,8 @@ typedef struct {
     lv_grad_dsc_t grad;
 } lv_draw_fill_dsc_t;
 
-typedef struct {
+typedef struct
+{
     lv_draw_dsc_base_t base;
 
     /**Radius, LV_RADIUS_CIRCLE for max. radius */
@@ -113,10 +118,10 @@ typedef struct {
      * LV_BORDER_SIDE_INTERNAL is an information for upper layers
      * and shouldn't be used here. */
     lv_border_side_t side : 5;
-
 } lv_draw_border_dsc_t;
 
-typedef struct {
+typedef struct
+{
     lv_draw_dsc_base_t base;
 
     /**Radius, LV_RADIUS_CIRCLE for max. radius */
@@ -143,7 +148,7 @@ typedef struct {
 
     /**Set `bg_cover` to 1 if the background will cover the shadow.
      * It's a hint to the renderer about it might skip some masking.*/
-    uint8_t bg_cover    : 1;
+    uint8_t bg_cover : 1;
 } lv_draw_box_shadow_dsc_t;
 
 /**********************
@@ -154,20 +159,20 @@ typedef struct {
  * Initialize a rectangle draw descriptor.
  * @param dsc       pointer to a draw descriptor
  */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_rect_dsc_init(lv_draw_rect_dsc_t * dsc);
+void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_rect_dsc_init(lv_draw_rect_dsc_t* dsc);
 
 /**
  * Initialize a fill draw descriptor.
  * @param dsc       pointer to a draw descriptor
  */
-void lv_draw_fill_dsc_init(lv_draw_fill_dsc_t * dsc);
+void lv_draw_fill_dsc_init(lv_draw_fill_dsc_t* dsc);
 
 /**
  * Try to get a fill draw descriptor from a draw task.
  * @param task      draw task
  * @return          the task's draw descriptor or NULL if the task is not of type LV_DRAW_TASK_TYPE_FILL
  */
-lv_draw_fill_dsc_t * lv_draw_task_get_fill_dsc(lv_draw_task_t * task);
+lv_draw_fill_dsc_t* lv_draw_task_get_fill_dsc(lv_draw_task_t * task);
 
 /**
  * Fill an area
@@ -175,20 +180,20 @@ lv_draw_fill_dsc_t * lv_draw_task_get_fill_dsc(lv_draw_task_t * task);
  * @param dsc           pointer to an initialized draw descriptor variable
  * @param coords        the coordinates of the rectangle
  */
-void lv_draw_fill(lv_layer_t * layer, const lv_draw_fill_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_fill(lv_layer_t* layer, const lv_draw_fill_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Initialize a border draw descriptor.
  * @param dsc       pointer to a draw descriptor
  */
-void lv_draw_border_dsc_init(lv_draw_border_dsc_t * dsc);
+void lv_draw_border_dsc_init(lv_draw_border_dsc_t* dsc);
 
 /**
  * Try to get a border draw descriptor from a draw task.
  * @param task      draw task
  * @return          the task's draw descriptor or NULL if the task is not of type LV_DRAW_TASK_TYPE_BORDER
  */
-lv_draw_border_dsc_t * lv_draw_task_get_border_dsc(lv_draw_task_t * task);
+lv_draw_border_dsc_t* lv_draw_task_get_border_dsc(lv_draw_task_t * task);
 
 /**
  * Draw a border
@@ -196,20 +201,20 @@ lv_draw_border_dsc_t * lv_draw_task_get_border_dsc(lv_draw_task_t * task);
  * @param dsc           pointer to an initialized draw descriptor variable
  * @param coords        the coordinates of the rectangle
  */
-void lv_draw_border(lv_layer_t * layer, const lv_draw_border_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_border(lv_layer_t* layer, const lv_draw_border_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * Initialize a box shadow draw descriptor.
  * @param dsc       pointer to a draw descriptor
  */
-void lv_draw_box_shadow_dsc_init(lv_draw_box_shadow_dsc_t * dsc);
+void lv_draw_box_shadow_dsc_init(lv_draw_box_shadow_dsc_t* dsc);
 
 /**
  * Try to get a box shadow draw descriptor from a draw task.
  * @param task      draw task
  * @return          the task's draw descriptor or NULL if the task is not of type LV_DRAW_TASK_TYPE_BOX_SHADOW
  */
-lv_draw_box_shadow_dsc_t * lv_draw_task_get_box_shadow_dsc(lv_draw_task_t * task);
+lv_draw_box_shadow_dsc_t* lv_draw_task_get_box_shadow_dsc(lv_draw_task_t * task);
 
 /**
  * Draw a box shadow
@@ -217,7 +222,7 @@ lv_draw_box_shadow_dsc_t * lv_draw_task_get_box_shadow_dsc(lv_draw_task_t * task
  * @param dsc           pointer to an initialized draw descriptor variable
  * @param coords        the coordinates of the rectangle
  */
-void lv_draw_box_shadow(lv_layer_t * layer, const lv_draw_box_shadow_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_box_shadow(lv_layer_t* layer, const lv_draw_box_shadow_dsc_t* dsc, const lv_area_t* coords);
 
 /**
  * The rectangle is a wrapper for fill, border, bg. image and box shadow.
@@ -226,7 +231,7 @@ void lv_draw_box_shadow(lv_layer_t * layer, const lv_draw_box_shadow_dsc_t * dsc
  * @param dsc           pointer to an initialized draw descriptor variable
  * @param coords        the coordinates of the rectangle
  */
-void lv_draw_rect(lv_layer_t * layer, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_rect(lv_layer_t* layer, const lv_draw_rect_dsc_t* dsc, const lv_area_t* coords);
 
 /**********************
  *      MACROS

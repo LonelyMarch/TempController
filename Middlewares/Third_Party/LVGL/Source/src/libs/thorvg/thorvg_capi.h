@@ -26,43 +26,44 @@
 #include <stdbool.h>
 
 #ifdef TVG_API
-    #undef TVG_API
+#undef TVG_API
 #endif
 
 #ifndef TVG_STATIC
-    #ifdef _WIN32
-        #if TVG_BUILD
-            #define TVG_API __declspec(dllexport)
-        #else
-            #define TVG_API __declspec(dllimport)
-        #endif
-    #elif (defined(__SUNPRO_C)  || defined(__SUNPRO_CC))
-        #define TVG_API __global
-    #else
-        #if (defined(__GNUC__) && __GNUC__ >= 4) || defined(__INTEL_COMPILER)
-            #define TVG_API __attribute__ ((visibility("default")))
-        #else
-            #define TVG_API
-        #endif
-    #endif
+#ifdef _WIN32
+#if TVG_BUILD
+#define TVG_API __declspec(dllexport)
 #else
-    #define TVG_API
+#define TVG_API __declspec(dllimport)
+#endif
+#elif (defined(__SUNPRO_C)  || defined(__SUNPRO_CC))
+#define TVG_API __global
+#else
+#if (defined(__GNUC__) && __GNUC__ >= 4) || defined(__INTEL_COMPILER)
+#define TVG_API __attribute__ ((visibility("default")))
+#else
+#define TVG_API
+#endif
+#endif
+#else
+#define TVG_API
 #endif
 
 #ifdef TVG_DEPRECATED
-    #undef TVG_DEPRECATED
+#undef TVG_DEPRECATED
 #endif
 
 #ifdef _WIN32
-    #define TVG_DEPRECATED __declspec(deprecated)
+#define TVG_DEPRECATED __declspec(deprecated)
 #elif __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-    #define TVG_DEPRECATED __attribute__ ((__deprecated__))
+#define TVG_DEPRECATED __attribute__ ((__deprecated__))
 #else
-    #define TVG_DEPRECATED
+#define TVG_DEPRECATED
 #endif
 
 #ifdef __cplusplus
 extern "C" {
+
 #endif
 
 /**
@@ -111,9 +112,10 @@ typedef struct _Tvg_Animation Tvg_Animation;
 *
 * \ingroup ThorVGCapi_Initializer
 */
-typedef enum {
-    TVG_ENGINE_SW = (1 << 1),   ///< CPU rasterizer.
-    TVG_ENGINE_GL = (1 << 2)    ///< OpenGL rasterizer.
+typedef enum
+{
+    TVG_ENGINE_SW = (1 << 1), ///< CPU rasterizer.
+    TVG_ENGINE_GL = (1 << 2) ///< OpenGL rasterizer.
 } Tvg_Engine;
 
 
@@ -124,14 +126,18 @@ typedef enum {
  * Please note that some APIs may additionally specify the reasons that trigger their return values.
  *
  */
-typedef enum {
-    TVG_RESULT_SUCCESS = 0,            ///< The value returned in case of a correct request execution.
-    TVG_RESULT_INVALID_ARGUMENT,       ///< The value returned in the event of a problem with the arguments given to the API - e.g. empty paths or null pointers.
-    TVG_RESULT_INSUFFICIENT_CONDITION, ///< The value returned in case the request cannot be processed - e.g. asking for properties of an object, which does not exist.
-    TVG_RESULT_FAILED_ALLOCATION,      ///< The value returned in case of unsuccessful memory allocation.
-    TVG_RESULT_MEMORY_CORRUPTION,      ///< The value returned in the event of bad memory handling - e.g. failing in pointer releasing or casting
-    TVG_RESULT_NOT_SUPPORTED,          ///< The value returned in case of choosing unsupported engine features(options).
-    TVG_RESULT_UNKNOWN                 ///< The value returned in all other cases.
+typedef enum
+{
+    TVG_RESULT_SUCCESS = 0, ///< The value returned in case of a correct request execution.
+    TVG_RESULT_INVALID_ARGUMENT,
+    ///< The value returned in the event of a problem with the arguments given to the API - e.g. empty paths or null pointers.
+    TVG_RESULT_INSUFFICIENT_CONDITION,
+    ///< The value returned in case the request cannot be processed - e.g. asking for properties of an object, which does not exist.
+    TVG_RESULT_FAILED_ALLOCATION, ///< The value returned in case of unsuccessful memory allocation.
+    TVG_RESULT_MEMORY_CORRUPTION,
+    ///< The value returned in the event of bad memory handling - e.g. failing in pointer releasing or casting
+    TVG_RESULT_NOT_SUPPORTED, ///< The value returned in case of choosing unsupported engine features(options).
+    TVG_RESULT_UNKNOWN ///< The value returned in all other cases.
 } Tvg_Result;
 
 
@@ -140,13 +146,19 @@ typedef enum {
  *
  * \ingroup ThorVGCapi_Paint
  */
-typedef enum {
-    TVG_COMPOSITE_METHOD_NONE = 0,           ///< No composition is applied.
-    TVG_COMPOSITE_METHOD_CLIP_PATH,          ///< The intersection of the source and the target is determined and only the resulting pixels from the source are rendered. Note that ClipPath only supports the Shape type. @deprecated Use Paint::clip() instead.
-    TVG_COMPOSITE_METHOD_ALPHA_MASK,         ///< The pixels of the source and the target are alpha blended. As a result, only the part of the source, which intersects with the target is visible.
-    TVG_COMPOSITE_METHOD_INVERSE_ALPHA_MASK, ///< The pixels of the source and the complement to the target's pixels are alpha blended. As a result, only the part of the source which is not covered by the target is visible.
-    TVG_COMPOSITE_METHOD_LUMA_MASK,          ///< The source pixels are converted to grayscale (luma value) and alpha blended with the target. As a result, only the part of the source which intersects with the target is visible. \since 0.9
-    TVG_COMPOSITE_METHOD_INVERSE_LUMA_MASK   ///< The source pixels are converted to grayscale (luma value) and complement to the target's pixels are alpha blended. As a result, only the part of the source which is not covered by the target is visible. \since 0.14
+typedef enum
+{
+    TVG_COMPOSITE_METHOD_NONE = 0, ///< No composition is applied.
+    TVG_COMPOSITE_METHOD_CLIP_PATH,
+    ///< The intersection of the source and the target is determined and only the resulting pixels from the source are rendered. Note that ClipPath only supports the Shape type. @deprecated Use Paint::clip() instead.
+    TVG_COMPOSITE_METHOD_ALPHA_MASK,
+    ///< The pixels of the source and the target are alpha blended. As a result, only the part of the source, which intersects with the target is visible.
+    TVG_COMPOSITE_METHOD_INVERSE_ALPHA_MASK,
+    ///< The pixels of the source and the complement to the target's pixels are alpha blended. As a result, only the part of the source which is not covered by the target is visible.
+    TVG_COMPOSITE_METHOD_LUMA_MASK,
+    ///< The source pixels are converted to grayscale (luma value) and alpha blended with the target. As a result, only the part of the source which intersects with the target is visible. \since 0.9
+    TVG_COMPOSITE_METHOD_INVERSE_LUMA_MASK
+    ///< The source pixels are converted to grayscale (luma value) and complement to the target's pixels are alpha blended. As a result, only the part of the source which is not covered by the target is visible. \since 0.14
 } Tvg_Composite_Method;
 
 /**
@@ -156,26 +168,37 @@ typedef enum {
  *
  * \since 0.15
  */
-typedef enum {
-    TVG_BLEND_METHOD_NORMAL = 0,        ///< Perform the alpha blending(default). S if (Sa == 255), otherwise (Sa * S) + (255 - Sa) * D
-    TVG_BLEND_METHOD_MULTIPLY,          ///< Takes the RGB channel values from 0 to 255 of each pixel in the top layer and multiples them with the values for the corresponding pixel from the bottom layer. (S * D)
-    TVG_BLEND_METHOD_SCREEN,            ///< The values of the pixels in the two layers are inverted, multiplied, and then inverted again. (S + D) - (S * D)
-    TVG_BLEND_METHOD_OVERLAY,           ///< Combines Multiply and Screen blend modes. (2 * S * D) if (2 * D < Da), otherwise (Sa * Da) - 2 * (Da - S) * (Sa - D)
-    TVG_BLEND_METHOD_SRCOVER,           ///< Replace the bottom layer with the top layer.
-    TVG_BLEND_METHOD_DARKEN,            ///< Creates a pixel that retains the smallest components of the top and bottom layer pixels. min(S, D)
-    TVG_BLEND_METHOD_LIGHTEN,           ///< Only has the opposite action of Darken Only. max(S, D)
-    TVG_BLEND_METHOD_COLORDODGE,        ///< Divides the bottom layer by the inverted top layer. D / (255 - S)
-    TVG_BLEND_METHOD_COLORBURN,         ///< Divides the inverted bottom layer by the top layer, and then inverts the result. 255 - (255 - D) / S
-    TVG_BLEND_METHOD_HARDLIGHT,         ///< The same as Overlay but with the color roles reversed. (2 * S * D) if (S < Sa), otherwise (Sa * Da) - 2 * (Da - S) * (Sa - D)
-    TVG_BLEND_METHOD_SOFTLIGHT,         ///< The same as Overlay but with applying pure black or white does not result in pure black or white. (1 - 2 * S) * (D ^ 2) + (2 * S * D)
-    TVG_BLEND_METHOD_DIFFERENCE,        ///< Subtracts the bottom layer from the top layer or the other way around, to always get a non-negative value. (S - D) if (S > D), otherwise (D - S)
-    TVG_BLEND_METHOD_EXCLUSION,         ///< The result is twice the product of the top and bottom layers, subtracted from their sum. s + d - (2 * s * d)
-    TVG_BLEND_METHOD_HUE,               ///< Reserved. Not supported.
-    TVG_BLEND_METHOD_SATURATION,        ///< Reserved. Not supported.
-    TVG_BLEND_METHOD_COLOR,             ///< Reserved. Not supported.
-    TVG_BLEND_METHOD_LUMINOSITY,        ///< Reserved. Not supported.
-    TVG_BLEND_METHOD_ADD,               ///< Simply adds pixel values of one layer with the other. (S + D)
-    TVG_BLEND_METHOD_HARDMIX            ///< Reserved. Not supported.
+typedef enum
+{
+    TVG_BLEND_METHOD_NORMAL = 0,
+    ///< Perform the alpha blending(default). S if (Sa == 255), otherwise (Sa * S) + (255 - Sa) * D
+    TVG_BLEND_METHOD_MULTIPLY,
+    ///< Takes the RGB channel values from 0 to 255 of each pixel in the top layer and multiples them with the values for the corresponding pixel from the bottom layer. (S * D)
+    TVG_BLEND_METHOD_SCREEN,
+    ///< The values of the pixels in the two layers are inverted, multiplied, and then inverted again. (S + D) - (S * D)
+    TVG_BLEND_METHOD_OVERLAY,
+    ///< Combines Multiply and Screen blend modes. (2 * S * D) if (2 * D < Da), otherwise (Sa * Da) - 2 * (Da - S) * (Sa - D)
+    TVG_BLEND_METHOD_SRCOVER, ///< Replace the bottom layer with the top layer.
+    TVG_BLEND_METHOD_DARKEN,
+    ///< Creates a pixel that retains the smallest components of the top and bottom layer pixels. min(S, D)
+    TVG_BLEND_METHOD_LIGHTEN, ///< Only has the opposite action of Darken Only. max(S, D)
+    TVG_BLEND_METHOD_COLORDODGE, ///< Divides the bottom layer by the inverted top layer. D / (255 - S)
+    TVG_BLEND_METHOD_COLORBURN,
+    ///< Divides the inverted bottom layer by the top layer, and then inverts the result. 255 - (255 - D) / S
+    TVG_BLEND_METHOD_HARDLIGHT,
+    ///< The same as Overlay but with the color roles reversed. (2 * S * D) if (S < Sa), otherwise (Sa * Da) - 2 * (Da - S) * (Sa - D)
+    TVG_BLEND_METHOD_SOFTLIGHT,
+    ///< The same as Overlay but with applying pure black or white does not result in pure black or white. (1 - 2 * S) * (D ^ 2) + (2 * S * D)
+    TVG_BLEND_METHOD_DIFFERENCE,
+    ///< Subtracts the bottom layer from the top layer or the other way around, to always get a non-negative value. (S - D) if (S > D), otherwise (D - S)
+    TVG_BLEND_METHOD_EXCLUSION,
+    ///< The result is twice the product of the top and bottom layers, subtracted from their sum. s + d - (2 * s * d)
+    TVG_BLEND_METHOD_HUE, ///< Reserved. Not supported.
+    TVG_BLEND_METHOD_SATURATION, ///< Reserved. Not supported.
+    TVG_BLEND_METHOD_COLOR, ///< Reserved. Not supported.
+    TVG_BLEND_METHOD_LUMINOSITY, ///< Reserved. Not supported.
+    TVG_BLEND_METHOD_ADD, ///< Simply adds pixel values of one layer with the other. (S + D)
+    TVG_BLEND_METHOD_HARDMIX ///< Reserved. Not supported.
 } Tvg_Blend_Method;
 
 
@@ -183,14 +206,15 @@ typedef enum {
  * \see Tvg_Type
  * \deprecated
  */
-typedef enum {
-    TVG_IDENTIFIER_UNDEF = 0,   ///< Undefined type.
-    TVG_IDENTIFIER_SHAPE,       ///< A shape type paint.
-    TVG_IDENTIFIER_SCENE,       ///< A scene type paint.
-    TVG_IDENTIFIER_PICTURE,     ///< A picture type paint.
+typedef enum
+{
+    TVG_IDENTIFIER_UNDEF = 0, ///< Undefined type.
+    TVG_IDENTIFIER_SHAPE, ///< A shape type paint.
+    TVG_IDENTIFIER_SCENE, ///< A scene type paint.
+    TVG_IDENTIFIER_PICTURE, ///< A picture type paint.
     TVG_IDENTIFIER_LINEAR_GRAD, ///< A linear gradient type.
     TVG_IDENTIFIER_RADIAL_GRAD, ///< A radial gradient type.
-    TVG_IDENTIFIER_TEXT         ///< A text type paint.
+    TVG_IDENTIFIER_TEXT ///< A text type paint.
 } Tvg_Identifier;
 
 
@@ -206,14 +230,15 @@ typedef enum {
  *
  * \note Experimental API
  */
-typedef enum {
-    TVG_TYPE_UNDEF = 0,        ///< Undefined type.
-    TVG_TYPE_SHAPE,            ///< A shape type paint.
-    TVG_TYPE_SCENE,            ///< A scene type paint.
-    TVG_TYPE_PICTURE,          ///< A picture type paint.
-    TVG_TYPE_TEXT,             ///< A text type paint.
+typedef enum
+{
+    TVG_TYPE_UNDEF = 0, ///< Undefined type.
+    TVG_TYPE_SHAPE, ///< A shape type paint.
+    TVG_TYPE_SCENE, ///< A scene type paint.
+    TVG_TYPE_PICTURE, ///< A picture type paint.
+    TVG_TYPE_TEXT, ///< A text type paint.
     TVG_TYPE_LINEAR_GRAD = 10, ///< A linear gradient type.
-    TVG_TYPE_RADIAL_GRAD       ///< A radial gradient type.
+    TVG_TYPE_RADIAL_GRAD ///< A radial gradient type.
 } Tvg_Type;
 
 
@@ -228,53 +253,72 @@ typedef enum {
  * Not to be confused with the path commands from the svg path element (like M, L, Q, H and many others).
  * TVG interprets all of them and translates to the ones from the PathCommand values.
  */
-typedef enum {
-    TVG_PATH_COMMAND_CLOSE = 0, ///< Ends the current sub-path and connects it with its initial point - corresponds to Z command in the svg path commands.
-    TVG_PATH_COMMAND_MOVE_TO,   ///< Sets a new initial point of the sub-path and a new current point - corresponds to M command in the svg path commands.
-    TVG_PATH_COMMAND_LINE_TO,   ///< Draws a line from the current point to the given point and sets a new value of the current point - corresponds to L command in the svg path commands.
-    TVG_PATH_COMMAND_CUBIC_TO   ///< Draws a cubic Bezier curve from the current point to the given point using two given control points and sets a new value of the current point - corresponds to C command in the svg path commands.
+typedef enum
+{
+    TVG_PATH_COMMAND_CLOSE = 0,
+    ///< Ends the current sub-path and connects it with its initial point - corresponds to Z command in the svg path commands.
+    TVG_PATH_COMMAND_MOVE_TO,
+    ///< Sets a new initial point of the sub-path and a new current point - corresponds to M command in the svg path commands.
+    TVG_PATH_COMMAND_LINE_TO,
+    ///< Draws a line from the current point to the given point and sets a new value of the current point - corresponds to L command in the svg path commands.
+    TVG_PATH_COMMAND_CUBIC_TO
+    ///< Draws a cubic Bezier curve from the current point to the given point using two given control points and sets a new value of the current point - corresponds to C command in the svg path commands.
 } Tvg_Path_Command;
 
 
 /**
  * \brief Enumeration determining the ending type of a stroke in the open sub-paths.
  */
-typedef enum {
-    TVG_STROKE_CAP_SQUARE = 0, ///< The stroke is extended in both endpoints of a sub-path by a rectangle, with the width equal to the stroke width and the length equal to the half of the stroke width. For zero length sub-paths the square is rendered with the size of the stroke width.
-    TVG_STROKE_CAP_ROUND,      ///< The stroke is extended in both endpoints of a sub-path by a half circle, with a radius equal to the half of a stroke width. For zero length sub-paths a full circle is rendered.
-    TVG_STROKE_CAP_BUTT        ///< The stroke ends exactly at each of the two endpoints of a sub-path. For zero length sub-paths no stroke is rendered.
+typedef enum
+{
+    TVG_STROKE_CAP_SQUARE = 0,
+    ///< The stroke is extended in both endpoints of a sub-path by a rectangle, with the width equal to the stroke width and the length equal to the half of the stroke width. For zero length sub-paths the square is rendered with the size of the stroke width.
+    TVG_STROKE_CAP_ROUND,
+    ///< The stroke is extended in both endpoints of a sub-path by a half circle, with a radius equal to the half of a stroke width. For zero length sub-paths a full circle is rendered.
+    TVG_STROKE_CAP_BUTT
+    ///< The stroke ends exactly at each of the two endpoints of a sub-path. For zero length sub-paths no stroke is rendered.
 } Tvg_Stroke_Cap;
 
 
 /**
  * \brief Enumeration specifying how to fill the area outside the gradient bounds.
  */
-typedef enum {
-    TVG_STROKE_JOIN_BEVEL = 0, ///< The outer corner of the joined path segments is bevelled at the join point. The triangular region of the corner is enclosed by a straight line between the outer corners of each stroke.
-    TVG_STROKE_JOIN_ROUND,     ///< The outer corner of the joined path segments is rounded. The circular region is centered at the join point.
-    TVG_STROKE_JOIN_MITER      ///< The outer corner of the joined path segments is spiked. The spike is created by extension beyond the join point of the outer edges of the stroke until they intersect. In case the extension goes beyond the limit, the join style is converted to the Bevel style.
+typedef enum
+{
+    TVG_STROKE_JOIN_BEVEL = 0,
+    ///< The outer corner of the joined path segments is bevelled at the join point. The triangular region of the corner is enclosed by a straight line between the outer corners of each stroke.
+    TVG_STROKE_JOIN_ROUND,
+    ///< The outer corner of the joined path segments is rounded. The circular region is centered at the join point.
+    TVG_STROKE_JOIN_MITER
+    ///< The outer corner of the joined path segments is spiked. The spike is created by extension beyond the join point of the outer edges of the stroke until they intersect. In case the extension goes beyond the limit, the join style is converted to the Bevel style.
 } Tvg_Stroke_Join;
 
 
 /**
  * \brief Enumeration specifying how to fill the area outside the gradient bounds.
  */
-typedef enum {
+typedef enum
+{
     TVG_STROKE_FILL_PAD = 0, ///< The remaining area is filled with the closest stop color.
-    TVG_STROKE_FILL_REFLECT, ///< The gradient pattern is reflected outside the gradient area until the expected region is filled.
-    TVG_STROKE_FILL_REPEAT   ///< The gradient pattern is repeated continuously beyond the gradient area until the expected region is filled.
+    TVG_STROKE_FILL_REFLECT,
+    ///< The gradient pattern is reflected outside the gradient area until the expected region is filled.
+    TVG_STROKE_FILL_REPEAT
+    ///< The gradient pattern is repeated continuously beyond the gradient area until the expected region is filled.
 } Tvg_Stroke_Fill;
 
 
 /**
  * \brief Enumeration specifying the algorithm used to establish which parts of the shape are treated as the inside of the shape.
  */
-typedef enum {
-    TVG_FILL_RULE_WINDING = 0, ///< A line from the point to a location outside the shape is drawn. The intersections of the line with the path segment of the shape are counted. Starting from zero, if the path segment of the shape crosses the line clockwise, one is added, otherwise one is subtracted. If the resulting sum is non zero, the point is inside the shape.
-    TVG_FILL_RULE_EVEN_ODD     ///< A line from the point to a location outside the shape is drawn and its intersections with the path segments of the shape are counted. If the number of intersections is an odd number, the point is inside the shape.
+typedef enum
+{
+    TVG_FILL_RULE_WINDING = 0,
+    ///< A line from the point to a location outside the shape is drawn. The intersections of the line with the path segment of the shape are counted. Starting from zero, if the path segment of the shape crosses the line clockwise, one is added, otherwise one is subtracted. If the resulting sum is non zero, the point is inside the shape.
+    TVG_FILL_RULE_EVEN_ODD
+    ///< A line from the point to a location outside the shape is drawn and its intersections with the path segments of the shape are counted. If the number of intersections is an odd number, the point is inside the shape.
 } Tvg_Fill_Rule;
 
-/** \} */   // end addtogroup ThorVGCapi_Shape
+/** \} */ // end addtogroup ThorVGCapi_Shape
 
 
 /*!
@@ -288,13 +332,14 @@ typedef enum {
 typedef struct
 {
     float offset; /**< The relative position of the color. */
-    uint8_t r;    /**< The red color channel value in the range [0 ~ 255]. */
-    uint8_t g;    /**< The green color channel value in the range [0 ~ 255]. */
-    uint8_t b;    /**< The blue color channel value in the range [0 ~ 255]. */
-    uint8_t a;    /**< The alpha channel value in the range [0 ~ 255], where 0 is completely transparent and 255 is opaque. */
+    uint8_t r; /**< The red color channel value in the range [0 ~ 255]. */
+    uint8_t g; /**< The green color channel value in the range [0 ~ 255]. */
+    uint8_t b; /**< The blue color channel value in the range [0 ~ 255]. */
+    uint8_t a;
+    /**< The alpha channel value in the range [0 ~ 255], where 0 is completely transparent and 255 is opaque. */
 } Tvg_Color_Stop;
 
-/** \} */   // end addtogroup ThorVGCapi_Gradient
+/** \} */ // end addtogroup ThorVGCapi_Gradient
 
 
 /**
@@ -400,7 +445,7 @@ TVG_API Tvg_Result tvg_engine_term(Tvg_Engine engine_method);
 */
 TVG_API Tvg_Result tvg_engine_version(uint32_t* major, uint32_t* minor, uint32_t* micro, const char** version);
 
-/** \} */   // end defgroup ThorVGCapi_Initializer
+/** \} */ // end defgroup ThorVGCapi_Initializer
 
 
 /**
@@ -431,21 +476,27 @@ TVG_API Tvg_Result tvg_engine_version(uint32_t* major, uint32_t* minor, uint32_t
 /**
  * \brief Enumeration specifying the methods of Memory Pool behavior policy.
  */
-typedef enum {
+typedef enum
+{
     TVG_MEMPOOL_POLICY_DEFAULT = 0, ///< Default behavior that ThorVG is designed to.
-    TVG_MEMPOOL_POLICY_SHAREABLE,   ///< Memory Pool is shared among canvases.
-    TVG_MEMPOOL_POLICY_INDIVIDUAL   ///< Allocate designated memory pool that is used only by the current canvas instance.
+    TVG_MEMPOOL_POLICY_SHAREABLE, ///< Memory Pool is shared among canvases.
+    TVG_MEMPOOL_POLICY_INDIVIDUAL ///< Allocate designated memory pool that is used only by the current canvas instance.
 } Tvg_Mempool_Policy;
 
 
 /**
  * \brief Enumeration specifying the methods of combining the 8-bit color channels into 32-bit color.
  */
-typedef enum {
-    TVG_COLORSPACE_ABGR8888 = 0, ///< The channels are joined in the order: alpha, blue, green, red. Colors are alpha-premultiplied. (a << 24 | b << 16 | g << 8 | r)
-    TVG_COLORSPACE_ARGB8888,     ///< The channels are joined in the order: alpha, red, green, blue. Colors are alpha-premultiplied. (a << 24 | r << 16 | g << 8 | b)
-    TVG_COLORSPACE_ABGR8888S,    ///< The channels are joined in the order: alpha, blue, green, red. Colors are un-alpha-premultiplied. @since 0.13
-    TVG_COLORSPACE_ARGB8888S     ///< The channels are joined in the order: alpha, red, green, blue. Colors are un-alpha-premultiplied. @since 0.13
+typedef enum
+{
+    TVG_COLORSPACE_ABGR8888 = 0,
+    ///< The channels are joined in the order: alpha, blue, green, red. Colors are alpha-premultiplied. (a << 24 | b << 16 | g << 8 | r)
+    TVG_COLORSPACE_ARGB8888,
+    ///< The channels are joined in the order: alpha, red, green, blue. Colors are alpha-premultiplied. (a << 24 | r << 16 | g << 8 | b)
+    TVG_COLORSPACE_ABGR8888S,
+    ///< The channels are joined in the order: alpha, blue, green, red. Colors are un-alpha-premultiplied. @since 0.13
+    TVG_COLORSPACE_ARGB8888S
+    ///< The channels are joined in the order: alpha, red, green, blue. Colors are un-alpha-premultiplied. @since 0.13
 } Tvg_Colorspace;
 
 
@@ -500,7 +551,8 @@ TVG_API Tvg_Canvas* tvg_swcanvas_create(void);
 *
 * \see Tvg_Colorspace
 */
-TVG_API Tvg_Result tvg_swcanvas_set_target(Tvg_Canvas* canvas, uint32_t* buffer, uint32_t stride, uint32_t w, uint32_t h, Tvg_Colorspace cs);
+TVG_API Tvg_Result tvg_swcanvas_set_target(Tvg_Canvas* canvas, uint32_t* buffer, uint32_t stride, uint32_t w,
+                                           uint32_t h, Tvg_Colorspace cs);
 
 
 /*!
@@ -528,7 +580,7 @@ TVG_API Tvg_Result tvg_swcanvas_set_target(Tvg_Canvas* canvas, uint32_t* buffer,
 */
 TVG_API Tvg_Result tvg_swcanvas_set_mempool(Tvg_Canvas* canvas, Tvg_Mempool_Policy policy);
 
-/** \} */   // end defgroup ThorVGCapi_SwCanvas
+/** \} */ // end defgroup ThorVGCapi_SwCanvas
 
 
 /************************************************************************/
@@ -792,7 +844,7 @@ TVG_API Tvg_Result tvg_canvas_sync(Tvg_Canvas* canvas);
 */
 TVG_API Tvg_Result tvg_canvas_set_viewport(Tvg_Canvas* canvas, int32_t x, int32_t y, int32_t w, int32_t h);
 
-/** \} */   // end defgroup ThorVGCapi_Canvas
+/** \} */ // end defgroup ThorVGCapi_Canvas
 
 
 /**
@@ -973,7 +1025,8 @@ TVG_API Tvg_Paint* tvg_paint_duplicate(Tvg_Paint* paint);
 * \note If @p transformed is @c true, the paint needs to be pushed into a canvas and updated before this api is called.
 * \see tvg_canvas_update_paint()
 */
-TVG_API Tvg_Result tvg_paint_get_bounds(const Tvg_Paint* paint, float* x, float* y, float* w, float* h, bool transformed);
+TVG_API Tvg_Result tvg_paint_get_bounds(const Tvg_Paint* paint, float* x, float* y, float* w, float* h,
+                                        bool transformed);
 
 
 /*!
@@ -999,7 +1052,8 @@ TVG_API Tvg_Result tvg_paint_set_composite_method(Tvg_Paint* paint, Tvg_Paint* t
 * \return Tvg_Result enumeration.
 * \retval TVG_RESULT_INVALID_ARGUMENT A @c nullptr is passed as the argument.
 */
-TVG_API Tvg_Result tvg_paint_get_composite_method(const Tvg_Paint* paint, const Tvg_Paint** target, Tvg_Composite_Method* method);
+TVG_API Tvg_Result tvg_paint_get_composite_method(const Tvg_Paint* paint, const Tvg_Paint** target,
+                                                  Tvg_Composite_Method* method);
 
 
 /*!
@@ -1057,7 +1111,7 @@ TVG_DEPRECATED TVG_API Tvg_Result tvg_paint_get_identifier(const Tvg_Paint* pain
 TVG_API Tvg_Result tvg_paint_set_blend_method(Tvg_Paint* paint, Tvg_Blend_Method method);
 
 
-/** \} */   // end defgroup ThorVGCapi_Paint
+/** \} */ // end defgroup ThorVGCapi_Paint
 
 /**
 * \defgroup ThorVGCapi_Shape Shape
@@ -1238,7 +1292,8 @@ TVG_API Tvg_Result tvg_shape_append_circle(Tvg_Paint* paint, float cx, float cy,
 *
 * \note Setting @p sweep value greater than 360 degrees, is equivalent to calling tvg_shape_append_circle(paint, cx, cy, radius, radius).
 */
-TVG_API Tvg_Result tvg_shape_append_arc(Tvg_Paint* paint, float cx, float cy, float radius, float startAngle, float sweep, uint8_t pie);
+TVG_API Tvg_Result tvg_shape_append_arc(Tvg_Paint* paint, float cx, float cy, float radius, float startAngle,
+                                        float sweep, uint8_t pie);
 
 
 /*!
@@ -1257,7 +1312,8 @@ TVG_API Tvg_Result tvg_shape_append_arc(Tvg_Paint* paint, float cx, float cy, fl
 * \return Tvg_Result enumeration.
 * \retval TVG_RESULT_INVALID_ARGUMENT A @c nullptr passed as the argument or @p cmdCnt or @p ptsCnt equal to zero.
 */
-TVG_API Tvg_Result tvg_shape_append_path(Tvg_Paint* paint, const Tvg_Path_Command* cmds, uint32_t cmdCnt, const Tvg_Point* pts, uint32_t ptsCnt);
+TVG_API Tvg_Result tvg_shape_append_path(Tvg_Paint* paint, const Tvg_Path_Command* cmds, uint32_t cmdCnt,
+                                         const Tvg_Point* pts, uint32_t ptsCnt);
 
 
 /*!
@@ -1689,7 +1745,7 @@ TVG_API Tvg_Result tvg_shape_set_radial_gradient(Tvg_Paint* paint, Tvg_Gradient*
 TVG_API Tvg_Result tvg_shape_get_gradient(const Tvg_Paint* paint, Tvg_Gradient** grad);
 
 
-/** \} */   // end defgroup ThorVGCapi_Shape
+/** \} */ // end defgroup ThorVGCapi_Shape
 
 
 /**
@@ -1849,7 +1905,8 @@ TVG_API Tvg_Result tvg_gradient_set_color_stops(Tvg_Gradient* grad, const Tvg_Co
 * \return Tvg_Result enumeration.
 * \retval TVG_RESULT_INVALID_ARGUMENT A @c nullptr passed as the argument.
 */
-TVG_API Tvg_Result tvg_gradient_get_color_stops(const Tvg_Gradient* grad, const Tvg_Color_Stop** color_stop, uint32_t* cnt);
+TVG_API Tvg_Result tvg_gradient_get_color_stops(const Tvg_Gradient* grad, const Tvg_Color_Stop** color_stop,
+                                                uint32_t* cnt);
 
 
 /*!
@@ -1946,7 +2003,7 @@ TVG_API Tvg_Gradient* tvg_gradient_duplicate(Tvg_Gradient* grad);
 TVG_API Tvg_Result tvg_gradient_del(Tvg_Gradient* grad);
 
 
-/** \} */   // end defgroup ThorVGCapi_Gradient
+/** \} */ // end defgroup ThorVGCapi_Gradient
 
 
 /**
@@ -2006,7 +2063,7 @@ TVG_API Tvg_Result tvg_picture_load(Tvg_Paint* paint, const char* path);
 *
 * \since 0.9
 */
-TVG_API Tvg_Result tvg_picture_load_raw(Tvg_Paint* paint, uint32_t *data, uint32_t w, uint32_t h, bool copy);
+TVG_API Tvg_Result tvg_picture_load_raw(Tvg_Paint* paint, uint32_t* data, uint32_t w, uint32_t h, bool copy);
 
 
 /*!
@@ -2028,7 +2085,8 @@ TVG_API Tvg_Result tvg_picture_load_raw(Tvg_Paint* paint, uint32_t *data, uint32
 *
 * \warning: It's the user responsibility to release the @p data memory if the @p copy is @c true.
 */
-TVG_API Tvg_Result tvg_picture_load_data(Tvg_Paint* paint, const char *data, uint32_t size, const char *mimetype, bool copy);
+TVG_API Tvg_Result tvg_picture_load_data(Tvg_Paint* paint, const char* data, uint32_t size, const char* mimetype,
+                                         bool copy);
 
 
 /*!
@@ -2076,7 +2134,7 @@ TVG_API Tvg_Result tvg_picture_get_size(const Tvg_Paint* paint, float* w, float*
 TVG_API const Tvg_Paint* tvg_picture_get_paint(Tvg_Paint* paint, uint32_t id);
 
 
-/** \} */   // end defgroup ThorVGCapi_Picture
+/** \} */ // end defgroup ThorVGCapi_Picture
 
 
 /**
@@ -2152,8 +2210,7 @@ TVG_API Tvg_Result tvg_scene_push(Tvg_Paint* scene, Tvg_Paint* paint);
 */
 TVG_API Tvg_Result tvg_scene_clear(Tvg_Paint* scene, bool free);
 
-/** \} */   // end defgroup ThorVGCapi_Scene
-
+/** \} */ // end defgroup ThorVGCapi_Scene
 
 
 /**
@@ -2295,7 +2352,8 @@ TVG_API Tvg_Result tvg_font_load(const char* path);
 *
 * \since 0.15
 */
-TVG_API Tvg_Result tvg_font_load_data(const char* name, const char* data, uint32_t size, const char *mimetype, bool copy);
+TVG_API Tvg_Result tvg_font_load_data(const char* name, const char* data, uint32_t size, const char* mimetype,
+                                      bool copy);
 
 
 /**
@@ -2316,7 +2374,7 @@ TVG_API Tvg_Result tvg_font_load_data(const char* name, const char* data, uint32
 TVG_API Tvg_Result tvg_font_unload(const char* path);
 
 
-/** \} */   // end defgroup ThorVGCapi_Text
+/** \} */ // end defgroup ThorVGCapi_Text
 
 
 /**
@@ -2394,7 +2452,7 @@ TVG_API Tvg_Result tvg_saver_sync(Tvg_Saver* saver);
 TVG_API Tvg_Result tvg_saver_del(Tvg_Saver* saver);
 
 
-/** \} */   // end defgroup ThorVGCapi_Saver
+/** \} */ // end defgroup ThorVGCapi_Saver
 
 
 /**
@@ -2554,7 +2612,7 @@ TVG_API Tvg_Result tvg_animation_get_segment(Tvg_Animation* animation, float* be
 TVG_API Tvg_Result tvg_animation_del(Tvg_Animation* animation);
 
 
-/** \} */   // end defgroup ThorVGCapi_Animation
+/** \} */ // end defgroup ThorVGCapi_Animation
 
 
 /**
@@ -2584,7 +2642,7 @@ TVG_API Tvg_Result tvg_animation_del(Tvg_Animation* animation);
 TVG_API uint32_t tvg_accessor_generate_id(const char* name);
 
 
-/** \} */   // end defgroup ThorVGCapi_Accessor
+/** \} */ // end defgroup ThorVGCapi_Accessor
 
 
 /**
@@ -2652,7 +2710,7 @@ TVG_API Tvg_Result tvg_lottie_animation_set_marker(Tvg_Animation* animation, con
 *
 * \note Experimental API
 */
-TVG_API Tvg_Result tvg_lottie_animation_get_markers_cnt(Tvg_Animation* animation, uint32_t* cnt);
+TVG_API Tvg_Result tvg_lottie_animation_get_markers_cnt(Tvg_Animation * animation, uint32_t * cnt);
 
 
 /*!
@@ -2670,10 +2728,10 @@ TVG_API Tvg_Result tvg_lottie_animation_get_markers_cnt(Tvg_Animation* animation
 TVG_API Tvg_Result tvg_lottie_animation_get_marker(Tvg_Animation* animation, uint32_t idx, const char** name);
 
 
-/** \} */   // end addtogroup ThorVGCapi_LottieAnimation
+/** \} */ // end addtogroup ThorVGCapi_LottieAnimation
 
 
-/** \} */   // end defgroup ThorVGCapi
+/** \} */ // end defgroup ThorVGCapi
 
 
 #ifdef __cplusplus
@@ -2683,4 +2741,3 @@ TVG_API Tvg_Result tvg_lottie_animation_get_marker(Tvg_Animation* animation, uin
 #endif //_THORVG_CAPI_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

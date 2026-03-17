@@ -25,13 +25,14 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef enum {
+typedef enum
+{
     LV_OBJ_TREE_WALK_NEXT,
     LV_OBJ_TREE_WALK_SKIP_CHILDREN,
     LV_OBJ_TREE_WALK_END,
 } lv_obj_tree_walk_res_t;
 
-typedef lv_obj_tree_walk_res_t (*lv_obj_tree_walk_cb_t)(lv_obj_t *, void *);
+typedef lv_obj_tree_walk_res_t (*lv_obj_tree_walk_cb_t)(lv_obj_t*, void*);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -58,7 +59,7 @@ void lv_obj_clean(lv_obj_t * obj);
  * @param obj       pointer to an object
  * @param delay_ms  time to wait before delete in milliseconds
  */
-void lv_obj_delete_delayed(lv_obj_t * obj, uint32_t delay_ms);
+void lv_obj_delete_delayed(lv_obj_t* obj, uint32_t delay_ms);
 
 /**
  * A function to be easily used in animation ready callback to delete an object when the animation is ready
@@ -98,28 +99,28 @@ void lv_obj_swap(lv_obj_t * obj1, lv_obj_t * obj2);
  * @note to move to the background: lv_obj_move_to_index(obj, 0)
  * @note to move forward (up): lv_obj_move_to_index(obj, lv_obj_get_index(obj) - 1)
  */
-void lv_obj_move_to_index(lv_obj_t * obj, int32_t index);
+void lv_obj_move_to_index(lv_obj_t* obj, int32_t index);
 
 /**
  * Get the screen of an object
  * @param obj       pointer to an object
  * @return          pointer to the object's screen
  */
-lv_obj_t * lv_obj_get_screen(const lv_obj_t * obj);
+lv_obj_t* lv_obj_get_screen(const lv_obj_t* obj);
 
 /**
  * Get the display of the object
  * @param obj       pointer to an object
  * @return          pointer to the object's display
  */
-lv_display_t * lv_obj_get_display(const lv_obj_t * obj);
+lv_display_t* lv_obj_get_display(const lv_obj_t* obj);
 
 /**
  * Get the parent of an object
  * @param obj       pointer to an object
  * @return          the parent of the object. (NULL if `obj` was a screen)
  */
-lv_obj_t * lv_obj_get_parent(const lv_obj_t * obj);
+lv_obj_t* lv_obj_get_parent(const lv_obj_t* obj);
 
 /**
  * Get the child of an object by the child's index.
@@ -132,7 +133,7 @@ lv_obj_t * lv_obj_get_parent(const lv_obj_t * obj);
  *                  -2: the second youngest
  * @return          pointer to the child or NULL if the index was invalid
  */
-lv_obj_t * lv_obj_get_child(const lv_obj_t * obj, int32_t idx);
+lv_obj_t* lv_obj_get_child(const lv_obj_t* obj, int32_t idx);
 
 /**
  * Get the child of an object by the child's index. Consider the children only with a given type.
@@ -146,8 +147,8 @@ lv_obj_t * lv_obj_get_child(const lv_obj_t * obj, int32_t idx);
  * @param class_p   the type of the children to check
  * @return          pointer to the child or NULL if the index was invalid
  */
-lv_obj_t * lv_obj_get_child_by_type(const lv_obj_t * obj, int32_t idx,
-                                    const lv_obj_class_t * class_p);
+lv_obj_t* lv_obj_get_child_by_type(const lv_obj_t* obj, int32_t idx,
+                                   const lv_obj_class_t* class_p);
 
 /**
  * Return a sibling of an object
@@ -160,7 +161,7 @@ lv_obj_t * lv_obj_get_child_by_type(const lv_obj_t * obj, int32_t idx,
  *                  etc
  * @return          pointer to the requested sibling  or NULL if there is no such sibling
  */
-lv_obj_t * lv_obj_get_sibling(const lv_obj_t * obj, int32_t idx);
+lv_obj_t* lv_obj_get_sibling(const lv_obj_t* obj, int32_t idx);
 
 /**
  * Return a sibling of an object. Consider the siblings only with a given type.
@@ -174,15 +175,15 @@ lv_obj_t * lv_obj_get_sibling(const lv_obj_t * obj, int32_t idx);
  * @param class_p   the type of the children to check
  * @return          pointer to the requested sibling  or NULL if there is no such sibling
  */
-lv_obj_t * lv_obj_get_sibling_by_type(const lv_obj_t * obj, int32_t idx,
-                                      const lv_obj_class_t * class_p);
+lv_obj_t* lv_obj_get_sibling_by_type(const lv_obj_t* obj, int32_t idx,
+                                     const lv_obj_class_t* class_p);
 
 /**
  * Get the number of children
  * @param obj       pointer to an object
  * @return          the number of children
  */
-uint32_t lv_obj_get_child_count(const lv_obj_t * obj);
+uint32_t lv_obj_get_child_count(const lv_obj_t* obj);
 
 /**
  * Get the number of children having a given type.
@@ -191,7 +192,7 @@ uint32_t lv_obj_get_child_count(const lv_obj_t * obj);
  * @return          the number of children
  */
 
-uint32_t lv_obj_get_child_count_by_type(const lv_obj_t * obj, const lv_obj_class_t * class_p);
+uint32_t lv_obj_get_child_count_by_type(const lv_obj_t* obj, const lv_obj_class_t* class_p);
 
 #if LV_USE_OBJ_NAME
 
@@ -209,7 +210,7 @@ uint32_t lv_obj_get_child_count_by_type(const lv_obj_t * obj, const lv_obj_class
  * is called, so the result reflects the currently existing widgets at
  * that time.
  */
-void lv_obj_set_name(lv_obj_t * obj, const char * name);
+void lv_obj_set_name(lv_obj_t* obj, const char* name);
 
 /**
  * Set a name for a widget. Only a pointer will be saved.
@@ -224,14 +225,14 @@ void lv_obj_set_name(lv_obj_t * obj, const char * name);
  * is called, so the result reflects the currently existing widgets at
  * that time.
  */
-void lv_obj_set_name_static(lv_obj_t * obj, const char * name);
+void lv_obj_set_name_static(lv_obj_t* obj, const char* name);
 
 /**
  * Get the set name as it was set.
  * @param obj       pointer to an object
  * @return          get the set name or NULL if it wasn't set yet
  */
-const char * lv_obj_get_name(const lv_obj_t * obj);
+const char* lv_obj_get_name(const lv_obj_t* obj);
 
 /**
  * Get the set name or craft a name automatically.
@@ -246,7 +247,7 @@ const char * lv_obj_get_name(const lv_obj_t * obj);
  * is called, so the result reflects the currently existing widgets at
  * that time.
  */
-void lv_obj_get_name_resolved(const lv_obj_t * obj, char buf[], size_t buf_size);
+void lv_obj_get_name_resolved(const lv_obj_t* obj, char buf[], size_t buf_size);
 
 /**
  * Find a child with a given name on a parent. This child doesn't have to be the
@@ -259,7 +260,7 @@ void lv_obj_get_name_resolved(const lv_obj_t * obj, char buf[], size_t buf_size)
  * @param parent        the widget where the search should start
  * @return              the found widget or NULL if not found.
  */
-lv_obj_t * lv_obj_find_by_name(const lv_obj_t * parent, const char * name);
+lv_obj_t* lv_obj_find_by_name(const lv_obj_t* parent, const char* name);
 
 /**
  * Get an object by name. The name can be a path too, for example
@@ -273,7 +274,7 @@ lv_obj_t * lv_obj_find_by_name(const lv_obj_t * parent, const char * name);
  * @param parent        the widget where the search should start
  * @return              the found widget or NULL if not found.
  */
-lv_obj_t * lv_obj_get_child_by_name(const lv_obj_t * parent, const char * name_path);
+lv_obj_t* lv_obj_get_child_by_name(const lv_obj_t* parent, const char* name_path);
 
 #endif /*LV_USE_OBJ_NAME*/
 
@@ -284,7 +285,7 @@ lv_obj_t * lv_obj_get_child_by_name(const lv_obj_t * parent, const char * name_p
  *                  E.g. 0: the oldest (firstly created child).
  *                  (-1 if child could not be found or no parent exists)
  */
-int32_t lv_obj_get_index(const lv_obj_t * obj);
+int32_t lv_obj_get_index(const lv_obj_t* obj);
 
 /**
  * Get the index of a child. Consider the children only with a given type.
@@ -294,7 +295,7 @@ int32_t lv_obj_get_index(const lv_obj_t * obj);
  *                  E.g. 0: the oldest (firstly created child with the given class).
  *                  (-1 if child could not be found or no parent exists)
  */
-int32_t lv_obj_get_index_by_type(const lv_obj_t * obj, const lv_obj_class_t * class_p);
+int32_t lv_obj_get_index_by_type(const lv_obj_t* obj, const lv_obj_class_t* class_p);
 
 /**
  * Iterate through all children of any object.
@@ -302,7 +303,7 @@ int32_t lv_obj_get_index_by_type(const lv_obj_t * obj, const lv_obj_class_t * cl
  * @param cb            call this callback on the objects
  * @param user_data     pointer to any user related data (will be passed to `cb`)
  */
-void lv_obj_tree_walk(lv_obj_t * start_obj, lv_obj_tree_walk_cb_t cb, void * user_data);
+void lv_obj_tree_walk(lv_obj_t* start_obj, lv_obj_tree_walk_cb_t cb, void* user_data);
 
 /**
  * Iterate through all children of any object and print their ID.

@@ -5,13 +5,13 @@
  ******************************************************************************/
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
-    #include "lvgl.h"
+#include "lvgl.h"
 #else
-    #include "../../lvgl.h"
+#include "../../lvgl.h"
 #endif
 
 #ifndef LV_FONT_DEJAVU_16_PERSIAN_HEBREW
-    #define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 1
+#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 1
 #endif
 
 #if LV_FONT_DEJAVU_16_PERSIAN_HEBREW
@@ -6515,7 +6515,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 1542, .range_length = 26, .glyph_id_start = 123,
-        .unicode_list = unicode_list_2, .glyph_id_ofs_list = NULL, .list_length = 8, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_2, .glyph_id_ofs_list = NULL, .list_length = 8,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     },
     {
         .range_start = 1569, .range_length = 26, .glyph_id_start = 131,
@@ -6527,7 +6528,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 1623, .range_length = 30, .glyph_id_start = 179,
-        .unicode_list = NULL, .glyph_id_ofs_list = glyph_id_ofs_list_5, .list_length = 30, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_FULL
+        .unicode_list = NULL, .glyph_id_ofs_list = glyph_id_ofs_list_5, .list_length = 30,
+        .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_FULL
     },
     {
         .range_start = 1657, .range_length = 71, .glyph_id_start = 199,
@@ -6535,7 +6537,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 1734, .range_length = 61917, .glyph_id_start = 270,
-        .unicode_list = unicode_list_7, .glyph_id_ofs_list = NULL, .list_length = 78, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_7, .glyph_id_ofs_list = NULL, .list_length = 78,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     },
     {
         .range_start = 64338, .range_length = 82, .glyph_id_start = 348,
@@ -6543,7 +6546,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 64426, .range_length = 715, .glyph_id_start = 430,
-        .unicode_list = unicode_list_9, .glyph_id_ofs_list = NULL, .list_length = 31, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_9, .glyph_id_ofs_list = NULL, .list_length = 31,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     },
     {
         .range_start = 65142, .range_length = 135, .glyph_id_start = 461,
@@ -6588,10 +6592,10 @@ const lv_font_t lv_font_dejavu_16_persian_hebrew = {
 #else
 lv_font_t lv_font_dejavu_16_persian_hebrew = {
 #endif
-    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
-    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
-    .line_height = 24,          /*The maximum line height required by the font*/
-    .base_line = 7,             /*Baseline measured from the bottom of the line*/
+    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt, /*Function pointer to get glyph's data*/
+    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt, /*Function pointer to get glyph's bitmap*/
+    .line_height = 24, /*The maximum line height required by the font*/
+    .base_line = 7, /*Baseline measured from the bottom of the line*/
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
@@ -6599,7 +6603,7 @@ lv_font_t lv_font_dejavu_16_persian_hebrew = {
     .underline_position = -1,
     .underline_thickness = 1,
 #endif
-    .dsc = &font_dsc           /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
+    .dsc = &font_dsc /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
 };
 
 #endif /*#if LV_FONT_DEJAVU_16_PERSIAN_HEBREW*/

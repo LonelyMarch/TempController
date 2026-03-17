@@ -24,7 +24,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     volatile uint32_t sys_time;
     volatile uint8_t sys_irq_flag;
     lv_tick_get_cb_t tick_get_cb;

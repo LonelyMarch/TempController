@@ -62,17 +62,18 @@ static void disp_delete_cb(lv_event_t * e);
 
 void lv_draw_eve_init(void)
 {
-    lv_draw_eve_unit_t * draw_eve_unit = lv_draw_create_unit(sizeof(lv_draw_eve_unit_t));
+    lv_draw_eve_unit_t* draw_eve_unit = lv_draw_create_unit(sizeof(lv_draw_eve_unit_t));
     draw_eve_unit->base_unit.dispatch_cb = eve_dispatch;
     draw_eve_unit->base_unit.evaluate_cb = eve_evaluate;
 
     lv_draw_eve_unit_g = draw_eve_unit;
 }
 
-void lv_draw_eve_set_display_data(lv_display_t * disp, const lv_draw_eve_parameters_t * params,
+void lv_draw_eve_set_display_data(lv_display_t* disp, const lv_draw_eve_parameters_t* params,
                                   lv_draw_eve_operation_cb_t op_cb)
 {
-    if(lv_draw_eve_unit_g == NULL) {
+    if (lv_draw_eve_unit_g == NULL)
+    {
         LV_LOG_WARN("lv_draw_eve is not initialized.");
         return;
     }
@@ -88,13 +89,13 @@ void lv_draw_eve_set_display_data(lv_display_t * disp, const lv_draw_eve_paramet
  *   STATIC FUNCTIONS
  **********************/
 
-static int32_t eve_dispatch(lv_draw_unit_t * draw_unit, lv_layer_t * layer)
+static int32_t eve_dispatch(lv_draw_unit_t* draw_unit, lv_layer_t* layer)
 {
-    lv_draw_eve_unit_t * draw_eve_unit = (lv_draw_eve_unit_t *) draw_unit;
+    lv_draw_eve_unit_t* draw_eve_unit = (lv_draw_eve_unit_t*)draw_unit;
 
-    lv_draw_task_t * t = NULL;
+    lv_draw_task_t* t = NULL;
     t = lv_draw_get_next_available_task(layer, NULL, DRAW_UNIT_ID_EVE);
-    if(t == NULL) return LV_DRAW_UNIT_IDLE;
+    if (t == NULL) return LV_DRAW_UNIT_IDLE;
 
 
     t->state = LV_DRAW_TASK_STATE_IN_PROGRESS;
@@ -112,49 +113,51 @@ static int32_t eve_dispatch(lv_draw_unit_t * draw_unit, lv_layer_t * layer)
     return 1;
 }
 
-static int32_t eve_evaluate(lv_draw_unit_t * draw_unit, lv_draw_task_t * task)
+static int32_t eve_evaluate(lv_draw_unit_t* draw_unit, lv_draw_task_t* task)
 {
     LV_UNUSED(draw_unit);
 
-    if(((lv_draw_dsc_base_t *)task->draw_dsc)->user_data == NULL) {
+    if (((lv_draw_dsc_base_t*)task->draw_dsc)->user_data == NULL)
+    {
         task->preference_score = 0;
         task->preferred_draw_unit_id = DRAW_UNIT_ID_EVE;
     }
     return 0;
 }
 
-static void eve_execute_drawing(lv_draw_eve_unit_t * u)
+static void eve_execute_drawing(lv_draw_eve_unit_t* u)
 {
-    lv_draw_task_t * t = u->task_act;
+    lv_draw_task_t* t = u->task_act;
 
-    switch(t->type) {
-        case LV_DRAW_TASK_TYPE_LINE:
-            lv_draw_line_iterate(t, t->draw_dsc, lv_draw_eve_line);
-            break;
-        case LV_DRAW_TASK_TYPE_BORDER:
-            lv_draw_eve_border(t, t->draw_dsc, &t->area);
-            break;
-        case LV_DRAW_TASK_TYPE_FILL:
-            lv_draw_eve_fill(t, t->draw_dsc, &t->area);
-            break;
-        case LV_DRAW_TASK_TYPE_IMAGE:
-            lv_draw_eve_image(t, t->draw_dsc, &t->area);
-            break;
-        case LV_DRAW_TASK_TYPE_LABEL:
-            lv_draw_eve_label(t, t->draw_dsc, &t->area);
-            break;
-        case LV_DRAW_TASK_TYPE_ARC:
-            lv_draw_eve_arc(t, t->draw_dsc, &t->area);
-            break;
-        case LV_DRAW_TASK_TYPE_TRIANGLE:
-            lv_draw_eve_triangle(t, t->draw_dsc);
-            break;
-        default:
-            break;
+    switch (t->type)
+    {
+    case LV_DRAW_TASK_TYPE_LINE:
+        lv_draw_line_iterate(t, t->draw_dsc, lv_draw_eve_line);
+        break;
+    case LV_DRAW_TASK_TYPE_BORDER:
+        lv_draw_eve_border(t, t->draw_dsc, &t->area);
+        break;
+    case LV_DRAW_TASK_TYPE_FILL:
+        lv_draw_eve_fill(t, t->draw_dsc, &t->area);
+        break;
+    case LV_DRAW_TASK_TYPE_IMAGE:
+        lv_draw_eve_image(t, t->draw_dsc, &t->area);
+        break;
+    case LV_DRAW_TASK_TYPE_LABEL:
+        lv_draw_eve_label(t, t->draw_dsc, &t->area);
+        break;
+    case LV_DRAW_TASK_TYPE_ARC:
+        lv_draw_eve_arc(t, t->draw_dsc, &t->area);
+        break;
+    case LV_DRAW_TASK_TYPE_TRIANGLE:
+        lv_draw_eve_triangle(t, t->draw_dsc);
+        break;
+    default:
+        break;
     }
 }
 
-static void disp_delete_cb(lv_event_t * e)
+static void disp_delete_cb(lv_event_t* e)
 {
     lv_draw_eve_unit_g->disp = NULL;
     lv_draw_eve_unit_g = NULL;

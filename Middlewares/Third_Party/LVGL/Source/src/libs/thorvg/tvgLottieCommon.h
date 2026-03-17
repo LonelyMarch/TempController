@@ -58,15 +58,20 @@ struct TextDocument
     float height;
     float shift;
     RGB24 color;
-    struct {
+
+    struct
+    {
         Point pos;
         Point size;
     } bbox;
-    struct {
+
+    struct
+    {
         RGB24 color;
         float width;
         bool render = false;
     } stroke;
+
     char* name = nullptr;
     float size;
     float tracking = 0.0f;
@@ -94,11 +99,13 @@ static inline RGB24 operator+(const RGB24& lhs, const RGB24& rhs)
 
 static inline RGB24 operator*(const RGB24& lhs, float rhs)
 {
-    return {(int32_t)nearbyintf(lhs.rgb[0] * rhs), (int32_t)nearbyintf(lhs.rgb[1] * rhs), (int32_t)nearbyintf(lhs.rgb[2] * rhs)};
+    return {
+        (int32_t)nearbyintf(lhs.rgb[0] * rhs), (int32_t)nearbyintf(lhs.rgb[1] * rhs),
+        (int32_t)nearbyintf(lhs.rgb[2] * rhs)
+    };
 }
 
 
 #endif //_TVG_LOTTIE_COMMON_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

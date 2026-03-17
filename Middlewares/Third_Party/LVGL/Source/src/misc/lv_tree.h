@@ -28,38 +28,42 @@ extern "C" {
 typedef struct _lv_tree_class_t lv_tree_class_t;
 typedef struct _lv_tree_node_t lv_tree_node_t;
 
-typedef void (*lv_tree_constructor_cb_t)(const lv_tree_class_t * class_p, lv_tree_node_t * node);
-typedef void (*lv_tree_destructor_cb_t)(const lv_tree_class_t * class_p, lv_tree_node_t * node);
+typedef void (*lv_tree_constructor_cb_t)(const lv_tree_class_t* class_p, lv_tree_node_t* node);
+typedef void (*lv_tree_destructor_cb_t)(const lv_tree_class_t* class_p, lv_tree_node_t* node);
 
 /**
  * Describe the common methods of every object.
  * Similar to a C++ class.
  */
-struct _lv_tree_class_t {
-    const lv_tree_class_t * base_class;
+struct _lv_tree_class_t
+{
+    const lv_tree_class_t* base_class;
     uint32_t instance_size;
     lv_tree_constructor_cb_t constructor_cb;
     lv_tree_destructor_cb_t destructor_cb;
 };
 
 /** Description of a tree node*/
-struct _lv_tree_node_t {
-    lv_tree_node_t * parent;
-    lv_tree_node_t ** children;
+struct _lv_tree_node_t
+{
+    lv_tree_node_t* parent;
+    lv_tree_node_t** children;
     uint32_t child_cnt;
     uint32_t child_cap;
-    const lv_tree_class_t * class_p;
+    const lv_tree_class_t* class_p;
 };
 
-enum _lv_tree_walk_mode_t {
+enum _lv_tree_walk_mode_t
+{
     LV_TREE_WALK_PRE_ORDER = 0,
     LV_TREE_WALK_POST_ORDER,
 };
+
 typedef uint8_t lv_tree_walk_mode_t;
 
-typedef bool (*lv_tree_traverse_cb_t)(const lv_tree_node_t * node, void * user_data);
-typedef bool (*lv_tree_before_cb_t)(const lv_tree_node_t * node, void * user_data);
-typedef void (*lv_tree_after_cb_t)(const lv_tree_node_t * node, void * user_data);
+typedef bool (*lv_tree_traverse_cb_t)(const lv_tree_node_t* node, void* user_data);
+typedef bool (*lv_tree_before_cb_t)(const lv_tree_node_t* node, void* user_data);
+typedef void (*lv_tree_after_cb_t)(const lv_tree_node_t* node, void* user_data);
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -73,13 +77,13 @@ extern const lv_tree_class_t lv_tree_node_class;
  * @param parent pointer to the parent node (or NULL if it's the root node)
  * @return pointer to the new node
  */
-lv_tree_node_t * lv_tree_node_create(const lv_tree_class_t * class_p, lv_tree_node_t * parent);
+lv_tree_node_t* lv_tree_node_create(const lv_tree_class_t* class_p, lv_tree_node_t* parent);
 
 /**
  * @brief Delete a tree node and all its children recursively
  * @param node pointer to the node to delete
  */
-void lv_tree_node_delete(lv_tree_node_t * node);
+void lv_tree_node_delete(lv_tree_node_t* node);
 
 /**
  * @brief Walk the tree recursively and call a callback function on each node
@@ -91,12 +95,12 @@ void lv_tree_node_delete(lv_tree_node_t * node);
  * @param user_data user data to pass to the callback functions
  * @return true: traversal is finished; false: traversal broken
  */
-bool lv_tree_walk(const lv_tree_node_t * node,
+bool lv_tree_walk(const lv_tree_node_t* node,
                   lv_tree_walk_mode_t mode,
                   lv_tree_traverse_cb_t cb,
                   lv_tree_before_cb_t bcb,
                   lv_tree_after_cb_t acb,
-                  void * user_data);
+                  void* user_data);
 
 /**********************
  *      MACROS

@@ -1,4 +1,3 @@
-
 /**
  * @file lv_g2d_buf_map.h
  *
@@ -38,16 +37,18 @@ extern "C" {
  **********************/
 
 /* Map item definition. */
-typedef struct lv_map_item {
+typedef struct lv_map_item
+{
     /* Virtual address buffer. */
-    void * key;
-    struct g2d_buf * value;
+    void* key;
+    struct g2d_buf* value;
 } lv_map_item_t;
 
 /*Buf map definition. */
-typedef struct lv_buf_map {
-    lv_map_item_t ** items;
-    lv_array_t ** overflow_list;
+typedef struct lv_buf_map
+{
+    lv_map_item_t** items;
+    lv_array_t** overflow_list;
 
     int size;
     int count;
@@ -61,11 +62,11 @@ void g2d_create_buf_map(void);
 
 void g2d_free_buf_map(void);
 
-void g2d_insert_buf_map(void * key, struct g2d_buf * value);
+void g2d_insert_buf_map(void* key, struct g2d_buf* value);
 
-struct g2d_buf * g2d_search_buf_map(void * key);
+struct g2d_buf* g2d_search_buf_map(void* key);
 
-void g2d_free_item(void * key);
+void g2d_free_item(void* key);
 
 void g2d_print_table(void);
 

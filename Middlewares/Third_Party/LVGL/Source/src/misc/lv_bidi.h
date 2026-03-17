@@ -28,13 +28,14 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-typedef enum {
-    LV_BASE_DIR_LTR      = 0x00,
-    LV_BASE_DIR_RTL      = 0x01,
-    LV_BASE_DIR_AUTO     = 0x02,
+typedef enum
+{
+    LV_BASE_DIR_LTR = 0x00,
+    LV_BASE_DIR_RTL = 0x01,
+    LV_BASE_DIR_AUTO = 0x02,
 
-    LV_BASE_DIR_NEUTRAL  = 0x20,
-    LV_BASE_DIR_WEAK     = 0x21,
+    LV_BASE_DIR_NEUTRAL = 0x20,
+    LV_BASE_DIR_WEAK = 0x21,
 } lv_base_dir_t;
 
 /**********************
@@ -48,13 +49,13 @@ typedef enum {
  * @param base_dir  LV_BASE_DIR_..., write the calculated base dir here (LV_BASE_DIR_LTR/RTL)
  * @param txt       a text, used with LV_BASE_DIR_AUTO to determine the base direction
  */
-void lv_bidi_calculate_align(lv_text_align_t * align, lv_base_dir_t * base_dir, const char * txt);
+void lv_bidi_calculate_align(lv_text_align_t* align, lv_base_dir_t* base_dir, const char* txt);
 
 /**
  * Set custom neutrals string
  * @param neutrals  default " \t\n\r.,:;'\"`!?%/\\-=()[]{}<>@#&$|"
  */
-void lv_bidi_set_custom_neutrals_static(const char * neutrals);
+void lv_bidi_set_custom_neutrals_static(const char* neutrals);
 
 /**********************
  *      MACROS
@@ -68,11 +69,11 @@ void lv_bidi_set_custom_neutrals_static(const char * neutrals);
  * @param base_dir  Unused
  * @param txt       Unused
  */
-static inline void lv_bidi_calculate_align(lv_text_align_t * align, lv_base_dir_t * base_dir, const char * txt)
+static inline void lv_bidi_calculate_align(lv_text_align_t* align, lv_base_dir_t* base_dir, const char* txt)
 {
     LV_UNUSED(txt);
     LV_UNUSED(base_dir);
-    if(*align == LV_TEXT_ALIGN_AUTO) * align = LV_TEXT_ALIGN_LEFT;
+    if (*align == LV_TEXT_ALIGN_AUTO) *align = LV_TEXT_ALIGN_LEFT;
 }
 #endif /*LV_USE_BIDI*/
 

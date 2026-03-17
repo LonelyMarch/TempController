@@ -38,18 +38,18 @@
  **********************/
 
 /** Creates a right-handed view matrix */
-fastgltf::math::fmat4x4 lv_gltf_math_look_at_rh(const fastgltf::math::fvec3 & eye, const fastgltf::math::fvec3 & center,
-                                                const fastgltf::math::fvec3 & up) noexcept
+fastgltf::math::fmat4x4 lv_gltf_math_look_at_rh(const fastgltf::math::fvec3& eye, const fastgltf::math::fvec3& center,
+                                                const fastgltf::math::fvec3& up) noexcept
 {
     auto dir = normalize(center - eye);
     auto lft = normalize(cross(dir, up));
     auto rup = cross(lft, dir);
 
     fastgltf::math::fmat4x4 ret(1.f);
-    ret.col(0) = { lft.x(), rup.x(), -dir.x(), 0.f };
-    ret.col(1) = { lft.y(), rup.y(), -dir.y(), 0.f };
-    ret.col(2) = { lft.z(), rup.z(), -dir.z(), 0.f };
-    ret.col(3) = { -dot(lft, eye), -dot(rup, eye), dot(dir, eye), 1.f };
+    ret.col(0) = {lft.x(), rup.x(), -dir.x(), 0.f};
+    ret.col(1) = {lft.y(), rup.y(), -dir.y(), 0.f};
+    ret.col(2) = {lft.z(), rup.z(), -dir.z(), 0.f};
+    ret.col(3) = {-dot(lft, eye), -dot(rup, eye), dot(dir, eye), 1.f};
     return ret;
 }
 

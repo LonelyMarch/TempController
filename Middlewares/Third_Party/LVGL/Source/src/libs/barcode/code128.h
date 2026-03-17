@@ -36,9 +36,9 @@ extern "C" {
 #define CODE128_FNC3 '\xf3'
 #define CODE128_FNC4 '\xf4'
 
-size_t code128_estimate_len(const char * s);
-size_t code128_encode_gs1(const char * s, char * out, size_t maxlength);
-size_t code128_encode_raw(const char * s, char * out, size_t maxlength);
+size_t code128_estimate_len(const char* s);
+size_t code128_encode_gs1(const char* s, char* out, size_t maxlength);
+size_t code128_encode_raw(const char* s, char* out, size_t maxlength);
 
 #ifdef __cplusplus
 }

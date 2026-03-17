@@ -51,7 +51,7 @@ struct SceneIterator : Iterator
 
     uint32_t count() override
     {
-       return paints->size();
+        return paints->size();
     }
 
     void begin() override
@@ -67,8 +67,8 @@ struct Scene::Impl
     Scene* scene = nullptr;
     RenderRegion vport = {0, 0, INT32_MAX, INT32_MAX};
     Array<RenderEffect*>* effects = nullptr;
-    uint8_t opacity;         //for composition
-    bool needComp = false;   //composite or not
+    uint8_t opacity; //for composition
+    bool needComp = false; //composite or not
 
     Impl(Scene* s) : scene(s)
     {
@@ -78,11 +78,13 @@ struct Scene::Impl
     {
         resetEffects();
 
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             if (P(paint)->unref() == 0) delete(paint);
         }
 
-        if (auto renderer = PP(scene)->renderer) {
+        if (auto renderer = PP(scene)->renderer)
+        {
             renderer->dispose(rd);
         }
     }
@@ -112,17 +114,20 @@ struct Scene::Impl
         return true;
     }
 
-    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity, RenderUpdateFlag flag, TVG_UNUSED bool clipper)
+    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity,
+                      RenderUpdateFlag flag, TVG_UNUSEDbool clipper)
     {
         this->vport = renderer->viewport();
 
-        if ((needComp = needComposition(opacity))) {
+        if ((needComp = needComposition(opacity)))
+        {
             /* Overriding opacity value. If this scene is half-translucent,
                It must do intermediate composition with that opacity value. */
             this->opacity = opacity;
             opacity = 255;
         }
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             paint->pImpl->update(renderer, transform, clips, opacity, flag, false);
         }
 
@@ -136,19 +141,24 @@ struct Scene::Impl
 
         renderer->blend(PP(scene)->blendMethod);
 
-        if (needComp) {
+        if (needComp)
+        {
             cmp = renderer->target(bounds(renderer), renderer->colorSpace());
             renderer->beginComposite(cmp, CompositeMethod::None, opacity);
         }
 
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             ret &= paint->pImpl->render(renderer);
         }
 
-        if (cmp) {
+        if (cmp)
+        {
             //Apply post effects if any.
-            if (effects) {
-                for (auto e = effects->begin(); e < effects->end(); ++e) {
+            if (effects)
+            {
+                for (auto e = effects->begin(); e < effects->end(); ++e)
+                {
                     renderer->effect(cmp, *e);
                 }
             }
@@ -167,7 +177,8 @@ struct Scene::Impl
         int32_t x2 = 0;
         int32_t y2 = 0;
 
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             auto region = paint->pImpl->bounds(renderer);
 
             //Merge regions
@@ -179,10 +190,13 @@ struct Scene::Impl
 
         //Extends the render region if post effects require
         int32_t ex = 0, ey = 0, ew = 0, eh = 0;
-        if (effects) {
-            for (auto e = effects->begin(); e < effects->end(); ++e) {
+        if (effects)
+        {
+            for (auto e = effects->begin(); e < effects->end(); ++e)
+            {
                 auto effect = *e;
-                if (effect->rd || renderer->prepare(effect)) {
+                if (effect->rd || renderer->prepare(effect))
+                {
                     ex = std::min(ex, effect->extend.x);
                     ey = std::min(ey, effect->extend.y);
                     ew = std::max(ew, effect->extend.w);
@@ -205,7 +219,8 @@ struct Scene::Impl
         auto x2 = -FLT_MAX;
         auto y2 = -FLT_MAX;
 
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             auto x = FLT_MAX;
             auto y = FLT_MAX;
             auto w = 0.0f;
@@ -235,7 +250,8 @@ struct Scene::Impl
         auto scene = Scene::gen().release();
         auto dup = scene->pImpl;
 
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             auto cdup = paint->duplicate();
             P(cdup)->ref();
             dup->paints.push_back(cdup);
@@ -248,7 +264,8 @@ struct Scene::Impl
 
     void clear(bool free)
     {
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             if (P(paint)->unref() == 0 && free) delete(paint);
         }
         paints.clear();
@@ -265,4 +282,3 @@ struct Scene::Impl
 #endif //_TVG_SCENE_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

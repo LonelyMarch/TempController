@@ -41,16 +41,16 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_nanovg_3d(lv_draw_task_t * t, const lv_draw_3d_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_nanovg_3d(lv_draw_task_t* t, const lv_draw_3d_dsc_t* dsc, const lv_area_t* coords)
 {
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_draw_nanovg_unit_t * u = (lv_draw_nanovg_unit_t *)t->draw_unit;
+    lv_draw_nanovg_unit_t* u = (lv_draw_nanovg_unit_t*)t->draw_unit;
 
     /* End NanoVG frame temporarily to allow direct OpenGL rendering */
     lv_nanovg_end_frame(u);
 
-    lv_layer_t * layer = t->target_layer;
+    lv_layer_t* layer = t->target_layer;
 
     /* Get target layer info */
     int32_t layer_w = lv_area_get_width(&layer->buf_area);
@@ -82,11 +82,11 @@ void lv_draw_nanovg_3d(lv_draw_task_t * t, const lv_draw_3d_dsc_t * dsc, const l
     params.v_flip = dsc->v_flip;
     params.rb_swap = true;
 #if LV_DRAW_TRANSFORM_USE_MATRIX
-    params.matrix = &layer->matrix;
+params.matrix=&layer->matrix;
 #endif
-    lv_opengles_render(&params);
+lv_opengles_render (&params);
 
-    LV_PROFILER_DRAW_END;
+LV_PROFILER_DRAW_END;
 }
 
 /**********************

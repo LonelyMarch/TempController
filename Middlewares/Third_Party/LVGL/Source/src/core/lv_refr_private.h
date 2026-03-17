@@ -45,13 +45,13 @@ void lv_refr_deinit(void);
  * only one display)
  * @return LV_RESULT_OK: the area is invalidated; LV_RESULT_INVALID: the area wasn't invalidated.
  */
-lv_result_t lv_inv_area(lv_display_t * disp, const lv_area_t * area_p);
+lv_result_t lv_inv_area(lv_display_t* disp, const lv_area_t* area_p);
 
 /**
  * Get the display which is being refreshed
  * @return the display being refreshed
  */
-lv_display_t * lv_refr_get_disp_refreshing(void);
+lv_display_t* lv_refr_get_disp_refreshing(void);
 
 /**
  * Set the display which is being refreshed
@@ -65,7 +65,7 @@ void lv_refr_set_disp_refreshing(lv_display_t * disp);
  * @param obj the first object to start the searching (typically a screen)
  * @return
  */
-lv_obj_t * lv_refr_get_top_obj(const lv_area_t * area_p, lv_obj_t * obj);
+lv_obj_t* lv_refr_get_top_obj(const lv_area_t* area_p, lv_obj_t* obj);
 
 /**
  * Render an object to a layer

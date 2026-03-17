@@ -80,11 +80,12 @@ static inline bool nvg_math_is_equal(float a, float b)
 static inline float nvg_math_inv_sqrtf(float number)
 {
     /* From https://en.wikipedia.org/wiki/Fast_inverse_square_root#Avoiding_undefined_behavior */
-    union {
-        float   f;
+    union
+    {
+        float f;
         int32_t i;
-    } conv = { .f = number };
-    conv.i  = 0x5f3759df - (conv.i >> 1);
+    } conv = {.f = number};
+    conv.i = 0x5f3759df - (conv.i >> 1);
     conv.f *= 1.5F - (number * 0.5F * conv.f * conv.f);
     return conv.f;
 }

@@ -21,10 +21,10 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 
-char *lv_gltf_view_shader_get_vertex(void);
-char *lv_gltf_view_shader_get_fragment(void);
-void lv_gltf_view_shader_get_src(lv_opengl_shader_portions_t *shaders);
-void lv_gltf_view_shader_get_env(lv_opengl_shader_portions_t *shaders);
+char* lv_gltf_view_shader_get_vertex(void);
+char* lv_gltf_view_shader_get_fragment(void);
+void lv_gltf_view_shader_get_src(lv_opengl_shader_portions_t * shaders);
+void lv_gltf_view_shader_get_env(lv_opengl_shader_portions_t * shaders);
 
 /**********************
  *      MACROS

@@ -35,12 +35,12 @@
 /* External Class Implementation                                        */
 /************************************************************************/
 
-Shape :: Shape() : pImpl(new Impl(this))
+Shape::Shape() : pImpl(new Impl(this))
 {
 }
 
 
-Shape :: ~Shape()
+Shape::~Shape()
 {
     delete(pImpl);
 }
@@ -48,13 +48,13 @@ Shape :: ~Shape()
 
 unique_ptr<Shape> Shape::gen() noexcept
 {
-    return unique_ptr<Shape>(new Shape);
+    return unique_ptr < Shape > (new Shape);
 }
 
 
 uint32_t Shape::identifier() noexcept
 {
-    return (uint32_t) Type::Shape;
+    return (uint32_t)Type::Shape;
 }
 
 
@@ -89,7 +89,7 @@ uint32_t Shape::pathCoords(const Point** pts) const noexcept
 }
 
 
-Result Shape::appendPath(const PathCommand *cmds, uint32_t cmdCnt, const Point* pts, uint32_t ptsCnt) noexcept
+Result Shape::appendPath(const PathCommand* cmds, uint32_t cmdCnt, const Point* pts, uint32_t ptsCnt) noexcept
 {
     if (cmdCnt == 0 || ptsCnt == 0 || !cmds || !pts) return Result::InvalidArguments;
 
@@ -177,14 +177,18 @@ Result Shape::appendArc(float cx, float cy, float radius, float startAngle, floa
     //Start from here
     Point start = {radius * cosf(startAngle), radius * sinf(startAngle)};
 
-    if (pie) {
+    if (pie)
+    {
         pImpl->moveTo(cx, cy);
         pImpl->lineTo(start.x + cx, start.y + cy);
-    } else {
+    }
+    else
+    {
         pImpl->moveTo(start.x + cx, start.y + cy);
     }
 
-    for (int i = 0; i < nCurves; ++i) {
+    for (int i = 0; i < nCurves; ++i)
+    {
         auto endAngle = startAngle + ((i != nCurves - 1) ? MATH_PI2 * sweepSign : fract);
         Point end = {radius * cosf(endAngle), radius * sinf(endAngle)};
 
@@ -198,7 +202,7 @@ Result Shape::appendArc(float cx, float cy, float radius, float startAngle, floa
         auto by = end.y;
         auto q1 = ax * ax + ay * ay;
         auto q2 = ax * bx + ay * by + q1;
-        auto k2 = (4.0f/3.0f) * ((sqrtf(2 * q1 * q2) - q2) / (ax * by - ay * bx));
+        auto k2 = (4.0f / 3.0f) * ((sqrtf(2 * q1 * q2) - q2) / (ax * by - ay * bx));
 
         start = end; //Next start point is the current end point
 
@@ -231,15 +235,18 @@ Result Shape::appendRect(float x, float y, float w, float h, float rx, float ry)
     if (ry > halfH) ry = halfH;
 
     //rectangle
-    if (rx == 0 && ry == 0) {
+    if (rx == 0 && ry == 0)
+    {
         pImpl->grow(5, 4);
         pImpl->moveTo(x, y);
         pImpl->lineTo(x + w, y);
         pImpl->lineTo(x + w, y + h);
         pImpl->lineTo(x, y + h);
         pImpl->close();
-    //rounded rectangle or circle
-    } else {
+        //rounded rectangle or circle
+    }
+    else
+    {
         auto hrx = rx * PATH_KAPPA;
         auto hry = ry * PATH_KAPPA;
         pImpl->grow(10, 17);
@@ -263,13 +270,15 @@ Result Shape::appendRect(float x, float y, float w, float h, float rx, float ry)
 
 Result Shape::fill(uint8_t r, uint8_t g, uint8_t b, uint8_t a) noexcept
 {
-    if (pImpl->rs.fill) {
+    if (pImpl->rs.fill)
+    {
         delete(pImpl->rs.fill);
         pImpl->rs.fill = nullptr;
         pImpl->flag |= RenderUpdateFlag::Gradient;
     }
 
-    if (r == pImpl->rs.color[0] && g == pImpl->rs.color[1] && b == pImpl->rs.color[2] && a == pImpl->rs.color[3]) return Result::Success;
+    if (r == pImpl->rs.color[0] && g == pImpl->rs.color[1] && b == pImpl->rs.color[2] && a == pImpl->rs.color[3]) return
+        Result::Success;
 
     pImpl->rs.color[0] = r;
     pImpl->rs.color[1] = g;
@@ -431,4 +440,3 @@ FillRule Shape::fillRule() const noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

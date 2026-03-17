@@ -57,7 +57,8 @@ using namespace rapidjson;
 
 struct LookaheadParserHandler
 {
-    enum LookaheadParsingState {
+    enum LookaheadParsingState
+    {
         kInit = 0,
         kError,
         kHasNull,
@@ -71,12 +72,12 @@ struct LookaheadParserHandler
         kExitingArray
     };
 
-    Value                   val;
-    LookaheadParsingState   state = kInit;
-    Reader                  reader;
-    InsituStringStream      iss;
+    Value val;
+    LookaheadParsingState state = kInit;
+    Reader reader;
+    InsituStringStream iss;
 
-    LookaheadParserHandler(const char *str) : iss((char*)str)
+    LookaheadParserHandler(const char* str) : iss((char*)str)
     {
         reader.IterativeParseInit();
     }
@@ -130,12 +131,12 @@ struct LookaheadParserHandler
         return true;
     }
 
-    bool RawNumber(const char *, SizeType, TVG_UNUSED bool)
-    { 
+    bool RawNumber(const char*, SizeType, TVG_UNUSEDbool)
+    {
         return false;
     }
 
-    bool String(const char *str, SizeType length, TVG_UNUSED bool)
+    bool String(const char* str, SizeType length, TVG_UNUSEDbool)
     {
         state = kHasString;
         val.SetString(str, length);
@@ -148,7 +149,7 @@ struct LookaheadParserHandler
         return true;
     }
 
-    bool Key(const char *str, SizeType length, TVG_UNUSED bool)
+    bool Key(const char* str, SizeType length, TVG_UNUSEDbool)
     {
         state = kHasKey;
         val.SetString(str, length);
@@ -203,4 +204,3 @@ struct LookaheadParserHandler
 #endif //_TVG_LOTTIE_PARSER_HANDLER_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

@@ -46,7 +46,7 @@ void PXP_IRQHandler(void);
 /**
  * Get the PXP default configuration.
  */
-pxp_cfg_t * pxp_get_default_cfg(void);
+pxp_cfg_t* pxp_get_default_cfg(void);
 
 /**********************
  *      MACROS

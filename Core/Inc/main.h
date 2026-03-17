@@ -69,6 +69,10 @@ extern volatile float g_temp_setpoint_c;
 #define LCD_RES_GPIO_Port GPIOB
 #define LCD_DC_Pin GPIO_PIN_10
 #define LCD_DC_GPIO_Port GPIOD
+#define LCD_SDI_Pin GPIO_PIN_7
+#define LCD_SDI_GPIO_Port GPIOD
+#define LCD_SCK_Pin GPIO_PIN_3
+#define LCD_SCK_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

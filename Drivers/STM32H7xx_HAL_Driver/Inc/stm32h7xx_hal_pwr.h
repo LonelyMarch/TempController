@@ -21,7 +21,7 @@
 #define STM32H7xx_HAL_PWR_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
@@ -46,16 +46,16 @@
   */
 typedef struct
 {
-  uint32_t PVDLevel; /*!< PVDLevel: Specifies the PVD detection level. This
+    uint32_t PVDLevel; /*!< PVDLevel: Specifies the PVD detection level. This
                                     parameter can be a value of @ref
                                     PWR_PVD_detection_level.
                      */
 
-  uint32_t Mode;     /*!< Mode: Specifies the EXTI operating mode for the PVD
+    uint32_t Mode; /*!< Mode: Specifies the EXTI operating mode for the PVD
                                 event. This parameter can be a value of @ref
                                 PWR_PVD_Mode.
                      */
-}PWR_PVDTypeDef;
+} PWR_PVDTypeDef;
 
 /**
   * @}
@@ -93,12 +93,19 @@ typedef struct
   * @{
   */
 #define PWR_PVD_MODE_NORMAL               (0x00000000U) /*!< Basic mode is used                                        */
+
 #define PWR_PVD_MODE_IT_RISING            (0x00010001U) /*!< Interrupt Mode with Rising edge trigger detection         */
+
 #define PWR_PVD_MODE_IT_FALLING           (0x00010002U) /*!< Interrupt Mode with Falling edge trigger detection        */
+
 #define PWR_PVD_MODE_IT_RISING_FALLING    (0x00010003U) /*!< Interrupt Mode with Rising/Falling edge trigger detection */
+
 #define PWR_PVD_MODE_EVENT_RISING         (0x00020001U) /*!< Event Mode with Rising edge trigger detection             */
+
 #define PWR_PVD_MODE_EVENT_FALLING        (0x00020002U) /*!< Event Mode with Falling edge trigger detection            */
+
 #define PWR_PVD_MODE_EVENT_RISING_FALLING (0x00020003U) /*!< Event Mode with Rising/Falling edge trigger detection     */
+
 /**
   * @}
   */
@@ -680,9 +687,9 @@ do {                                                     \
   * @{
   */
 /* Initialization and de-initialization functions *****************************/
-void HAL_PWR_DeInit            (void);
-void HAL_PWR_EnableBkUpAccess  (void);
-void HAL_PWR_DisableBkUpAccess (void);
+void HAL_PWR_DeInit(void);
+void HAL_PWR_EnableBkUpAccess(void);
+void HAL_PWR_DisableBkUpAccess(void);
 /**
   * @}
   */
@@ -692,28 +699,28 @@ void HAL_PWR_DisableBkUpAccess (void);
   */
 /* Peripheral Control functions  **********************************************/
 /* PVD configuration */
-void HAL_PWR_ConfigPVD  (const PWR_PVDTypeDef *sConfigPVD);
-void HAL_PWR_EnablePVD  (void);
-void HAL_PWR_DisablePVD (void);
+void HAL_PWR_ConfigPVD(const PWR_PVDTypeDef* sConfigPVD);
+void HAL_PWR_EnablePVD(void);
+void HAL_PWR_DisablePVD(void);
 
 /* WakeUp pins configuration */
-void HAL_PWR_EnableWakeUpPin  (uint32_t WakeUpPinPolarity);
-void HAL_PWR_DisableWakeUpPin (uint32_t WakeUpPinx);
+void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinPolarity);
+void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx);
 
 /* Low Power modes entry */
-void HAL_PWR_EnterSTOPMode    (uint32_t Regulator, uint8_t STOPEntry);
-void HAL_PWR_EnterSLEEPMode   (uint32_t Regulator, uint8_t SLEEPEntry);
-void HAL_PWR_EnterSTANDBYMode (void);
+void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry);
+void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry);
+void HAL_PWR_EnterSTANDBYMode(void);
 
 /* Power PVD IRQ Handler */
-void HAL_PWR_PVD_IRQHandler (void);
-void HAL_PWR_PVDCallback    (void);
+void HAL_PWR_PVD_IRQHandler(void);
+void HAL_PWR_PVDCallback(void);
 
 /* Cortex System Control functions  *******************************************/
-void HAL_PWR_EnableSleepOnExit  (void);
-void HAL_PWR_DisableSleepOnExit (void);
-void HAL_PWR_EnableSEVOnPend    (void);
-void HAL_PWR_DisableSEVOnPend   (void);
+void HAL_PWR_EnableSleepOnExit(void);
+void HAL_PWR_DisableSleepOnExit(void);
+void HAL_PWR_EnableSEVOnPend(void);
+void HAL_PWR_DisableSEVOnPend(void);
 /**
   * @}
   */
@@ -806,4 +813,3 @@ void HAL_PWR_DisableSEVOnPend   (void);
 #endif /* __cplusplus */
 
 #endif /* STM32H7xx_HAL_PWR_H */
-

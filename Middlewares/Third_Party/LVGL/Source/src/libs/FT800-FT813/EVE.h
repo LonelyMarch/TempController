@@ -78,8 +78,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "EVE_target.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "EVE_config.h"
@@ -281,7 +280,9 @@ extern "C"
 /* Fonts */
 #define EVE_NUMCHAR_PERFONT     ((uint32_t) 128UL)  /* number of font characters per bitmap handle */
 #define EVE_FONT_TABLE_SIZE     ((uint32_t) 148UL)  /* size of the font table - utilized for loopup by the graphics engine */
+
 #define EVE_FONT_TABLE_POINTER  ((uint32_t) 0xFFFFCUL) /* pointer to the inbuilt font tables starting from bitmap handle 16 */
+
 
 /* Audio sample type defines */
 #define EVE_LINEAR_SAMPLES       ((uint32_t) 0UL) /* 8bit signed samples */
@@ -597,7 +598,7 @@ extern "C"
  */
 static inline uint32_t ALPHA_FUNC(uint8_t func, uint8_t ref)
 {
-    uint32_t const funcv = ((uint32_t) func & 7U) << 8U;
+    uint32_t const funcv = ((uint32_t)func & 7U) << 8U;
     return (DL_ALPHA_FUNC | funcv | ref);
 }
 
@@ -618,8 +619,8 @@ static inline uint32_t BITMAP_HANDLE(uint8_t handle)
  */
 static inline uint32_t BITMAP_LAYOUT(uint8_t format, uint16_t linestride, uint16_t height)
 {
-    uint32_t const formatv = ((uint32_t) format & 0x1FUL) << 19U;
-    uint32_t const linestridev = ((uint32_t) linestride & 0x3FFUL) << 9U;
+    uint32_t const formatv = ((uint32_t)format & 0x1FUL) << 19U;
+    uint32_t const linestridev = ((uint32_t)linestride & 0x3FFUL) << 9U;
     uint32_t const heightv = height & 0x1FFUL;
     return (DL_BITMAP_LAYOUT | formatv | linestridev | heightv);
 }
@@ -649,8 +650,8 @@ static inline uint32_t BITMAP_SIZE(uint8_t filter, uint8_t wrapx, uint8_t wrapy,
  */
 static inline uint32_t BITMAP_LAYOUT_H(uint16_t linestride, uint16_t height)
 {
-    uint32_t const linestridev = (uint32_t) ((((linestride & 0xC00U) >> 10U) &3UL) << 2U);
-    uint32_t const heightv = (uint32_t) (((height & 0x600U) >> 9U) & 3UL);
+    uint32_t const linestridev = (uint32_t)((((linestride & 0xC00U) >> 10U) & 3UL) << 2U);
+    uint32_t const heightv = (uint32_t)(((height & 0x600U) >> 9U) & 3UL);
     return (DL_BITMAP_LAYOUT_H | linestridev | heightv);
 }
 
@@ -664,8 +665,8 @@ static inline uint32_t BITMAP_LAYOUT_H(uint16_t linestride, uint16_t height)
  */
 static inline uint32_t BITMAP_SIZE_H(uint16_t width, uint16_t height)
 {
-    uint32_t const widthv = (uint32_t) ((((width & 0x600U) >> 9U) & 3UL) << 2U);
-    uint32_t const heightv = (uint32_t) (((height & 0x600U) >> 9U) & 3UL);
+    uint32_t const widthv = (uint32_t)((((width & 0x600U) >> 9U) & 3UL) << 2U);
+    uint32_t const heightv = (uint32_t)(((height & 0x600U) >> 9U) & 3UL);
     return ((DL_BITMAP_SIZE_H) | widthv | heightv);
 }
 
@@ -749,8 +750,8 @@ static inline uint32_t BITMAP_TRANSFORM_F(uint32_t val)
  */
 static inline uint32_t BLEND_FUNC(uint8_t src, uint8_t dst)
 {
-    uint32_t const srcv = (uint32_t) ((src & 7UL) << 3U);
-    uint32_t const dstv = (uint32_t) (dst & 7UL);
+    uint32_t const srcv = (uint32_t)((src & 7UL) << 3U);
+    uint32_t const dstv = (uint32_t)(dst & 7UL);
     return (DL_BLEND_FUNC | srcv | dstv);
 }
 
@@ -928,8 +929,8 @@ static inline uint32_t POINT_SIZE(uint16_t size)
  */
 static inline uint32_t SCISSOR_SIZE(uint16_t width, uint16_t height)
 {
-    uint32_t const widthv = (uint32_t) ((width & 0xFFFUL) << 12U);
-    uint32_t const heightv = (uint32_t) (height & 0xFFFUL);
+    uint32_t const widthv = (uint32_t)((width & 0xFFFUL) << 12U);
+    uint32_t const heightv = (uint32_t)(height & 0xFFFUL);
     return (DL_SCISSOR_SIZE | widthv | heightv);
 }
 
@@ -941,8 +942,8 @@ static inline uint32_t SCISSOR_SIZE(uint16_t width, uint16_t height)
  */
 static inline uint32_t SCISSOR_XY(uint16_t xc0, uint16_t yc0)
 {
-    uint32_t const xc0v = (uint32_t) ((xc0 & 0x7FFUL) << 11U);
-    uint32_t const yc0v = (uint32_t) (yc0 & 0x7FFUL);
+    uint32_t const xc0v = (uint32_t)((xc0 & 0x7FFUL) << 11U);
+    uint32_t const yc0v = (uint32_t)(yc0 & 0x7FFUL);
     return (DL_SCISSOR_XY | xc0v | yc0v);
 }
 
@@ -953,9 +954,9 @@ static inline uint32_t SCISSOR_XY(uint16_t xc0, uint16_t yc0)
  */
 static inline uint32_t STENCIL_FUNC(uint8_t func, uint8_t ref, uint8_t mask)
 {
-    uint32_t const funcv = (uint32_t) ((func & 7UL) << 16U);
-    uint32_t const refv = (uint32_t) ((ref & 0xFFUL) << 8U);
-    uint32_t const maskv = (uint32_t) (mask & 0xFFUL);
+    uint32_t const funcv = (uint32_t)((func & 7UL) << 16U);
+    uint32_t const refv = (uint32_t)((ref & 0xFFUL) << 8U);
+    uint32_t const maskv = (uint32_t)(mask & 0xFFUL);
     return (DL_STENCIL_FUNC | funcv | refv | maskv);
 }
 
@@ -976,8 +977,8 @@ static inline uint32_t STENCIL_MASK(uint8_t mask)
  */
 static inline uint32_t STENCIL_OP(uint8_t sfail, uint8_t spass)
 {
-    uint32_t const sfailv = (uint32_t) ((sfail & 0x07UL) << 3U);
-    uint32_t const spassv = (uint32_t) (spass & 0x07UL);
+    uint32_t const sfailv = (uint32_t)((sfail & 0x07UL) << 3U);
+    uint32_t const spassv = (uint32_t)(spass & 0x07UL);
     return (DL_STENCIL_OP | sfailv | spassv);
 }
 
@@ -1008,8 +1009,8 @@ static inline uint32_t TAG_MASK(uint8_t mask)
  */
 static inline uint32_t VERTEX2F(int16_t xc0, int16_t yc0)
 {
-    uint32_t const xc0v = ((((uint32_t) ((uint16_t) xc0)) & 0x7FFFUL) << 15U);
-    uint32_t const yc0v = (((uint32_t) ((uint16_t) yc0)) & 0x7FFFUL);
+    uint32_t const xc0v = ((((uint32_t)((uint16_t)xc0)) & 0x7FFFUL) << 15U);
+    uint32_t const yc0v = (((uint32_t)((uint16_t)yc0)) & 0x7FFFUL);
     return (DL_VERTEX2F | xc0v | yc0v);
 }
 
@@ -1020,10 +1021,10 @@ static inline uint32_t VERTEX2F(int16_t xc0, int16_t yc0)
  */
 static inline uint32_t VERTEX2II(uint16_t xc0, uint16_t yc0, uint8_t handle, uint8_t cell)
 {
-    uint32_t const xc0v = ((((uint32_t) xc0) & 0x1FFUL) << 21U);
-    uint32_t const yc0v = ((((uint32_t) yc0) & 0x1FFUL) << 12U);
-    uint32_t const handlev = ((((uint32_t) handle) & 0x1FUL) << 7U);
-    uint32_t const cellv = (((uint32_t) cell) & 0x7FUL);
+    uint32_t const xc0v = ((((uint32_t)xc0) & 0x1FFUL) << 21U);
+    uint32_t const yc0v = ((((uint32_t)yc0) & 0x1FFUL) << 12U);
+    uint32_t const handlev = ((((uint32_t)handle) & 0x1FUL) << 7U);
+    uint32_t const cellv = (((uint32_t)cell) & 0x7FUL);
     return (DL_VERTEX2II | xc0v | yc0v | handlev | cellv);
 }
 
@@ -1044,7 +1045,7 @@ static inline uint32_t VERTEX_FORMAT(uint8_t frac)
  */
 static inline uint32_t VERTEX_TRANSLATE_X(int32_t xco)
 {
-    return (DL_VERTEX_TRANSLATE_X | (((uint32_t) xco) & 0x1FFFFUL));
+    return (DL_VERTEX_TRANSLATE_X | (((uint32_t)xco) & 0x1FFFFUL));
 }
 
 //#define VERTEX_TRANSLATE_Y(y) ((DL_VERTEX_TRANSLATE_Y) | ((y) & 0x1FFFFUL))
@@ -1054,7 +1055,7 @@ static inline uint32_t VERTEX_TRANSLATE_X(int32_t xco)
  */
 static inline uint32_t VERTEX_TRANSLATE_Y(int32_t yco)
 {
-    return (DL_VERTEX_TRANSLATE_Y | (((uint32_t) yco) & 0x1FFFFUL));
+    return (DL_VERTEX_TRANSLATE_Y | (((uint32_t)yco) & 0x1FFFFUL));
 }
 
 /* #define BEGIN(prim) ((DL_BEGIN) | ((prim) & 15UL)) */ /* use define DL_BEGIN */
@@ -1071,9 +1072,11 @@ static inline uint32_t VERTEX_TRANSLATE_Y(int32_t yco)
 
 #define EVE_GLFORMAT  ((uint32_t) 31UL) /* used with BITMAP_LAYOUT to indicate bitmap-format is specified by BITMAP_EXT_FORMAT */
 
+
 #define DL_BITMAP_EXT_FORMAT ((uint32_t) 0x2E000000UL) /* requires OR'd arguments */
 #define DL_BITMAP_SWIZZLE    ((uint32_t) 0x2F000000UL)
-/* #define DL_INT_FRR           ((uint32_t) 0x30000000UL) */ /* ESE displays "Internal: flash read result" - undocumented display list command */
+/* #define DL_INT_FRR           ((uint32_t) 0x30000000UL) */
+/* ESE displays "Internal: flash read result" - undocumented display list command */
 
 /* Extended Bitmap formats */
 #define EVE_ASTC_4X4   ((uint32_t) 37808UL)
@@ -1103,21 +1106,28 @@ static inline uint32_t VERTEX_TRANSLATE_Y(int32_t yco)
 /* Commands for BT815 / BT816 */
 #define CMD_BITMAP_TRANSFORM ((uint32_t) 0xFFFFFF21UL)
 #define CMD_SYNC             ((uint32_t) 0xFFFFFF42UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_SYNC) */
+
 #define CMD_FLASHERASE       ((uint32_t) 0xFFFFFF44UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_FLASHERASE) */
+
 #define CMD_FLASHWRITE       ((uint32_t) 0xFFFFFF45UL)
 #define CMD_FLASHREAD        ((uint32_t) 0xFFFFFF46UL)
 #define CMD_FLASHUPDATE      ((uint32_t) 0xFFFFFF47UL)
 #define CMD_FLASHDETACH      ((uint32_t) 0xFFFFFF48UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_FLASHDETACH) */
+
 #define CMD_FLASHATTACH      ((uint32_t) 0xFFFFFF49UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_FLASHATTACH) */
+
 #define CMD_FLASHFAST        ((uint32_t) 0xFFFFFF4AUL)
 #define CMD_FLASHSPIDESEL    ((uint32_t) 0xFFFFFF4BUL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_FLASHSPIDESEL) */
+
 #define CMD_FLASHSPITX       ((uint32_t) 0xFFFFFF4CUL)
 #define CMD_FLASHSPIRX       ((uint32_t) 0xFFFFFF4DUL)
 #define CMD_FLASHSOURCE      ((uint32_t) 0xFFFFFF4EUL)
 #define CMD_CLEARCACHE       ((uint32_t) 0xFFFFFF4FUL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_CLEARCACHE) */
+
 #define CMD_INFLATE2         ((uint32_t) 0xFFFFFF50UL)
 #define CMD_ROTATEAROUND     ((uint32_t) 0xFFFFFF51UL)
 #define CMD_RESETFONTS       ((uint32_t) 0xFFFFFF52UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_RESETFONTS) */
+
 #define CMD_ANIMSTART        ((uint32_t) 0xFFFFFF53UL)
 #define CMD_ANIMSTOP         ((uint32_t) 0xFFFFFF54UL)
 #define CMD_ANIMXY           ((uint32_t) 0xFFFFFF55UL)
@@ -1127,6 +1137,7 @@ static inline uint32_t VERTEX_TRANSLATE_Y(int32_t yco)
 #define CMD_APPENDF          ((uint32_t) 0xFFFFFF59UL)
 #define CMD_ANIMFRAME        ((uint32_t) 0xFFFFFF5AUL)
 #define CMD_VIDEOSTARTF      ((uint32_t) 0xFFFFFF5FUL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_VIDEOSTARTF) */
+
 
 /* Registers for BT815 / BT816 */
 #define REG_ADAPTIVE_FRAMERATE ((uint32_t) 0x0030257cUL)
@@ -1228,6 +1239,7 @@ static inline uint32_t BITMAP_TRANSFORM_E(uint8_t prc, uint32_t val)
 #define CMD_CALIBRATESUB   ((uint32_t) 0xFFFFFF60UL)
 #define CMD_CALLLIST       ((uint32_t) 0xFFFFFF67UL)
 #define CMD_ENDLIST        ((uint32_t) 0xFFFFFF69UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_ENDLIST) */
+
 #define CMD_FLASHPROGRAM   ((uint32_t) 0xFFFFFF70UL)
 #define CMD_FONTCACHE      ((uint32_t) 0xFFFFFF6BUL)
 #define CMD_FONTCACHEQUERY ((uint32_t) 0xFFFFFF6CUL)
@@ -1237,8 +1249,10 @@ static inline uint32_t BITMAP_TRANSFORM_E(uint8_t prc, uint32_t val)
 #define CMD_NEWLIST        ((uint32_t) 0xFFFFFF68UL)
 #define CMD_PCLKFREQ       ((uint32_t) 0xFFFFFF6AUL)
 #define CMD_RETURN         ((uint32_t) 0xFFFFFF66UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_RETURN) */
+
 #define CMD_RUNANIM        ((uint32_t) 0xFFFFFF6FUL)
 #define CMD_TESTCARD       ((uint32_t) 0xFFFFFF61UL) /* does not need a dedicated function, just use EVE_cmd_dl(CMD_TESTCARD) */
+
 #define CMD_WAIT           ((uint32_t) 0xFFFFFF65UL)
 
 /* Registers for BT817 / BT818 */

@@ -5,13 +5,13 @@
  ******************************************************************************/
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
-    #include "lvgl.h"
+#include "lvgl.h"
 #else
-    #include "../../lvgl.h"
+#include "../../lvgl.h"
 #endif
 
 #ifndef LV_FONT_MONTSERRAT_18
-    #define LV_FONT_MONTSERRAT_18 1
+#define LV_FONT_MONTSERRAT_18 1
 #endif
 
 #if LV_FONT_MONTSERRAT_18
@@ -2367,7 +2367,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] = {
     },
     {
         .range_start = 176, .range_length = 63475, .glyph_id_start = 96,
-        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 62, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 62,
+        .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     }
 };
 
@@ -2803,11 +2804,11 @@ static const int8_t kern_class_values[] = {
 
 /*Collect the kern class' data in one place*/
 static const lv_font_fmt_txt_kern_classes_t kern_classes = {
-    .class_pair_values   = kern_class_values,
-    .left_class_mapping  = kern_left_class_mapping,
+    .class_pair_values = kern_class_values,
+    .left_class_mapping = kern_left_class_mapping,
     .right_class_mapping = kern_right_class_mapping,
-    .left_class_cnt      = 61,
-    .right_class_cnt     = 49,
+    .left_class_cnt = 61,
+    .right_class_cnt = 49,
 };
 
 /*--------------------
@@ -2843,10 +2844,10 @@ const lv_font_t lv_font_montserrat_18 = {
 #else
 lv_font_t lv_font_montserrat_18 = {
 #endif
-    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
-    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
-    .line_height = 21,          /*The maximum line height required by the font*/
-    .base_line = 4,             /*Baseline measured from the bottom of the line*/
+    .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt, /*Function pointer to get glyph's data*/
+    .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt, /*Function pointer to get glyph's bitmap*/
+    .line_height = 21, /*The maximum line height required by the font*/
+    .base_line = 4, /*Baseline measured from the bottom of the line*/
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
@@ -2854,7 +2855,7 @@ lv_font_t lv_font_montserrat_18 = {
     .underline_position = -1,
     .underline_thickness = 1,
 #endif
-    .dsc = &font_dsc           /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
+    .dsc = &font_dsc /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
 };
 
 #endif /*#if LV_FONT_MONTSERRAT_18*/

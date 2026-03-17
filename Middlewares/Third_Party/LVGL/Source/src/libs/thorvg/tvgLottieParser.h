@@ -33,7 +33,7 @@
 struct LottieParser : LookaheadParserHandler
 {
 public:
-    LottieParser(const char *str, const char* dirName) : LookaheadParserHandler(str)
+    LottieParser(const char* str, const char* dirName) : LookaheadParserHandler(str)
     {
         this->dirName = dirName;
     }
@@ -43,10 +43,10 @@ public:
     const char* sid(bool first = false);
 
     LottieComposition* comp = nullptr;
-    const char* dirName = nullptr;       //base resource directory
+    const char* dirName = nullptr; //base resource directory
 
 private:
-    RGB24 getColor(const char *str);
+    RGB24 getColor(const char* str);
     CompositeMethod getMatteType();
     FillRule getFillRule();
     StrokeCap getStrokeCap();
@@ -68,12 +68,18 @@ private:
     void getValue(RGB24& color);
     bool getValue(Point& pt);
 
-    template<typename T> bool parseTangent(const char *key, LottieVectorFrame<T>& value);
-    template<typename T> bool parseTangent(const char *key, LottieScalarFrame<T>& value);
-    template<typename T> void parseKeyFrame(T& prop);
-    template<typename T> void parsePropertyInternal(T& prop);
-    template<LottieProperty::Type type = LottieProperty::Type::Invalid, typename T> void parseProperty(T& prop, LottieObject* obj = nullptr);
-    template<LottieProperty::Type type = LottieProperty::Type::Invalid, typename T> void parseSlotProperty(T& prop);
+    template <typename T>
+    bool parseTangent(const char* key, LottieVectorFrame<T>& value);
+    template <typename T>
+    bool parseTangent(const char* key, LottieScalarFrame<T>& value);
+    template <typename T>
+    void parseKeyFrame(T& prop);
+    template <typename T>
+    void parsePropertyInternal(T& prop);
+    template <LottieProperty::Type type = LottieProperty::Type::Invalid, typename T>
+    void parseProperty(T& prop, LottieObject* obj = nullptr);
+    template <LottieProperty::Type type = LottieProperty::Type::Invalid, typename T>
+    void parseSlotProperty(T& prop);
 
     LottieObject* parseObject();
     LottieObject* parseAsset();
@@ -119,7 +125,8 @@ private:
     void postProcess(Array<LottieGlyph*>& glyphs);
 
     //Current parsing context
-    struct Context {
+    struct Context
+    {
         LottieLayer* layer = nullptr;
         LottieObject* parent = nullptr;
     } context;
@@ -128,4 +135,3 @@ private:
 #endif //_TVG_LOTTIE_PARSER_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

@@ -126,11 +126,11 @@ extern "C" {
   */
 
 /* HSEM semaphore take (lock) using 2-Step  method ****************************/
-HAL_StatusTypeDef  HAL_HSEM_Take(uint32_t SemID, uint32_t ProcessID);
+HAL_StatusTypeDef HAL_HSEM_Take(uint32_t SemID, uint32_t ProcessID);
 /* HSEM semaphore fast take (lock) using 1-Step  method ***********************/
-HAL_StatusTypeDef  HAL_HSEM_FastTake(uint32_t SemID);
+HAL_StatusTypeDef HAL_HSEM_FastTake(uint32_t SemID);
 /* HSEM Release  **************************************************************/
-void  HAL_HSEM_Release(uint32_t SemID, uint32_t ProcessID);
+void HAL_HSEM_Release(uint32_t SemID, uint32_t ProcessID);
 /* HSEM Release All************************************************************/
 void HAL_HSEM_ReleaseAll(uint32_t Key, uint32_t CoreID);
 /* HSEM Check semaphore state Taken or not   **********************************/
@@ -145,7 +145,7 @@ uint32_t HAL_HSEM_IsSemTaken(uint32_t SemID);
   * @{
   */
 /* HSEM Set Clear Key *********************************************************/
-void  HAL_HSEM_SetClearKey(uint32_t Key);
+void HAL_HSEM_SetClearKey(uint32_t Key);
 /* HSEM Get Clear Key *********************************************************/
 uint32_t HAL_HSEM_GetClearKey(void);
 /**

@@ -26,8 +26,10 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef union {
-    struct {
+typedef union
+{
+    struct
+    {
         /*
          *  We ignore the iowait column as it's not reliable
          *  We ignore the guest and guest_nice columns because they're accounted
@@ -36,6 +38,7 @@ typedef union {
         uint32_t user, nice, system, idle, /*iowait,*/ irq, softirq,
                  steal /*, guest, guest_nice*/;
     } fields;
+
     uint32_t buffer[LV_PROC_STAT_PARAMS_LEN];
 } lv_linux_proc_stat_t;
 

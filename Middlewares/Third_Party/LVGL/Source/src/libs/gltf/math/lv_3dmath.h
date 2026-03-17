@@ -26,20 +26,23 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     float x;
     float y;
     float z;
 } lv_3dpoint_t;
 
-typedef struct {
+typedef struct
+{
     float x;
     float y;
     float z;
     float w;
 } lv_quaternion_t;
 
-typedef struct {
+typedef struct
+{
     lv_3dpoint_t origin;
     lv_3dpoint_t direction;
 } lv_3dplane_t;

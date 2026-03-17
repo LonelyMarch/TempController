@@ -29,7 +29,7 @@
 /* External Class Implementation                                        */
 /************************************************************************/
 
-Canvas::Canvas(RenderMethod *pRenderer):pImpl(new Impl(pRenderer))
+Canvas::Canvas(RenderMethod* pRenderer) : pImpl(new Impl(pRenderer))
 {
 }
 
@@ -96,4 +96,3 @@ Result Canvas::sync() noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

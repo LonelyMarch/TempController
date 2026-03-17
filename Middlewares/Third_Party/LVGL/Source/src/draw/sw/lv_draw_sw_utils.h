@@ -41,8 +41,9 @@ extern "C" {
  * @param index0_color        color of the 0 bits of i1 buf
  * @param index1_color        color of the 1 bits of i1 buf
  */
-void lv_draw_sw_i1_to_argb8888(const void * buf_i1, void * buf_argb8888, uint32_t width, uint32_t height,
-                               uint32_t buf_i1_stride, uint32_t buf_argb8888_stride, uint32_t index0_color, uint32_t index1_color);
+void lv_draw_sw_i1_to_argb8888(const void* buf_i1, void* buf_argb8888, uint32_t width, uint32_t height,
+                               uint32_t buf_i1_stride, uint32_t buf_argb8888_stride, uint32_t index0_color,
+                               uint32_t index1_color);
 
 /**
  * Swap the upper and lower byte of an RGB565 buffer.
@@ -51,7 +52,7 @@ void lv_draw_sw_i1_to_argb8888(const void * buf_i1, void * buf_argb8888, uint32_
  * @param buf           pointer to buffer
  * @param buf_size_px   number of pixels in the buffer
  */
-void lv_draw_sw_rgb565_swap(void * buf, uint32_t buf_size_px);
+void lv_draw_sw_rgb565_swap(void* buf, uint32_t buf_size_px);
 
 /**
  * Invert a draw buffer in the I1 color format.
@@ -61,7 +62,7 @@ void lv_draw_sw_rgb565_swap(void * buf, uint32_t buf_size_px);
  * @param buf          pointer to the buffer to be inverted
  * @param buf_size     size of the buffer in bytes
  */
-void lv_draw_sw_i1_invert(void * buf, uint32_t buf_size);
+void lv_draw_sw_i1_invert(void* buf, uint32_t buf_size);
 
 
 /**
@@ -76,8 +77,8 @@ void lv_draw_sw_i1_invert(void * buf, uint32_t buf_size);
  * @param out_buf_size  size of the output buffer in bytes
  * @param bit_order_lsb bit order of the resulting vtiled buffer
  */
-void lv_draw_sw_i1_convert_to_vtiled(const void * buf, uint32_t buf_size, uint32_t width, uint32_t height,
-                                     void * out_buf,
+void lv_draw_sw_i1_convert_to_vtiled(const void* buf, uint32_t buf_size, uint32_t width, uint32_t height,
+                                     void* out_buf,
                                      uint32_t out_buf_size, bool bit_order_lsb);
 
 /**
@@ -91,7 +92,7 @@ void lv_draw_sw_i1_convert_to_vtiled(const void * buf, uint32_t buf_size, uint32
  * @param rotation      LV_DISPLAY_ROTATION_0/90/180/270
  * @param color_format  LV_COLOR_FORMAT_RGB565/RGB888/XRGB8888/ARGB8888
  */
-void lv_draw_sw_rotate(const void * src, void * dest, int32_t src_width, int32_t src_height, int32_t src_stride,
+void lv_draw_sw_rotate(const void* src, void* dest, int32_t src_width, int32_t src_height, int32_t src_stride,
                        int32_t dest_stride, lv_display_rotation_t rotation, lv_color_format_t color_format);
 
 /***********************

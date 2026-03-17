@@ -62,7 +62,8 @@ static const int PARSE_FLAGS = kParseDefaultFlags | kParseInsituFlag;
 
 bool LookaheadParserHandler::enterArray()
 {
-    if (state != kEnteringArray) {
+    if (state != kEnteringArray)
+    {
         Error();
         return false;
     }
@@ -73,13 +74,15 @@ bool LookaheadParserHandler::enterArray()
 
 bool LookaheadParserHandler::nextArrayValue()
 {
-    if (state == kExitingArray) {
+    if (state == kExitingArray)
+    {
         parseNext();
         return false;
     }
     //SPECIAL CASE: same as nextObjectKey()
     if (state == kExitingObject) return false;
-    if (state == kError || state == kHasKey) {
+    if (state == kError || state == kHasKey)
+    {
         Error();
         return false;
     }
@@ -89,7 +92,8 @@ bool LookaheadParserHandler::nextArrayValue()
 
 int LookaheadParserHandler::getInt()
 {
-    if (state != kHasNumber) {
+    if (state != kHasNumber)
+    {
         Error();
         return 0;
     }
@@ -101,7 +105,8 @@ int LookaheadParserHandler::getInt()
 
 float LookaheadParserHandler::getFloat()
 {
-    if (state != kHasNumber) {
+    if (state != kHasNumber)
+    {
         Error();
         return 0;
     }
@@ -113,7 +118,8 @@ float LookaheadParserHandler::getFloat()
 
 const char* LookaheadParserHandler::getString()
 {
-    if (state != kHasString) {
+    if (state != kHasString)
+    {
         Error();
         return nullptr;
     }
@@ -133,7 +139,8 @@ char* LookaheadParserHandler::getStringCopy()
 
 bool LookaheadParserHandler::getBool()
 {
-    if (state != kHasBool) {
+    if (state != kHasBool)
+    {
         Error();
         return false;
     }
@@ -145,7 +152,8 @@ bool LookaheadParserHandler::getBool()
 
 void LookaheadParserHandler::getNull()
 {
-    if (state != kHasNull) {
+    if (state != kHasNull)
+    {
         Error();
         return;
     }
@@ -155,11 +163,13 @@ void LookaheadParserHandler::getNull()
 
 bool LookaheadParserHandler::parseNext()
 {
-    if (reader.HasParseError()) {
+    if (reader.HasParseError())
+    {
         Error();
         return false;
     }
-    if (!reader.IterativeParseNext<PARSE_FLAGS>(iss, *this)) {
+    if (!reader.IterativeParseNext < PARSE_FLAGS > (iss, *this))
+    {
         Error();
         return false;
     }
@@ -169,7 +179,8 @@ bool LookaheadParserHandler::parseNext()
 
 bool LookaheadParserHandler::enterObject()
 {
-    if (state != kEnteringObject) {
+    if (state != kEnteringObject)
+    {
         Error();
         return false;
     }
@@ -189,18 +200,21 @@ int LookaheadParserHandler::peekType()
 
 void LookaheadParserHandler::skipOut(int depth)
 {
-    do {
+    do
+    {
         if (state == kEnteringArray || state == kEnteringObject) ++depth;
         else if (state == kExitingArray || state == kExitingObject) --depth;
         else if (state == kError) return;
         parseNext();
-    } while (depth > 0);
+    }
+    while (depth > 0);
 }
 
 
 const char* LookaheadParserHandler::nextObjectKey()
 {
-    if (state == kHasKey) {
+    if (state == kHasKey)
+    {
         auto result = val.GetString();
         parseNext();
         return result;
@@ -212,7 +226,8 @@ const char* LookaheadParserHandler::nextObjectKey()
        so ignore those and don't put parser in the error state. */
     if (state == kExitingArray || state == kEnteringObject) return nullptr;
 
-    if (state != kExitingObject) {
+    if (state != kExitingObject)
+    {
         Error();
         return nullptr;
     }
@@ -226,16 +241,20 @@ void LookaheadParserHandler::skip(const char* key)
 {
     //if (key) TVGLOG("LOTTIE", "Skipped parsing value = %s", key);
 
-    if (peekType() == kArrayType) {
+    if (peekType() == kArrayType)
+    {
         enterArray();
         skipOut(1);
-    } else if (peekType() == kObjectType) {
+    }
+    else if (peekType() == kObjectType)
+    {
         enterObject();
         skipOut(1);
-    } else {
+    }
+    else
+    {
         skipOut(0);
     }
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

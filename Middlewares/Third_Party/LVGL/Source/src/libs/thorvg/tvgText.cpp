@@ -32,7 +32,6 @@
 /************************************************************************/
 
 
-
 /************************************************************************/
 /* External Class Implementation                                        */
 /************************************************************************/
@@ -64,7 +63,8 @@ Result Text::font(const char* name, float size, const char* style) noexcept
 Result Text::load(const std::string& path) noexcept
 {
     bool invalid; //invalid path
-    if (!LoaderMgr::loader(path, &invalid)) {
+    if (!LoaderMgr::loader(path, &invalid))
+    {
         if (invalid) return Result::InvalidArguments;
         else return Result::NonSupport;
     }
@@ -78,7 +78,8 @@ Result Text::load(const char* name, const char* data, uint32_t size, const strin
     if (!name || (size == 0 && data)) return Result::InvalidArguments;
 
     //unload font
-    if (!data) {
+    if (!data)
+    {
         if (LoaderMgr::retrieve(name)) return Result::Success;
         return Result::InsufficientCondition;
     }
@@ -109,7 +110,7 @@ Result Text::fill(unique_ptr<Fill> f) noexcept
 
 unique_ptr<Text> Text::gen() noexcept
 {
-    return unique_ptr<Text>(new Text);
+    return unique_ptr < Text > (new Text);
 }
 
 
@@ -119,4 +120,3 @@ Type Text::type() const noexcept
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

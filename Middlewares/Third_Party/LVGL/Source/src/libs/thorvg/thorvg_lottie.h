@@ -5,8 +5,7 @@
 
 namespace tvg
 {
-
-/**
+    /**
  * @class LottieAnimation
  *
  * @brief The LottieAnimation class enables control of advanced Lottie features.
@@ -20,12 +19,12 @@ namespace tvg
 
 #include "../../lv_conf_internal.h"
 #if LV_USE_THORVG_INTERNAL
-class TVG_API LottieAnimation final : public Animation
-{
-public:
-    ~LottieAnimation();
+    class TVG_API LottieAnimation final : public Animation
+    {
+    public:
+        ~LottieAnimation();
 
-    /**
+        /**
      * @brief Override Lottie properties using slot data.
      *
      * @param[in] slot The Lottie slot data in JSON format to override, or @c nullptr to reset.
@@ -36,9 +35,9 @@ public:
      *
      * @note Experimental API
      */
-    Result override(const char* slot) noexcept;
+        Result override(const char* slot) noexcept;
 
-    /**
+        /**
     * @brief Specifies a segment by marker. 
     * 
     * Markers are used to control animation playback by specifying start and end points, 
@@ -58,9 +57,9 @@ public:
     * @see Animation::segment(float begin, float end)
     * @note Experimental API
     */
-    Result segment(const char* marker) noexcept;
+        Result segment(const char* marker) noexcept;
 
-    /**
+        /**
      * @brief Gets the marker count of the animation.
      *
      * @retval The count of the markers, zero if there is no marker.
@@ -68,9 +67,9 @@ public:
      * @see LottieAnimation::marker()
      * @note Experimental API
      */
-    uint32_t markersCnt() noexcept;
-    
-    /**
+        uint32_t markersCnt() noexcept;
+
+        /**
      * @brief Gets the marker name by a given index.
      *
      * @param[in] idx The index of the animation marker, starts from 0.
@@ -80,17 +79,17 @@ public:
      * @see LottieAnimation::markersCnt()
      * @note Experimental API
      */
-    const char* marker(uint32_t idx) noexcept;
+        const char* marker(uint32_t idx) noexcept;
 
-    /**
+        /**
      * @brief Creates a new LottieAnimation object.
      *
      * @return A new LottieAnimation object.
      *
      * @since 0.15
      */
-    static std::unique_ptr<LottieAnimation> gen() noexcept;
-};
+        static std::unique_ptr<LottieAnimation> gen() noexcept;
+    };
 
 } //namespace
 

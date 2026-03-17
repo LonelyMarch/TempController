@@ -32,15 +32,18 @@ using std::function;
 /* Internal Class Implementation                                        */
 /************************************************************************/
 
-static bool accessChildren(Iterator* it, function<bool(const Paint* paint, void* data)> func, void* data)
+static bool accessChildren(Iterator * it, function < bool(const Paint * paint, void*data) > func, void*data)
 {
-    while (auto child = it->next()) {
+    while (auto child = it->next())
+    {
         //Access the child
         if (!func(child, data)) return false;
 
         //Access the children of the child
-        if (auto it2 = IteratorAccessor::iterator(child)) {
-            if (!accessChildren(it2, func, data)) {
+        if (auto it2 = IteratorAccessor::iterator(child))
+        {
+            if (!accessChildren(it2, func, data))
+            {
                 delete(it2);
                 return false;
             }
@@ -55,11 +58,12 @@ static bool accessChildren(Iterator* it, function<bool(const Paint* paint, void*
 /* External Class Implementation                                        */
 /************************************************************************/
 
-TVG_DEPRECATED unique_ptr<Picture> Accessor::set(unique_ptr<Picture> picture, function<bool(const Paint* paint)> func) noexcept
+TVG_DEPRECATED unique_ptr<Picture> Accessor::set(unique_ptr<Picture> picture,
+                                                 function<bool(const Paint * paint)> func) noexcept
 {
     auto backward = [](const tvg::Paint* paint, void* data) -> bool
     {
-        auto func = reinterpret_cast<function<bool(const Paint* paint)>*>(data);
+        auto func = reinterpret_cast<function<bool(const Paint * paint)>*>(data);
         if (!(*func)(paint)) return false;
         return true;
     };
@@ -69,7 +73,7 @@ TVG_DEPRECATED unique_ptr<Picture> Accessor::set(unique_ptr<Picture> picture, fu
 }
 
 
-Result Accessor::set(const Picture* picture, function<bool(const Paint* paint, void* data)> func, void* data) noexcept
+Result Accessor::set(const Picture* picture, function<bool(const Paint * paint, void*data)> func, void* data) noexcept
 {
     if (!picture || !func) return Result::InvalidArguments;
 
@@ -79,7 +83,8 @@ Result Accessor::set(const Picture* picture, function<bool(const Paint* paint, v
     if (!func(picture, data)) return Result::Success;
 
     //Children
-    if (auto it = IteratorAccessor::iterator(picture)) {
+    if (auto it = IteratorAccessor::iterator(picture))
+    {
         accessChildren(it, func, data);
         delete(it);
     }
@@ -95,20 +100,17 @@ uint32_t Accessor::id(const char* name) noexcept
 
 Accessor::~Accessor()
 {
-
 }
 
 
 Accessor::Accessor() : pImpl(nullptr)
 {
-
 }
 
 
 unique_ptr<Accessor> Accessor::gen() noexcept
 {
-    return unique_ptr<Accessor>(new Accessor);
+    return unique_ptr < Accessor > (new Accessor);
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

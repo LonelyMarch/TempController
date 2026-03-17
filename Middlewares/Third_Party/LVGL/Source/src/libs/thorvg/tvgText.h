@@ -73,10 +73,13 @@ struct Text::Impl
         fontSize = size;
 
         //Same resource has been loaded.
-        if (this->loader == loader) {
-            this->loader->sharing--;  //make it sure the reference counting.
+        if (this->loader == loader)
+        {
+            this->loader->sharing--; //make it sure the reference counting.
             return Result::Success;
-        } else if (this->loader) {
+        }
+        else if (this->loader)
+        {
             LoaderMgr::retrieve(this->loader);
         }
         this->loader = static_cast<FontLoader*>(loader);
@@ -103,27 +106,33 @@ struct Text::Impl
 
         loader->request(shape, utf8);
         //reload
-        if (changed) {
+        if (changed)
+        {
             loader->read();
             changed = false;
         }
         return loader->transform(shape, fontSize, italic);
     }
 
-    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity, RenderUpdateFlag pFlag, TVG_UNUSED bool clipper)
+    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity,
+                      RenderUpdateFlag pFlag, TVG_UNUSEDbool clipper)
     {
         if (!load()) return nullptr;
 
         //transform the gradient coordinates based on the final scaled font.
         auto fill = P(shape)->rs.fill;
-        if (fill && P(shape)->flag & RenderUpdateFlag::Gradient) {
+        if (fill && P(shape)->flag & RenderUpdateFlag::Gradient)
+        {
             auto scale = 1.0f / loader->scale;
-            if (fill->type() == Type::LinearGradient) {
+            if (fill->type() == Type::LinearGradient)
+            {
                 P(static_cast<LinearGradient*>(fill))->x1 *= scale;
                 P(static_cast<LinearGradient*>(fill))->y1 *= scale;
                 P(static_cast<LinearGradient*>(fill))->x2 *= scale;
                 P(static_cast<LinearGradient*>(fill))->y2 *= scale;
-            } else {
+            }
+            else
+            {
                 P(static_cast<RadialGradient*>(fill))->cx *= scale;
                 P(static_cast<RadialGradient*>(fill))->cy *= scale;
                 P(static_cast<RadialGradient*>(fill))->r *= scale;
@@ -135,7 +144,7 @@ struct Text::Impl
         return PP(shape)->update(renderer, transform, clips, opacity, pFlag, false);
     }
 
-    bool bounds(float* x, float* y, float* w, float* h, TVG_UNUSED bool stroking)
+    bool bounds(float* x, float* y, float* w, float* h, TVG_UNUSEDbool stroking)
     {
         if (!load()) return false;
         PP(shape)->bounds(x, y, w, h, true, true, false);
@@ -152,7 +161,8 @@ struct Text::Impl
         auto dup = text->pImpl;
         P(shape)->duplicate(dup->shape);
 
-        if (loader) {
+        if (loader)
+        {
             dup->loader = loader;
             ++dup->loader->sharing;
         }
@@ -171,8 +181,6 @@ struct Text::Impl
 };
 
 
-
 #endif //_TVG_TEXT_H
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

@@ -31,13 +31,14 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-lv_result_t _lv_draw_buf_convert_premultiply_indexed_helium(lv_draw_buf_t * buf)
+lv_result_t _lv_draw_buf_convert_premultiply_indexed_helium(lv_draw_buf_t* buf)
 {
     lv_draw_buf_t palette_draw_buf;
 
     LV_ASSERT_NULL(buf);
 
-    if(!LV_COLOR_FORMAT_IS_INDEXED(buf->header.cf)) {
+    if (!LV_COLOR_FORMAT_IS_INDEXED(buf->header.cf))
+    {
         LV_LOG_WARN("Unsupported color format : %d", buf->header.cf);
         return LV_RESULT_INVALID;
     }
@@ -52,16 +53,17 @@ lv_result_t _lv_draw_buf_convert_premultiply_indexed_helium(lv_draw_buf_t * buf)
     return _lv_draw_buf_convert_premultiply_argb8888_helium(&palette_draw_buf);
 }
 
-lv_result_t _lv_draw_buf_convert_premultiply_argb8888_helium(lv_draw_buf_t * buf)
+lv_result_t _lv_draw_buf_convert_premultiply_argb8888_helium(lv_draw_buf_t* buf)
 {
     LV_ASSERT_NULL(buf);
 
     uint32_t h = buf->header.h;
     uint32_t w = buf->header.w;
     uint32_t stride = buf->header.stride;
-    uint8_t * data = (uint8_t *)buf->data;
+    uint8_t* data = (uint8_t*)buf->data;
 
-    if(buf->header.cf != LV_COLOR_FORMAT_ARGB8888) {
+    if (buf->header.cf != LV_COLOR_FORMAT_ARGB8888)
+    {
         LV_LOG_WARN("Unsupported color format : %d", buf->header.cf);
         return LV_RESULT_INVALID;
     }

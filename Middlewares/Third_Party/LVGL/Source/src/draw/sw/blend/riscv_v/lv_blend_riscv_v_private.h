@@ -162,7 +162,7 @@ extern "C" {
  * Uses m1->m2 widening
  */
 #define LV_RVV_BLEND_RGB_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, \
-                              alpha, v_out_r, v_out_g, v_out_b, vl) \
+    alpha, v_out_r, v_out_g, v_out_b, vl) \
 do { \
     LV_RVV_BLEND_CHANNEL_U8M1_TO_U16M2((v_src_r), (v_dst_r), (alpha), (v_out_r), (vl)); \
     LV_RVV_BLEND_CHANNEL_U8M1_TO_U16M2((v_src_g), (v_dst_g), (alpha), (v_out_g), (vl)); \
@@ -174,7 +174,7 @@ do { \
  * Uses m2->m4 widening
  */
 #define LV_RVV_BLEND_RGB_U8M2(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, \
-                              alpha, v_out_r, v_out_g, v_out_b, vl) \
+    alpha, v_out_r, v_out_g, v_out_b, vl) \
 do { \
     LV_RVV_BLEND_CHANNEL_U8M2_TO_U16M4((v_src_r), (v_dst_r), (alpha), (v_out_r), (vl)); \
     LV_RVV_BLEND_CHANNEL_U8M2_TO_U16M4((v_src_g), (v_dst_g), (alpha), (v_out_g), (vl)); \
@@ -189,8 +189,8 @@ do { \
  * Uses m2->m4 widening
  */
 #define LV_RVV_BLEND_SOLID_RGB_U8M2(v_dst_r, v_dst_g, v_dst_b, \
-                                    fg_r_opa, fg_g_opa, fg_b_opa, opa_inv, \
-                                    v_out_r, v_out_g, v_out_b, vl) \
+    fg_r_opa, fg_g_opa, fg_b_opa, opa_inv, \
+    v_out_r, v_out_g, v_out_b, vl) \
 do { \
     vuint16m4_t _v_r16 = __riscv_vwmulu_vx_u16m4((v_dst_r), (opa_inv), (vl)); \
     vuint16m4_t _v_g16 = __riscv_vwmulu_vx_u16m4((v_dst_g), (opa_inv), (vl)); \
@@ -211,8 +211,8 @@ do { \
  * Uses m2->m4 widening with vwmaccu for efficiency
  */
 #define LV_RVV_BLEND_SOLID_RGB_VMASK_U8M2(v_dst_r, v_dst_g, v_dst_b, \
-                                          fg_r, fg_g, fg_b, v_alpha, \
-                                          v_out_r, v_out_g, v_out_b, vl) \
+    fg_r, fg_g, fg_b, v_alpha, \
+    v_out_r, v_out_g, v_out_b, vl) \
 do { \
     vuint8m2_t _v_alpha_inv = __riscv_vrsub_vx_u8m2((v_alpha), 255, (vl)); \
     vuint16m4_t _v_r16 = __riscv_vwmulu_vv_u16m4((v_dst_r), _v_alpha_inv, (vl)); \
@@ -230,7 +230,7 @@ do { \
  * Blend RGB channels with vector alpha (per-pixel mask)
  */
 #define LV_RVV_BLEND_RGB_VMASK_U8M1(v_src_r, v_src_g, v_src_b, v_dst_r, v_dst_g, v_dst_b, \
-                                    v_alpha, v_out_r, v_out_g, v_out_b, vl) \
+    v_alpha, v_out_r, v_out_g, v_out_b, vl) \
 do { \
     LV_RVV_BLEND_CHANNEL_VMASK_U8M1_TO_U16M2((v_src_r), (v_dst_r), (v_alpha), (v_out_r), (vl)); \
     LV_RVV_BLEND_CHANNEL_VMASK_U8M1_TO_U16M2((v_src_g), (v_dst_g), (v_alpha), (v_out_g), (vl)); \
@@ -242,7 +242,7 @@ do { \
  * When mask is 0, use destination; when mask is >= 255, use source
  */
 #define LV_RVV_BLEND_OPTIMIZE_MASK_U8M1(v_r, v_g, v_b, v_src_r, v_src_g, v_src_b, \
-                                        v_dst_r, v_dst_g, v_dst_b, v_mask, vl) \
+    v_dst_r, v_dst_g, v_dst_b, v_mask, vl) \
 do { \
     vbool8_t _zero_mask = __riscv_vmseq_vx_u8m1_b8((v_mask), 0, (vl)); \
     vbool8_t _full_mask = __riscv_vmsgeu_vx_u8m1_b8((v_mask), LV_OPA_MAX, (vl)); \
@@ -259,7 +259,7 @@ do { \
  * When mask is 0, use destination; when mask is >= 255, use scalar source
  */
 #define LV_RVV_BLEND_OPTIMIZE_MASK_SCALAR_U8M2(v_r, v_g, v_b, src_r, src_g, src_b, \
-                                               v_dst_r, v_dst_g, v_dst_b, v_mask, vl) \
+    v_dst_r, v_dst_g, v_dst_b, v_mask, vl) \
 do { \
     vbool4_t _zero_mask = __riscv_vmseq_vx_u8m2_b4((v_mask), 0, (vl)); \
     vbool4_t _full_mask = __riscv_vmsgeu_vx_u8m2_b4((v_mask), LV_OPA_MAX, (vl)); \
@@ -374,9 +374,9 @@ do { \
  *  STATIC PROTOTYPES
  **********************/
 
-static inline void * LV_ATTRIBUTE_FAST_MEM drawbuf_next_row(const void * buf, uint32_t stride)
+static inline void* LV_ATTRIBUTE_FAST_MEM drawbuf_next_row(const void* buf, uint32_t stride)
 {
-    return (void *)((uint8_t *)buf + stride);
+    return (void*)((uint8_t*)buf + stride);
 }
 
 /**********************

@@ -3,7 +3,7 @@
 
 #include "../../../misc/lv_area_private.h"
 
-void lv_draw_dave2d_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_dave2d_fill(lv_draw_task_t* t, const lv_draw_fill_dsc_t* dsc, const lv_area_t* coords)
 {
     lv_area_t draw_area;
     lv_area_t coordinates;
@@ -15,29 +15,29 @@ void lv_draw_dave2d_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, con
     d2_u32 flags = 0;
 
     lv_point_t arc_centre;
-    lv_draw_dave2d_unit_t * u = (lv_draw_dave2d_unit_t *)t->draw_unit;
+    lv_draw_dave2d_unit_t* u = (lv_draw_dave2d_unit_t*)t->draw_unit;
 
     is_common = lv_area_intersect(&draw_area, coords, &t->clip_area);
-    if(!is_common) return;
+    if (!is_common) return;
 
 #if LV_USE_OS
-    lv_result_t  status;
-    status = lv_mutex_lock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+lv_result_t status;
+status= lv_mutex_lock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 
-    lv_area_copy(&coordinates, coords);
+lv_area_copy (&coordinates, coords);
 
-    x = 0 - t->target_layer->buf_area.x1;
-    y = 0 - t->target_layer->buf_area.y1;
+x=0 - t->target_layer->buf_area.x1;
+y=0 - t->target_layer->buf_area.y1;
 
-    lv_area_move(&draw_area, x, y);
-    lv_area_move(&coordinates, x, y);
+lv_area_move (&draw_area, x, y);
+lv_area_move (&coordinates, x, y);
 
-    d2_u8 current_alpha = d2_getalpha(u->d2_handle);
-    d2_framebuffer_from_layer(u->d2_handle, t->target_layer);
+d2_u8 current_alpha = d2_getalpha(u->d2_handle);
+d2_framebuffer_from_layer (u->d2_handle, t->target_layer);
 
-    if(LV_GRAD_DIR_NONE != dsc->grad.dir) {
+    if(LV_GRAD_DIR_NONE!= dsc->grad.dir) {
         float a1;
         float a2;
 
@@ -116,10 +116,10 @@ void lv_draw_dave2d_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, con
         d2_setalpha(u->d2_handle, dsc->opa);
     }
 
-    d2_cliprect(u->d2_handle, (d2_border)draw_area.x1, (d2_border)draw_area.y1, (d2_border)draw_area.x2,
-                (d2_border)draw_area.y2);
+d2_cliprect (u->d2_handle, (d2_border)draw_area.x1, (d2_border)draw_area.y1, (d2_border)draw_area.x2,
+(d2_border)draw_area.y2);
 
-    if(dsc->radius == 0) {
+    if(dsc->radius== 0) {
 
         d2_renderbox(u->d2_handle, (d2_point)D2_FIX4(coordinates.x1),
                      (d2_point)D2_FIX4(coordinates.y1),
@@ -277,7 +277,7 @@ void lv_draw_dave2d_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, con
         }
     }
 
-    if(LV_GRAD_DIR_NONE != dsc->grad.dir) {
+    if(LV_GRAD_DIR_NONE!= dsc->grad.dir) {
         d2_setalphamode(u->d2_handle, current_alpha_mode);
         d2_setfillmode(u->d2_handle, d2_fm_color); //default
     }
@@ -286,8 +286,8 @@ void lv_draw_dave2d_fill(lv_draw_task_t * t, const lv_draw_fill_dsc_t * dsc, con
     }
 
 #if LV_USE_OS
-    status = lv_mutex_unlock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+status= lv_mutex_unlock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 }
 

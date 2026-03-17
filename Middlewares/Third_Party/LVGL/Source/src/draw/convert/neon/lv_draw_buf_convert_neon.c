@@ -33,13 +33,14 @@
  *   GLOBAL FUNCTIONS
  **********************/
 
-lv_result_t _lv_draw_buf_convert_premultiply_indexed_neon(lv_draw_buf_t * buf)
+lv_result_t _lv_draw_buf_convert_premultiply_indexed_neon(lv_draw_buf_t* buf)
 {
     lv_draw_buf_t palette_draw_buf;
 
     LV_ASSERT_NULL(buf);
 
-    if(!LV_COLOR_FORMAT_IS_INDEXED(buf->header.cf)) {
+    if (!LV_COLOR_FORMAT_IS_INDEXED(buf->header.cf))
+    {
         LV_LOG_WARN("Unsupported color format : %d", buf->header.cf);
         return LV_RESULT_INVALID;
     }
@@ -52,28 +53,30 @@ lv_result_t _lv_draw_buf_convert_premultiply_indexed_neon(lv_draw_buf_t * buf)
     palette_draw_buf.header.stride = 4 * palette_draw_buf.header.w;
 
     return _lv_draw_buf_convert_premultiply_argb8888_neon(&palette_draw_buf);
-
 }
 
-lv_result_t _lv_draw_buf_convert_premultiply_argb8888_neon(lv_draw_buf_t * buf)
+lv_result_t _lv_draw_buf_convert_premultiply_argb8888_neon(lv_draw_buf_t* buf)
 {
     LV_ASSERT_NULL(buf);
 
     uint32_t h = buf->header.h;
     uint32_t w = buf->header.w;
     uint32_t stride = buf->header.stride;
-    uint8_t * data = (uint8_t *)buf->data;
+    uint8_t* data = (uint8_t*)buf->data;
 
-    if(buf->header.cf != LV_COLOR_FORMAT_ARGB8888) {
+    if (buf->header.cf != LV_COLOR_FORMAT_ARGB8888)
+    {
         LV_LOG_WARN("Unsupported color format : %d", buf->header.cf);
         return LV_RESULT_INVALID;
     }
 
-    for(uint32_t y = 0; y < h; y++) {
-        uint8_t * p = (uint8_t *)data;
+    for (uint32_t y = 0; y < h; y++)
+    {
+        uint8_t* p = (uint8_t*)data;
         uint32_t remaining_pixels = w;
 
-        while(remaining_pixels >= 8) {
+        while (remaining_pixels >= 8)
+        {
             uint8x8x4_t rgba = vld4_u8(p);
 
             uint16x8_t r16 = vmovl_u8(rgba.val[0]);
@@ -91,7 +94,8 @@ lv_result_t _lv_draw_buf_convert_premultiply_argb8888_neon(lv_draw_buf_t * buf)
             remaining_pixels -= 8;
         }
 
-        if(remaining_pixels >= 4) {
+        if (remaining_pixels >= 4)
+        {
             uint8x8x4_t rgba;
             rgba = vld4_lane_u8(p, rgba, 0);
             rgba = vld4_lane_u8(p + 4, rgba, 1);
@@ -116,7 +120,8 @@ lv_result_t _lv_draw_buf_convert_premultiply_argb8888_neon(lv_draw_buf_t * buf)
             remaining_pixels -= 4;
         }
 
-        while(remaining_pixels--) {
+        while (remaining_pixels--)
+        {
             uint8_t a = p[3];
             p[0] = ((uint16_t)(p[0]) * a) >> 8;
             p[1] = ((uint16_t)(p[1]) * a) >> 8;

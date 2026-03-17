@@ -32,8 +32,8 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void _pxp_fill(uint8_t * dest_buf, const lv_area_t * dest_area, int32_t dest_stride,
-                      lv_color_format_t dest_cf, const lv_draw_fill_dsc_t * dsc);
+static void _pxp_fill(uint8_t* dest_buf, const lv_area_t* dest_area, int32_t dest_stride,
+                      lv_color_format_t dest_cf, const lv_draw_fill_dsc_t* dsc);
 
 /**********************
  *  STATIC VARIABLES
@@ -47,16 +47,16 @@ static void _pxp_fill(uint8_t * dest_buf, const lv_area_t * dest_area, int32_t d
  *   GLOBAL FUNCTIONS
  **********************/
 
-void lv_draw_pxp_fill(lv_draw_task_t * t)
+void lv_draw_pxp_fill(lv_draw_task_t* t)
 {
-    const lv_draw_fill_dsc_t * dsc = t->draw_dsc;
-    const lv_area_t * coords = &t->area;
+    const lv_draw_fill_dsc_t* dsc = t->draw_dsc;
+    const lv_area_t* coords = &t->area;
 
-    if(dsc->opa <= (lv_opa_t)LV_OPA_MIN)
+    if (dsc->opa <= (lv_opa_t)LV_OPA_MIN)
         return;
 
-    lv_layer_t * layer = t->target_layer;
-    lv_draw_buf_t * draw_buf = layer->draw_buf;
+    lv_layer_t* layer = t->target_layer;
+    lv_draw_buf_t* draw_buf = layer->draw_buf;
 
     lv_area_t rel_coords;
     lv_area_copy(&rel_coords, coords);
@@ -67,7 +67,7 @@ void lv_draw_pxp_fill(lv_draw_task_t * t)
     lv_area_move(&rel_clip_area, -layer->buf_area.x1, -layer->buf_area.y1);
 
     lv_area_t blend_area;
-    if(!lv_area_intersect(&blend_area, &rel_coords, &rel_clip_area))
+    if (!lv_area_intersect(&blend_area, &rel_coords, &rel_clip_area))
         return; /*Fully clipped, nothing to do*/
 
     _pxp_fill(draw_buf->data, &blend_area, draw_buf->header.stride, draw_buf->header.cf, dsc);
@@ -77,8 +77,8 @@ void lv_draw_pxp_fill(lv_draw_task_t * t)
  *   STATIC FUNCTIONS
  **********************/
 
-static void _pxp_fill(uint8_t * dest_buf, const lv_area_t * dest_area, int32_t dest_stride,
-                      lv_color_format_t dest_cf, const lv_draw_fill_dsc_t * dsc)
+static void _pxp_fill(uint8_t* dest_buf, const lv_area_t* dest_area, int32_t dest_stride,
+                      lv_color_format_t dest_cf, const lv_draw_fill_dsc_t* dsc)
 {
     int32_t dest_w = lv_area_get_width(dest_area);
     int32_t dest_h = lv_area_get_height(dest_area);
@@ -100,12 +100,13 @@ static void _pxp_fill(uint8_t * dest_buf, const lv_area_t * dest_area, int32_t d
 
     PXP_SetOutputBufferConfig(PXP_ID, &outputConfig);
 
-    if(dsc->opa >= (lv_opa_t)LV_OPA_MAX) {
+    if (dsc->opa >= (lv_opa_t)LV_OPA_MAX)
+    {
         /*Simple color fill without opacity - AS disabled*/
         PXP_SetAlphaSurfacePosition(PXP_ID, 0xFFFFU, 0xFFFFU, 0U, 0U);
-
     }
-    else {
+    else
+    {
         /*Fill with opacity - AS used as source (same as OUT)*/
         pxp_as_buffer_config_t asBufferConfig = {
             .pixelFormat = pxp_get_as_px_format(dest_cf),
@@ -135,11 +136,13 @@ static void _pxp_fill(uint8_t * dest_buf, const lv_area_t * dest_area, int32_t d
         .dstGlobalAlphaMode = kPXP_PorterDuffGlobalAlpha,
         .srcGlobalAlphaMode = kPXP_PorterDuffGlobalAlpha,
         .dstFactorMode = kPXP_PorterDuffFactorStraight,
-        .srcFactorMode = (dsc->opa >= (lv_opa_t)LV_OPA_MAX) ? kPXP_PorterDuffFactorStraight : kPXP_PorterDuffFactorInversed,
+        .srcFactorMode = (dsc->opa >= (lv_opa_t)LV_OPA_MAX)
+                             ? kPXP_PorterDuffFactorStraight
+                             : kPXP_PorterDuffFactorInversed,
         .dstGlobalAlpha = dsc->opa,
         .srcGlobalAlpha = dsc->opa,
         .dstAlphaMode = kPXP_PorterDuffAlphaStraight, /*don't care*/
-        .srcAlphaMode = kPXP_PorterDuffAlphaStraight  /*don't care*/
+        .srcAlphaMode = kPXP_PorterDuffAlphaStraight /*don't care*/
     };
 
     PXP_SetPorterDuffConfig(PXP_ID, &pdConfig);

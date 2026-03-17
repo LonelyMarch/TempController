@@ -30,31 +30,31 @@
 #include "tvgLock.h"
 
 #ifdef THORVG_SVG_LOADER_SUPPORT
-    #include "tvgSvgLoader.h"
+#include "tvgSvgLoader.h"
 #endif
 
 #ifdef THORVG_PNG_LOADER_SUPPORT
-    #include "tvgPngLoader.h"
+#include "tvgPngLoader.h"
 #endif
 
 #ifdef THORVG_TVG_LOADER_SUPPORT
-    #include "tvgTvgLoader.h"
+#include "tvgTvgLoader.h"
 #endif
 
 #ifdef THORVG_JPG_LOADER_SUPPORT
-    #include "tvgJpgLoader.h"
+#include "tvgJpgLoader.h"
 #endif
 
 #ifdef THORVG_WEBP_LOADER_SUPPORT
-    #include "tvgWebpLoader.h"
+#include "tvgWebpLoader.h"
 #endif
 
 #ifdef THORVG_TTF_LOADER_SUPPORT
-    #include "tvgTtfLoader.h"
+#include "tvgTtfLoader.h"
 #endif
 
 #ifdef THORVG_LOTTIE_LOADER_SUPPORT
-    #include "tvgLottieLoader.h"
+#include "tvgLottieLoader.h"
 #endif
 
 #include "tvgRawLoader.h"
@@ -77,101 +77,126 @@ static Inlist<LoadModule> _activeLoaders;
 
 static LoadModule* _find(FileType type)
 {
-    switch(type) {
-        case FileType::Png: {
+    switch (type)
+    {
+    case FileType::Png: { 
 #ifdef THORVG_PNG_LOADER_SUPPORT
-            return new PngLoader;
+return new PngLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Jpg: {
+        case FileType::Jpg :
+{
+
 #ifdef THORVG_JPG_LOADER_SUPPORT
-            return new JpgLoader;
+return new JpgLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Webp: {
+        case FileType::Webp :
+{
+
 #ifdef THORVG_WEBP_LOADER_SUPPORT
-            return new WebpLoader;
+return new WebpLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Tvg: {
+        case FileType::Tvg :
+{
+
 #ifdef THORVG_TVG_LOADER_SUPPORT
-            return new TvgLoader;
+return new TvgLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Svg: {
+        case FileType::Svg :
+{
+
 #ifdef THORVG_SVG_LOADER_SUPPORT
-            return new SvgLoader;
+return new SvgLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Ttf: {
+        case FileType::Ttf :
+{
+
 #ifdef THORVG_TTF_LOADER_SUPPORT
-            return new TtfLoader;
+return new TtfLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Lottie: {
+        case FileType::Lottie :
+{
+
 #ifdef THORVG_LOTTIE_LOADER_SUPPORT
-            return new LottieLoader;
+return new LottieLoader;
 #endif
-            break;
+break;
         }
-        case FileType::Raw: {
-            return new RawLoader;
-            break;
-        }
-        default: {
-            break;
-        }
+        case FileType::Raw :
+{
+    return new RawLoader;
+    break;
+}
+default :
+{
+    break;
+}
     }
 
 #ifdef THORVG_LOG_ENABLED
-    const char *format;
-    switch(type) {
-        case FileType::Tvg: {
-            format = "TVG";
-            break;
-        }
-        case FileType::Svg: {
-            format = "SVG";
-            break;
-        }
-        case FileType::Ttf: {
-            format = "TTF";
-            break;
-        }
-        case FileType::Lottie: {
-            format = "lottie(json)";
-            break;
-        }
-        case FileType::Raw: {
-            format = "RAW";
-            break;
-        }
-        case FileType::Png: {
-            format = "PNG";
-            break;
-        }
-        case FileType::Jpg: {
-            format = "JPG";
-            break;
-        }
-        case FileType::Webp: {
-            format = "WEBP";
-            break;
-        }
-        default: {
-            format = "???";
-            break;
-        }
+const char* format;
+    switch(type)
+{
+case FileType::Tvg:
+    {
+        format = "TVG";
+        break;
     }
-    TVGLOG("RENDERER", "%s format is not supported", format);
+case FileType::Svg:
+    {
+        format = "SVG";
+        break;
+    }
+case FileType::Ttf:
+    {
+        format = "TTF";
+        break;
+    }
+case FileType::Lottie:
+    {
+        format = "lottie(json)";
+        break;
+    }
+case FileType::Raw:
+    {
+        format = "RAW";
+        break;
+    }
+case FileType::Png:
+    {
+        format = "PNG";
+        break;
+    }
+case FileType::Jpg:
+    {
+        format = "JPG";
+        break;
+    }
+case FileType::Webp:
+    {
+        format = "WEBP";
+        break;
+    }
+default:
+    {
+        format = "???";
+        break;
+    }
+}
+TVGLOG ("RENDERER", "%s format is not supported", format);
 #endif
-    return nullptr;
+return nullptr;
 }
 
 
@@ -220,8 +245,10 @@ static LoadModule* _findFromCache(const string& path)
 
     auto loader = _activeLoaders.head;
 
-    while (loader) {
-        if (loader->pathcache && !strcmp(loader->hashpath, path.c_str())) {
+    while (loader)
+    {
+        if (loader->pathcache && !strcmp(loader->hashpath, path.c_str()))
+        {
             ++loader->sharing;
             return loader;
         }
@@ -241,8 +268,10 @@ static LoadModule* _findFromCache(const char* data, uint32_t size, const string&
 
     auto key = HASH_KEY(data);
 
-    while (loader) {
-        if (loader->type == type && loader->hashkey == key) {
+    while (loader)
+    {
+        if (loader->type == type && loader->hashkey == key)
+        {
             ++loader->sharing;
             return loader;
         }
@@ -268,7 +297,8 @@ bool LoaderMgr::term()
     auto loader = _activeLoaders.head;
 
     //clean up the remained font loaders which is globally used.
-    while (loader && loader->type == FileType::Ttf) {
+    while (loader && loader->type == FileType::Ttf)
+    {
         auto ret = loader->close();
         auto tmp = loader;
         loader = loader->next;
@@ -282,8 +312,10 @@ bool LoaderMgr::term()
 bool LoaderMgr::retrieve(LoadModule* loader)
 {
     if (!loader) return false;
-    if (loader->close()) {
-        if (loader->cached()) {
+    if (loader->close())
+    {
+        if (loader->cached())
+        {
             ScopedLock lock(key);
             _activeLoaders.remove(loader);
         }
@@ -302,13 +334,17 @@ LoadModule* LoaderMgr::loader(const string& path, bool* invalid)
     auto ext = path.substr(path.find_last_of(".") + 1);
     if (!ext.compare("svg") || !ext.compare("json")) allowCache = false;
 
-    if (allowCache) {
+    if (allowCache)
+    {
         if (auto loader = _findFromCache(path)) return loader;
     }
 
-    if (auto loader = _findByPath(path)) {
-        if (loader->open(path)) {
-            if (allowCache) {
+    if (auto loader = _findByPath(path))
+    {
+        if (loader->open(path))
+        {
+            if (allowCache)
+            {
                 loader->hashpath = lv_strdup(path.c_str());
                 loader->pathcache = true;
                 {
@@ -321,10 +357,14 @@ LoadModule* LoaderMgr::loader(const string& path, bool* invalid)
         delete(loader);
     }
     //Unknown MimeType. Try with the candidates in the order
-    for (int i = 0; i < static_cast<int>(FileType::Raw); i++) {
-        if (auto loader = _find(static_cast<FileType>(i))) {
-            if (loader->open(path)) {
-                if (allowCache) {
+    for (int i = 0; i < static_cast<int>(FileType::Raw); i++)
+    {
+        if (auto loader = _find(static_cast<FileType>(i)))
+        {
+            if (loader->open(path))
+            {
+                if (allowCache)
+                {
                     loader->hashpath = lv_strdup(path.c_str());
                     loader->pathcache = true;
                     {
@@ -352,8 +392,10 @@ LoadModule* LoaderMgr::loader(const char* key)
 {
     auto loader = _activeLoaders.head;
 
-    while (loader) {
-        if (loader->pathcache && strstr(loader->hashpath, key)) {
+    while (loader)
+    {
+        if (loader->pathcache && strstr(loader->hashpath, key))
+        {
             ++loader->sharing;
             return loader;
         }
@@ -370,37 +412,49 @@ LoadModule* LoaderMgr::loader(const char* data, uint32_t size, const string& mim
     auto allowCache = !copy;
 
     //TODO: lottie is not sharable.
-    if (allowCache) {
+    if (allowCache)
+    {
         auto type = _convert(mimeType);
         if (type == FileType::Lottie) allowCache = false;
     }
 
-    if (allowCache) {
+    if (allowCache)
+    {
         if (auto loader = _findFromCache(data, size, mimeType)) return loader;
     }
 
     //Try with the given MimeType
-    if (!mimeType.empty()) {
-        if (auto loader = _findByType(mimeType)) {
-            if (loader->open(data, size, copy)) {
-                if (allowCache) {
+    if (!mimeType.empty())
+    {
+        if (auto loader = _findByType(mimeType))
+        {
+            if (loader->open(data, size, copy))
+            {
+                if (allowCache)
+                {
                     loader->hashkey = HASH_KEY(data);
                     ScopedLock lock(key);
                     _activeLoaders.back(loader);
                 }
                 return loader;
-            } else {
+            }
+            else
+            {
                 TVGLOG("LOADER", "Given mimetype \"%s\" seems incorrect or not supported.", mimeType.c_str());
                 delete(loader);
             }
         }
     }
     //Unknown MimeType. Try with the candidates in the order
-    for (int i = 0; i < static_cast<int>(FileType::Raw); i++) {
+    for (int i = 0; i < static_cast<int>(FileType::Raw); i++)
+    {
         auto loader = _find(static_cast<FileType>(i));
-        if (loader) {
-            if (loader->open(data, size, copy)) {
-                if (allowCache) {
+        if (loader)
+        {
+            if (loader->open(data, size, copy))
+            {
+                if (allowCache)
+                {
                     loader->hashkey = HASH_KEY(data);
                     ScopedLock lock(key);
                     _activeLoaders.back(loader);
@@ -414,19 +468,22 @@ LoadModule* LoaderMgr::loader(const char* data, uint32_t size, const string& mim
 }
 
 
-LoadModule* LoaderMgr::loader(const uint32_t *data, uint32_t w, uint32_t h, bool copy)
+LoadModule* LoaderMgr::loader(const uint32_t* data, uint32_t w, uint32_t h, bool copy)
 {
     //Note that users could use the same data pointer with the different content.
     //Thus caching is only valid for shareable.
-    if (!copy) {
+    if (!copy)
+    {
         //TODO: should we check premultiplied??
         if (auto loader = _findFromCache((const char*)(data), w * h, "raw")) return loader;
     }
 
     //function is dedicated for raw images only
     auto loader = new RawLoader;
-    if (loader->open(data, w, h, copy)) {
-        if (!copy) {
+    if (loader->open(data, w, h, copy))
+    {
+        if (!copy)
+        {
             loader->hashkey = HASH_KEY((const char*)data);
             ScopedLock lock(key);
             _activeLoaders.back(loader);
@@ -439,14 +496,16 @@ LoadModule* LoaderMgr::loader(const uint32_t *data, uint32_t w, uint32_t h, bool
 
 
 //loads fonts from memory - loader is cached (regardless of copy value) in order to access it while setting font
-LoadModule* LoaderMgr::loader(const char* name, const char* data, uint32_t size, TVG_UNUSED const string& mimeType, bool copy)
+LoadModule* LoaderMgr::loader(const char* name, const char* data, uint32_t size, TVG_UNUSED const string& mimeType,
+                              bool copy)
 {
-#ifdef THORVG_TTF_LOADER_SUPPORT
-    //TODO: add check for mimetype ?
-    if (auto loader = _findFromCache(name)) return loader;
 
-    //function is dedicated for ttf loader (the only supported font loader)
-    auto loader = new TtfLoader;
+#ifdef THORVG_TTF_LOADER_SUPPORT
+//TODO: add check for mimetype ?
+if (auto loader = _findFromCache(name)) return loader;
+
+//function is dedicated for ttf loader (the only supported font loader)
+auto loader = new TtfLoader;
     if (loader->open(data, size, copy)) {
         loader->hashpath = lv_strdup(name);
         loader->pathcache = true;
@@ -455,11 +514,10 @@ LoadModule* LoaderMgr::loader(const char* name, const char* data, uint32_t size,
         return loader;
     }
 
-    TVGLOG("LOADER", "The font data \"%s\" could not be loaded.", name);
+TVGLOG ("LOADER", "The font data \"%s\" could not be loaded.", name);
     delete(loader);
 #endif
-    return nullptr;
+return nullptr;
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

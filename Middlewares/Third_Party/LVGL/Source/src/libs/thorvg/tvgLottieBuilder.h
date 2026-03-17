@@ -54,15 +54,15 @@ struct RenderContext
 {
     INLIST_ITEM(RenderContext);
 
-    Shape* propagator = nullptr;  //for propagating the shape properties excluding paths
-    Shape* merging = nullptr;  //merging shapes if possible (if shapes have same properties)
+    Shape* propagator = nullptr; //for propagating the shape properties excluding paths
+    Shape* merging = nullptr; //merging shapes if possible (if shapes have same properties)
     LottieObject** begin = nullptr; //iteration entry point
     Array<RenderRepeater> repeaters;
     Matrix* transform = nullptr;
     LottieRoundnessModifier* roundness = nullptr;
     LottieOffsetModifier* offsetPath = nullptr;
-    bool fragmenting = false;  //render context has been fragmented by filling
-    bool reqFragment = false;  //requirement to fragment the render context
+    bool fragmenting = false; //render context has been fragmented by filling
+    bool reqFragment = false; //requirement to fragment the render context
 
     RenderContext(Shape* propagator)
     {
@@ -86,7 +86,8 @@ struct RenderContext
         this->propagator = propagator;
         this->repeaters = rhs.repeaters;
         if (rhs.roundness) this->roundness = new LottieRoundnessModifier(rhs.roundness->r);
-        if (rhs.offsetPath) this->offsetPath = new LottieOffsetModifier(rhs.offsetPath->offset, rhs.offsetPath->miterLimit, rhs.offsetPath->join);
+        if (rhs.offsetPath) this->offsetPath = new LottieOffsetModifier(
+            rhs.offsetPath->offset, rhs.offsetPath->miterLimit, rhs.offsetPath->join);
     }
 };
 
@@ -116,20 +117,34 @@ private:
     void updateMaskings(LottieLayer* layer, float frameNo);
     void updateTransform(LottieLayer* layer, float frameNo);
     void updateChildren(LottieGroup* parent, float frameNo, Inlist<RenderContext>& contexts);
-    void updateGroup(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& pcontexts, RenderContext* ctx);
-    void updateTransform(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateSolidFill(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateSolidStroke(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateGradientFill(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateGradientStroke(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateRect(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateEllipse(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updatePath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updatePolystar(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateTrimpath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateRepeater(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateRoundedCorner(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
-    void updateOffsetPath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts, RenderContext* ctx);
+    void updateGroup(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& pcontexts,
+                     RenderContext* ctx);
+    void updateTransform(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                         RenderContext* ctx);
+    void updateSolidFill(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                         RenderContext* ctx);
+    void updateSolidStroke(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                           RenderContext* ctx);
+    void updateGradientFill(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                            RenderContext* ctx);
+    void updateGradientStroke(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                              RenderContext* ctx);
+    void updateRect(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                    RenderContext* ctx);
+    void updateEllipse(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                       RenderContext* ctx);
+    void updatePath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                    RenderContext* ctx);
+    void updatePolystar(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                        RenderContext* ctx);
+    void updateTrimpath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                        RenderContext* ctx);
+    void updateRepeater(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                        RenderContext* ctx);
+    void updateRoundedCorner(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                             RenderContext* ctx);
+    void updateOffsetPath(LottieGroup* parent, LottieObject** child, float frameNo, Inlist<RenderContext>& contexts,
+                          RenderContext* ctx);
 
     LottieExpressions* exps;
 };
@@ -137,4 +152,3 @@ private:
 #endif //_TVG_LOTTIE_BUILDER_H
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

@@ -58,7 +58,8 @@ bool RawLoader::open(const uint32_t* data, uint32_t w, uint32_t h, bool copy)
     this->h = (float)h;
     this->copy = copy;
 
-    if (copy) {
+    if (copy)
+    {
         surface.buf32 = (uint32_t*)lv_malloc(sizeof(uint32_t) * w * h);
         LV_ASSERT_MALLOC(surface.buf32);
         if (!surface.buf32) return false;
@@ -86,4 +87,3 @@ bool RawLoader::read()
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

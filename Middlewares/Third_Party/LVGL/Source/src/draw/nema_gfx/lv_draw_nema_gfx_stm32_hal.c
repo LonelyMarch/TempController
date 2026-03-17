@@ -38,10 +38,10 @@ extern GPU2D_HandleTypeDef hgpu2d;
  * One byte per peixel for masking/stencling plus 10240 for additional allocations.
  */
 #if defined(LV_NEMA_GFX_MAX_RESX) && defined(LV_NEMA_GFX_MAX_RESY)
-    #define NEMAGFX_MEM_POOL_SIZE          ((LV_NEMA_GFX_MAX_RESX * LV_NEMA_GFX_MAX_RESY) + 10240)
+#define NEMAGFX_MEM_POOL_SIZE          ((LV_NEMA_GFX_MAX_RESX * LV_NEMA_GFX_MAX_RESY) + 10240)
 #else
-    /* LV_USE_NEMA_VG is 0 so masking/stencling memory is not needed. */
-    #define NEMAGFX_MEM_POOL_SIZE          10240
+/* LV_USE_NEMA_VG is 0 so masking/stencling memory is not needed. */
+#define NEMAGFX_MEM_POOL_SIZE          10240
 #endif
 
 /**********************
@@ -53,7 +53,7 @@ extern GPU2D_HandleTypeDef hgpu2d;
  **********************/
 
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-    static void GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef * hgpu2d, uint32_t CmdListID);
+static void GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef* hgpu2d, uint32_t CmdListID);
 #endif
 
 /**********************
@@ -75,9 +75,9 @@ static lv_thread_sync_t sync;
  **********************/
 
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-    static void GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef * hgpu2d, uint32_t CmdListID)
+static void GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef* hgpu2d, uint32_t CmdListID)
 #else
-    void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef * hgpu2d, uint32_t CmdListID)
+void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef* hgpu2d, uint32_t CmdListID)
 #endif
 {
     LV_UNUSED(hgpu2d);
@@ -92,29 +92,29 @@ int32_t nema_sys_init(void)
 
     lv_thread_sync_init(&sync);
 
-    /* Setup GPU2D Callback */
+/* Setup GPU2D Callback */
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-    /* Register Command List Complete Callback */
-    HAL_GPU2D_RegisterCommandListCpltCallback(&hgpu2d, GPU2D_CommandListCpltCallback);
+/* Register Command List Complete Callback */
+HAL_GPU2D_RegisterCommandListCpltCallback (&hgpu2d, GPU2D_CommandListCpltCallback);
 #endif
 
-    /* Initialise Mem Space */
-    error_code = tsi_malloc_init_pool_aligned(0, (void *)nemagfx_pool_mem, (uintptr_t)nemagfx_pool_mem,
-                                              NEMAGFX_MEM_POOL_SIZE, 1, 8);
-    LV_ASSERT(error_code == 0);
+/* Initialise Mem Space */
+error_code= tsi_malloc_init_pool_aligned(0, (void*)nemagfx_pool_mem, (uintptr_t)nemagfx_pool_mem,
+                                                                     NEMAGFX_MEM_POOL_SIZE, 1, 8);
+LV_ASSERT (error_code== 0);
 
-    /* Allocate ring_buffer memory */
-    ring_buffer_str.bo = nema_buffer_create(RING_SIZE);
-    LV_ASSERT(ring_buffer_str.bo.base_virt);
+/* Allocate ring_buffer memory */
+ring_buffer_str.bo= nema_buffer_create(RING_SIZE);
+LV_ASSERT (ring_buffer_str.bo.base_virt);
 
-    /* Initialize Ring Buffer */
-    error_code = nema_rb_init(&ring_buffer_str, 1);
-    if(error_code < 0) {
+/* Initialize Ring Buffer */
+error_code= nema_rb_init(&ring_buffer_str, 1);
+    if(error_code<0) {
         return error_code;
     }
 
-    /* Reset last_cl_id counter */
-    last_cl_id = 0;
+/* Reset last_cl_id counter */
+last_cl_id=0;
 
     return error_code;
 }
@@ -130,8 +130,6 @@ void nema_reg_write(uint32_t reg, uint32_t value)
 }
 
 
-
-
 int nema_wait_irq(void)
 {
     lv_thread_sync_wait(&sync);
@@ -141,7 +139,8 @@ int nema_wait_irq(void)
 
 int nema_wait_irq_cl(int cl_id)
 {
-    while(last_cl_id < cl_id) {
+    while (last_cl_id < cl_id)
+    {
         (void)nema_wait_irq();
     }
 
@@ -150,19 +149,20 @@ int nema_wait_irq_cl(int cl_id)
 
 int nema_wait_irq_brk(int brk_id)
 {
-    while(nema_reg_read(GPU2D_BREAKPOINT) == 0U) {
+    while (nema_reg_read(GPU2D_BREAKPOINT) == 0U)
+    {
         (void)nema_wait_irq();
     }
 
     return 0;
 }
 
-void nema_host_free(void * ptr)
+void nema_host_free(void* ptr)
 {
     tsi_free(ptr);
 }
 
-void * nema_host_malloc(unsigned size)
+void* nema_host_malloc(unsigned size)
 {
     return tsi_malloc(size);
 }
@@ -173,7 +173,7 @@ nema_buffer_t nema_buffer_create(int size)
     lv_memset(&bo, 0, sizeof(bo));
     bo.base_virt = tsi_malloc(size);
     bo.base_phys = (uint32_t)bo.base_virt;
-    bo.size      = size;
+    bo.size = size;
     LV_ASSERT_MSG(bo.base_virt != 0, "Unable to allocate memory in nema_buffer_create");
 
     return bo;
@@ -186,36 +186,37 @@ nema_buffer_t nema_buffer_create_pool(int pool, int size)
     return nema_buffer_create(size);
 }
 
-void * nema_buffer_map(nema_buffer_t * bo)
+void* nema_buffer_map(nema_buffer_t* bo)
 {
     return bo->base_virt;
 }
 
-void nema_buffer_unmap(nema_buffer_t * bo)
+void nema_buffer_unmap(nema_buffer_t* bo)
 {
     LV_UNUSED(bo);
 }
 
-void nema_buffer_destroy(nema_buffer_t * bo)
+void nema_buffer_destroy(nema_buffer_t* bo)
 {
-    if(bo->fd == -1) {
+    if (bo->fd == -1)
+    {
         return; /* Buffer weren't allocated! */
     }
 
     tsi_free(bo->base_virt);
 
-    bo->base_virt = (void *)0;
+    bo->base_virt = (void*)0;
     bo->base_phys = 0;
-    bo->size      = 0;
-    bo->fd        = -1; /* Buffer not allocated */
+    bo->size = 0;
+    bo->fd = -1; /* Buffer not allocated */
 }
 
-uintptr_t nema_buffer_phys(nema_buffer_t * bo)
+uintptr_t nema_buffer_phys(nema_buffer_t* bo)
 {
     return bo->base_phys;
 }
 
-void nema_buffer_flush(nema_buffer_t * bo)
+void nema_buffer_flush(nema_buffer_t* bo)
 {
     LV_UNUSED(bo);
 }
@@ -240,12 +241,10 @@ int nema_mutex_unlock(int mutex_id)
 
 void platform_disable_cache(void)
 {
-
 }
 
 void platform_invalidate_cache(void)
 {
-
 }
 
 /**********************

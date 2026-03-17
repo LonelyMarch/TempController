@@ -36,7 +36,9 @@ struct PictureIterator : Iterator
     Paint* paint = nullptr;
     Paint* ptr = nullptr;
 
-    PictureIterator(Paint* p) : paint(p) {}
+    PictureIterator(Paint* p) : paint(p)
+    {
+    }
 
     const Paint* next() override
     {
@@ -62,13 +64,13 @@ struct Picture::Impl
 {
     ImageLoader* loader = nullptr;
 
-    Paint* paint = nullptr;           //vector picture uses
+    Paint* paint = nullptr; //vector picture uses
     RenderSurface* surface = nullptr; //bitmap picture uses
-    RenderData rd = nullptr;          //engine data
+    RenderData rd = nullptr; //engine data
     float w = 0, h = 0;
     Picture* picture = nullptr;
     bool resizing = false;
-    bool needComp = false;            //need composition
+    bool needComp = false; //need composition
 
     bool needComposition(uint8_t opacity);
     bool render(RenderMethod* renderer);
@@ -83,19 +85,23 @@ struct Picture::Impl
     ~Impl()
     {
         LoaderMgr::retrieve(loader);
-        if (surface) {
-            if (auto renderer = PP(picture)->renderer) {
+        if (surface)
+        {
+            if (auto renderer = PP(picture)->renderer)
+            {
                 renderer->dispose(rd);
             }
         }
         delete(paint);
     }
 
-    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity, RenderUpdateFlag pFlag, TVG_UNUSED bool clipper)
+    RenderData update(RenderMethod* renderer, const Matrix& transform, Array<RenderData>& clips, uint8_t opacity,
+                      RenderUpdateFlag pFlag, TVG_UNUSEDbool clipper)
     {
         auto flag = static_cast<RenderUpdateFlag>(pFlag | load());
 
-        if (surface) {
+        if (surface)
+        {
             if (flag == RenderUpdateFlag::None) return rd;
 
             //Overriding Transformation by the desired image size
@@ -105,8 +111,11 @@ struct Picture::Impl
             auto m = transform * Matrix{scale, 0, 0, 0, scale, 0, 0, 0, 1};
 
             rd = renderer->prepare(surface, rd, m, clips, opacity, flag);
-        } else if (paint) {
-            if (resizing) {
+        }
+        else if (paint)
+        {
+            if (resizing)
+            {
                 loader->resize(paint, w, h);
                 resizing = false;
             }
@@ -129,9 +138,10 @@ struct Picture::Impl
     {
         if (paint || surface) return Result::InsufficientCondition;
 
-        bool invalid;  //Invalid Path
+        bool invalid; //Invalid Path
         auto loader = static_cast<ImageLoader*>(LoaderMgr::loader(path, &invalid));
-        if (!loader) {
+        if (!loader)
+        {
             if (invalid) return Result::InvalidArguments;
             return Result::NonSupport;
         }
@@ -167,7 +177,8 @@ struct Picture::Impl
 
         if (paint) dup->paint = paint->duplicate();
 
-        if (loader) {
+        if (loader)
+        {
             dup->loader = loader;
             ++dup->loader->sharing;
             PP(picture)->renderFlag |= RenderUpdateFlag::Image;
@@ -192,10 +203,13 @@ struct Picture::Impl
         //Try it, If not loaded yet.
         load();
 
-        if (loader) {
+        if (loader)
+        {
             if (w) *w = static_cast<uint32_t>(loader->w);
             if (h) *h = static_cast<uint32_t>(loader->h);
-        } else {
+        }
+        else
+        {
             if (w) *w = 0;
             if (h) *h = 0;
         }
@@ -209,4 +223,3 @@ struct Picture::Impl
 #endif //_TVG_PICTURE_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

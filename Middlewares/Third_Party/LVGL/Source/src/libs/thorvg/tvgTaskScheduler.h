@@ -44,17 +44,19 @@ using std::atomic;
 using std::try_to_lock;
 #endif
 
-namespace tvg {
+namespace tvg
+{
+
 
 #ifdef THORVG_THREAD_SUPPORT
 
 struct Task
 {
 private:
-    mutex                   mtx;
-    condition_variable      cv;
-    bool                    ready = true;
-    bool                    pending = false;
+    mutex mtx;
+    condition_variable cv;
+    bool ready = true;
+    bool pending = false;
 
 public:
     INLIST_ITEM(Task);
@@ -100,7 +102,10 @@ public:
     INLIST_ITEM(Task);
 
     virtual ~Task() = default;
-    void done() {}
+
+    void done()
+    {
+    }
 
 protected:
     virtual void run(unsigned tid) = 0;
@@ -121,10 +126,9 @@ struct TaskScheduler
     static void async(bool on);
 };
 
-}  //namespace
+} //namespace
 
 #endif //_TVG_TASK_SCHEDULER_H_
- 
+
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

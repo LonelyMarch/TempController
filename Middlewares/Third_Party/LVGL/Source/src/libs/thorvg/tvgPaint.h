@@ -31,11 +31,14 @@
 
 namespace tvg
 {
-    enum ContextFlag : uint8_t {Invalid = 0, FastTrack = 1};
+    enum ContextFlag : uint8_t { Invalid = 0, FastTrack = 1 };
 
     struct Iterator
     {
-        virtual ~Iterator() {}
+        virtual ~Iterator()
+        {
+        }
+
         virtual const Paint* next() = 0;
         virtual uint32_t count() = 0;
         virtual void begin() = 0;
@@ -54,12 +57,14 @@ namespace tvg
         Composite* compData = nullptr;
         Paint* clipper = nullptr;
         RenderMethod* renderer = nullptr;
-        struct {
-            Matrix m;                 //input matrix
-            Matrix cm;                //multipled parents matrix
-            float degree;             //rotation degree
-            float scale;              //scale factor
-            bool overriding;          //user transform?
+
+        struct
+        {
+            Matrix m; //input matrix
+            Matrix cm; //multipled parents matrix
+            float degree; //rotation degree
+            float scale; //scale factor
+            bool overriding; //user transform?
 
             void update()
             {
@@ -75,11 +80,12 @@ namespace tvg
                 tvg::rotate(&m, degree);
             }
         } tr;
+
         BlendMethod blendMethod;
         uint8_t renderFlag;
         uint8_t ctxFlag;
         uint8_t opacity;
-        uint8_t refCnt = 0;                              //reference count
+        uint8_t refCnt = 0; //reference count
 
         Impl(Paint* pnt) : paint(pnt)
         {
@@ -88,7 +94,8 @@ namespace tvg
 
         ~Impl()
         {
-            if (compData) {
+            if (compData)
+            {
                 if (P(compData->target)->unref() == 0) delete(compData->target);
                 lv_free(compData);
             }
@@ -127,9 +134,11 @@ namespace tvg
 
         void clip(Paint* clp)
         {
-            if (this->clipper) {
+            if (this->clipper)
+            {
                 P(this->clipper)->unref();
-                if (this->clipper != clp && P(this->clipper)->refCnt == 0) {
+                if (this->clipper != clp && P(this->clipper)->refCnt == 0)
+                {
                     delete(this->clipper);
                 }
             }
@@ -142,20 +151,26 @@ namespace tvg
         bool composite(Paint* source, Paint* target, CompositeMethod method)
         {
             //Invalid case
-            if ((!target && method != CompositeMethod::None) || (target && method == CompositeMethod::None)) return false;
+            if ((!target && method != CompositeMethod::None) || (target && method == CompositeMethod::None)) return
+                false;
 
-            if (compData) {
+            if (compData)
+            {
                 P(compData->target)->unref();
-                if ((compData->target != target) && P(compData->target)->refCnt == 0) {
+                if ((compData->target != target) && P(compData->target)->refCnt == 0)
+                {
                     delete(compData->target);
                 }
                 //Reset scenario
-                if (!target && method == CompositeMethod::None) {
-                	lv_free(compData);
+                if (!target && method == CompositeMethod::None)
+                {
+                    lv_free(compData);
                     compData = nullptr;
                     return true;
                 }
-            } else {
+            }
+            else
+            {
                 if (!target && method == CompositeMethod::None) return true;
                 compData = static_cast<Composite*>(lv_zalloc(sizeof(Composite)));
                 LV_ASSERT_MALLOC(compData);
@@ -173,7 +188,8 @@ namespace tvg
         bool scale(float factor);
         bool translate(float x, float y);
         bool bounds(float* x, float* y, float* w, float* h, bool transformed, bool stroking, bool origin = false);
-        RenderData update(RenderMethod* renderer, const Matrix& pm, Array<RenderData>& clips, uint8_t opacity, RenderUpdateFlag pFlag, bool clipper = false);
+        RenderData update(RenderMethod* renderer, const Matrix& pm, Array<RenderData>& clips, uint8_t opacity,
+                          RenderUpdateFlag pFlag, bool clipper = false);
         bool render(RenderMethod* renderer);
         Paint* duplicate(Paint* ret = nullptr);
         void reset();
@@ -183,4 +199,3 @@ namespace tvg
 #endif //_TVG_PAINT_H_
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

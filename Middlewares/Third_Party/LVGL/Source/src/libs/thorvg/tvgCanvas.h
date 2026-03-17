@@ -30,7 +30,7 @@
 
 using std::list;
 
-enum Status : uint8_t {Synced = 0, Updating, Drawing, Damaged};
+enum Status : uint8_t { Synced = 0, Updating, Drawing, Damaged };
 
 struct Canvas::Impl
 {
@@ -57,7 +57,8 @@ struct Canvas::Impl
 
     void clearPaints()
     {
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             if (P(paint)->unref() == 0) delete(paint);
         }
         paints.clear();
@@ -99,10 +100,14 @@ struct Canvas::Impl
 
         auto m = Matrix{1, 0, 0, 0, 1, 0, 0, 0, 1};
 
-        if (paint) {
+        if (paint)
+        {
             paint->pImpl->update(renderer, m, clips, 255, flag);
-        } else {
-            for (auto paint : paints) {
+        }
+        else
+        {
+            for (auto paint : paints)
+            {
                 paint->pImpl->update(renderer, m, clips, 255, flag);
             }
         }
@@ -116,7 +121,8 @@ struct Canvas::Impl
         if (status == Status::Drawing || paints.empty() || !renderer->preRender()) return Result::InsufficientCondition;
 
         bool rendered = false;
-        for (auto paint : paints) {
+        for (auto paint : paints)
+        {
             if (paint->pImpl->render(renderer)) rendered = true;
         }
 
@@ -130,7 +136,8 @@ struct Canvas::Impl
     {
         if (status == Status::Synced || status == Status::Damaged) return Result::InsufficientCondition;
 
-        if (renderer->sync()) {
+        if (renderer->sync())
+        {
             status = Status::Synced;
             return Result::Success;
         }
@@ -145,7 +152,8 @@ struct Canvas::Impl
         RenderRegion val = {x, y, w, h};
         //intersect if the target buffer is already set.
         auto surface = renderer->mainSurface();
-        if (surface && surface->w > 0 && surface->h > 0) {
+        if (surface && surface->w > 0 && surface->h > 0)
+        {
             val.intersect({0, 0, (int32_t)surface->w, (int32_t)surface->h});
         }
         if (vport == val) return Result::Success;
@@ -159,4 +167,3 @@ struct Canvas::Impl
 #endif /* _TVG_CANVAS_H_ */
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

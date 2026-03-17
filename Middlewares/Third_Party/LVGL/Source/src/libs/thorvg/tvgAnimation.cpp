@@ -110,7 +110,7 @@ Result Animation::segment(float begin, float end) noexcept
 }
 
 
-Result Animation::segment(float *begin, float *end) noexcept
+Result Animation::segment(float* begin, float* end) noexcept
 {
     auto loader = pImpl->picture->pImpl->loader;
     if (!loader) return Result::InsufficientCondition;
@@ -125,8 +125,7 @@ Result Animation::segment(float *begin, float *end) noexcept
 
 unique_ptr<Animation> Animation::gen() noexcept
 {
-    return unique_ptr<Animation>(new Animation);
+    return unique_ptr < Animation > (new Animation);
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

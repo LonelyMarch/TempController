@@ -28,10 +28,10 @@
 #include "tvgPaint.h"
 
 #ifdef THORVG_TVG_SAVER_SUPPORT
-    #include "tvgTvgSaver.h"
+#include "tvgTvgSaver.h"
 #endif
 #ifdef THORVG_GIF_SAVER_SUPPORT
-    #include "tvgGifSaver.h"
+#include "tvgGifSaver.h"
 #endif
 
 /************************************************************************/
@@ -53,52 +53,63 @@ struct Saver::Impl
 
 static SaveModule* _find(FileType type)
 {
-    switch(type) {
-        case FileType::Tvg: {
+    switch (type)
+    {
+    case FileType::Tvg: { 
 #ifdef THORVG_TVG_SAVER_SUPPORT
-            return new TvgSaver;
+return new TvgSaver;
 #endif
-            break;
+break;
         }
-        case FileType::Gif: {
+        case FileType::Gif :
+{
+
 #ifdef THORVG_GIF_SAVER_SUPPORT
-            return new GifSaver;
+return new GifSaver;
 #endif
-            break;
+break;
         }
-        default: {
-            break;
-        }
+default :
+{
+    break;
+}
     }
 
 #ifdef THORVG_LOG_ENABLED
-    const char *format;
-    switch(type) {
-        case FileType::Tvg: {
-            format = "TVG";
-            break;
-        }
-        case FileType::Gif: {
-            format = "GIF";
-            break;
-        }
-        default: {
-            format = "???";
-            break;
-        }
+const char* format;
+    switch(type)
+{
+case FileType::Tvg:
+    {
+        format = "TVG";
+        break;
     }
-    TVGLOG("RENDERER", "%s format is not supported", format);
+case FileType::Gif:
+    {
+        format = "GIF";
+        break;
+    }
+default:
+    {
+        format = "???";
+        break;
+    }
+}
+TVGLOG ("RENDERER", "%s format is not supported", format);
 #endif
-    return nullptr;
+return nullptr;
 }
 
 
 static SaveModule* _find(const string& path)
 {
     auto ext = path.substr(path.find_last_of(".") + 1);
-    if (!ext.compare("tvg")) {
+    if (!ext.compare("tvg"))
+    {
         return _find(FileType::Tvg);
-    } else if (!ext.compare("gif")) {
+    }
+    else if (!ext.compare("gif"))
+    {
         return _find(FileType::Gif);
     }
     return nullptr;
@@ -126,16 +137,21 @@ Result Saver::save(std::unique_ptr<Paint> paint, const string& path, bool compre
     if (!p) return Result::MemoryCorruption;
 
     //Already on saving another resource.
-    if (pImpl->saveModule) {
+    if (pImpl->saveModule)
+    {
         if (P(p)->refCnt == 0) delete(p);
         return Result::InsufficientCondition;
     }
 
-    if (auto saveModule = _find(path)) {
-        if (saveModule->save(p, path, compress)) {
+    if (auto saveModule = _find(path))
+    {
+        if (saveModule->save(p, path, compress))
+        {
             pImpl->saveModule = saveModule;
             return Result::Success;
-        } else {
+        }
+        else
+        {
             if (P(p)->refCnt == 0) delete(p);
             delete(saveModule);
             return Result::Unknown;
@@ -163,22 +179,28 @@ Result Saver::save(unique_ptr<Animation> animation, const string& path, uint32_t
     //animation holds the picture, it must be 1 at the bottom.
     auto remove = PP(a->picture())->refCnt <= 1 ? true : false;
 
-    if (tvg::zero(a->totalFrame())) {
+    if (tvg::zero(a->totalFrame()))
+    {
         if (remove) delete(a);
         return Result::InsufficientCondition;
     }
 
     //Already on saving another resource.
-    if (pImpl->saveModule) {
+    if (pImpl->saveModule)
+    {
         if (remove) delete(a);
         return Result::InsufficientCondition;
     }
 
-    if (auto saveModule = _find(path)) {
-        if (saveModule->save(a, pImpl->bg, path, quality, fps)) {
+    if (auto saveModule = _find(path))
+    {
+        if (saveModule->save(a, pImpl->bg, path, quality, fps))
+        {
             pImpl->saveModule = saveModule;
             return Result::Success;
-        } else {
+        }
+        else
+        {
             if (remove) delete(a);
             delete(saveModule);
             return Result::Unknown;
@@ -202,8 +224,7 @@ Result Saver::sync() noexcept
 
 unique_ptr<Saver> Saver::gen() noexcept
 {
-    return unique_ptr<Saver>(new Saver);
+    return unique_ptr < Saver > (new Saver);
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

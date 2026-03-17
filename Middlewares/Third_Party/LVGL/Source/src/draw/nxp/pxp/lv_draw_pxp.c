@@ -21,7 +21,7 @@
 #include "lv_pxp_utils.h"
 
 #if LV_USE_PARALLEL_DRAW_DEBUG
-    #include "../../../core/lv_global.h"
+#include "../../../core/lv_global.h"
 #endif
 
 /*********************
@@ -56,7 +56,7 @@ static int32_t _pxp_dispatch(lv_draw_unit_t * draw_unit, lv_layer_t * layer);
 static int32_t _pxp_delete(lv_draw_unit_t * draw_unit);
 
 #if LV_USE_PXP_DRAW_THREAD
-    static void _pxp_render_thread_cb(void * ptr);
+static void _pxp_render_thread_cb(void* ptr);
 #endif
 
 static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u);
@@ -70,7 +70,7 @@ static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u);
  **********************/
 
 #if LV_USE_PARALLEL_DRAW_DEBUG
-    #define _draw_info LV_GLOBAL_DEFAULT()->draw_info
+#define _draw_info LV_GLOBAL_DEFAULT()->draw_info
 #endif
 
 /**********************
@@ -86,16 +86,16 @@ void lv_draw_pxp_init(void)
     lv_pxp_init();
 
 #if LV_USE_DRAW_PXP
-    lv_draw_buf_pxp_init_handlers();
+lv_draw_buf_pxp_init_handlers();
 
-    lv_draw_pxp_unit_t * draw_pxp_unit = lv_draw_create_unit(sizeof(lv_draw_pxp_unit_t));
-    draw_pxp_unit->base_unit.evaluate_cb = _pxp_evaluate;
-    draw_pxp_unit->base_unit.dispatch_cb = _pxp_dispatch;
-    draw_pxp_unit->base_unit.delete_cb = _pxp_delete;
-    draw_pxp_unit->base_unit.name = "NXP_PXP";
+lv_draw_pxp_unit_t* draw_pxp_unit = lv_draw_create_unit(sizeof(lv_draw_pxp_unit_t));
+draw_pxp_unit->base_unit.evaluate_cb= _pxp_evaluate;
+draw_pxp_unit->base_unit.dispatch_cb= _pxp_dispatch;
+draw_pxp_unit->base_unit.delete_cb= _pxp_delete;
+draw_pxp_unit->base_unit.name="NXP_PXP";
 
 #if LV_USE_PXP_DRAW_THREAD
-    lv_thread_init(&draw_pxp_unit->thread, "pxpdraw", LV_DRAW_THREAD_PRIO, _pxp_render_thread_cb, 2 * 1024, draw_pxp_unit);
+lv_thread_init (&draw_pxp_unit->thread, "pxpdraw", LV_DRAW_THREAD_PRIO, _pxp_render_thread_cb, 2 * 1024, draw_pxp_unit);
 #endif
 #endif /*LV_USE_DRAW_PXP*/
 }
@@ -105,7 +105,7 @@ void lv_draw_pxp_deinit(void)
     lv_pxp_deinit();
 }
 
-void lv_draw_pxp_rotate(const void * src_buf, void * dest_buf, int32_t src_width, int32_t src_height,
+void lv_draw_pxp_rotate(const void* src_buf, void* dest_buf, int32_t src_width, int32_t src_height,
                         int32_t src_stride, int32_t dest_stride, lv_display_rotation_t rotation,
                         lv_color_format_t cf)
 {
@@ -120,22 +120,23 @@ void lv_draw_pxp_rotate(const void * src_buf, void * dest_buf, int32_t src_width
      * LV_DISPLAY_ROTATION_270 -> kPXP_Rotate90
      */
     pxp_rotate_degree_t pxp_rotation;
-    switch(rotation) {
-        case LV_DISPLAY_ROTATION_0:
-            pxp_rotation = kPXP_Rotate0;
-            break;
-        case LV_DISPLAY_ROTATION_270:
-            pxp_rotation = kPXP_Rotate90;
-            break;
-        case LV_DISPLAY_ROTATION_180:
-            pxp_rotation = kPXP_Rotate180;
-            break;
-        case LV_DISPLAY_ROTATION_90:
-            pxp_rotation = kPXP_Rotate270;
-            break;
-        default:
-            pxp_rotation = kPXP_Rotate0;
-            break;
+    switch (rotation)
+    {
+    case LV_DISPLAY_ROTATION_0:
+        pxp_rotation = kPXP_Rotate0;
+        break;
+    case LV_DISPLAY_ROTATION_270:
+        pxp_rotation = kPXP_Rotate90;
+        break;
+    case LV_DISPLAY_ROTATION_180:
+        pxp_rotation = kPXP_Rotate180;
+        break;
+    case LV_DISPLAY_ROTATION_90:
+        pxp_rotation = kPXP_Rotate270;
+        break;
+    default:
+        pxp_rotation = kPXP_Rotate0;
+        break;
     }
     PXP_SetRotateConfig(PXP_ID, kPXP_RotateOutputBuffer, pxp_rotation, kPXP_FlipDisable);
 
@@ -175,14 +176,15 @@ static inline bool _pxp_src_cf_supported(lv_color_format_t cf)
 {
     bool is_cf_supported = false;
 
-    switch(cf) {
-        case LV_COLOR_FORMAT_RGB565:
-        case LV_COLOR_FORMAT_ARGB8888:
-        case LV_COLOR_FORMAT_XRGB8888:
-            is_cf_supported = true;
-            break;
-        default:
-            break;
+    switch (cf)
+    {
+    case LV_COLOR_FORMAT_RGB565:
+    case LV_COLOR_FORMAT_ARGB8888:
+    case LV_COLOR_FORMAT_XRGB8888:
+        is_cf_supported = true;
+        break;
+    default:
+        break;
     }
 
     return is_cf_supported;
@@ -192,30 +194,31 @@ static inline bool _pxp_dest_cf_supported(lv_color_format_t cf)
 {
     bool is_cf_supported = false;
 
-    switch(cf) {
-        case LV_COLOR_FORMAT_RGB565:
-        case LV_COLOR_FORMAT_RGB888:
-        case LV_COLOR_FORMAT_ARGB8888:
-        case LV_COLOR_FORMAT_XRGB8888:
-            is_cf_supported = true;
-            break;
-        default:
-            break;
+    switch (cf)
+    {
+    case LV_COLOR_FORMAT_RGB565:
+    case LV_COLOR_FORMAT_RGB888:
+    case LV_COLOR_FORMAT_ARGB8888:
+    case LV_COLOR_FORMAT_XRGB8888:
+        is_cf_supported = true;
+        break;
+    default:
+        break;
     }
 
     return is_cf_supported;
 }
 
-static bool _pxp_draw_img_supported(const lv_draw_image_dsc_t * draw_dsc)
+static bool _pxp_draw_img_supported(const lv_draw_image_dsc_t* draw_dsc)
 {
-    const lv_image_dsc_t * img_dsc = draw_dsc->src;
+    const lv_image_dsc_t* img_dsc = draw_dsc->src;
 
     bool has_recolor = (draw_dsc->recolor_opa > LV_OPA_MIN);
     bool has_transform = (draw_dsc->rotation != 0 || draw_dsc->scale_x != LV_SCALE_NONE ||
-                          draw_dsc->scale_y != LV_SCALE_NONE);
+        draw_dsc->scale_y != LV_SCALE_NONE);
 
     /* Recolor and transformation are not supported at the same time. */
-    if(has_recolor && has_transform)
+    if (has_recolor && has_transform)
         return false;
 
     bool has_opa = (draw_dsc->opa < (lv_opa_t)LV_OPA_MAX);
@@ -225,11 +228,11 @@ static bool _pxp_draw_img_supported(const lv_draw_image_dsc_t * draw_dsc)
      * Recolor or transformation for images w/ opa or alpha channel can't
      * be obtained in a single PXP configuration. Two steps are required.
      */
-    if((has_recolor || has_transform) && (has_opa || src_has_alpha))
+    if ((has_recolor || has_transform) && (has_opa || src_has_alpha))
         return false;
 
     /* PXP can only rotate at 90x angles. */
-    if(draw_dsc->rotation % 900)
+    if (draw_dsc->rotation % 900)
         return false;
 
     /*
@@ -244,146 +247,154 @@ static bool _pxp_draw_img_supported(const lv_draw_image_dsc_t * draw_dsc)
      * No combination of rotate with flip, scaling or decimation is possible
      * if buffer is unaligned.
      */
-    if(has_transform && (img_dsc->header.w % 16 || img_dsc->header.h % 16))
+    if (has_transform && (img_dsc->header.w % 16 || img_dsc->header.h % 16))
         return false;
 
     return true;
 }
 
-static int32_t _pxp_evaluate(lv_draw_unit_t * u, lv_draw_task_t * t)
+static int32_t _pxp_evaluate(lv_draw_unit_t* u, lv_draw_task_t* t)
 {
     LV_UNUSED(u);
 
-    const lv_draw_dsc_base_t * draw_dsc_base = (lv_draw_dsc_base_t *) t->draw_dsc;
+    const lv_draw_dsc_base_t* draw_dsc_base = (lv_draw_dsc_base_t*)t->draw_dsc;
 
-    if(!_pxp_dest_cf_supported(draw_dsc_base->layer->color_format))
+    if (!_pxp_dest_cf_supported(draw_dsc_base->layer->color_format))
         return 0;
 
-    switch(t->type) {
-        case LV_DRAW_TASK_TYPE_FILL: {
-                const lv_draw_fill_dsc_t * draw_dsc = (lv_draw_fill_dsc_t *) t->draw_dsc;
+    switch (t->type)
+    {
+    case LV_DRAW_TASK_TYPE_FILL:
+        {
+            const lv_draw_fill_dsc_t* draw_dsc = (lv_draw_fill_dsc_t*)t->draw_dsc;
 
-                /* Most simple case: just a plain rectangle (no radius, no gradient). */
-                if((draw_dsc->radius != 0) || (draw_dsc->grad.dir != (lv_grad_dir_t)LV_GRAD_DIR_NONE))
-                    return 0;
+            /* Most simple case: just a plain rectangle (no radius, no gradient). */
+            if ((draw_dsc->radius != 0) || (draw_dsc->grad.dir != (lv_grad_dir_t)LV_GRAD_DIR_NONE))
+                return 0;
 
-                if(t->preference_score > 70) {
-                    t->preference_score = 70;
-                    t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
-                }
-                return 1;
+            if (t->preference_score > 70)
+            {
+                t->preference_score = 70;
+                t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
             }
+            return 1;
+        }
 
-        case LV_DRAW_TASK_TYPE_LAYER: {
-                const lv_draw_image_dsc_t * draw_dsc = (lv_draw_image_dsc_t *) t->draw_dsc;
-                lv_layer_t * layer_to_draw = (lv_layer_t *)draw_dsc->src;
+    case LV_DRAW_TASK_TYPE_LAYER:
+        {
+            const lv_draw_image_dsc_t* draw_dsc = (lv_draw_image_dsc_t*)t->draw_dsc;
+            lv_layer_t* layer_to_draw = (lv_layer_t*)draw_dsc->src;
 
-                if(!_pxp_src_cf_supported(layer_to_draw->color_format))
-                    return 0;
+            if (!_pxp_src_cf_supported(layer_to_draw->color_format))
+                return 0;
 
-                if(!_pxp_draw_img_supported(draw_dsc))
-                    return 0;
+            if (!_pxp_draw_img_supported(draw_dsc))
+                return 0;
 
-                if(t->preference_score > 70) {
-                    t->preference_score = 70;
-                    t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
-                }
-                return 1;
+            if (t->preference_score > 70)
+            {
+                t->preference_score = 70;
+                t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
             }
+            return 1;
+        }
 
-        case LV_DRAW_TASK_TYPE_IMAGE: {
-                lv_draw_image_dsc_t * draw_dsc = (lv_draw_image_dsc_t *) t->draw_dsc;
-                const lv_image_dsc_t * img_dsc = draw_dsc->src;
+    case LV_DRAW_TASK_TYPE_IMAGE:
+        {
+            lv_draw_image_dsc_t* draw_dsc = (lv_draw_image_dsc_t*)t->draw_dsc;
+            const lv_image_dsc_t* img_dsc = draw_dsc->src;
 
-                if(img_dsc->header.cf >= LV_COLOR_FORMAT_PROPRIETARY_START)
-                    return 0;
+            if (img_dsc->header.cf >= LV_COLOR_FORMAT_PROPRIETARY_START)
+                return 0;
 
-                if((!_pxp_src_cf_supported(img_dsc->header.cf)) ||
-                   (!pxp_buf_aligned(img_dsc->data, img_dsc->header.stride)))
-                    return 0;
+            if ((!_pxp_src_cf_supported(img_dsc->header.cf)) ||
+                (!pxp_buf_aligned(img_dsc->data, img_dsc->header.stride)))
+                return 0;
 
-                if(!_pxp_draw_img_supported(draw_dsc))
-                    return 0;
+            if (!_pxp_draw_img_supported(draw_dsc))
+                return 0;
 
-                if(t->preference_score > 70) {
-                    t->preference_score = 70;
-                    t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
-                }
-                return 1;
+            if (t->preference_score > 70)
+            {
+                t->preference_score = 70;
+                t->preferred_draw_unit_id = DRAW_UNIT_ID_PXP;
             }
-        default:
-            return 0;
+            return 1;
+        }
+    default:
+        return 0;
     }
 
     return 0;
 }
 
-static int32_t _pxp_dispatch(lv_draw_unit_t * draw_unit, lv_layer_t * layer)
+static int32_t _pxp_dispatch(lv_draw_unit_t* draw_unit, lv_layer_t* layer)
 {
-    lv_draw_pxp_unit_t * draw_pxp_unit = (lv_draw_pxp_unit_t *) draw_unit;
+    lv_draw_pxp_unit_t* draw_pxp_unit = (lv_draw_pxp_unit_t*)draw_unit;
 
     /* Return immediately if it's busy with draw task. */
-    if(draw_pxp_unit->task_act)
+    if (draw_pxp_unit->task_act)
         return 0;
 
     /* Try to get an ready to draw. */
-    lv_draw_task_t * t = lv_draw_get_available_task(layer, NULL, DRAW_UNIT_ID_PXP);
+    lv_draw_task_t* t = lv_draw_get_available_task(layer, NULL, DRAW_UNIT_ID_PXP);
 
-    if(t == NULL || t->preferred_draw_unit_id != DRAW_UNIT_ID_PXP)
+    if (t == NULL || t->preferred_draw_unit_id != DRAW_UNIT_ID_PXP)
         return LV_DRAW_UNIT_IDLE;
 
-    if(lv_draw_layer_alloc_buf(layer) == NULL)
+    if (lv_draw_layer_alloc_buf(layer) == NULL)
         return LV_DRAW_UNIT_IDLE;
 
     t->state = LV_DRAW_TASK_STATE_IN_PROGRESS;
     draw_pxp_unit->task_act = t;
 
 #if LV_USE_PXP_DRAW_THREAD
-    /* Let the render thread work. */
-    if(draw_pxp_unit->inited)
-        lv_thread_sync_signal(&draw_pxp_unit->sync);
+/* Let the render thread work. */
+if(draw_pxp_unit->inited)
+lv_thread_sync_signal (&draw_pxp_unit->sync);
 #else
-    _pxp_execute_drawing(draw_pxp_unit);
+_pxp_execute_drawing (draw_pxp_unit);
 
-    draw_pxp_unit->task_act->state = LV_DRAW_TASK_STATE_FINISHED;
-    draw_pxp_unit->task_act = NULL;
+draw_pxp_unit->task_act->state= LV_DRAW_TASK_STATE_FINISHED;
+draw_pxp_unit->task_act= NULL;
 
-    /* The draw unit is free now. Request a new dispatching as it can get a new task. */
-    lv_draw_dispatch_request();
+/* The draw unit is free now. Request a new dispatching as it can get a new task. */
+lv_draw_dispatch_request();
 #endif
 
-    return 1;
+return 1;
 }
 
-static int32_t _pxp_delete(lv_draw_unit_t * draw_unit)
+static int32_t _pxp_delete(lv_draw_unit_t* draw_unit)
 {
-#if LV_USE_PXP_DRAW_THREAD
-    lv_draw_pxp_unit_t * draw_pxp_unit = (lv_draw_pxp_unit_t *) draw_unit;
 
-    LV_LOG_INFO("Cancel PXP draw thread.");
-    draw_pxp_unit->exit_status = true;
+#if LV_USE_PXP_DRAW_THREAD
+lv_draw_pxp_unit_t* draw_pxp_unit = (lv_draw_pxp_unit_t*)draw_unit;
+
+LV_LOG_INFO ("Cancel PXP draw thread.");
+draw_pxp_unit->exit_status=true;
 
     if(draw_pxp_unit->inited)
-        lv_thread_sync_signal(&draw_pxp_unit->sync);
+lv_thread_sync_signal (&draw_pxp_unit->sync);
 
-    lv_result_t res = lv_thread_delete(&draw_pxp_unit->thread);
+lv_result_t res = lv_thread_delete(&draw_pxp_unit->thread);
 
     return res;
 #else
-    LV_UNUSED(draw_unit);
+LV_UNUSED (draw_unit);
 
     return 0;
 #endif
 }
 
-static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u)
+static void _pxp_execute_drawing(lv_draw_pxp_unit_t* u)
 {
-    lv_draw_task_t * t = u->task_act;
-    lv_layer_t * layer = t->target_layer;
-    lv_draw_buf_t * draw_buf = layer->draw_buf;
+    lv_draw_task_t* t = u->task_act;
+    lv_layer_t* layer = t->target_layer;
+    lv_draw_buf_t* draw_buf = layer->draw_buf;
 
     lv_area_t draw_area;
-    if(!lv_area_intersect(&draw_area, &t->area, &t->clip_area))
+    if (!lv_area_intersect(&draw_area, &t->area, &t->clip_area))
         return; /*Fully clipped, nothing to do*/
 
     /* Make area relative to the buffer */
@@ -393,10 +404,10 @@ static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u)
     lv_draw_buf_invalidate_cache(draw_buf, &draw_area);
 
 #if LV_USE_PARALLEL_DRAW_DEBUG
-    t->draw_unit = &u->base_unit;
+t->draw_unit=&u->base_unit;
 #endif
 
-    switch(t->type) {
+switch(t->type) {
         case LV_DRAW_TASK_TYPE_FILL:
             lv_draw_pxp_fill(t);
             break;
@@ -411,8 +422,8 @@ static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u)
     }
 
 #if LV_USE_PARALLEL_DRAW_DEBUG
-    /*Layers manage it for themselves*/
-    if(t->type != LV_DRAW_TASK_TYPE_LAYER) {
+/*Layers manage it for themselves*/
+if(t->type!= LV_DRAW_TASK_TYPE_LAYER) {
         lv_area_t draw_area;
         if(!lv_area_intersect(&draw_area, &t->area, &t->clip_area))
             return;
@@ -453,23 +464,26 @@ static void _pxp_execute_drawing(lv_draw_pxp_unit_t * u)
 }
 
 #if LV_USE_PXP_DRAW_THREAD
-static void _pxp_render_thread_cb(void * ptr)
+static void _pxp_render_thread_cb(void* ptr)
 {
-    lv_draw_pxp_unit_t * u = ptr;
+    lv_draw_pxp_unit_t* u = ptr;
 
     lv_thread_sync_init(&u->sync);
     u->inited = true;
 
-    while(1) {
+    while (1)
+    {
         /* Wait for sync if there is no task set. */
-        while(u->task_act == NULL) {
-            if(u->exit_status)
+        while (u->task_act == NULL)
+        {
+            if (u->exit_status)
                 break;
 
             lv_thread_sync_wait(&u->sync);
         }
 
-        if(u->exit_status) {
+        if (u->exit_status)
+        {
             LV_LOG_INFO("Ready to exit PXP draw thread.");
             break;
         }

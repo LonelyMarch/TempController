@@ -48,14 +48,14 @@
  * Linear output is the default.
  */
 #ifndef LV_GLTF_LINEAR_OUTPUT
-    #define LV_GLTF_LINEAR_OUTPUT 1
+#define LV_GLTF_LINEAR_OUTPUT 1
 #endif
 
 /* If tone-mapping is applied, this adjusts the brightness
  * and color range of the output. Use stringified values.
  */
 #ifndef LV_GLTF_TONEMAP_GAMMA
-    #define LV_GLTF_TONEMAP_GAMMA LV_GLTF_GAMMA_STANDARD
+#define LV_GLTF_TONEMAP_GAMMA LV_GLTF_GAMMA_STANDARD
 #endif
 
 /**********************
@@ -64,16 +64,19 @@
 
 #ifdef __cplusplus
 extern "C" {
+
 #endif/* __cplusplus*/
 
 
-typedef struct {
+typedef struct
+{
     uint32_t texture;
     uint32_t renderbuffer;
     unsigned framebuffer;
 } lv_gltf_renwin_state_t;
 
-typedef struct  {
+typedef struct
+{
     lv_gltf_renwin_state_t render_state;
     lv_gltf_renwin_state_t opaque_render_state;
 
@@ -84,13 +87,15 @@ typedef struct  {
     bool render_opaque_buffer;
 } lv_gltf_view_state_t;
 
-typedef struct {
+typedef struct
+{
     float pitch;
     float yaw;
     float distance;
-    float fov;                  // The vertical FOV, in degrees.  If this is zero, the view will be orthographic (non-perspective)
-    int32_t render_width;       // If anti-aliasing is not applied this frame, these are the same as width/height, if antialiasing
-    int32_t render_height;      // is enabled, these are width/height * antialias upscale power (currently 2.0)
+    float fov; // The vertical FOV, in degrees.  If this is zero, the view will be orthographic (non-perspective)
+    int32_t render_width;
+    // If anti-aliasing is not applied this frame, these are the same as width/height, if antialiasing
+    int32_t render_height; // is enabled, these are width/height * antialias upscale power (currently 2.0)
     float focal_x;
     float focal_y;
     float focal_z;
@@ -98,12 +103,13 @@ typedef struct {
     int32_t animation_speed_ratio;
     lv_gltf_aa_mode_t aa_mode;
     lv_gltf_bg_mode_t bg_mode;
-    float blur_bg;              /** How much to blur the environment background, between 0.0 and 1.0 */
-    float env_pow;              /** Environmental brightness, 1.8 by default */
-    float exposure;             /** Image exposure level, 1.0 default */
+    float blur_bg; /** How much to blur the environment background, between 0.0 and 1.0 */
+    float env_pow; /** Environmental brightness, 1.8 by default */
+    float exposure; /** Image exposure level, 1.0 default */
 } lv_gltf_view_desc_t;
 
-typedef struct {
+typedef struct
+{
     /* Blend state */
     GLboolean blend_enabled;
     GLint blend_src;
@@ -156,20 +162,21 @@ typedef struct {
 #include <fastgltf/types.hpp>
 #include <map>
 
-struct _lv_gltf_t {
+struct _lv_gltf_t
+{
     lv_3dtexture_t texture;
     lv_array_t models;
     lv_gltf_view_state_t state;
     lv_gltf_view_desc_t desc;
     lv_gltf_view_desc_t last_desc;
     lv_opengl_shader_manager_t shader_manager;
-    lv_gltf_environment_t * environment;
+    lv_gltf_environment_t* environment;
     fastgltf::math::fmat4x4 view_matrix;
     fastgltf::math::fmat4x4 projection_matrix;
     fastgltf::math::fmat4x4 view_projection_matrix;
     fastgltf::math::fvec3 camera_pos;
 
-    std::map<int32_t, std::map<fastgltf::Node *, fastgltf::math::fmat4x4>> ibm_by_skin_then_node;
+    std::map<int32_t, std::map<fastgltf::Node*, fastgltf::math::fmat4x4>> ibm_by_skin_then_node;
     bool owns_environment;
 };
 

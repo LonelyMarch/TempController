@@ -33,7 +33,8 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-typedef struct _mem_header_t {
+typedef struct _mem_header_t
+{
     size_t size;
     uint8_t data[0];
 } mem_header_t;
@@ -50,33 +51,33 @@ void lv_mem_deinit(void)
     return; /*Nothing to deinit*/
 }
 
-void * lv_malloc_core(size_t size)
+void* lv_malloc_core(size_t size)
 {
     size_t size_with_header = size + sizeof(mem_header_t);
-    mem_header_t * ptr = NULL;
+    mem_header_t* ptr = NULL;
 
-    if(gLvEfiBS->AllocatePool(EfiBootServicesData, size_with_header, (void **)&ptr) != EFI_SUCCESS) return NULL;
+    if (gLvEfiBS->AllocatePool(EfiBootServicesData, size_with_header, (void**)&ptr) != EFI_SUCCESS) return NULL;
 
     ptr->size = size;
 
     return ptr->data;
 }
 
-void * lv_realloc_core(void * p, size_t new_size)
+void* lv_realloc_core(void* p, size_t new_size)
 {
-    mem_header_t * p_header = NULL;
+    mem_header_t* p_header = NULL;
     uintptr_t p_address = (uintptr_t)p;
-    void * p_new = NULL;
+    void* p_new = NULL;
 
-    if(p == NULL) return lv_malloc_core(new_size);
+    if (p == NULL) return lv_malloc_core(new_size);
     // Check for invalid pointers
-    if(p_address < sizeof(mem_header_t)) return NULL;
+    if (p_address < sizeof(mem_header_t)) return NULL;
 
     p_address -= sizeof(mem_header_t);
-    p_header = (mem_header_t *) p_address;
+    p_header = (mem_header_t*)p_address;
 
     // UEFI supports no realloc, if the size grows a new memory block has to be allocated
-    if(p_header->size > new_size) return p;
+    if (p_header->size > new_size) return p;
 
     p_new = lv_malloc_core(new_size);
     lv_memcpy(p_new, p, p_header->size);
@@ -85,17 +86,17 @@ void * lv_realloc_core(void * p, size_t new_size)
     return p_new;
 }
 
-void lv_free_core(void * p)
+void lv_free_core(void* p)
 {
     uintptr_t p_address = (uintptr_t)p;
-    if(p_address < sizeof(mem_header_t)) return;
+    if (p_address < sizeof(mem_header_t)) return;
 
     p_address -= sizeof(mem_header_t);
 
-    gLvEfiBS->FreePool((void *)p_address);
+    gLvEfiBS->FreePool((void*)p_address);
 }
 
-void lv_mem_monitor_core(lv_mem_monitor_t * mon_p)
+void lv_mem_monitor_core(lv_mem_monitor_t* mon_p)
 {
     /*Not supported*/
     LV_UNUSED(mon_p);

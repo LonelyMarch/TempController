@@ -44,7 +44,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef enum {
+typedef enum
+{
     LV_DRAW_TASK_TYPE_NONE = 0,
     LV_DRAW_TASK_TYPE_FILL,
     LV_DRAW_TASK_TYPE_BORDER,
@@ -67,7 +68,8 @@ typedef enum {
 #endif
 } lv_draw_task_type_t;
 
-typedef enum {
+typedef enum
+{
     /** Waiting for an other task to be finished.
      * For example in case of `LV_DRAW_TASK_TYPE_LAYER` (used to blend a layer)
      * is blocked until all the draw tasks of the layer is rendered. */
@@ -93,21 +95,22 @@ typedef enum {
     LV_DRAW_TASK_STATE_FINISHED,
 } lv_draw_task_state_t;
 
-struct _lv_layer_t  {
+struct _lv_layer_t
+{
     /** Target draw buffer of the layer */
-    lv_draw_buf_t * draw_buf;
+    lv_draw_buf_t* draw_buf;
 
     /** Linked list of draw tasks */
-    lv_draw_task_t * draw_task_head;
+    lv_draw_task_t* draw_task_head;
 
     /** Parent layer */
-    lv_layer_t * parent;
+    lv_layer_t* parent;
 
     /** Next layer */
-    lv_layer_t * next;
+    lv_layer_t* next;
 
     /** User data */
-    void * user_data;
+    void* user_data;
 
     /** The absolute coordinates of the buffer */
     lv_area_t buf_area;
@@ -146,9 +149,10 @@ struct _lv_layer_t  {
     lv_opa_t opa;
 };
 
-typedef struct {
+typedef struct
+{
     /**The widget for which draw descriptor was created */
-    lv_obj_t * obj;
+    lv_obj_t* obj;
 
     /**The widget part for which draw descriptor was created */
     uint32_t part;
@@ -160,7 +164,7 @@ typedef struct {
     uint32_t id2;
 
     /**The target layer */
-    lv_layer_t * layer;
+    lv_layer_t* layer;
 
     /*Drop shadow is part of every draw dsc as anything can have drop shadow*/
 
@@ -177,7 +181,7 @@ typedef struct {
     lv_opa_t drop_shadow_opa;
 
     /**Drop shadow blur radius*/
-    int32_t drop_shadow_blur_radius: 20;
+    int32_t drop_shadow_blur_radius : 20;
 
     /**Drop shadow blur quality*/
     lv_blur_quality_t drop_shadow_quality : 3;
@@ -186,7 +190,7 @@ typedef struct {
     size_t dsc_size;
 
     /**Any custom user data*/
-    void * user_data;
+    void* user_data;
 } lv_draw_dsc_base_t;
 
 /**********************
@@ -208,7 +212,7 @@ void lv_draw_deinit(void);
  * @param size      the size to allocate. E.g. `sizeof(my_draw_unit_t)`,
  *                  where the first element of `my_draw_unit_t` is `lv_draw_unit_t`.
  */
-void * lv_draw_create_unit(size_t size);
+void* lv_draw_create_unit(size_t size);
 
 /**
  * Add an empty draw task to the draw task list of a layer.
@@ -217,7 +221,7 @@ void * lv_draw_create_unit(size_t size);
  * @return          the created draw task which needs to be
  *                  further configured e.g. by added a draw descriptor
  */
-lv_draw_task_t * lv_draw_add_task(lv_layer_t * layer, const lv_area_t * coords, lv_draw_task_type_t type);
+lv_draw_task_t* lv_draw_add_task(lv_layer_t* layer, const lv_area_t* coords, lv_draw_task_type_t type);
 
 /**
  * Needs to be called when a draw task is created and configured.
@@ -272,7 +276,7 @@ uint32_t lv_draw_get_unit_count(void);
  * @param draw_unit_id      check the task where `preferred_draw_unit_id` equals this value or `LV_DRAW_UNIT_NONE`
  * @return                  an available draw task or NULL if there is not any
  */
-lv_draw_task_t * lv_draw_get_available_task(lv_layer_t * layer, lv_draw_task_t * t_prev, uint8_t draw_unit_id);
+lv_draw_task_t* lv_draw_get_available_task(lv_layer_t* layer, lv_draw_task_t* t_prev, uint8_t draw_unit_id);
 
 /**
  * Find and available draw task
@@ -281,7 +285,7 @@ lv_draw_task_t * lv_draw_get_available_task(lv_layer_t * layer, lv_draw_task_t *
  * @param draw_unit_id      check the task where `preferred_draw_unit_id` equals this value or `LV_DRAW_UNIT_NONE`
  * @return                  an available draw task or NULL if there is not any
  */
-lv_draw_task_t * lv_draw_get_next_available_task(lv_layer_t * layer, lv_draw_task_t * t_prev, uint8_t draw_unit_id);
+lv_draw_task_t* lv_draw_get_next_available_task(lv_layer_t* layer, lv_draw_task_t* t_prev, uint8_t draw_unit_id);
 
 /**
  * Tell how many draw task are waiting to be drawn on the area of `t_check`.
@@ -300,7 +304,7 @@ uint32_t lv_draw_get_dependent_count(lv_draw_task_t * t_check);
  * @param code              the event code
  * @param param             the event parameter
  */
-void lv_draw_unit_send_event(const char * name, lv_event_code_t code, void * param);
+void lv_draw_unit_send_event(const char* name, lv_event_code_t code, void* param);
 
 /**
  * Initialize a layer
@@ -321,7 +325,7 @@ void lv_layer_reset(lv_layer_t * layer);
  * @param area              the areas of the layer (absolute coordinates)
  * @return                  the new target_layer or NULL on error
  */
-lv_layer_t * lv_draw_layer_create(lv_layer_t * parent_layer, lv_color_format_t color_format, const lv_area_t * area);
+lv_layer_t* lv_draw_layer_create(lv_layer_t* parent_layer, lv_color_format_t color_format, const lv_area_t* area);
 
 /**
  * Initialize a layer which is allocated by the user
@@ -331,15 +335,15 @@ lv_layer_t * lv_draw_layer_create(lv_layer_t * parent_layer, lv_color_format_t c
  * @param area              the areas of the layer (absolute coordinates)
  * @return                  the new target_layer or NULL on error
  */
-void lv_draw_layer_init(lv_layer_t * layer, lv_layer_t * parent_layer, lv_color_format_t color_format,
-                        const lv_area_t * area);
+void lv_draw_layer_init(lv_layer_t* layer, lv_layer_t* parent_layer, lv_color_format_t color_format,
+                        const lv_area_t* area);
 
 /**
  * Try to allocate a buffer for the layer.
  * @param layer             pointer to a layer
  * @return                  pointer to the allocated aligned buffer or NULL on failure
  */
-void * lv_draw_layer_alloc_buf(lv_layer_t * layer);
+void* lv_draw_layer_alloc_buf(lv_layer_t * layer);
 
 /**
  * Got to a pixel at X and Y coordinate on a layer
@@ -348,35 +352,34 @@ void * lv_draw_layer_alloc_buf(lv_layer_t * layer);
  * @param y                 the target X coordinate
  * @return                  `buf` offset to point to the given X and Y coordinate
  */
-void * lv_draw_layer_go_to_xy(lv_layer_t * layer, int32_t x, int32_t y);
+void* lv_draw_layer_go_to_xy(lv_layer_t* layer, int32_t x, int32_t y);
 
 /**
  * Get the type of a draw task
  * @param t   the draw task to get the type of
  * @return    the draw task type
 */
-lv_draw_task_type_t lv_draw_task_get_type(const lv_draw_task_t * t);
+lv_draw_task_type_t lv_draw_task_get_type(const lv_draw_task_t* t);
 
 /**
  * Get the draw descriptor of a draw task
  * @param t   the draw task to get the draw descriptor of
  * @return    a void pointer to the draw descriptor
 */
-void * lv_draw_task_get_draw_dsc(const lv_draw_task_t * t);
+void* lv_draw_task_get_draw_dsc(const lv_draw_task_t* t);
 
 /**
  * Get the draw area of a draw task
  * @param t      the draw task to get the draw area of
  * @param area   the destination where the draw area will be stored
 */
-void lv_draw_task_get_area(const lv_draw_task_t * t, lv_area_t * area);
+void lv_draw_task_get_area(const lv_draw_task_t* t, lv_area_t* area);
 
 
+lv_layer_t* lv_draw_layer_create_drop_shadow(lv_layer_t* parent_layer, const lv_draw_dsc_base_t* base,
+                                             const lv_area_t* area);
 
-lv_layer_t * lv_draw_layer_create_drop_shadow(lv_layer_t * parent_layer, const lv_draw_dsc_base_t * base,
-                                              const lv_area_t * area);
-
-void lv_draw_layer_finish_drop_shadow(lv_layer_t * drop_shadow_layer, const lv_draw_dsc_base_t * base);
+void lv_draw_layer_finish_drop_shadow(lv_layer_t* drop_shadow_layer, const lv_draw_dsc_base_t* base);
 
 
 /**********************

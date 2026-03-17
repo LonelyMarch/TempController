@@ -28,8 +28,8 @@
 *  STATIC PROTOTYPES
 **********************/
 
-static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
-                                              const lv_draw_border_dsc_t * dsc,
+static enum NVGwinding path_append_inner_rect(NVGcontext* ctx,
+                                              const lv_draw_border_dsc_t* dsc,
                                               int32_t x, int32_t y, int32_t w, int32_t h,
                                               float r);
 
@@ -45,14 +45,15 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
 *   GLOBAL FUNCTIONS
 **********************/
 
-void lv_draw_nanovg_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_nanovg_border(lv_draw_task_t* t, const lv_draw_border_dsc_t* dsc, const lv_area_t* coords)
 {
     LV_PROFILER_DRAW_BEGIN;
 
-    lv_draw_nanovg_unit_t * u = (lv_draw_nanovg_unit_t *)t->draw_unit;
+    lv_draw_nanovg_unit_t* u = (lv_draw_nanovg_unit_t*)t->draw_unit;
 
     lv_area_t clip_area;
-    if(!lv_area_intersect(&clip_area, coords, &t->clip_area)) {
+    if (!lv_area_intersect(&clip_area, coords, &t->clip_area))
+    {
         LV_PROFILER_DRAW_END;
         return;
     }
@@ -60,7 +61,8 @@ void lv_draw_nanovg_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc,
     int32_t w = lv_area_get_width(coords);
     int32_t h = lv_area_get_height(coords);
     float r_out = dsc->radius;
-    if(dsc->radius) {
+    if (dsc->radius)
+    {
         float r_short = LV_MIN(w, h) / 2.0f;
         r_out = LV_MIN(r_out, r_short);
     }
@@ -89,8 +91,8 @@ void lv_draw_nanovg_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc,
 *   STATIC FUNCTIONS
 **********************/
 
-static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
-                                              const lv_draw_border_dsc_t * dsc,
+static enum NVGwinding path_append_inner_rect(NVGcontext* ctx,
+                                              const lv_draw_border_dsc_t* dsc,
                                               int32_t x, int32_t y, int32_t w, int32_t h,
                                               float r)
 {
@@ -102,7 +104,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
     const float border_w_max = LV_MIN(half_w, half_h);
 
     /* normal fill, no inner rect */
-    if(border_w >= border_w_max) {
+    if (border_w >= border_w_max)
+    {
         LV_PROFILER_DRAW_END;
         return NVG_CCW;
     }
@@ -110,7 +113,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
     const float r_in = r - border_w;
 
     /* full border, simple rect */
-    if(dsc->side == LV_BORDER_SIDE_FULL) {
+    if (dsc->side == LV_BORDER_SIDE_FULL)
+    {
         lv_nanovg_path_append_rect(ctx,
                                    x + border_w, y + border_w,
                                    w - border_w * 2, h - border_w * 2,
@@ -123,8 +127,10 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
     nvgBeginPath(ctx);
 
     /* no-radius case */
-    if(dsc->radius <= 0) {
-        if(dsc->side & LV_BORDER_SIDE_TOP) {
+    if (dsc->radius <= 0)
+    {
+        if (dsc->side & LV_BORDER_SIDE_TOP)
+        {
             lv_nanovg_path_append_rect(ctx,
                                        x,
                                        y,
@@ -132,7 +138,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
                                        border_w,
                                        0);
         }
-        if(dsc->side & LV_BORDER_SIDE_LEFT) {
+        if (dsc->side & LV_BORDER_SIDE_LEFT)
+        {
             lv_nanovg_path_append_rect(ctx,
                                        x,
                                        y,
@@ -140,7 +147,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
                                        h,
                                        0);
         }
-        if(dsc->side & LV_BORDER_SIDE_BOTTOM) {
+        if (dsc->side & LV_BORDER_SIDE_BOTTOM)
+        {
             lv_nanovg_path_append_rect(ctx,
                                        x,
                                        y + h - border_w,
@@ -148,7 +156,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
                                        border_w,
                                        0);
         }
-        if(dsc->side & LV_BORDER_SIDE_RIGHT) {
+        if (dsc->side & LV_BORDER_SIDE_RIGHT)
+        {
             lv_nanovg_path_append_rect(ctx,
                                        x + w - border_w,
                                        y,
@@ -172,7 +181,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
     const float c4_y = c3_y;
 
     /* When border_w > r, No need to calculate the intersection of the arc and the line */
-    if(r_in <= 0) {
+    if (r_in <= 0)
+    {
         const float p1_x = x;
         const float p1_y = y + border_w;
         const float p2_x = x;
@@ -209,7 +219,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         const float p16_x = x;
         const float p16_y = y + h - border_w;
 
-        if(dsc->side & LV_BORDER_SIDE_BOTTOM) {
+        if (dsc->side & LV_BORDER_SIDE_BOTTOM)
+        {
             nvgMoveTo(ctx, p16_x, p16_y);
             nvgLineTo(ctx, p9_x, p9_y);
             nvgLineTo(ctx, p10_x, p10_y);
@@ -219,7 +230,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
             nvgClosePath(ctx);
         }
 
-        if(dsc->side & LV_BORDER_SIDE_TOP) {
+        if (dsc->side & LV_BORDER_SIDE_TOP)
+        {
             nvgMoveTo(ctx, p1_x, p1_y);
             nvgLineTo(ctx, p2_x, p2_y);
             lv_nanovg_path_append_arc_right_angle(ctx, p2_x, p2_y, c1_x, c1_y, p3_x, p3_y);
@@ -229,7 +241,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
             nvgClosePath(ctx);
         }
 
-        if(dsc->side & LV_BORDER_SIDE_LEFT) {
+        if (dsc->side & LV_BORDER_SIDE_LEFT)
+        {
             nvgMoveTo(ctx, p4_x, p4_y);
             nvgLineTo(ctx, p13_x, p13_y);
             nvgLineTo(ctx, p14_x, p14_y);
@@ -239,7 +252,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
             nvgClosePath(ctx);
         }
 
-        if(dsc->side & LV_BORDER_SIDE_RIGHT) {
+        if (dsc->side & LV_BORDER_SIDE_RIGHT)
+        {
             nvgMoveTo(ctx, p5_x, p5_y);
             nvgLineTo(ctx, p6_x, p6_y);
             lv_nanovg_path_append_arc_right_angle(ctx, p6_x, p6_y, c2_x, c2_y, p7_x, p7_y);
@@ -308,7 +322,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
     const float p24_x = x + border_w;
     const float p24_y = y + h - r;
 
-    if(dsc->side & LV_BORDER_SIDE_BOTTOM) {
+    if (dsc->side & LV_BORDER_SIDE_BOTTOM)
+    {
         nvgMoveTo(ctx, p21_x, p21_y);
         nvgLineTo(ctx, p16_x, p16_y);
         lv_nanovg_path_append_arc(ctx, c3_x, c3_y, r, sweep_beta, sweep_alpha, false);
@@ -317,7 +332,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(dsc->side & LV_BORDER_SIDE_TOP) {
+    if (dsc->side & LV_BORDER_SIDE_TOP)
+    {
         nvgMoveTo(ctx, p4_x, p4_y);
         lv_nanovg_path_append_arc(ctx, c1_x, c1_y, r, 270 - sweep_alpha, sweep_alpha, false);
         nvgLineTo(ctx, p8_x, p8_y);
@@ -325,7 +341,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(dsc->side & LV_BORDER_SIDE_LEFT) {
+    if (dsc->side & LV_BORDER_SIDE_LEFT)
+    {
         nvgMoveTo(ctx, p3_x, p3_y);
         nvgLineTo(ctx, p22_x, p22_y);
         lv_nanovg_path_append_arc(ctx, c4_x, c4_y, r, 90 + sweep_beta, sweep_alpha, false);
@@ -334,7 +351,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(dsc->side & LV_BORDER_SIDE_RIGHT) {
+    if (dsc->side & LV_BORDER_SIDE_RIGHT)
+    {
         nvgMoveTo(ctx, p10_x, p10_y);
         lv_nanovg_path_append_arc(ctx, c2_x, c2_y, r, 270 + sweep_beta, sweep_alpha, false);
         nvgLineTo(ctx, p14_x, p14_y);
@@ -344,7 +362,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
 
     /* Draw the rounded corners adjacent to the border */
 
-    if(HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_LEFT)) {
+    if (HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_LEFT))
+    {
         nvgMoveTo(ctx, p2_x, p2_y);
         lv_nanovg_path_append_arc_right_angle(ctx, p2_x, p2_y, c1_x, c1_y, p5_x, p5_y);
         nvgLineTo(ctx, p6_x, p6_y);
@@ -352,7 +371,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_RIGHT)) {
+    if (HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_TOP | LV_BORDER_SIDE_RIGHT))
+    {
         nvgMoveTo(ctx, p8_x, p8_y);
         lv_nanovg_path_append_arc_right_angle(ctx, p8_x, p8_y, c2_x, c2_y, p11_x, p11_y);
         nvgLineTo(ctx, p12_x, p12_y);
@@ -360,7 +380,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_LEFT)) {
+    if (HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_LEFT))
+    {
         nvgMoveTo(ctx, p20_x, p20_y);
         lv_nanovg_path_append_arc_right_angle(ctx, p20_x, p20_y, c4_x, c4_y, p23_x, p23_y);
         nvgLineTo(ctx, p24_x, p24_y);
@@ -368,7 +389,8 @@ static enum NVGwinding path_append_inner_rect(NVGcontext * ctx,
         nvgClosePath(ctx);
     }
 
-    if(HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_RIGHT)) {
+    if (HAS_BORDER_SIDE(dsc->side, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_RIGHT))
+    {
         nvgMoveTo(ctx, p14_x, p14_y);
         lv_nanovg_path_append_arc_right_angle(ctx, p14_x, p14_y, c3_x, c3_y, p17_x, p17_y);
         nvgLineTo(ctx, p18_x, p18_y);

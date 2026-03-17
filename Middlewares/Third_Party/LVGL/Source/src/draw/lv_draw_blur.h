@@ -26,7 +26,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-typedef struct {
+typedef struct
+{
     lv_draw_dsc_base_t base;
 
     /**
@@ -43,7 +44,6 @@ typedef struct {
      * Sets whether to prefer speed or precision
      */
     lv_blur_quality_t quality;
-
 } lv_draw_blur_dsc_t;
 
 /**********************
@@ -54,14 +54,14 @@ typedef struct {
  * Initialize a blur draw descriptor
  * @param dsc       pointer to a draw descriptor
  */
-void lv_draw_blur_dsc_init(lv_draw_blur_dsc_t * dsc);
+void lv_draw_blur_dsc_init(lv_draw_blur_dsc_t* dsc);
 
 /**
  * Try to get a blur draw descriptor from a draw task.
  * @param task      draw task
  * @return          the task's draw descriptor or NULL if the task is not of type LV_DRAW_TASK_TYPE_BLUR
  */
-lv_draw_blur_dsc_t * lv_draw_task_get_blur_dsc(lv_draw_task_t * task);
+lv_draw_blur_dsc_t* lv_draw_task_get_blur_dsc(lv_draw_task_t * task);
 
 /**
  * Create a blur draw task
@@ -69,7 +69,7 @@ lv_draw_blur_dsc_t * lv_draw_task_get_blur_dsc(lv_draw_task_t * task);
  * @param dsc       pointer to an initialized `lv_draw_blur_dsc_t` variable
  * @param coords    coordinates of the character
  */
-void lv_draw_blur(lv_layer_t * layer, const lv_draw_blur_dsc_t * dsc, const lv_area_t * coords);
+void lv_draw_blur(lv_layer_t* layer, const lv_draw_blur_dsc_t* dsc, const lv_area_t* coords);
 
 /**********************
  *      MACROS

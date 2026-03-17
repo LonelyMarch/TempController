@@ -40,14 +40,18 @@
 /* Internal Class Implementation                                        */
 /************************************************************************/
 
-static bool _appendShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox, const string& svgPath);
-static bool _appendClipShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox, const string& svgPath, const Matrix* transform);
-static unique_ptr<Scene> _sceneBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox, const string& svgPath, bool mask, int depth, bool* isMaskWhite = nullptr);
+static bool _appendShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox,
+                         const string& svgPath);
+static bool _appendClipShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox,
+                             const string& svgPath, const Matrix* transform);
+static unique_ptr<Scene> _sceneBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox,
+                                           const string& svgPath, bool mask, int depth, bool* isMaskWhite = nullptr);
 
 
 static inline bool _isGroupType(SvgNodeType type)
 {
-    if (type == SvgNodeType::Doc || type == SvgNodeType::G || type == SvgNodeType::Use || type == SvgNodeType::ClipPath || type == SvgNodeType::Symbol) return true;
+    if (type == SvgNodeType::Doc || type == SvgNodeType::G || type == SvgNodeType::Use || type == SvgNodeType::ClipPath
+        || type == SvgNodeType::Symbol) return true;
     return false;
 }
 
@@ -59,7 +63,8 @@ static Box _boundingBox(const Shape* shape)
     float x, y, w, h;
     shape->bounds(&x, &y, &w, &h, false);
 
-    if (auto strokeW = shape->strokeWidth()) {
+    if (auto strokeW = shape->strokeWidth())
+    {
         x += 0.5f * strokeW;
         y += 0.5f * strokeW;
         w -= strokeW;
@@ -100,15 +105,19 @@ static unique_ptr<LinearGradient> _applyLinearGradientProperty(SvgStyleGradient*
     Matrix finalTransform = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     if (isTransform) finalTransform = *g->transform;
 
-    if (g->userSpace) {
+    if (g->userSpace)
+    {
         g->linear->x1 = g->linear->x1 * vBox.w;
         g->linear->y1 = g->linear->y1 * vBox.h;
         g->linear->x2 = g->linear->x2 * vBox.w;
         g->linear->y2 = g->linear->y2 * vBox.h;
-    } else {
+    }
+    else
+    {
         Matrix m = {vBox.w, 0, vBox.x, 0, vBox.h, vBox.y, 0, 0, 1};
         if (isTransform) _transformMultiply(&m, &finalTransform);
-        else {
+        else
+        {
             finalTransform = m;
             isTransform = true;
         }
@@ -121,12 +130,14 @@ static unique_ptr<LinearGradient> _applyLinearGradientProperty(SvgStyleGradient*
 
     //Update the stops
     stopCount = g->stops.count;
-    if (stopCount > 0) {
+    if (stopCount > 0)
+    {
         stops = (Fill::ColorStop*)lv_zalloc(stopCount * sizeof(Fill::ColorStop));
         LV_ASSERT_MALLOC(stops);
         if (!stops) return fillGrad;
         auto prevOffset = 0.0f;
-        for (uint32_t i = 0; i < g->stops.count; ++i) {
+        for (uint32_t i = 0; i < g->stops.count; ++i)
+        {
             auto colorStop = &g->stops[i];
             //Use premultiplied color
             stops[i].r = colorStop->r;
@@ -148,7 +159,7 @@ static unique_ptr<LinearGradient> _applyLinearGradientProperty(SvgStyleGradient*
 
 static unique_ptr<RadialGradient> _applyRadialGradientProperty(SvgStyleGradient* g, const Box& vBox, int opacity)
 {
-    Fill::ColorStop *stops;
+    Fill::ColorStop* stops;
     int stopCount = 0;
     auto fillGrad = RadialGradient::gen();
 
@@ -156,7 +167,8 @@ static unique_ptr<RadialGradient> _applyRadialGradientProperty(SvgStyleGradient*
     Matrix finalTransform = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     if (isTransform) finalTransform = *g->transform;
 
-    if (g->userSpace) {
+    if (g->userSpace)
+    {
         //The radius scaling is done according to the Units section:
         //https://www.w3.org/TR/2015/WD-SVG2-20150915/coords.html
         g->radial->cx = g->radial->cx * vBox.w;
@@ -165,10 +177,13 @@ static unique_ptr<RadialGradient> _applyRadialGradientProperty(SvgStyleGradient*
         g->radial->fx = g->radial->fx * vBox.w;
         g->radial->fy = g->radial->fy * vBox.h;
         g->radial->fr = g->radial->fr * sqrtf(powf(vBox.w, 2.0f) + powf(vBox.h, 2.0f)) / sqrtf(2.0f);
-    } else {
+    }
+    else
+    {
         Matrix m = {vBox.w, 0, vBox.x, 0, vBox.h, vBox.y, 0, 0, 1};
         if (isTransform) _transformMultiply(&m, &finalTransform);
-        else {
+        else
+        {
             finalTransform = m;
             isTransform = true;
         }
@@ -181,12 +196,14 @@ static unique_ptr<RadialGradient> _applyRadialGradientProperty(SvgStyleGradient*
 
     //Update the stops
     stopCount = g->stops.count;
-    if (stopCount > 0) {
+    if (stopCount > 0)
+    {
         stops = (Fill::ColorStop*)lv_zalloc(stopCount * sizeof(Fill::ColorStop));
         LV_ASSERT_MALLOC(stops);
         if (!stops) return fillGrad;
         auto prevOffset = 0.0f;
-        for (uint32_t i = 0; i < g->stops.count; ++i) {
+        for (uint32_t i = 0; i < g->stops.count; ++i)
+        {
             auto colorStop = &g->stops[i];
             //Use premultiplied color
             stops[i].r = colorStop->r;
@@ -207,26 +224,31 @@ static unique_ptr<RadialGradient> _applyRadialGradientProperty(SvgStyleGradient*
 
 
 //The SVG standard allows only for 'use' nodes that point directly to a basic shape.
-static bool _appendClipUseNode(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox, const string& svgPath)
+static bool _appendClipUseNode(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox,
+                               const string& svgPath)
 {
     if (node->child.count != 1) return false;
     auto child = *(node->child.data);
 
     Matrix finalTransform = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     if (node->transform) finalTransform = *node->transform;
-    if (node->node.use.x != 0.0f || node->node.use.y != 0.0f) {
+    if (node->node.use.x != 0.0f || node->node.use.y != 0.0f)
+    {
         Matrix m = {1, 0, node->node.use.x, 0, 1, node->node.use.y, 0, 0, 1};
         finalTransform *= m;
     }
     if (child->transform) finalTransform = *child->transform * finalTransform;
 
-    return _appendClipShape(loaderData, child, shape, vBox, svgPath, identity((const Matrix*)(&finalTransform)) ? nullptr : &finalTransform);
+    return _appendClipShape(loaderData, child, shape, vBox, svgPath,
+                            identity((const Matrix*)(&finalTransform)) ? nullptr : &finalTransform);
 }
 
 
-static bool _appendClipChild(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox, const string& svgPath, bool clip)
+static bool _appendClipChild(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox,
+                             const string& svgPath, bool clip)
 {
-    if (node->type == SvgNodeType::Use) {
+    if (node->type == SvgNodeType::Use)
+    {
         return _appendClipUseNode(loaderData, node, shape, vBox, svgPath);
     }
     return _appendClipShape(loaderData, node, shape, vBox, svgPath, nullptr);
@@ -237,13 +259,16 @@ static Matrix _compositionTransform(Paint* paint, const SvgNode* node, const Svg
 {
     Matrix m = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     //The initial mask transformation ignored according to the SVG standard.
-    if (node->transform && type != SvgNodeType::Mask) {
+    if (node->transform && type != SvgNodeType::Mask)
+    {
         m = *node->transform;
     }
-    if (compNode->transform) {
+    if (compNode->transform)
+    {
         m *= *compNode->transform;
     }
-    if (!compNode->node.clip.userSpace) {
+    if (!compNode->node.clip.userSpace)
+    {
         float x, y, w, h;
         P(paint)->bounds(&x, &y, &w, &h, false, false);
         Matrix mBBox = {w, 0, x, 0, h, y, 0, 0, 1};
@@ -253,16 +278,21 @@ static Matrix _compositionTransform(Paint* paint, const SvgNode* node, const Svg
 }
 
 
-static void _applyComposition(SvgLoaderData& loaderData, Paint* paint, const SvgNode* node, const Box& vBox, const string& svgPath)
+static void _applyComposition(SvgLoaderData& loaderData, Paint* paint, const SvgNode* node, const Box& vBox,
+                              const string& svgPath)
 {
     /* ClipPath */
     /* Do not drop in Circular Dependency for ClipPath.
        Composition can be applied recursively if its children nodes have composition target to this one. */
-    if (node->style->clipPath.applying) {
+    if (node->style->clipPath.applying)
+    {
         TVGLOG("SVG", "Multiple Composition Tried! Check out Circular dependency?");
-    } else {
+    }
+    else
+    {
         auto compNode = node->style->clipPath.node;
-        if (compNode && compNode->child.count > 0) {
+        if (compNode && compNode->child.count > 0)
+        {
             node->style->clipPath.applying = true;
 
             auto comp = Shape::gen();
@@ -270,11 +300,14 @@ static void _applyComposition(SvgLoaderData& loaderData, Paint* paint, const Svg
             auto child = compNode->child.data;
             auto valid = false; //Composite only when valid shapes exist
 
-            for (uint32_t i = 0; i < compNode->child.count; ++i, ++child) {
-                if (_appendClipChild(loaderData, *child, comp.get(), vBox, svgPath, compNode->child.count > 1)) valid = true;
+            for (uint32_t i = 0; i < compNode->child.count; ++i, ++child)
+            {
+                if (_appendClipChild(loaderData, *child, comp.get(), vBox, svgPath, compNode->child.count > 1)) valid =
+                    true;
             }
 
-            if (valid) {
+            if (valid)
+            {
                 Matrix finalTransform = _compositionTransform(paint, node, compNode, SvgNodeType::ClipPath);
                 comp->transform(finalTransform);
                 paint->clip(std::move(comp));
@@ -287,25 +320,36 @@ static void _applyComposition(SvgLoaderData& loaderData, Paint* paint, const Svg
     /* Mask */
     /* Do not drop in Circular Dependency for Mask.
        Composition can be applied recursively if its children nodes have composition target to this one. */
-    if (node->style->mask.applying) {
+    if (node->style->mask.applying)
+    {
         TVGLOG("SVG", "Multiple Composition Tried! Check out Circular dependency?");
-    } else {
+    }
+    else
+    {
         auto compNode = node->style->mask.node;
-        if (compNode && compNode->child.count > 0) {
+        if (compNode && compNode->child.count > 0)
+        {
             node->style->mask.applying = true;
 
             bool isMaskWhite = true;
-            if (auto comp = _sceneBuildHelper(loaderData, compNode, vBox, svgPath, true, 0, &isMaskWhite)) {
-                if (!compNode->node.mask.userSpace) {
+            if (auto comp = _sceneBuildHelper(loaderData, compNode, vBox, svgPath, true, 0, &isMaskWhite))
+            {
+                if (!compNode->node.mask.userSpace)
+                {
                     Matrix finalTransform = _compositionTransform(paint, node, compNode, SvgNodeType::Mask);
                     comp->transform(finalTransform);
-                } else {
+                }
+                else
+                {
                     if (node->transform) comp->transform(*node->transform);
                 }
 
-                if (compNode->node.mask.type == SvgMaskType::Luminance && !isMaskWhite) {
+                if (compNode->node.mask.type == SvgMaskType::Luminance && !isMaskWhite)
+                {
                     paint->composite(std::move(comp), CompositeMethod::LumaMask);
-                } else {
+                }
+                else
+                {
                     paint->composite(std::move(comp), CompositeMethod::AlphaMask);
                 }
             }
@@ -316,7 +360,8 @@ static void _applyComposition(SvgLoaderData& loaderData, Paint* paint, const Svg
 }
 
 
-static void _applyProperty(SvgLoaderData& loaderData, SvgNode* node, Shape* vg, const Box& vBox, const string& svgPath, bool clip)
+static void _applyProperty(SvgLoaderData& loaderData, SvgNode* node, Shape* vg, const Box& vBox, const string& svgPath,
+                           bool clip)
 {
     SvgStyleProperty* style = node->style;
 
@@ -325,26 +370,38 @@ static void _applyProperty(SvgLoaderData& loaderData, SvgNode* node, Shape* vg, 
     if (node->type == SvgNodeType::Doc || !node->style->display) return;
 
     //If fill property is nullptr then do nothing
-    if (style->fill.paint.none) {
+    if (style->fill.paint.none)
+    {
         //Do nothing
-    } else if (style->fill.paint.gradient) {
+    }
+    else if (style->fill.paint.gradient)
+    {
         Box bBox = vBox;
         if (!style->fill.paint.gradient->userSpace) bBox = _boundingBox(vg);
 
-        if (style->fill.paint.gradient->type == SvgGradientType::Linear) {
+        if (style->fill.paint.gradient->type == SvgGradientType::Linear)
+        {
             auto linear = _applyLinearGradientProperty(style->fill.paint.gradient, bBox, style->fill.opacity);
             vg->fill(std::move(linear));
-        } else if (style->fill.paint.gradient->type == SvgGradientType::Radial) {
+        }
+        else if (style->fill.paint.gradient->type == SvgGradientType::Radial)
+        {
             auto radial = _applyRadialGradientProperty(style->fill.paint.gradient, bBox, style->fill.opacity);
             vg->fill(std::move(radial));
         }
-    } else if (style->fill.paint.url) {
+    }
+    else if (style->fill.paint.url)
+    {
         //TODO: Apply the color pointed by url
         TVGLOG("SVG", "The fill's url not supported.");
-    } else if (style->fill.paint.curColor) {
+    }
+    else if (style->fill.paint.curColor)
+    {
         //Apply the current style color
         vg->fill(style->color.r, style->color.g, style->color.b, style->fill.opacity);
-    } else {
+    }
+    else
+    {
         //Apply the fill color
         vg->fill(style->fill.paint.color.r, style->fill.paint.color.g, style->fill.paint.color.b, style->fill.opacity);
     }
@@ -364,40 +421,55 @@ static void _applyProperty(SvgLoaderData& loaderData, SvgNode* node, Shape* vg, 
     vg->stroke(style->stroke.cap);
     vg->stroke(style->stroke.join);
     vg->strokeMiterlimit(style->stroke.miterlimit);
-    if (style->stroke.dash.array.count > 0) {
+    if (style->stroke.dash.array.count > 0)
+    {
         P(vg)->strokeDash(style->stroke.dash.array.data, style->stroke.dash.array.count, style->stroke.dash.offset);
     }
 
     //If stroke property is nullptr then do nothing
-    if (style->stroke.paint.none) {
+    if (style->stroke.paint.none)
+    {
         vg->stroke(0.0f);
-    } else if (style->stroke.paint.gradient) {
+    }
+    else if (style->stroke.paint.gradient)
+    {
         Box bBox = vBox;
         if (!style->stroke.paint.gradient->userSpace) bBox = _boundingBox(vg);
 
-        if (style->stroke.paint.gradient->type == SvgGradientType::Linear) {
-             auto linear = _applyLinearGradientProperty(style->stroke.paint.gradient, bBox, style->stroke.opacity);
-             vg->stroke(std::move(linear));
-        } else if (style->stroke.paint.gradient->type == SvgGradientType::Radial) {
-             auto radial = _applyRadialGradientProperty(style->stroke.paint.gradient, bBox, style->stroke.opacity);
-             vg->stroke(std::move(radial));
+        if (style->stroke.paint.gradient->type == SvgGradientType::Linear)
+        {
+            auto linear = _applyLinearGradientProperty(style->stroke.paint.gradient, bBox, style->stroke.opacity);
+            vg->stroke(std::move(linear));
         }
-    } else if (style->stroke.paint.url) {
+        else if (style->stroke.paint.gradient->type == SvgGradientType::Radial)
+        {
+            auto radial = _applyRadialGradientProperty(style->stroke.paint.gradient, bBox, style->stroke.opacity);
+            vg->stroke(std::move(radial));
+        }
+    }
+    else if (style->stroke.paint.url)
+    {
         //TODO: Apply the color pointed by url
         TVGLOG("SVG", "The stroke's url not supported.");
-    } else if (style->stroke.paint.curColor) {
+    }
+    else if (style->stroke.paint.curColor)
+    {
         //Apply the current style color
         vg->stroke(style->color.r, style->color.g, style->color.b, style->stroke.opacity);
-    } else {
+    }
+    else
+    {
         //Apply the stroke color
-        vg->stroke(style->stroke.paint.color.r, style->stroke.paint.color.g, style->stroke.paint.color.b, style->stroke.opacity);
+        vg->stroke(style->stroke.paint.color.r, style->stroke.paint.color.g, style->stroke.paint.color.b,
+                   style->stroke.opacity);
     }
 
     _applyComposition(loaderData, vg, node, vBox, svgPath);
 }
 
 
-static unique_ptr<Shape> _shapeBuildHelper(SvgLoaderData& loaderData, SvgNode* node, const Box& vBox, const string& svgPath)
+static unique_ptr<Shape> _shapeBuildHelper(SvgLoaderData& loaderData, SvgNode* node, const Box& vBox,
+                                           const string& svgPath)
 {
     auto shape = Shape::gen();
     if (_appendShape(loaderData, node, shape.get(), vBox, svgPath)) return shape;
@@ -407,53 +479,68 @@ static unique_ptr<Shape> _shapeBuildHelper(SvgLoaderData& loaderData, SvgNode* n
 
 static bool _recognizeShape(SvgNode* node, Shape* shape)
 {
-    switch (node->type) {
-        case SvgNodeType::Path: {
-            if (node->node.path.path) {
-                if (!svgPathToShape(node->node.path.path, shape)) {
+    switch (node->type)
+    {
+    case SvgNodeType::Path:
+        {
+            if (node->node.path.path)
+            {
+                if (!svgPathToShape(node->node.path.path, shape))
+                {
                     TVGERR("SVG", "Invalid path information.");
                     return false;
                 }
             }
             break;
         }
-        case SvgNodeType::Ellipse: {
-            shape->appendCircle(node->node.ellipse.cx, node->node.ellipse.cy, node->node.ellipse.rx, node->node.ellipse.ry);
+    case SvgNodeType::Ellipse:
+        {
+            shape->appendCircle(node->node.ellipse.cx, node->node.ellipse.cy, node->node.ellipse.rx,
+                                node->node.ellipse.ry);
             break;
         }
-        case SvgNodeType::Polygon: {
+    case SvgNodeType::Polygon:
+        {
             if (node->node.polygon.pts.count < 2) break;
             auto pts = node->node.polygon.pts.begin();
             shape->moveTo(pts[0], pts[1]);
-            for (pts += 2; pts < node->node.polygon.pts.end(); pts += 2) {
+            for (pts += 2; pts < node->node.polygon.pts.end(); pts += 2)
+            {
                 shape->lineTo(pts[0], pts[1]);
             }
             shape->close();
             break;
         }
-        case SvgNodeType::Polyline: {
+    case SvgNodeType::Polyline:
+        {
             if (node->node.polyline.pts.count < 2) break;
             auto pts = node->node.polyline.pts.begin();
             shape->moveTo(pts[0], pts[1]);
-            for (pts += 2; pts < node->node.polyline.pts.end(); pts += 2) {
+            for (pts += 2; pts < node->node.polyline.pts.end(); pts += 2)
+            {
                 shape->lineTo(pts[0], pts[1]);
             }
             break;
         }
-        case SvgNodeType::Circle: {
+    case SvgNodeType::Circle:
+        {
             shape->appendCircle(node->node.circle.cx, node->node.circle.cy, node->node.circle.r, node->node.circle.r);
             break;
         }
-        case SvgNodeType::Rect: {
-            shape->appendRect(node->node.rect.x, node->node.rect.y, node->node.rect.w, node->node.rect.h, node->node.rect.rx, node->node.rect.ry);
+    case SvgNodeType::Rect:
+        {
+            shape->appendRect(node->node.rect.x, node->node.rect.y, node->node.rect.w, node->node.rect.h,
+                              node->node.rect.rx, node->node.rect.ry);
             break;
         }
-        case SvgNodeType::Line: {
+    case SvgNodeType::Line:
+        {
             shape->moveTo(node->node.line.x1, node->node.line.y1);
             shape->lineTo(node->node.line.x2, node->node.line.y2);
             break;
         }
-        default: {
+    default:
+        {
             return false;
         }
     }
@@ -470,25 +557,29 @@ static bool _appendShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape,
 }
 
 
-static bool _appendClipShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox, const string& svgPath, const Matrix* transform)
+static bool _appendClipShape(SvgLoaderData& loaderData, SvgNode* node, Shape* shape, const Box& vBox,
+                             const string& svgPath, const Matrix* transform)
 {
     //The 'transform' matrix has higher priority than the node->transform, since it already contains it
     auto m = transform ? transform : (node->transform ? node->transform : nullptr);
 
     uint32_t currentPtsCnt = 0;
-    if (m) {
-        const Point *tmp = nullptr;
+    if (m)
+    {
+        const Point* tmp = nullptr;
         currentPtsCnt = shape->pathCoords(&tmp);
     }
 
     if (!_recognizeShape(node, shape)) return false;
 
-    if (m) {
-        const Point *pts = nullptr;
+    if (m)
+    {
+        const Point* pts = nullptr;
         auto ptsCnt = shape->pathCoords(&pts);
 
         auto p = const_cast<Point*>(pts) + currentPtsCnt;
-        while (currentPtsCnt++ < ptsCnt) {
+        while (currentPtsCnt++ < ptsCnt)
+        {
             *p *= *m;
             ++p;
         }
@@ -505,11 +596,13 @@ enum class imageMimeTypeEncoding
     utf8 = 0x2
 };
 
-constexpr imageMimeTypeEncoding operator|(imageMimeTypeEncoding a, imageMimeTypeEncoding b) {
+constexpr imageMimeTypeEncoding operator|(imageMimeTypeEncoding a, imageMimeTypeEncoding b)
+{
     return static_cast<imageMimeTypeEncoding>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-constexpr bool operator&(imageMimeTypeEncoding a, imageMimeTypeEncoding b) {
+constexpr bool operator&(imageMimeTypeEncoding a, imageMimeTypeEncoding b)
+{
     return (static_cast<int>(a) & static_cast<int>(b));
 }
 
@@ -527,32 +620,40 @@ static constexpr struct
 };
 
 
-static bool _isValidImageMimeTypeAndEncoding(const char** href, const char** mimetype, imageMimeTypeEncoding* encoding) {
+static bool _isValidImageMimeTypeAndEncoding(const char** href, const char** mimetype, imageMimeTypeEncoding* encoding)
+{
     if (strncmp(*href, "image/", sizeof("image/") - 1)) return false; //not allowed mime type
     *href += sizeof("image/") - 1;
 
     //RFC2397 data:[<mediatype>][;base64],<data>
     //mediatype  := [ type "/" subtype ] *( ";" parameter )
     //parameter  := attribute "=" value
-    for (unsigned int i = 0; i < sizeof(imageMimeTypes) / sizeof(imageMimeTypes[0]); i++) {
-        if (!strncmp(*href, imageMimeTypes[i].name, imageMimeTypes[i].sz - 1)) {
-            *href += imageMimeTypes[i].sz  - 1;
+    for (unsigned int i = 0; i < sizeof(imageMimeTypes) / sizeof(imageMimeTypes[0]); i++)
+    {
+        if (!strncmp(*href, imageMimeTypes[i].name, imageMimeTypes[i].sz - 1))
+        {
+            *href += imageMimeTypes[i].sz - 1;
             *mimetype = imageMimeTypes[i].name;
 
-            while (**href && **href != ',') {
+            while (**href && **href != ',')
+            {
                 while (**href && **href != ';') ++(*href);
                 if (!**href) return false;
                 ++(*href);
 
-                if (imageMimeTypes[i].encoding & imageMimeTypeEncoding::base64) {
-                    if (!strncmp(*href, "base64,", sizeof("base64,") - 1)) {
+                if (imageMimeTypes[i].encoding & imageMimeTypeEncoding::base64)
+                {
+                    if (!strncmp(*href, "base64,", sizeof("base64,") - 1))
+                    {
                         *href += sizeof("base64,") - 1;
                         *encoding = imageMimeTypeEncoding::base64;
                         return true; //valid base64
                     }
                 }
-                if (imageMimeTypes[i].encoding & imageMimeTypeEncoding::utf8) {
-                    if (!strncmp(*href, "utf8,", sizeof("utf8,") - 1)) {
+                if (imageMimeTypes[i].encoding & imageMimeTypeEncoding::utf8)
+                {
+                    if (!strncmp(*href, "utf8,", sizeof("utf8,") - 1))
+                    {
                         *href += sizeof("utf8,") - 1;
                         *encoding = imageMimeTypeEncoding::utf8;
                         return true; //valid utf8
@@ -560,7 +661,8 @@ static bool _isValidImageMimeTypeAndEncoding(const char** href, const char** mim
                 }
             }
             //no encoding defined
-            if (**href == ',' && (imageMimeTypes[i].encoding & imageMimeTypeEncoding::utf8)) {
+            if (**href == ',' && (imageMimeTypes[i].encoding & imageMimeTypeEncoding::utf8))
+            {
                 ++(*href);
                 *encoding = imageMimeTypeEncoding::utf8;
                 return true; //allow no encoding defined if utf8 expected
@@ -573,52 +675,65 @@ static bool _isValidImageMimeTypeAndEncoding(const char** href, const char** mim
 
 #include "tvgTaskScheduler.h"
 
-static unique_ptr<Picture> _imageBuildHelper(SvgLoaderData& loaderData, SvgNode* node, const Box& vBox, const string& svgPath)
+static unique_ptr<Picture> _imageBuildHelper(SvgLoaderData& loaderData, SvgNode* node, const Box& vBox,
+                                             const string& svgPath)
 {
     if (!node->node.image.href || !strlen(node->node.image.href)) return nullptr;
     auto picture = Picture::gen();
 
-    TaskScheduler::async(false);    //force to load a picture on the same thread
+    TaskScheduler::async(false); //force to load a picture on the same thread
 
     const char* href = node->node.image.href;
-    if (!strncmp(href, "data:", sizeof("data:") - 1)) {
+    if (!strncmp(href, "data:", sizeof("data:") - 1))
+    {
         href += sizeof("data:") - 1;
         const char* mimetype;
         imageMimeTypeEncoding encoding;
-        if (!_isValidImageMimeTypeAndEncoding(&href, &mimetype, &encoding)) return nullptr; //not allowed mime type or encoding
-        char *decoded = nullptr;
-        if (encoding == imageMimeTypeEncoding::base64) {
+        if (!_isValidImageMimeTypeAndEncoding(&href, &mimetype, &encoding)) return nullptr;
+        //not allowed mime type or encoding
+        char* decoded = nullptr;
+        if (encoding == imageMimeTypeEncoding::base64)
+        {
             auto size = b64Decode(href, strlen(href), &decoded);
-            if (picture->load(decoded, size, mimetype, false) != Result::Success) {
+            if (picture->load(decoded, size, mimetype, false) != Result::Success)
+            {
                 lv_free(decoded);
                 TaskScheduler::async(true);
                 return nullptr;
             }
-        } else {
+        }
+        else
+        {
             auto size = svgUtilURLDecode(href, &decoded);
-            if (picture->load(decoded, size, mimetype, false) != Result::Success) {
+            if (picture->load(decoded, size, mimetype, false) != Result::Success)
+            {
                 lv_free(decoded);
                 TaskScheduler::async(true);
                 return nullptr;
             }
         }
         loaderData.images.push(decoded);
-    } else {
+    }
+    else
+    {
         if (!strncmp(href, "file://", sizeof("file://") - 1)) href += sizeof("file://") - 1;
         //TODO: protect against recursive svg image loading
         //Temporarily disable embedded svg:
-        const char *dot = strrchr(href, '.');
-        if (dot && !strcmp(dot, ".svg")) {
+        const char* dot = strrchr(href, '.');
+        if (dot && !strcmp(dot, ".svg"))
+        {
             TVGLOG("SVG", "Embedded svg file is disabled.");
             TaskScheduler::async(true);
             return nullptr;
         }
         string imagePath = href;
-        if (strncmp(href, "/", 1)) {
+        if (strncmp(href, "/", 1))
+        {
             auto last = svgPath.find_last_of("/");
             imagePath = svgPath.substr(0, (last == string::npos ? 0 : last + 1)) + imagePath;
         }
-        if (picture->load(imagePath) != Result::Success) {
+        if (picture->load(imagePath) != Result::Success)
+        {
             TaskScheduler::async(true);
             return nullptr;
         }
@@ -628,7 +743,8 @@ static unique_ptr<Picture> _imageBuildHelper(SvgLoaderData& loaderData, SvgNode*
 
     float w, h;
     Matrix m = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-    if (picture->size(&w, &h) == Result::Success && w  > 0 && h > 0) {
+    if (picture->size(&w, &h) == Result::Success && w > 0 && h > 0)
+    {
         auto sx = node->node.image.w / w;
         auto sy = node->node.image.h / h;
         m = {sx, 0, node->node.image.x, 0, sy, node->node.image.y, 0, 0, 1};
@@ -642,7 +758,8 @@ static unique_ptr<Picture> _imageBuildHelper(SvgLoaderData& loaderData, SvgNode*
 }
 
 
-static Matrix _calculateAspectRatioMatrix(AspectRatioAlign align, AspectRatioMeetOrSlice meetOrSlice, float width, float height, const Box& box)
+static Matrix _calculateAspectRatioMatrix(AspectRatioAlign align, AspectRatioMeetOrSlice meetOrSlice, float width,
+                                          float height, const Box& box)
 {
     auto sx = width / box.w;
     auto sy = height / box.h;
@@ -653,10 +770,13 @@ static Matrix _calculateAspectRatioMatrix(AspectRatioAlign align, AspectRatioMee
         return {sx, 0, -tvx, 0, sy, -tvy, 0, 0, 1};
 
     //Scale
-    if (meetOrSlice == AspectRatioMeetOrSlice::Meet) {
+    if (meetOrSlice == AspectRatioMeetOrSlice::Meet)
+    {
         if (sx < sy) sy = sx;
         else sx = sy;
-    } else {
+    }
+    else
+    {
         if (sx < sy) sx = sy;
         else sy = sx;
     }
@@ -667,47 +787,58 @@ static Matrix _calculateAspectRatioMatrix(AspectRatioAlign align, AspectRatioMee
     auto tvw = box.w * sx;
     auto tvh = box.h * sy;
 
-    switch (align) {
-        case AspectRatioAlign::XMinYMin: {
+    switch (align)
+    {
+    case AspectRatioAlign::XMinYMin:
+        {
             break;
         }
-        case AspectRatioAlign::XMidYMin: {
+    case AspectRatioAlign::XMidYMin:
+        {
             tvx -= (width - tvw) * 0.5f;
             break;
         }
-        case AspectRatioAlign::XMaxYMin: {
+    case AspectRatioAlign::XMaxYMin:
+        {
             tvx -= width - tvw;
             break;
         }
-        case AspectRatioAlign::XMinYMid: {
+    case AspectRatioAlign::XMinYMid:
+        {
             tvy -= (height - tvh) * 0.5f;
             break;
         }
-        case AspectRatioAlign::XMidYMid: {
+    case AspectRatioAlign::XMidYMid:
+        {
             tvx -= (width - tvw) * 0.5f;
             tvy -= (height - tvh) * 0.5f;
             break;
         }
-        case AspectRatioAlign::XMaxYMid: {
+    case AspectRatioAlign::XMaxYMid:
+        {
             tvx -= width - tvw;
             tvy -= (height - tvh) * 0.5f;
             break;
         }
-        case AspectRatioAlign::XMinYMax: {
+    case AspectRatioAlign::XMinYMax:
+        {
             tvy -= height - tvh;
             break;
         }
-        case AspectRatioAlign::XMidYMax: {
+    case AspectRatioAlign::XMidYMax:
+        {
             tvx -= (width - tvw) * 0.5f;
             tvy -= height - tvh;
             break;
         }
-        case AspectRatioAlign::XMaxYMax: {
+    case AspectRatioAlign::XMaxYMax:
+        {
             tvx -= width - tvw;
             tvy -= height - tvh;
             break;
         }
-        default: {
+    default:
+        {
             break;
         }
     }
@@ -716,19 +847,22 @@ static Matrix _calculateAspectRatioMatrix(AspectRatioAlign align, AspectRatioMee
 }
 
 
-static unique_ptr<Scene> _useBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox, const string& svgPath, int depth, bool* isMaskWhite)
+static unique_ptr<Scene> _useBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox,
+                                         const string& svgPath, int depth, bool* isMaskWhite)
 {
     auto scene = _sceneBuildHelper(loaderData, node, vBox, svgPath, false, depth + 1, isMaskWhite);
 
     // mUseTransform = mUseTransform * mTranslate
     Matrix mUseTransform = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     if (node->transform) mUseTransform = *node->transform;
-    if (node->node.use.x != 0.0f || node->node.use.y != 0.0f) {
+    if (node->node.use.x != 0.0f || node->node.use.y != 0.0f)
+    {
         Matrix mTranslate = {1, 0, node->node.use.x, 0, 1, node->node.use.y, 0, 0, 1};
         mUseTransform *= mTranslate;
     }
 
-    if (node->node.use.symbol) {
+    if (node->node.use.symbol)
+    {
         auto symbol = node->node.use.symbol->node.symbol;
 
         auto width = (symbol.hasWidth ? symbol.w : vBox.w);
@@ -739,35 +873,43 @@ static unique_ptr<Scene> _useBuildHelper(SvgLoaderData& loaderData, const SvgNod
         auto vh = (symbol.hasViewBox ? symbol.vh : height);
 
         Matrix mViewBox = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-        if ((!tvg::equal(width, vw) || !tvg::equal(height, vh)) && vw > 0 && vh > 0) {
+        if ((!tvg::equal(width, vw) || !tvg::equal(height, vh)) && vw > 0 && vh > 0)
+        {
             Box box = {symbol.vx, symbol.vy, vw, vh};
             mViewBox = _calculateAspectRatioMatrix(symbol.align, symbol.meetOrSlice, width, height, box);
-        } else if (!tvg::zero(symbol.vx) || !tvg::zero(symbol.vy)) {
+        }
+        else if (!tvg::zero(symbol.vx) || !tvg::zero(symbol.vy))
+        {
             mViewBox = {1, 0, -symbol.vx, 0, 1, -symbol.vy, 0, 0, 1};
         }
 
         // mSceneTransform = mUseTransform * mSymbolTransform * mViewBox
         Matrix mSceneTransform = mViewBox;
-        if (node->node.use.symbol->transform) {
+        if (node->node.use.symbol->transform)
+        {
             mSceneTransform = *node->node.use.symbol->transform * mViewBox;
         }
         mSceneTransform = mUseTransform * mSceneTransform;
         scene->transform(mSceneTransform);
 
-        if (!node->node.use.symbol->node.symbol.overflowVisible) {
+        if (!node->node.use.symbol->node.symbol.overflowVisible)
+        {
             auto viewBoxClip = Shape::gen();
             viewBoxClip->appendRect(0, 0, width, height, 0, 0);
 
             // mClipTransform = mUseTransform * mSymbolTransform
             Matrix mClipTransform = mUseTransform;
-            if (node->node.use.symbol->transform) {
+            if (node->node.use.symbol->transform)
+            {
                 mClipTransform = mUseTransform * *node->node.use.symbol->transform;
             }
             viewBoxClip->transform(mClipTransform);
 
             scene->clip(std::move(viewBoxClip));
         }
-    } else {
+    }
+    else
+    {
         scene->transform(mUseTransform);
     }
 
@@ -778,27 +920,39 @@ static unique_ptr<Scene> _useBuildHelper(SvgLoaderData& loaderData, const SvgNod
 static void _applyTextFill(SvgStyleProperty* style, Text* text, const Box& vBox)
 {
     //If fill property is nullptr then do nothing
-    if (style->fill.paint.none) {
+    if (style->fill.paint.none)
+    {
         //Do nothing
-    } else if (style->fill.paint.gradient) {
+    }
+    else if (style->fill.paint.gradient)
+    {
         Box bBox = vBox;
         if (!style->fill.paint.gradient->userSpace) bBox = _boundingBox(text);
 
-        if (style->fill.paint.gradient->type == SvgGradientType::Linear) {
+        if (style->fill.paint.gradient->type == SvgGradientType::Linear)
+        {
             auto linear = _applyLinearGradientProperty(style->fill.paint.gradient, bBox, style->fill.opacity);
             text->fill(std::move(linear));
-        } else if (style->fill.paint.gradient->type == SvgGradientType::Radial) {
+        }
+        else if (style->fill.paint.gradient->type == SvgGradientType::Radial)
+        {
             auto radial = _applyRadialGradientProperty(style->fill.paint.gradient, bBox, style->fill.opacity);
             text->fill(std::move(radial));
         }
-    } else if (style->fill.paint.url) {
+    }
+    else if (style->fill.paint.url)
+    {
         //TODO: Apply the color pointed by url
         TVGLOG("SVG", "The fill's url not supported.");
-    } else if (style->fill.paint.curColor) {
+    }
+    else if (style->fill.paint.curColor)
+    {
         //Apply the current style color
         text->fill(style->color.r, style->color.g, style->color.b);
         text->opacity(style->fill.opacity);
-    } else {
+    }
+    else
+    {
         //Apply the fill color
         text->fill(style->fill.paint.color.r, style->fill.paint.color.g, style->fill.paint.color.b);
         text->opacity(style->fill.opacity);
@@ -806,7 +960,8 @@ static void _applyTextFill(SvgStyleProperty* style, Text* text, const Box& vBox)
 }
 
 
-static unique_ptr<Text> _textBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox, const string& svgPath)
+static unique_ptr<Text> _textBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox,
+                                         const string& svgPath)
 {
     auto textNode = &node->node.text;
     if (!textNode->text) return nullptr;
@@ -830,45 +985,63 @@ static unique_ptr<Text> _textBuildHelper(SvgLoaderData& loaderData, const SvgNod
 }
 
 
-static unique_ptr<Scene> _sceneBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox, const string& svgPath, bool mask, int depth, bool* isMaskWhite)
+static unique_ptr<Scene> _sceneBuildHelper(SvgLoaderData& loaderData, const SvgNode* node, const Box& vBox,
+                                           const string& svgPath, bool mask, int depth, bool* isMaskWhite)
 {
     /* Exception handling: Prevent invalid SVG data input.
        The size is the arbitrary value, we need an experimental size. */
-    if (depth > 2192) {
-        TVGERR("SVG", "Infinite recursive call - stopped after %d calls! Svg file may be incorrectly formatted.", depth);
+    if (depth > 2192)
+    {
+        TVGERR("SVG", "Infinite recursive call - stopped after %d calls! Svg file may be incorrectly formatted.",
+               depth);
         return nullptr;
     }
 
-    if (_isGroupType(node->type) || mask) {
+    if (_isGroupType(node->type) || mask)
+    {
         auto scene = Scene::gen();
         // For a Symbol node, the viewBox transformation has to be applied first - see _useBuildHelper()
         if (!mask && node->transform && node->type != SvgNodeType::Symbol) scene->transform(*node->transform);
 
-        if (node->style->display && node->style->opacity != 0) {
+        if (node->style->display && node->style->opacity != 0)
+        {
             auto child = node->child.data;
-            for (uint32_t i = 0; i < node->child.count; ++i, ++child) {
-                if (_isGroupType((*child)->type)) {
+            for (uint32_t i = 0; i < node->child.count; ++i, ++child)
+            {
+                if (_isGroupType((*child)->type))
+                {
                     if ((*child)->type == SvgNodeType::Use)
                         scene->push(_useBuildHelper(loaderData, *child, vBox, svgPath, depth + 1, isMaskWhite));
                     else if (!((*child)->type == SvgNodeType::Symbol && node->type != SvgNodeType::Use))
-                        scene->push(_sceneBuildHelper(loaderData, *child, vBox, svgPath, false, depth + 1, isMaskWhite));
-                } else if ((*child)->type == SvgNodeType::Image) {
+                        scene->push(_sceneBuildHelper(loaderData, *child, vBox, svgPath, false, depth + 1,
+                                                      isMaskWhite));
+                }
+                else if ((*child)->type == SvgNodeType::Image)
+                {
                     auto image = _imageBuildHelper(loaderData, *child, vBox, svgPath);
-                    if (image) {
+                    if (image)
+                    {
                         scene->push(std::move(image));
                         if (isMaskWhite) *isMaskWhite = false;
                     }
-                } else if ((*child)->type == SvgNodeType::Text) {
+                }
+                else if ((*child)->type == SvgNodeType::Text)
+                {
                     auto text = _textBuildHelper(loaderData, *child, vBox, svgPath);
                     if (text) scene->push(std::move(text));
-                } else if ((*child)->type != SvgNodeType::Mask) {
+                }
+                else if ((*child)->type != SvgNodeType::Mask)
+                {
                     auto shape = _shapeBuildHelper(loaderData, *child, vBox, svgPath);
-                    if (shape) {
-                        if (isMaskWhite) {
+                    if (shape)
+                    {
+                        if (isMaskWhite)
+                        {
                             uint8_t r, g, b;
                             shape->fillColor(&r, &g, &b);
                             if (shape->fill() || r < 255 || g < 255 || b < 255 || shape->strokeFill() ||
-                                (shape->strokeColor(&r, &g, &b) == Result::Success && (r < 255 || g < 255 || b < 255))) {
+                                (shape->strokeColor(&r, &g, &b) == Result::Success && (r < 255 || g < 255 || b < 255)))
+                            {
                                 *isMaskWhite = false;
                             }
                         }
@@ -892,10 +1065,13 @@ static void _updateInvalidViewSize(const Scene* scene, Box& vBox, float& w, floa
 
     float x, y;
     scene->bounds(&x, &y, &vBox.w, &vBox.h, false);
-    if (!validWidth && !validHeight) {
+    if (!validWidth && !validHeight)
+    {
         vBox.x = x;
         vBox.y = y;
-    } else {
+    }
+    else
+    {
         if (validWidth) vBox.w = w;
         if (validHeight) vBox.h = h;
     }
@@ -909,7 +1085,8 @@ static void _updateInvalidViewSize(const Scene* scene, Box& vBox, float& w, floa
 /* External Class Implementation                                        */
 /************************************************************************/
 
-Scene* svgSceneBuild(SvgLoaderData& loaderData, Box vBox, float w, float h, AspectRatioAlign align, AspectRatioMeetOrSlice meetOrSlice, const string& svgPath, SvgViewFlag viewFlag)
+Scene* svgSceneBuild(SvgLoaderData& loaderData, Box vBox, float w, float h, AspectRatioAlign align,
+                     AspectRatioMeetOrSlice meetOrSlice, const string& svgPath, SvgViewFlag viewFlag)
 {
     //TODO: aspect ratio is valid only if viewBox was set
 
@@ -919,10 +1096,13 @@ Scene* svgSceneBuild(SvgLoaderData& loaderData, Box vBox, float w, float h, Aspe
 
     if (!(viewFlag & SvgViewFlag::Viewbox)) _updateInvalidViewSize(docNode.get(), vBox, w, h, viewFlag);
 
-    if (!tvg::equal(w, vBox.w) || !tvg::equal(h, vBox.h)) {
+    if (!tvg::equal(w, vBox.w) || !tvg::equal(h, vBox.h))
+    {
         Matrix m = _calculateAspectRatioMatrix(align, meetOrSlice, w, h, vBox);
         docNode->transform(m);
-    } else if (!tvg::zero(vBox.x) || !tvg::zero(vBox.y)) {
+    }
+    else if (!tvg::zero(vBox.x) || !tvg::zero(vBox.y))
+    {
         docNode->translate(-vBox.x, -vBox.y);
     }
 
@@ -947,4 +1127,3 @@ Scene* svgSceneBuild(SvgLoaderData& loaderData, Box vBox, float w, float h, Aspe
 }
 
 #endif /* LV_USE_THORVG_INTERNAL */
-

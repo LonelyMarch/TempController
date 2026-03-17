@@ -243,10 +243,10 @@ SECTIONS
   /* LVGL display draw buffers in AXI SRAM (RAM_D1) to avoid DTCM overflow. */
   .lvgl_buf (NOLOAD) :
   {
-    . = ALIGN(32);
+    . = ALIGN(16);
     *(.lvgl_buf)
     *(.lvgl_buf*)
-    . = ALIGN(32);
+    . = ALIGN(16);
   } >RAM_D1
 
 

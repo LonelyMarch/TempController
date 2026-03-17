@@ -39,30 +39,32 @@
 * according to the Exif specification(http://www.cipa.jp/std/documents/e/DC-008-Translation-2019-E.pdf)
 * Relationship between image data and orientation on a display screen according to an orientation tag
 */
-typedef enum {
+typedef enum
+{
     /* Orientation = 0 is created when the image data in the Exif is not rotated */
-    IMAGE_CLOCKWISE_NONE    = 0,
+    IMAGE_CLOCKWISE_NONE = 0,
     /* Orientation = 1 is created when Oth row of the coded image data stored in the Exif image file
      * and the visual top of the display screen, and Oth column and visual left, will each be matched for display
      */
-    IMAGE_CLOCKWISE_0       = 1,
+    IMAGE_CLOCKWISE_0 = 1,
     /* Orientation = 2 is equivalent to an arrangement that is reversed Orientation = 1 horizontally */
-    IMAGE_FLIP_HOR          = 2,
+    IMAGE_FLIP_HOR = 2,
     /* Orientation = 3 is equivalent to an arrangement that is turned Orientation = 6 90 degrees clockwise */
-    IMAGE_CLOCKWISE_180     = 3,
+    IMAGE_CLOCKWISE_180 = 3,
     /* Orientation = 4 is equivalent to an arrangement that is reversed Orientation = 3 horizontally */
-    IMAGE_FLIP_VER          = 4,
+    IMAGE_FLIP_VER = 4,
     /* Orientation = 5 is equivalent to an arrangement that is reversed Orientation = 6 horizontally */
-    IMAGE_TRANSPOSE         = 5,
+    IMAGE_TRANSPOSE = 5,
     /* Orientation = 6 is equivalent to an arrangement that is turned Orientation = 1 90 degrees clockwise */
-    IMAGE_CLOCKWISE_90      = 6,
+    IMAGE_CLOCKWISE_90 = 6,
     /* Orientation = 7 is equivalent to an arrangement that is reversed Orientation = 8 horizontally */
-    IMAGE_TRANSVERSE        = 7,
+    IMAGE_TRANSVERSE = 7,
     /* Orientation = 8 is equivalent to an arrangement that is turned Orientation = 3 90 degrees clockwise */
-    IMAGE_CLOCKWISE_270     = 8,
+    IMAGE_CLOCKWISE_270 = 8,
 } image_orientation_t;
 
-typedef struct error_mgr_s {
+typedef struct error_mgr_s
+{
     struct jpeg_error_mgr pub;
     jmp_buf jb;
 } error_mgr_t;
@@ -73,15 +75,15 @@ typedef struct error_mgr_s {
 static lv_result_t decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc, lv_image_header_t * header);
 static lv_result_t decoder_open(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc);
 static void decoder_close(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc);
-static void convert_size_with_orientation(image_orientation_t image_orientation, uint32_t * width, uint32_t * height);
-static lv_draw_buf_t * decode_jpeg_file(const char * filename);
-static bool get_jpeg_head_info(const char * filename, uint32_t * width, uint32_t * height);
-static bool get_jpeg_size(uint8_t * data, uint32_t data_size, uint32_t * width, uint32_t * height);
-static image_orientation_t get_jpeg_direction(uint8_t * data, uint32_t data_size);
-static inline void process_buffer_orientation(image_orientation_t op, uint8_t * cur_pos, lv_image_header_t * header,
-                                              uint32_t line_index, uint8_t * buffer, uint32_t buf_stride);
-static image_orientation_t jpeg_markers_reader(struct jpeg_decompress_struct * cinfo);
-static void jpeg_cmyk_to_bgrx(uint8_t * cmyk_data, uint32_t pixel_count);
+static void convert_size_with_orientation(image_orientation_t image_orientation, uint32_t* width, uint32_t* height);
+static lv_draw_buf_t* decode_jpeg_file(const char* filename);
+static bool get_jpeg_head_info(const char* filename, uint32_t* width, uint32_t* height);
+static bool get_jpeg_size(uint8_t* data, uint32_t data_size, uint32_t* width, uint32_t* height);
+static image_orientation_t get_jpeg_direction(uint8_t* data, uint32_t data_size);
+static inline void process_buffer_orientation(image_orientation_t op, uint8_t* cur_pos, lv_image_header_t* header,
+                                              uint32_t line_index, uint8_t* buffer, uint32_t buf_stride);
+static image_orientation_t jpeg_markers_reader(struct jpeg_decompress_struct* cinfo);
+static void jpeg_cmyk_to_bgrx(uint8_t* cmyk_data, uint32_t pixel_count);
 static void error_exit(j_common_ptr cinfo);
 /**********************
  *  STATIC VARIABLES
@@ -108,7 +110,7 @@ const int JPEG_LITTLE_ENDIAN_TAG = 0x4949;
  */
 void lv_libjpeg_turbo_init(void)
 {
-    lv_image_decoder_t * dec = lv_image_decoder_create();
+    lv_image_decoder_t* dec = lv_image_decoder_create();
     lv_image_decoder_set_info_cb(dec, decoder_info);
     lv_image_decoder_set_open_cb(dec, decoder_open);
     lv_image_decoder_set_close_cb(dec, decoder_close);
@@ -118,9 +120,11 @@ void lv_libjpeg_turbo_init(void)
 
 void lv_libjpeg_turbo_deinit(void)
 {
-    lv_image_decoder_t * dec = NULL;
-    while((dec = lv_image_decoder_get_next(dec)) != NULL) {
-        if(dec->info_cb == decoder_info) {
+    lv_image_decoder_t* dec = NULL;
+    while ((dec = lv_image_decoder_get_next(dec)) != NULL)
+    {
+        if (dec->info_cb == decoder_info)
+        {
             lv_image_decoder_delete(dec);
             break;
         }
@@ -136,29 +140,33 @@ void lv_libjpeg_turbo_deinit(void)
  * @param header store the info here
  * @return LV_RESULT_OK: no error; LV_RESULT_INVALID: can't get the info
  */
-static lv_result_t decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc, lv_image_header_t * header)
+static lv_result_t decoder_info(lv_image_decoder_t* decoder, lv_image_decoder_dsc_t* dsc, lv_image_header_t* header)
 {
     LV_UNUSED(decoder); /*Unused*/
-    lv_image_src_t src_type = dsc->src_type;          /*Get the source type*/
+    lv_image_src_t src_type = dsc->src_type; /*Get the source type*/
 
     /*If it's a JPEG file...*/
-    if(src_type == LV_IMAGE_SRC_FILE) {
-        const char * src = dsc->src;
+    if (src_type == LV_IMAGE_SRC_FILE)
+    {
+        const char* src = dsc->src;
         uint32_t jpg_signature = 0;
         uint32_t rn;
         lv_fs_read(&dsc->file, &jpg_signature, sizeof(jpg_signature), &rn);
 
-        if(rn != sizeof(jpg_signature)) {
+        if (rn != sizeof(jpg_signature))
+        {
             LV_LOG_WARN("file: %s signature len = %" LV_PRIu32 " error", src, rn);
             return LV_RESULT_INVALID;
         }
 
-        const char * ext = lv_fs_get_ext(src);
+        const char* ext = lv_fs_get_ext(src);
         bool is_jpeg_ext = (lv_strcmp(ext, "jpg") == 0)
-                           || (lv_strcmp(ext, "jpeg") == 0);
+            || (lv_strcmp(ext, "jpeg") == 0);
 
-        if(!IS_JPEG_SIGNATURE(jpg_signature)) {
-            if(is_jpeg_ext) {
+        if (!IS_JPEG_SIGNATURE(jpg_signature))
+        {
+            if (is_jpeg_ext)
+            {
                 LV_LOG_WARN("file: %s signature = 0X%" LV_PRIX32 " error", src, jpg_signature);
             }
             return LV_RESULT_INVALID;
@@ -167,7 +175,8 @@ static lv_result_t decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_d
         uint32_t width;
         uint32_t height;
 
-        if(!get_jpeg_head_info(src, &width, &height)) {
+        if (!get_jpeg_head_info(src, &width, &height))
+        {
             return LV_RESULT_INVALID;
         }
 
@@ -179,7 +188,7 @@ static lv_result_t decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_d
         return LV_RESULT_OK;
     }
 
-    return LV_RESULT_INVALID;         /*If didn't succeeded earlier then it's an error*/
+    return LV_RESULT_INVALID; /*If didn't succeeded earlier then it's an error*/
 }
 
 /**
@@ -188,25 +197,27 @@ static lv_result_t decoder_info(lv_image_decoder_t * decoder, lv_image_decoder_d
  * @param dsc     pointer to the decoder descriptor
  * @return LV_RESULT_OK: no error; LV_RESULT_INVALID: can't open the image
  */
-static lv_result_t decoder_open(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc)
+static lv_result_t decoder_open(lv_image_decoder_t* decoder, lv_image_decoder_dsc_t* dsc)
 {
     LV_UNUSED(decoder); /*Unused*/
 
     /*If it's a JPEG file...*/
-    if(dsc->src_type == LV_IMAGE_SRC_FILE) {
-        const char * fn = dsc->src;
-        lv_draw_buf_t * decoded = decode_jpeg_file(fn);
-        if(decoded == NULL) {
+    if (dsc->src_type == LV_IMAGE_SRC_FILE)
+    {
+        const char* fn = dsc->src;
+        lv_draw_buf_t* decoded = decode_jpeg_file(fn);
+        if (decoded == NULL)
+        {
             LV_LOG_WARN("decode jpeg file failed");
             return LV_RESULT_INVALID;
         }
 
         dsc->decoded = decoded;
 
-        if(dsc->args.no_cache) return LV_RESULT_OK;
+        if (dsc->args.no_cache) return LV_RESULT_OK;
 
         /*If the image cache is disabled, just return the decoded image*/
-        if(!lv_image_cache_is_enabled()) return LV_RESULT_OK;
+        if (!lv_image_cache_is_enabled()) return LV_RESULT_OK;
 
         /*Add the decoded image to the cache*/
         lv_image_cache_data_t search_key;
@@ -214,35 +225,38 @@ static lv_result_t decoder_open(lv_image_decoder_t * decoder, lv_image_decoder_d
         search_key.src = dsc->src;
         search_key.slot.size = decoded->data_size;
 
-        lv_cache_entry_t * entry = lv_image_decoder_add_to_cache(decoder, &search_key, decoded, NULL);
+        lv_cache_entry_t* entry = lv_image_decoder_add_to_cache(decoder, &search_key, decoded, NULL);
 
-        if(entry == NULL) {
+        if (entry == NULL)
+        {
             lv_draw_buf_destroy(decoded);
             return LV_RESULT_INVALID;
         }
         dsc->cache_entry = entry;
-        return LV_RESULT_OK;    /*If not returned earlier then it failed*/
+        return LV_RESULT_OK; /*If not returned earlier then it failed*/
     }
 
-    return LV_RESULT_INVALID;    /*If not returned earlier then it failed*/
+    return LV_RESULT_INVALID; /*If not returned earlier then it failed*/
 }
 
 /**
  * Free the allocated resources
  */
-static void decoder_close(lv_image_decoder_t * decoder, lv_image_decoder_dsc_t * dsc)
+static void decoder_close(lv_image_decoder_t* decoder, lv_image_decoder_dsc_t* dsc)
 {
     LV_UNUSED(decoder); /*Unused*/
 
-    if(dsc->args.no_cache ||
-       !lv_image_cache_is_enabled()) lv_draw_buf_destroy((lv_draw_buf_t *)dsc->decoded);
+    if (dsc->args.no_cache ||
+        !lv_image_cache_is_enabled())
+        lv_draw_buf_destroy((lv_draw_buf_t*)dsc->decoded);
 }
 
-static void convert_size_with_orientation(image_orientation_t image_orientation, uint32_t * width, uint32_t * height)
+static void convert_size_with_orientation(image_orientation_t image_orientation, uint32_t* width, uint32_t* height)
 {
-    if(image_orientation == IMAGE_CLOCKWISE_NONE || image_orientation == IMAGE_CLOCKWISE_0
-       || image_orientation == IMAGE_CLOCKWISE_180 || image_orientation == IMAGE_FLIP_VER ||
-       image_orientation == IMAGE_FLIP_HOR) {
+    if (image_orientation == IMAGE_CLOCKWISE_NONE || image_orientation == IMAGE_CLOCKWISE_0
+        || image_orientation == IMAGE_CLOCKWISE_180 || image_orientation == IMAGE_FLIP_VER ||
+        image_orientation == IMAGE_FLIP_HOR)
+    {
         return;
     }
 
@@ -251,7 +265,7 @@ static void convert_size_with_orientation(image_orientation_t image_orientation,
     *height = tmp;
 }
 
-static lv_draw_buf_t * decode_jpeg_file(const char * filename)
+static lv_draw_buf_t* decode_jpeg_file(const char* filename)
 {
     /* This struct contains the JPEG decompression parameters and pointers to
      * working space (which is allocated as needed by the JPEG library).
@@ -264,11 +278,11 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
     error_mgr_t jerr;
 
     /* More stuff */
-    JSAMPARRAY buffer;  /* Output row buffer */
+    JSAMPARRAY buffer; /* Output row buffer */
 
-    uint32_t row_stride;     /* physical row width in output buffer */
+    uint32_t row_stride; /* physical row width in output buffer */
 
-    lv_draw_buf_t * decoded = NULL;
+    lv_draw_buf_t* decoded = NULL;
 
     /* In this example we want to open the input file before doing anything else,
      * so that the setjmp() error recovery below can assume the file is open.
@@ -277,8 +291,9 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
      */
 
     uint32_t data_size;
-    uint8_t * data = lv_fs_load_with_alloc(filename, &data_size);
-    if(data == NULL) {
+    uint8_t* data = lv_fs_load_with_alloc(filename, &data_size);
+    if (data == NULL)
+    {
         LV_LOG_WARN("can't load file %s", filename);
         return NULL;
     }
@@ -292,9 +307,11 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
     cinfo.err = jpeg_std_error(&jerr.pub);
     jerr.pub.error_exit = error_exit;
     /* Establish the setjmp return context for my_error_exit to use. */
-    if(setjmp(jerr.jb)) {
+    if (setjmp(jerr.jb))
+    {
         LV_LOG_WARN("decoding error");
-        if(decoded) {
+        if (decoded)
+        {
             lv_draw_buf_destroy(decoded);
         }
 
@@ -322,10 +339,12 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
      */
 
     /* set parameters for decompression */
-    if(cinfo.jpeg_color_space == JCS_CMYK || cinfo.jpeg_color_space == JCS_YCCK) {
+    if (cinfo.jpeg_color_space == JCS_CMYK || cinfo.jpeg_color_space == JCS_YCCK)
+    {
         cinfo.out_color_space = JCS_CMYK;
     }
-    else {
+    else
+    {
         cinfo.out_color_space = JCS_EXT_BGR;
     }
 
@@ -350,25 +369,27 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
     row_stride = cinfo.output_width * cinfo.output_components;
     /* Make a one-row-high sample array that will go away when done with image */
     buffer = (*cinfo.mem->alloc_sarray)
-             ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+        ((j_common_ptr) & cinfo, JPOOL_IMAGE, row_stride, 1);
 
     uint32_t width = cinfo.output_width;
     uint32_t height = cinfo.output_height;
     convert_size_with_orientation(image_orientation, &width, &height);
 
-    lv_image_header_t image_header = { 0 };
+    lv_image_header_t image_header = {0};
     image_header.w = width;
     image_header.h = height;
     image_header.stride = row_stride;
 
     lv_color_format_t fm = LV_COLOR_FORMAT_RGB888;
-    if(cinfo.out_color_space == JCS_CMYK) {
+    if (cinfo.out_color_space == JCS_CMYK)
+    {
         fm = LV_COLOR_FORMAT_XRGB8888;
     }
 
     /* Allocate the decoded draw buffer */
     decoded = lv_draw_buf_create_ex(image_cache_draw_buf_handlers, width, height, fm, LV_STRIDE_AUTO);
-    if(decoded != NULL) {
+    if (decoded != NULL)
+    {
         uint32_t line_index = 0;
         /* while (scan lines remain to be read) */
         /* jpeg_read_scanlines(...); */
@@ -376,14 +397,16 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
         /* Here we use the library's state variable cinfo.output_scanline as the
          * loop counter, so that we don't have to keep track ourselves.
          */
-        while(cinfo.output_scanline < cinfo.output_height) {
+        while (cinfo.output_scanline < cinfo.output_height)
+        {
             /* jpeg_read_scanlines expects an array of pointers to scanlines.
              * Here the array is only one element long, but you could ask for
              * more than one scanline at a time if that's more convenient.
              */
             jpeg_read_scanlines(&cinfo, buffer, 1);
 
-            if(cinfo.out_color_space == JCS_CMYK) {
+            if (cinfo.out_color_space == JCS_CMYK)
+            {
                 jpeg_cmyk_to_bgrx(buffer[0], decoded->header.w);
             }
 
@@ -417,16 +440,18 @@ static lv_draw_buf_t * decode_jpeg_file(const char * filename)
     return decoded;
 }
 
-static bool get_jpeg_head_info(const char * filename, uint32_t * width, uint32_t * height)
+static bool get_jpeg_head_info(const char* filename, uint32_t* width, uint32_t* height)
 {
-    uint8_t * data = NULL;
+    uint8_t* data = NULL;
     uint32_t data_size;
     data = lv_fs_load_with_alloc(filename, &data_size);
-    if(data == NULL) {
+    if (data == NULL)
+    {
         return false;
     }
 
-    if(!get_jpeg_size(data, data_size, width, height)) {
+    if (!get_jpeg_size(data, data_size, width, height))
+    {
         LV_LOG_WARN("read jpeg size failed.");
     }
 
@@ -435,14 +460,14 @@ static bool get_jpeg_head_info(const char * filename, uint32_t * width, uint32_t
     return JPEG_HEADER_OK;
 }
 
-static void jpeg_decompress_prepare(struct jpeg_decompress_struct * cinfo, uint8_t * data, uint32_t data_size)
+static void jpeg_decompress_prepare(struct jpeg_decompress_struct* cinfo, uint8_t* data, uint32_t data_size)
 {
     jpeg_create_decompress(cinfo);
     jpeg_mem_src(cinfo, data, data_size);
     jpeg_save_markers(cinfo, APP1_MARKER, MARKER_DATA_LIMIT);
 }
 
-static bool get_jpeg_size(uint8_t * data, uint32_t data_size, uint32_t * width, uint32_t * height)
+static bool get_jpeg_size(uint8_t* data, uint32_t data_size, uint32_t* width, uint32_t* height)
 {
     struct jpeg_decompress_struct cinfo;
     error_mgr_t jerr;
@@ -450,7 +475,8 @@ static bool get_jpeg_size(uint8_t * data, uint32_t data_size, uint32_t * width, 
     cinfo.err = jpeg_std_error(&jerr.pub);
     jerr.pub.error_exit = error_exit;
 
-    if(setjmp(jerr.jb)) {
+    if (setjmp(jerr.jb))
+    {
         LV_LOG_WARN("read jpeg head failed");
         jpeg_destroy_decompress(&cinfo);
         return false;
@@ -460,7 +486,8 @@ static bool get_jpeg_size(uint8_t * data, uint32_t data_size, uint32_t * width, 
     jpeg_decompress_prepare(&cinfo, data, data_size);
 
     int ret = jpeg_read_header(&cinfo, TRUE);
-    if(ret != JPEG_HEADER_OK) {
+    if (ret != JPEG_HEADER_OK)
+    {
         LV_LOG_WARN("read jpeg header failed: %d", ret);
         jpeg_destroy_decompress(&cinfo);
         return false;
@@ -478,7 +505,7 @@ static bool get_jpeg_size(uint8_t * data, uint32_t data_size, uint32_t * width, 
     return true;
 }
 
-static image_orientation_t get_jpeg_direction(uint8_t * data, uint32_t data_size)
+static image_orientation_t get_jpeg_direction(uint8_t* data, uint32_t data_size)
 {
     image_orientation_t res = IMAGE_CLOCKWISE_NONE;
     struct jpeg_decompress_struct cinfo;
@@ -487,7 +514,8 @@ static image_orientation_t get_jpeg_direction(uint8_t * data, uint32_t data_size
     cinfo.err = jpeg_std_error(&jerr.pub);
     jerr.pub.error_exit = error_exit;
 
-    if(setjmp(jerr.jb)) {
+    if (setjmp(jerr.jb))
+    {
         LV_LOG_WARN("read jpeg orientation failed");
         jpeg_destroy_decompress(&cinfo);
         return res;
@@ -504,108 +532,128 @@ static image_orientation_t get_jpeg_direction(uint8_t * data, uint32_t data_size
     return res;
 }
 
-static inline void process_buffer_orientation(image_orientation_t op, uint8_t * cur_pos, lv_image_header_t * header,
-                                              uint32_t line_index, uint8_t * buffer, uint32_t buf_stride)
+static inline void process_buffer_orientation(image_orientation_t op, uint8_t* cur_pos, lv_image_header_t* header,
+                                              uint32_t line_index, uint8_t* buffer, uint32_t buf_stride)
 {
     uint32_t dst_index = 0;
-    switch(op) {
-        case IMAGE_CLOCKWISE_NONE:
-        case IMAGE_CLOCKWISE_0:
-            lv_memcpy(cur_pos + line_index * buf_stride, buffer, header->stride);
-            break;
-        case IMAGE_CLOCKWISE_90:
-            for(uint32_t x = 0; x < header->h; x++) {
-                dst_index = x * buf_stride + (header->w - line_index - 1)  * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        case IMAGE_CLOCKWISE_180:
-            for(uint32_t x = 0; x < header->w; x++) {
-                dst_index = (header->h - line_index - 1) * buf_stride + x * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + (header->w - x - 1) * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        case IMAGE_CLOCKWISE_270:
-            for(uint32_t x = 0; x < header->h; x++) {
-                dst_index = (header->h - x - 1) * buf_stride + line_index * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        case IMAGE_FLIP_VER:
-            dst_index = (header->h - line_index - 1) * buf_stride;
-            lv_memcpy(cur_pos + dst_index, buffer, header->stride);
-            break;
-        case IMAGE_FLIP_HOR:
-            for(uint32_t x = 0; x < header->w; x++) {
-                dst_index = line_index * buf_stride + (header->w - x - 1) * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        case IMAGE_TRANSPOSE:
-            for(uint32_t x = 0; x < header->h; x++) {
-                dst_index = x * buf_stride + line_index * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        case IMAGE_TRANSVERSE:
-            for(uint32_t x = 0; x < header->h; x++) {
-                dst_index = (header->h - x - 1) * buf_stride + (header->w - line_index - 1) * JPEG_PIXEL_SIZE;
-                lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
-            }
-            break;
-        default:
-            lv_memcpy(cur_pos + line_index * buf_stride, buffer, header->stride);
-            break;
+    switch (op)
+    {
+    case IMAGE_CLOCKWISE_NONE:
+    case IMAGE_CLOCKWISE_0:
+        lv_memcpy(cur_pos + line_index * buf_stride, buffer, header->stride);
+        break;
+    case IMAGE_CLOCKWISE_90:
+        for (uint32_t x = 0; x < header->h; x++)
+        {
+            dst_index = x * buf_stride + (header->w - line_index - 1) * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    case IMAGE_CLOCKWISE_180:
+        for (uint32_t x = 0; x < header->w; x++)
+        {
+            dst_index = (header->h - line_index - 1) * buf_stride + x * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + (header->w - x - 1) * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    case IMAGE_CLOCKWISE_270:
+        for (uint32_t x = 0; x < header->h; x++)
+        {
+            dst_index = (header->h - x - 1) * buf_stride + line_index * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    case IMAGE_FLIP_VER:
+        dst_index = (header->h - line_index - 1) * buf_stride;
+        lv_memcpy(cur_pos + dst_index, buffer, header->stride);
+        break;
+    case IMAGE_FLIP_HOR:
+        for (uint32_t x = 0; x < header->w; x++)
+        {
+            dst_index = line_index * buf_stride + (header->w - x - 1) * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    case IMAGE_TRANSPOSE:
+        for (uint32_t x = 0; x < header->h; x++)
+        {
+            dst_index = x * buf_stride + line_index * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    case IMAGE_TRANSVERSE:
+        for (uint32_t x = 0; x < header->h; x++)
+        {
+            dst_index = (header->h - x - 1) * buf_stride + (header->w - line_index - 1) * JPEG_PIXEL_SIZE;
+            lv_memcpy(cur_pos + dst_index, buffer + x * JPEG_PIXEL_SIZE, JPEG_PIXEL_SIZE);
+        }
+        break;
+    default:
+        lv_memcpy(cur_pos + line_index * buf_stride, buffer, header->stride);
+        break;
     }
 }
 
-static image_orientation_t jpeg_markers_reader(struct jpeg_decompress_struct * cinfo)
+static image_orientation_t jpeg_markers_reader(struct jpeg_decompress_struct* cinfo)
 {
     image_orientation_t res = IMAGE_CLOCKWISE_NONE;
 
-    if(cinfo == NULL || cinfo->marker == NULL) {
+    if (cinfo == NULL || cinfo->marker == NULL)
+    {
         return res;
     }
 
     cinfo->marker->read_markers(cinfo);
 
     jpeg_saved_marker_ptr marker = cinfo->marker_list;
-    while(marker != NULL) {
-        if(marker->marker == APP1_MARKER) {
+    while (marker != NULL)
+    {
+        if (marker->marker == APP1_MARKER)
+        {
             JOCTET FAR * app1_data = marker->data;
-            if(TRANS_32_VALUE(true, app1_data) == JPEG_EXIF) {
+            if (TRANS_32_VALUE(true, app1_data) == JPEG_EXIF)
+            {
                 uint16_t endian_tag = TRANS_16_VALUE(true, app1_data + 4 + 2);
-                if(!(endian_tag == JPEG_LITTLE_ENDIAN_TAG || endian_tag == JPEG_BIG_ENDIAN_TAG)) {
+                if (!(endian_tag == JPEG_LITTLE_ENDIAN_TAG || endian_tag == JPEG_BIG_ENDIAN_TAG))
+                {
                     return res;
                 }
                 bool is_big_endian = endian_tag == JPEG_BIG_ENDIAN_TAG;
                 /* first ifd offset addr : 4bytes(Exif) + 2bytes(0x00) + 2bytes(align) + 2bytes(tag mark) */
                 unsigned int offset = TRANS_32_VALUE(is_big_endian, app1_data + 8 + 2);
                 /* ifd base : 4bytes(Exif) + 2bytes(0x00) */
-                unsigned char * ifd = 0;
-                do {
+                unsigned char* ifd = 0;
+                do
+                {
                     /* ifd start: 4bytes(Exif) + 2bytes(0x00) + offset value(2bytes(align) + 2bytes(tag mark) + 4bytes(offset size)) */
                     unsigned int entry_offset = 4 + 2 + offset + 2;
-                    if(entry_offset >= marker->data_length) {
+                    if (entry_offset >= marker->data_length)
+                    {
                         return res;
                     }
                     ifd = app1_data + entry_offset;
                     unsigned short num_entries = TRANS_16_VALUE(is_big_endian, ifd - 2);
-                    if(entry_offset + num_entries * 12 >= marker->data_length) {
+                    if (entry_offset + num_entries * 12 >= marker->data_length)
+                    {
                         return res;
                     }
-                    for(int i = 0; i < num_entries; i++) {
+                    for (int i = 0; i < num_entries; i++)
+                    {
                         unsigned short tag = TRANS_16_VALUE(is_big_endian, ifd);
-                        if(tag == ORIENTATION_TAG) {
+                        if (tag == ORIENTATION_TAG)
+                        {
                             /* ifd entry: 12bytes = 2bytes(tag number) + 2bytes(kind of data) + 4bytes(number of components) + 4bytes(data)
                             * orientation kind(0x03) of data is unsigned short */
                             uint32_t dirc = TRANS_16_VALUE(is_big_endian, ifd + 2 + 2 + 4);
-                            res = (dirc >= IMAGE_CLOCKWISE_0 && dirc <= IMAGE_CLOCKWISE_270) ? (image_orientation_t)dirc : IMAGE_CLOCKWISE_NONE;
+                            res = (dirc >= IMAGE_CLOCKWISE_0 && dirc <= IMAGE_CLOCKWISE_270)
+                                      ? (image_orientation_t)dirc
+                                      : IMAGE_CLOCKWISE_NONE;
                         }
                         ifd += 12;
                     }
                     offset = TRANS_32_VALUE(is_big_endian, ifd);
-                } while(offset != 0);
+                }
+                while (offset != 0);
             }
             break;
         }
@@ -615,10 +663,11 @@ static image_orientation_t jpeg_markers_reader(struct jpeg_decompress_struct * c
     return res;
 }
 
-static void jpeg_cmyk_to_bgrx(uint8_t * cmyk_data, uint32_t pixel_count)
+static void jpeg_cmyk_to_bgrx(uint8_t* cmyk_data, uint32_t pixel_count)
 {
-    uint8_t * ptr = cmyk_data;
-    for(uint32_t i = 0; i < pixel_count; i++) {
+    uint8_t* ptr = cmyk_data;
+    for (uint32_t i = 0; i < pixel_count; i++)
+    {
         uint8_t c = 255 - ptr[0];
         uint8_t m = 255 - ptr[1];
         uint8_t y = 255 - ptr[2];
@@ -636,7 +685,7 @@ static void jpeg_cmyk_to_bgrx(uint8_t * cmyk_data, uint32_t pixel_count)
 
 static void error_exit(j_common_ptr cinfo)
 {
-    error_mgr_t * myerr = (error_mgr_t *)cinfo->err;
+    error_mgr_t* myerr = (error_mgr_t*)cinfo->err;
     (*cinfo->err->output_message)(cinfo);
     longjmp(myerr->jb, 1);
 }

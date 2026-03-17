@@ -37,19 +37,24 @@ static volatile bool s_dma_error = false;
  */
 static joystick_dir_t joystick_decode_raw(uint16_t raw)
 {
-    if(raw <= JOY_PRESS_MAX_RAW) {
+    if (raw <= JOY_PRESS_MAX_RAW)
+    {
         return JOYSTICK_DIR_PRESS;
     }
-    if(raw <= JOY_LEFT_MAX_RAW) {
+    if (raw <= JOY_LEFT_MAX_RAW)
+    {
         return JOYSTICK_DIR_LEFT;
     }
-    if(raw <= JOY_RIGHT_MAX_RAW) {
+    if (raw <= JOY_RIGHT_MAX_RAW)
+    {
         return JOYSTICK_DIR_RIGHT;
     }
-    if(raw <= JOY_UP_MAX_RAW) {
+    if (raw <= JOY_UP_MAX_RAW)
+    {
         return JOYSTICK_DIR_UP;
     }
-    if(raw <= JOY_DOWN_MAX_RAW) {
+    if (raw <= JOY_DOWN_MAX_RAW)
+    {
         return JOYSTICK_DIR_DOWN;
     }
 
@@ -67,13 +72,16 @@ static uint16_t joystick_read_adc_once_dma(void)
     s_dma_done = false;
     s_dma_error = false;
 
-    if(HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&s_dma_adc_raw, 1U) != HAL_OK) {
+    if (HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&s_dma_adc_raw, 1U) != HAL_OK)
+    {
         return s_last_adc_raw;
     }
 
     start_tick = HAL_GetTick();
-    while((!s_dma_done) && (!s_dma_error)) {
-        if((HAL_GetTick() - start_tick) > 3U) {
+    while ((!s_dma_done) && (!s_dma_error))
+    {
+        if ((HAL_GetTick() - start_tick) > 3U)
+        {
             break;
         }
         osDelay(1U);
@@ -81,7 +89,8 @@ static uint16_t joystick_read_adc_once_dma(void)
 
     (void)HAL_ADC_Stop_DMA(&hadc1);
 
-    if(s_dma_done && (!s_dma_error)) {
+    if (s_dma_done && (!s_dma_error))
+    {
         s_last_adc_raw = (uint16_t)s_dma_adc_raw;
     }
 
@@ -94,7 +103,8 @@ static uint16_t joystick_read_adc_once_dma(void)
  */
 HAL_StatusTypeDef Joystick_Init(void)
 {
-    if(HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED) != HAL_OK) {
+    if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED) != HAL_OK)
+    {
         return HAL_ERROR;
     }
 
@@ -124,21 +134,24 @@ int16_t Joystick_GetEncoderStep(void)
     uint32_t now = HAL_GetTick();
 
     /* 非左右方向时，复位连发状态。 */
-    if(dir != JOYSTICK_DIR_LEFT && dir != JOYSTICK_DIR_RIGHT) {
+    if (dir != JOYSTICK_DIR_LEFT && dir != JOYSTICK_DIR_RIGHT)
+    {
         s_repeat_dir = JOYSTICK_DIR_NONE;
         s_next_repeat_tick = now + JOY_REPEAT_DELAY_MS;
         return 0;
     }
 
     /* 方向首次变化时立即触发一步，并设置首个连发延时。 */
-    if(dir != s_repeat_dir) {
+    if (dir != s_repeat_dir)
+    {
         s_repeat_dir = dir;
         s_next_repeat_tick = now + JOY_REPEAT_DELAY_MS;
         return (dir == JOYSTICK_DIR_LEFT) ? -1 : 1;
     }
 
     /* 持续按住同一方向时按固定周期连发。 */
-    if((int32_t)(now - s_next_repeat_tick) >= 0) {
+    if ((int32_t)(now - s_next_repeat_tick) >= 0)
+    {
         s_next_repeat_tick = now + JOY_REPEAT_RATE_MS;
         return (dir == JOYSTICK_DIR_LEFT) ? -1 : 1;
     }
@@ -159,11 +172,12 @@ uint16_t Joystick_GetAdcRaw(void)
  * @brief FreeRTOS 任务：周期采样摇杆 ADC 并更新缓存。
  * @param argument 未使用的任务参数。
  */
-void StartJoystickTask(void *argument)
+void JoystickTask(void* argument)
 {
     (void)argument;
 
-    for(;;) {
+    for (;;)
+    {
         /* 摇杆状态只在该任务中写入，其他上下文仅读取缓存。 */
         s_last_adc_raw = joystick_read_adc_once_dma();
         s_last_dir = joystick_decode_raw(s_last_adc_raw);
@@ -175,9 +189,10 @@ void StartJoystickTask(void *argument)
  * @brief ADC 转换完成回调：用于 DMA 采样完成通知。
  * @param hadc ADC 句柄。
  */
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    if(hadc->Instance == ADC1) {
+    if (hadc->Instance == ADC1)
+    {
         s_dma_done = true;
     }
 }
@@ -186,9 +201,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
  * @brief ADC 错误回调：用于 DMA 采样异常通知。
  * @param hadc ADC 句柄。
  */
-void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc)
+void HAL_ADC_ErrorCallback(ADC_HandleTypeDef* hadc)
 {
-    if(hadc->Instance == ADC1) {
+    if (hadc->Instance == ADC1)
+    {
         s_dma_error = true;
     }
 }

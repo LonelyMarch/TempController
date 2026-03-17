@@ -28,7 +28,8 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 
-struct _lv_gltf_ibl_sampler {
+struct _lv_gltf_ibl_sampler
+{
     uint32_t cube_map_resolution;
     float lod_bias;
     uint32_t lowest_mip_level;
@@ -60,24 +61,26 @@ struct _lv_gltf_ibl_sampler {
 
     uint32_t fullscreen_vertex_buffer;
     uint32_t fullscreen_tex_coord_buffer;
-
 };
 
-typedef struct {
-    uint8_t * data;
+typedef struct
+{
+    uint8_t* data;
     uint32_t internal_format;
     uint32_t format;
     uint32_t type;
 } lv_gltf_ibl_texture_t;
 
-typedef struct {
-    float * data;
+typedef struct
+{
+    float* data;
     size_t data_len;
     uint32_t width;
     uint32_t height;
 } lv_gltf_ibl_image_t;
 
-struct _lv_gltf_environment {
+struct _lv_gltf_environment
+{
     uint32_t diffuse;
     uint32_t specular;
     uint32_t sheen;
@@ -103,4 +106,3 @@ struct _lv_gltf_environment {
 #endif
 
 #endif /*LV_GLTF_ENVIRONMENT_PRIVATE_H*/
-

@@ -3,10 +3,9 @@
 
 #include "../../../misc/lv_area_private.h"
 
-void lv_draw_dave2d_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const lv_area_t * coords)
+void lv_draw_dave2d_arc(lv_draw_task_t* t, const lv_draw_arc_dsc_t* dsc, const lv_area_t* coords)
 {
-
-    uint32_t                flags = 0;
+    uint32_t flags = 0;
     int32_t sin_start;
     int32_t cos_start;
     int32_t sin_end;
@@ -17,9 +16,9 @@ void lv_draw_dave2d_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
     lv_point_t arc_centre;
     int32_t x;
     int32_t y;
-    lv_draw_dave2d_unit_t * u = (lv_draw_dave2d_unit_t *)t->draw_unit;
+    lv_draw_dave2d_unit_t* u = (lv_draw_dave2d_unit_t*)t->draw_unit;
 
-    if(!lv_area_intersect(&clipped_area, coords, &t->clip_area)) return;
+    if (!lv_area_intersect(&clipped_area, coords, &t->clip_area)) return;
 
     x = 0 - t->target_layer->buf_area.x1;
     y = 0 - t->target_layer->buf_area.y1;
@@ -36,30 +35,31 @@ void lv_draw_dave2d_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
     //
     // If both angles are equal (e.g. 0 and 0 or 180 and 180) nothing has to be done
     //
-    if(dsc->start_angle == dsc->end_angle) {
-        return;                      // Nothing to do, no angle - no arc
+    if (dsc->start_angle == dsc->end_angle)
+    {
+        return; // Nothing to do, no angle - no arc
     }
 
 #if LV_USE_OS
-    lv_result_t  status;
-    status = lv_mutex_lock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+lv_result_t status;
+status= lv_mutex_lock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 
-    //
-    // Generate render operations
-    //
-    d2_framebuffer_from_layer(u->d2_handle, t->target_layer);
+//
+// Generate render operations
+//
+d2_framebuffer_from_layer (u->d2_handle, t->target_layer);
 
-    d2_setalpha(u->d2_handle, dsc->opa);
+d2_setalpha (u->d2_handle, dsc->opa);
 
-    d2_setcolor(u->d2_handle, 0, lv_draw_dave2d_lv_colour_to_d2_colour(dsc->color));
+d2_setcolor (u->d2_handle, 0, lv_draw_dave2d_lv_colour_to_d2_colour (dsc->color));
 
-    result = d2_cliprect(u->d2_handle, (d2_border)clipped_area.x1, (d2_border)clipped_area.y1, (d2_border)clipped_area.x2,
-                         (d2_border)clipped_area.y2);
-    LV_ASSERT(D2_OK == result);
+result= d2_cliprect(u->d2_handle, (d2_border)clipped_area.x1, (d2_border)clipped_area.y1, (d2_border)clipped_area.x2,
+(d2_border)clipped_area.y2);
+LV_ASSERT (D2_OK== result);
 
-    if(360 <= LV_ABS(dsc->start_angle - dsc->end_angle)) {
+    if(360 <= LV_ABS (dsc->start_angle- dsc->end_angle)) {
         d2_rendercircle(u->d2_handle,
                         (d2_point)D2_FIX4(arc_centre.x),
                         (d2_point) D2_FIX4(arc_centre.y),
@@ -168,8 +168,8 @@ void lv_draw_dave2d_arc(lv_draw_task_t * t, const lv_draw_arc_dsc_t * dsc, const
     }
 
 #if LV_USE_OS
-    status = lv_mutex_unlock(u->pd2Mutex);
-    LV_ASSERT(LV_RESULT_OK == status);
+status= lv_mutex_unlock(u->pd2Mutex);
+LV_ASSERT (LV_RESULT_OK== status);
 #endif
 }
 

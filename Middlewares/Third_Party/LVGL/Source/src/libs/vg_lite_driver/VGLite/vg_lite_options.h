@@ -31,9 +31,9 @@
 #include "../../../lv_conf_internal.h"
 #if LV_USE_VG_LITE_DRIVER
 
-    #define VG_LITE_OPTIONS VG_LITE_OPTIONS_2
-    #define VG_LITE_OPTIONS_2  <../VGLite/Series/LV_VG_LITE_HAL_GPU_SERIES/LV_VG_LITE_HAL_GPU_REVISION/vg_lite_options.h>
-    #include VG_LITE_OPTIONS
+#define VG_LITE_OPTIONS VG_LITE_OPTIONS_2
+#define VG_LITE_OPTIONS_2  <../VGLite/Series/LV_VG_LITE_HAL_GPU_SERIES/LV_VG_LITE_HAL_GPU_REVISION/vg_lite_options.h>
+#include VG_LITE_OPTIONS
 
 #endif /* LV_USE_VG_LITE_DRIVER */
 

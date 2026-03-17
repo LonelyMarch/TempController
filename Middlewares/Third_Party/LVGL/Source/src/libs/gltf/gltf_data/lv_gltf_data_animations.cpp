@@ -28,12 +28,12 @@
 
 #include "fastgltf/math.hpp"
 #include "lv_gltf_data_internal.hpp"
-static fastgltf::math::fvec3 animation_get_vec3_at_timestamp(lv_gltf_model_t * data,
-                                                             fastgltf::AnimationSampler * sampler,
+static fastgltf::math::fvec3 animation_get_vec3_at_timestamp(lv_gltf_model_t* data,
+                                                             fastgltf::AnimationSampler* sampler,
                                                              float seconds);
 
-static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t * data,
-                                                             fastgltf::AnimationSampler * sampler,
+static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t* data,
+                                                             fastgltf::AnimationSampler* sampler,
                                                              float _seconds);
 
 /**********************
@@ -48,31 +48,36 @@ static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t * d
  *   GLOBAL FUNCTIONS
  **********************/
 
-uint32_t lv_gltf_data_get_animation_total_time(lv_gltf_model_t * data, uint32_t index)
+uint32_t lv_gltf_data_get_animation_total_time(lv_gltf_model_t* data, uint32_t index)
 {
     LV_ASSERT(data->asset.animations.size() > index);
-    auto & animation = data->asset.animations[index];
+    auto& animation = data->asset.animations[index];
     float max_time = -1.0f;
-    for(uint64_t i = 0; i < animation.channels.size(); i++) {
-        auto & accessor = data->asset.accessors[animation.samplers[i].inputAccessor];
+    for (uint64_t i = 0; i < animation.channels.size(); i++)
+    {
+        auto& accessor = data->asset.accessors[animation.samplers[i].inputAccessor];
         max_time = std::max(max_time, fastgltf::getAccessorElement<float>(data->asset, accessor, accessor.count - 1));
     }
     return (uint32_t)(max_time * 1000);
 }
 
-std::vector<uint32_t> * lv_gltf_data_animation_get_channel_set(std::size_t anim_num, lv_gltf_model_t * data,
-                                                               fastgltf::Node * node)
+std::vector<uint32_t>* lv_gltf_data_animation_get_channel_set(std::size_t anim_num, lv_gltf_model_t* data,
+                                                              fastgltf::Node* node)
 {
-    const auto & asset = lv_gltf_data_get_asset(data);
+    const auto& asset = lv_gltf_data_get_asset(data);
     size_t animation_count = lv_gltf_model_get_animation_count(data);
-    if(data->channel_set_cache.find(node) == data->channel_set_cache.end()) {
+    if (data->channel_set_cache.find(node) == data->channel_set_cache.end())
+    {
         std::vector<uint32_t> new_cache = std::vector<uint32_t>();
-        if(animation_count > anim_num) {
-            auto & anim = asset->animations[anim_num];
+        if (animation_count > anim_num)
+        {
+            auto& anim = asset->animations[anim_num];
 
-            for(uint64_t c = 0; c < anim.channels.size(); c++) {
-                auto & channel = anim.channels[c];
-                if(&(asset->nodes[channel.nodeIndex.value()]) == node) {
+            for (uint64_t c = 0; c < anim.channels.size(); c++)
+            {
+                auto& channel = anim.channels[c];
+                if (&(asset->nodes[channel.nodeIndex.value()]) == node)
+                {
                     new_cache.push_back(c);
                 }
             }
@@ -83,54 +88,62 @@ std::vector<uint32_t> * lv_gltf_data_animation_get_channel_set(std::size_t anim_
 }
 
 
-void lv_gltf_data_animation_matrix_apply(float timestamp, std::size_t anim_num, lv_gltf_model_t * gltf_data,
-                                         fastgltf::Node * node,
-                                         fastgltf::math::fmat4x4 & matrix)
+void lv_gltf_data_animation_matrix_apply(float timestamp, std::size_t anim_num, lv_gltf_model_t* gltf_data,
+                                         fastgltf::Node* node,
+                                         fastgltf::math::fmat4x4& matrix)
 {
-    const auto & asset = lv_gltf_data_get_asset(gltf_data);
+    const auto& asset = lv_gltf_data_get_asset(gltf_data);
 
     size_t animation_count = lv_gltf_model_get_animation_count(gltf_data);
     auto _channel_set = lv_gltf_data_animation_get_channel_set(anim_num, gltf_data, node);
-    if(_channel_set->size() == 0) {
+    if (_channel_set->size() == 0)
+    {
         return;
     }
-    if(animation_count > anim_num) {
-        auto & anim = asset->animations[anim_num];
+    if (animation_count > anim_num)
+    {
+        auto& anim = asset->animations[anim_num];
         bool need_rot_recalc = false;
         int32_t translation_comp_index = -1;
         int32_t rotation_comp_index = -1;
         int32_t scale_comp_index = -1;
 
-        for(const auto & c : (*_channel_set)) {
-            switch(anim.channels[c].path) {
-                case fastgltf::AnimationPath::Translation:
-                    translation_comp_index = c;
-                    break;
-                case fastgltf::AnimationPath::Rotation:
-                    rotation_comp_index = c;
-                    need_rot_recalc = true;
-                    break;
-                case fastgltf::AnimationPath::Scale:
-                    scale_comp_index = c;
-                    need_rot_recalc = true;
-                    break;
-                case fastgltf::AnimationPath::Weights:
-                    LV_LOG_WARN("Unhandled weights animation");
-                    break;
+        for (const auto& c : (*_channel_set))
+        {
+            switch (anim.channels[c].path)
+            {
+            case fastgltf::AnimationPath::Translation:
+                translation_comp_index = c;
+                break;
+            case fastgltf::AnimationPath::Rotation:
+                rotation_comp_index = c;
+                need_rot_recalc = true;
+                break;
+            case fastgltf::AnimationPath::Scale:
+                scale_comp_index = c;
+                need_rot_recalc = true;
+                break;
+            case fastgltf::AnimationPath::Weights:
+                LV_LOG_WARN("Unhandled weights animation");
+                break;
             }
         }
 
-        if(need_rot_recalc) {
+        if (need_rot_recalc)
+        {
             fastgltf::math::fvec3 new_scale;
             fastgltf::math::fquat new_quat;
-            if(!((scale_comp_index > -1) && (rotation_comp_index > -1))) {
+            if (!((scale_comp_index > -1) && (rotation_comp_index > -1)))
+            {
                 fastgltf::math::fvec3 unused;
                 fastgltf::math::decomposeTransformMatrix(matrix, new_scale, new_quat, unused);
             }
-            if(scale_comp_index > -1) new_scale = animation_get_vec3_at_timestamp(gltf_data, &anim.samplers[scale_comp_index],
-                                                                                      timestamp);
-            if(rotation_comp_index > -1) new_quat = animation_get_quat_at_timestamp(gltf_data, &anim.samplers[rotation_comp_index],
-                                                                                        timestamp);
+            if (scale_comp_index > -1)
+                new_scale = animation_get_vec3_at_timestamp(gltf_data, &anim.samplers[scale_comp_index],
+                                                            timestamp);
+            if (rotation_comp_index > -1)
+                new_quat = animation_get_quat_at_timestamp(gltf_data, &anim.samplers[rotation_comp_index],
+                                                           timestamp);
 
             float sx = new_scale[0], sy = new_scale[1], sz = new_scale[2];
             float qx = new_quat[0], qy = new_quat[1], qz = new_quat[2], qw = new_quat[3];
@@ -158,9 +171,10 @@ void lv_gltf_data_animation_matrix_apply(float timestamp, std::size_t anim_num, 
             //matrix[2][3] = 0.f;
         }
 
-        if(translation_comp_index > -1) {
+        if (translation_comp_index > -1)
+        {
             fastgltf::math::fvec3 new_translation = animation_get_vec3_at_timestamp(gltf_data,
-                                                                                    &anim.samplers[translation_comp_index], timestamp);
+                &anim.samplers[translation_comp_index], timestamp);
             matrix[3][0] = new_translation[0];
             matrix[3][1] = new_translation[1];
             matrix[3][2] = new_translation[2];
@@ -173,40 +187,49 @@ void lv_gltf_data_animation_matrix_apply(float timestamp, std::size_t anim_num, 
  *   STATIC FUNCTIONS
  **********************/
 
-static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t * data,
-                                                             fastgltf::AnimationSampler * sampler,
+static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t* data,
+                                                             fastgltf::AnimationSampler* sampler,
                                                              float _seconds)
 {
-    const auto & asset = lv_gltf_data_get_asset(data);
-    auto & _inAcc = asset->accessors[sampler->inputAccessor];
-    auto & _outAcc = asset->accessors[sampler->outputAccessor];
+    const auto& asset = lv_gltf_data_get_asset(data);
+    auto& _inAcc = asset->accessors[sampler->inputAccessor];
+    auto& _outAcc = asset->accessors[sampler->outputAccessor];
     std::size_t _inAccCount = _inAcc.count;
     float _maxTime = fastgltf::getAccessorElement<float>(*asset, _inAcc, _inAccCount - 1);
     std::size_t _lowerIndex = 0;
     float _lowerTimestamp = 0.0f;
 
-    if(_seconds < 0.001f) {
+    if (_seconds < 0.001f)
+    {
         _lowerIndex = 0;
     }
-    else {
+    else
+    {
         std::size_t _firstCheckOffset = 0;
         std::size_t _lastCheckOffset = _inAccCount;
         std::size_t _prepassLeft = TIME_LOC_PREPASS_COUNT;
-        while(_prepassLeft > 0) {
+        while (_prepassLeft > 0)
+        {
             _prepassLeft -= 1;
-            if(_seconds >= fastgltf::getAccessorElement<float>(*asset, _inAcc, (_firstCheckOffset + _lastCheckOffset) >> 1)) {
+            if (_seconds >= fastgltf::getAccessorElement<float>(*asset, _inAcc,
+                                                                (_firstCheckOffset + _lastCheckOffset) >> 1))
+            {
                 _firstCheckOffset = (_firstCheckOffset + _lastCheckOffset) >> 1;
             }
-            else {
+            else
+            {
                 _lastCheckOffset = (_firstCheckOffset + _lastCheckOffset) >> 1;
-                if(_lastCheckOffset <= _firstCheckOffset + 1) {
+                if (_lastCheckOffset <= _firstCheckOffset + 1)
+                {
                     _prepassLeft = 0;
                 }
             }
         }
-        for(uint64_t ii = _firstCheckOffset; ii < _inAccCount; ii++) {
+        for (uint64_t ii = _firstCheckOffset; ii < _inAccCount; ii++)
+        {
             float _stampTime = fastgltf::getAccessorElement<float>(*asset, _inAcc, ii);
-            if(_stampTime > _seconds) {
+            if (_stampTime > _seconds)
+            {
                 _lowerIndex = ii - 1;
                 break;
             }
@@ -214,49 +237,60 @@ static fastgltf::math::fquat animation_get_quat_at_timestamp(lv_gltf_model_t * d
         }
     }
 
-    fastgltf::math::fquat _lowerValue = fastgltf::getAccessorElement<fastgltf::math::fquat>(*asset, _outAcc, _lowerIndex);
-    if(_seconds >= _maxTime || _seconds <= 0.0f) {
+    fastgltf::math::fquat _lowerValue = fastgltf::getAccessorElement<fastgltf::math::fquat>(
+        *asset, _outAcc, _lowerIndex);
+    if (_seconds >= _maxTime || _seconds <= 0.0f)
+    {
         return _lowerValue;
     }
     std::size_t _upperIndex = _lowerIndex + 1;
     float _linDist = fastgltf::getAccessorElement<float>(*asset, _inAcc, _upperIndex) - _lowerTimestamp;
     return fastgltf::math::slerp(_lowerValue, fastgltf::getAccessorElement<fastgltf::math::fquat>(*asset, _outAcc,
-                                                                                                  _upperIndex), (_seconds - _lowerTimestamp) / _linDist);
+                                     _upperIndex), (_seconds - _lowerTimestamp) / _linDist);
 }
 
-fastgltf::math::fvec3 animation_get_vec3_at_timestamp(lv_gltf_model_t * data, fastgltf::AnimationSampler * sampler,
+fastgltf::math::fvec3 animation_get_vec3_at_timestamp(lv_gltf_model_t* data, fastgltf::AnimationSampler* sampler,
                                                       float _seconds)
 {
-    const auto & asset = lv_gltf_data_get_asset(data);
-    auto & _inAcc = asset->accessors[sampler->inputAccessor];
-    auto & _outAcc = asset->accessors[sampler->outputAccessor];
+    const auto& asset = lv_gltf_data_get_asset(data);
+    auto& _inAcc = asset->accessors[sampler->inputAccessor];
+    auto& _outAcc = asset->accessors[sampler->outputAccessor];
     std::size_t _inAccCount = _inAcc.count;
     float _maxTime = fastgltf::getAccessorElement<float>(*asset, _inAcc, _inAccCount - 1);
     std::size_t _lowerIndex = 0;
     float _lowerTimestamp = 0.0f;
 
-    if(_seconds < 0.001f) {
+    if (_seconds < 0.001f)
+    {
         _lowerIndex = 0;
     }
-    else {
+    else
+    {
         std::size_t _firstCheckOffset = 0;
         std::size_t _lastCheckOffset = _inAccCount;
         std::size_t _prepassLeft = TIME_LOC_PREPASS_COUNT;
-        while(_prepassLeft > 0) {
+        while (_prepassLeft > 0)
+        {
             _prepassLeft -= 1;
-            if(_seconds >= fastgltf::getAccessorElement<float>(*asset, _inAcc, (_firstCheckOffset + _lastCheckOffset) >> 1)) {
+            if (_seconds >= fastgltf::getAccessorElement<float>(*asset, _inAcc,
+                                                                (_firstCheckOffset + _lastCheckOffset) >> 1))
+            {
                 _firstCheckOffset = (_firstCheckOffset + _lastCheckOffset) >> 1;
             }
-            else {
+            else
+            {
                 _lastCheckOffset = (_firstCheckOffset + _lastCheckOffset) >> 1;
-                if(_lastCheckOffset <= _firstCheckOffset + 1) {
+                if (_lastCheckOffset <= _firstCheckOffset + 1)
+                {
                     _prepassLeft = 0;
                 }
             }
         }
-        for(uint64_t ii = _firstCheckOffset; ii < _inAccCount; ii++) {
+        for (uint64_t ii = _firstCheckOffset; ii < _inAccCount; ii++)
+        {
             float _stampTime = fastgltf::getAccessorElement<float>(*asset, _inAcc, ii);
-            if(_stampTime > _seconds) {
+            if (_stampTime > _seconds)
+            {
                 _lowerIndex = ii - 1;
                 break;
             }
@@ -264,12 +298,15 @@ fastgltf::math::fvec3 animation_get_vec3_at_timestamp(lv_gltf_model_t * data, fa
         }
     }
 
-    fastgltf::math::fvec3 _lowerValue = fastgltf::getAccessorElement<fastgltf::math::fvec3>(*asset, _outAcc, _lowerIndex);
-    if(_seconds >= _maxTime || _seconds <= 0.0f) {
+    fastgltf::math::fvec3 _lowerValue = fastgltf::getAccessorElement<fastgltf::math::fvec3>(
+        *asset, _outAcc, _lowerIndex);
+    if (_seconds >= _maxTime || _seconds <= 0.0f)
+    {
         return _lowerValue;
     }
     std::size_t _upperIndex = _lowerIndex + 1;
-    fastgltf::math::fvec3 _upperValue = fastgltf::getAccessorElement<fastgltf::math::fvec3>(*asset, _outAcc, _upperIndex);
+    fastgltf::math::fvec3 _upperValue = fastgltf::getAccessorElement<fastgltf::math::fvec3>(
+        *asset, _outAcc, _upperIndex);
     float _upperTimestamp = fastgltf::getAccessorElement<float>(*asset, _inAcc, _upperIndex);
     return fastgltf::math::lerp(_lowerValue, _upperValue,
                                 (_seconds - _lowerTimestamp) / (_upperTimestamp - _lowerTimestamp));
