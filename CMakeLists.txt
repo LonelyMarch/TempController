@@ -40,8 +40,6 @@ add_executable(${CMAKE_PROJECT_NAME})
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
 
-# Add LVGL middleware
-add_subdirectory(Middlewares/Third_Party/LVGL/Source)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -52,17 +50,14 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
         # Add user sources here
         Core/Src/lcd.c
-        Core/Src/joystick.c
-        Middlewares/Third_Party/LVGL/Apps/ui/ui_temp_scale.c
-        Middlewares/Third_Party/LVGL/Apps/ui/ui.c
+        Core/Src/ui.c
+        Core/Src/stick.c
         # Middlewares/Third_Party/LVGL/Apps/porting/lv_port_disp.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         # Add user defined include paths
-        ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/ui
-        # ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LVGL/Apps/porting
 )
 
 # Add project symbols (macros)
@@ -76,7 +71,6 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
         stm32cubemx
-        LVGL
 
         # Add user defined libraries
 )

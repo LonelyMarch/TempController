@@ -43,7 +43,7 @@ extern "C" {
   */
 typedef enum
 {
-    HAL_EXTI_COMMON_CB_ID = 0x00U,
+  HAL_EXTI_COMMON_CB_ID          = 0x00U,
 } EXTI_CallbackIDTypeDef;
 
 
@@ -52,8 +52,8 @@ typedef enum
   */
 typedef struct
 {
-    uint32_t Line; /*!<  Exti line number */
-    void (*PendingCallback)(void); /*!<  Exti pending callback */
+  uint32_t Line;                    /*!<  Exti line number */
+  void (* PendingCallback)(void);   /*!<  Exti pending callback */
 } EXTI_HandleTypeDef;
 
 /**
@@ -61,19 +61,20 @@ typedef struct
   */
 typedef struct
 {
-    uint32_t Line; /*!< The Exti line to be configured. This parameter
+  uint32_t Line;           /*!< The Exti line to be configured. This parameter
                                 can be a value of @ref EXTI_Line */
-    uint32_t Mode; /*!< The Exit Mode to be configured for a core.
+  uint32_t Mode;           /*!< The Exit Mode to be configured for a core.
                                 This parameter can be a combination of @ref EXTI_Mode */
-    uint32_t Trigger; /*!< The Exti Trigger to be configured. This parameter
+  uint32_t Trigger;        /*!< The Exti Trigger to be configured. This parameter
                                 can be a value of @ref EXTI_Trigger */
-    uint32_t GPIOSel; /*!< The Exti GPIO multiplexer selection to be configured.
+  uint32_t GPIOSel;        /*!< The Exti GPIO multiplexer selection to be configured.
                                 This parameter is only possible for line 0 to 15. It
                                 can be a value of @ref EXTI_GPIOSel */
 
-    uint32_t PendClearSource; /*!< Specifies the event pending clear source for D3/SRD
+  uint32_t PendClearSource; /*!< Specifies the event pending clear source for D3/SRD
                                  domain. This parameter can be a value of @ref
                                  EXTI_PendClear_Source */
+
 } EXTI_ConfigTypeDef;
 
 /**
@@ -298,24 +299,17 @@ typedef struct
   * @{
   */
 #define EXTI_D3_PENDCLR_SRC_NONE       0x00000000U /*!< No D3 domain pendclear source , PMRx register to be set to zero  */
-
 #define EXTI_D3_PENDCLR_SRC_DMACH6     0x00000001U /*!< DMA ch6 event selected as D3 domain pendclear source, PMRx register to be set to 1 */
-
 #define EXTI_D3_PENDCLR_SRC_DMACH7     0x00000002U /*!< DMA ch7 event selected as D3 domain pendclear source, PMRx register to be set to 1*/
-
 #if defined (LPTIM4)
 #define EXTI_D3_PENDCLR_SRC_LPTIM4     0x00000003U /*!< LPTIM4 out selected as D3 domain pendclear source, PMRx register to be set to 1    */
-
 #else
 #define EXTI_D3_PENDCLR_SRC_LPTIM2     0x00000003U /*!< LPTIM2 out selected as D3 domain pendclear source, PMRx register to be set to 1    */
-
 #endif
 #if defined (LPTIM5)
 #define EXTI_D3_PENDCLR_SRC_LPTIM5     0x00000004U /*!< LPTIM5 out selected as D3 domain pendclear source, PMRx register to be set to 1    */
-
 #else
 #define EXTI_D3_PENDCLR_SRC_LPTIM3     0x00000004U /*!< LPTIM3 out selected as D3 domain pendclear source, PMRx register to be set to 1    */
-
 #endif
 /**
   * @}
@@ -500,12 +494,11 @@ typedef struct
   * @{
   */
 /* Configuration functions ****************************************************/
-HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef* hexti, EXTI_ConfigTypeDef* pExtiConfig);
-HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef* hexti, EXTI_ConfigTypeDef* pExtiConfig);
-HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef* hexti);
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef* hexti, EXTI_CallbackIDTypeDef CallbackID,
-                                            void (*pPendingCbfn)(void));
-HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef* hexti, uint32_t ExtiLine);
+HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti);
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
+HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
 /**
   * @}
   */
@@ -515,10 +508,10 @@ HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef* hexti, uint32_t ExtiLin
   * @{
   */
 /* IO operation functions *****************************************************/
-void HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef* hexti);
-uint32_t HAL_EXTI_GetPending(const EXTI_HandleTypeDef* hexti, uint32_t Edge);
-void HAL_EXTI_ClearPending(const EXTI_HandleTypeDef* hexti, uint32_t Edge);
-void HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef* hexti);
+void              HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef *hexti);
+uint32_t          HAL_EXTI_GetPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
+void              HAL_EXTI_ClearPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge);
+void              HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef *hexti);
 
 /**
   * @}
@@ -541,3 +534,4 @@ void HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef* hexti);
 #endif
 
 #endif /* STM32H7xx_HAL_EXTI_H */
+

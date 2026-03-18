@@ -22,7 +22,7 @@
 #define STM32H7xx_HAL_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -42,12 +42,11 @@ extern "C" {
   */
 typedef enum
 {
-    HAL_TICK_FREQ_10HZ = 100U,
-    HAL_TICK_FREQ_100HZ = 10U,
-    HAL_TICK_FREQ_1KHZ = 1U,
-    HAL_TICK_FREQ_DEFAULT = HAL_TICK_FREQ_1KHZ
+  HAL_TICK_FREQ_10HZ         = 100U,
+  HAL_TICK_FREQ_100HZ        = 10U,
+  HAL_TICK_FREQ_1KHZ         = 1U,
+  HAL_TICK_FREQ_DEFAULT      = HAL_TICK_FREQ_1KHZ
 } HAL_TickFreqTypeDef;
-
 /**
   * @}
   */
@@ -73,7 +72,7 @@ typedef enum
 /**
   * @}
   */
-
+  
 /** @defgroup SYSCFG_Exported_Constants SYSCFG Exported Constants
   * @{
   */
@@ -101,7 +100,6 @@ typedef enum
   * @{
   */
 #define SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE  ((uint32_t)0x00000000) /*!< VREF_plus pin is internally connected to Voltage reference buffer output */
-
 #define SYSCFG_VREFBUF_HIGH_IMPEDANCE_ENABLE   VREFBUF_CSR_HIZ        /*!< VREF_plus pin is high impedance */
 
 #define IS_SYSCFG_VREFBUF_HIGH_IMPEDANCE(__VALUE__)  (((__VALUE__) == SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE) || \
@@ -165,7 +163,6 @@ typedef enum
 #define SYSCFG_ETH_MII                      ((uint32_t)0x00000000)  /*!< Select the Media Independent Interface */
 #define SYSCFG_ETH_RMII                     SYSCFG_PMCR_EPIS_SEL_2  /*!< Select the Reduced Media Independent Interface */
 
-
 #define IS_SYSCFG_ETHERNET_CONFIG(CONFIG) (((CONFIG) == SYSCFG_ETH_MII)        || \
                                           ((CONFIG) == SYSCFG_ETH_RMII))
 
@@ -181,6 +178,8 @@ typedef enum
 #define SYSCFG_SWITCH_PA1                       SYSCFG_PMCR_PA1SO  /*!< Select PA1 analog switch */
 #define SYSCFG_SWITCH_PC2                       SYSCFG_PMCR_PC2SO  /*!< Select PC2 analog switch */
 #define SYSCFG_SWITCH_PC3                       SYSCFG_PMCR_PC3SO  /*!< Select PC3 analog switch */
+
+
 
 
 #define SYSCFG_SWITCH_PA0_OPEN                       SYSCFG_PMCR_PA0SO       /*!< PA0 analog switch opened */
@@ -233,7 +232,6 @@ typedef enum
   */
 #define SYSCFG_CELL_CODE                    ((uint32_t)0x00000000)  /*!< Select Code from the cell */
 #define SYSCFG_REGISTER_CODE                 SYSCFG_CCCSR_CS        /*!< Code from the SYSCFG compensation cell code register */
-
 
 #define IS_SYSCFG_CODE_SELECT(SELECT) (((SELECT) == SYSCFG_CELL_CODE)|| \
                                         ((SELECT) == SYSCFG_REGISTER_CODE))
@@ -1068,7 +1066,7 @@ HAL_StatusTypeDef HAL_Init(void);
 HAL_StatusTypeDef HAL_DeInit(void);
 void HAL_MspInit(void);
 void HAL_MspDeInit(void);
-HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
+HAL_StatusTypeDef HAL_InitTick (uint32_t TickPriority);
 
 /**
   * @}
@@ -1095,7 +1093,7 @@ uint32_t HAL_GetUIDw2(void);
 #if defined(SYSCFG_PMCR_EPIS_SEL)
 void HAL_SYSCFG_ETHInterfaceSelect(uint32_t SYSCFG_ETHInterface);
 #endif /* SYSCFG_PMCR_EPIS_SEL */
-void HAL_SYSCFG_AnalogSwitchConfig(uint32_t SYSCFG_AnalogSwitch, uint32_t SYSCFG_SwitchState);
+void HAL_SYSCFG_AnalogSwitchConfig(uint32_t SYSCFG_AnalogSwitch , uint32_t SYSCFG_SwitchState );
 #if defined(SYSCFG_PMCR_BOOSTEN)
 void HAL_SYSCFG_EnableBOOST(void);
 void HAL_SYSCFG_DisableBOOST(void);
@@ -1143,17 +1141,17 @@ void HAL_DisableDomain3DBGStopMode(void);
 void HAL_EnableDomain3DBGStandbyMode(void);
 void HAL_DisableDomain3DBGStandbyMode(void);
 #endif /*DBGMCU_CR_DBG_STANDBYD3*/
-void HAL_EXTI_EdgeConfig(uint32_t EXTI_Line, uint32_t EXTI_Edge);
+void HAL_EXTI_EdgeConfig(uint32_t EXTI_Line , uint32_t EXTI_Edge );
 void HAL_EXTI_GenerateSWInterrupt(uint32_t EXTI_Line);
 #if defined(DUAL_CORE)
 void HAL_EXTI_D2_ClearFlag(uint32_t EXTI_Line);
 #endif /*DUAL_CORE*/
 void HAL_EXTI_D1_ClearFlag(uint32_t EXTI_Line);
-void HAL_EXTI_D1_EventInputConfig(uint32_t EXTI_Line, uint32_t EXTI_Mode, uint32_t EXTI_LineCmd);
+void HAL_EXTI_D1_EventInputConfig(uint32_t EXTI_Line , uint32_t EXTI_Mode,  uint32_t EXTI_LineCmd);
 #if defined(DUAL_CORE)
-void HAL_EXTI_D2_EventInputConfig(uint32_t EXTI_Line, uint32_t EXTI_Mode, uint32_t EXTI_LineCmd);
+void HAL_EXTI_D2_EventInputConfig(uint32_t EXTI_Line , uint32_t EXTI_Mode,  uint32_t EXTI_LineCmd);
 #endif /*DUAL_CORE*/
-void HAL_EXTI_D3_EventInputConfig(uint32_t EXTI_Line, uint32_t EXTI_LineCmd, uint32_t EXTI_ClearSrc);
+void HAL_EXTI_D3_EventInputConfig(uint32_t EXTI_Line, uint32_t EXTI_LineCmd , uint32_t EXTI_ClearSrc);
 void HAL_SetFMCMemorySwappingConfig(uint32_t BankMapConfig);
 uint32_t HAL_GetFMCMemorySwappingConfig(void);
 void HAL_SYSCFG_VREFBUF_VoltageScalingConfig(uint32_t VoltageScaling);
@@ -1189,3 +1187,5 @@ void HAL_SYSCFG_ADC2ALT_Rout1Config(uint32_t Adc2AltRout1);
 #endif
 
 #endif /* STM32H7xx_HAL_H */
+
+

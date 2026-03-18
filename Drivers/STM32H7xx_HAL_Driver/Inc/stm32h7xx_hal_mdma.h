@@ -21,7 +21,7 @@
 #define STM32H7xx_HAL_MDMA_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -47,39 +47,40 @@ extern "C" {
   */
 typedef struct
 {
-    uint32_t Request; /*!< Specifies the MDMA request.
+
+  uint32_t Request;                 /*!< Specifies the MDMA request.
                                         This parameter can be a value of @ref MDMA_Request_selection*/
 
-    uint32_t TransferTriggerMode; /*!< Specifies the Trigger Transfer mode : each request triggers a :
+  uint32_t TransferTriggerMode;     /*!< Specifies the Trigger Transfer mode : each request triggers a :
                                          a buffer transfer, a block transfer, a repeated block transfer or a linked list transfer
                                          This parameter can be a value of @ref MDMA_Transfer_TriggerMode  */
 
-    uint32_t Priority; /*!< Specifies the software priority for the MDMAy channelx.
+  uint32_t Priority;                 /*!< Specifies the software priority for the MDMAy channelx.
                                          This parameter can be a value of @ref MDMA_Priority_level */
 
-    uint32_t Endianness; /*!< Specifies if the MDMA transactions preserve the Little endianness.
+  uint32_t Endianness;                /*!< Specifies if the MDMA transactions preserve the Little endianness.
                                          This parameter can be a value of @ref MDMA_Endianness */
 
-    uint32_t SourceInc; /*!< Specifies if the Source increment mode .
+  uint32_t SourceInc;                /*!< Specifies if the Source increment mode .
                                          This parameter can be a value of @ref MDMA_Source_increment_mode */
 
-    uint32_t DestinationInc; /*!< Specifies if the Destination increment mode .
+  uint32_t DestinationInc;           /*!< Specifies if the Destination increment mode .
                                          This parameter can be a value of @ref MDMA_Destination_increment_mode */
 
-    uint32_t SourceDataSize; /*!< Specifies the source data size.
+  uint32_t SourceDataSize;           /*!< Specifies the source data size.
                                          This parameter can be a value of @ref MDMA_Source_data_size */
 
-    uint32_t DestDataSize; /*!< Specifies the destination data size.
+  uint32_t DestDataSize;             /*!< Specifies the destination data size.
                                           This parameter can be a value of @ref MDMA_Destination_data_size */
 
 
-    uint32_t DataAlignment; /*!< Specifies the source to destination Memory data packing/padding mode.
+  uint32_t DataAlignment;            /*!< Specifies the source to destination Memory data packing/padding mode.
                                             This parameter can be a value of @ref MDMA_data_Alignment */
 
-    uint32_t BufferTransferLength; /*!< Specifies the buffer Transfer Length (number of bytes),
+  uint32_t BufferTransferLength;      /*!< Specifies the buffer Transfer Length (number of bytes),
                                           this is the number of bytes to be transferred in a single transfer (1 byte to 128 bytes)*/
 
-    uint32_t SourceBurst; /*!< Specifies the Burst transfer configuration for the source memory transfers.
+  uint32_t SourceBurst;              /*!< Specifies the Burst transfer configuration for the source memory transfers.
                                          It specifies the amount of data to be transferred in a single non interruptible
                                          transaction.
                                          This parameter can be a value of @ref MDMA_Source_burst
@@ -87,7 +88,7 @@ typedef struct
                                          the BURST must be programmed as to ensure that the burst size will be lower than than
                                          BufferTransferLength */
 
-    uint32_t DestBurst; /*!< Specifies the Burst transfer configuration for the destination memory transfers.
+  uint32_t DestBurst;                 /*!< Specifies the Burst transfer configuration for the destination memory transfers.
                                            It specifies the amount of data to be transferred in a single non interruptible
                                            transaction.
                                            This parameter can be a value of @ref MDMA_Destination_burst
@@ -95,19 +96,20 @@ typedef struct
                                            the BURST must be programmed as to ensure that the burst size will be lower than than
                                            BufferTransferLength */
 
-    int32_t SourceBlockAddressOffset; /*!< this field specifies the Next block source address offset
+  int32_t SourceBlockAddressOffset;   /*!< this field specifies the Next block source address offset
                                            signed value : if > 0 then  increment the next block source Address by offset from where the last block ends
                                                           if < 0 then  decrement the next block source Address by offset from where the last block ends
                                                           if == 0, the next block source address starts from where the last block ends
                                        */
 
 
-    int32_t DestBlockAddressOffset; /*!< this field specifies the Next block destination address offset
+  int32_t DestBlockAddressOffset;      /*!< this field specifies the Next block destination address offset
                                            signed value : if > 0 then  increment the next block destination Address by offset from where the last block ends
                                                           if < 0 then  decrement the next block destination Address by offset from where the last block ends
                                                           if == 0, the next block destination address starts from where the last block ends
                                        */
-} MDMA_InitTypeDef;
+
+}MDMA_InitTypeDef;
 
 /**
   * @brief  HAL MDMA linked list node structure definition
@@ -118,17 +120,18 @@ typedef struct
   */
 typedef struct
 {
-  __IO uint32_t CTCR; /*!< New CTCR register configuration for the given MDMA linked list node   */
-  __IO uint32_t CBNDTR; /*!< New CBNDTR register configuration for the given MDMA linked list node */
-  __IO uint32_t CSAR; /*!< New CSAR register configuration for the given MDMA linked list node   */
-  __IO uint32_t CDAR; /*!< New CDAR register configuration for the given MDMA linked list node   */
-  __IO uint32_t CBRUR; /*!< New CBRUR register configuration for the given MDMA linked list node  */
-  __IO uint32_t CLAR; /*!< New CLAR register configuration for the given MDMA linked list node   */
-  __IO uint32_t CTBR; /*!< New CTBR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CTCR;     /*!< New CTCR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CBNDTR;   /*!< New CBNDTR register configuration for the given MDMA linked list node */
+  __IO uint32_t CSAR;     /*!< New CSAR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CDAR;     /*!< New CDAR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CBRUR;    /*!< New CBRUR register configuration for the given MDMA linked list node  */
+  __IO uint32_t CLAR;     /*!< New CLAR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CTBR;     /*!< New CTBR register configuration for the given MDMA linked list node   */
   __IO uint32_t Reserved; /*!< Reserved register                                                     */
-  __IO uint32_t CMAR; /*!< New CMAR register configuration for the given MDMA linked list node   */
-  __IO uint32_t CMDR; /*!< New CMDR register configuration for the given MDMA linked list node   */
-} MDMA_LinkNodeTypeDef;
+  __IO uint32_t CMAR;     /*!< New CMAR register configuration for the given MDMA linked list node   */
+  __IO uint32_t CMDR;     /*!< New CMDR register configuration for the given MDMA linked list node   */
+
+}MDMA_LinkNodeTypeDef;
 
 /**
   * @brief  HAL MDMA linked list node configuration structure definition
@@ -136,20 +139,20 @@ typedef struct
   */
 typedef struct
 {
-    MDMA_InitTypeDef Init; /*!< configuration of the specified MDMA Linked List Node    */
-    uint32_t SrcAddress; /*!< The source memory address for the Linked list Node      */
-    uint32_t DstAddress; /*!< The destination memory address for the Linked list Node */
-    uint32_t BlockDataLength; /*!< The data length of a block in bytes                     */
-    uint32_t BlockCount; /*!< The number of blocks to be transferred                  */
+  MDMA_InitTypeDef Init;            /*!< configuration of the specified MDMA Linked List Node    */
+  uint32_t         SrcAddress;      /*!< The source memory address for the Linked list Node      */
+  uint32_t         DstAddress;      /*!< The destination memory address for the Linked list Node */
+  uint32_t         BlockDataLength; /*!< The data length of a block in bytes                     */
+  uint32_t         BlockCount;      /*!< The number of blocks to be transferred                  */
 
-    uint32_t PostRequestMaskAddress;
-    /*!< specifies the address to be updated (written) with PostRequestMaskData after a request is served.
+  uint32_t PostRequestMaskAddress;  /*!< specifies the address to be updated (written) with PostRequestMaskData after a request is served.
                                          PostRequestMaskAddress and PostRequestMaskData could be used to automatically clear a peripheral flag when the request is served  */
 
-    uint32_t PostRequestMaskData;
-    /*!< specifies the value to be written to PostRequestMaskAddress after a request is served.
+  uint32_t PostRequestMaskData;     /*!< specifies the value to be written to PostRequestMaskAddress after a request is served.
                                          PostRequestMaskAddress and PostRequestMaskData could be used to automatically clear a peripheral flag when the request is served  */
-} MDMA_LinkNodeConfTypeDef;
+
+
+}MDMA_LinkNodeConfTypeDef;
 
 
 /**
@@ -157,37 +160,40 @@ typedef struct
   */
 typedef enum
 {
-    HAL_MDMA_STATE_RESET = 0x00U, /*!< MDMA not yet initialized or disabled */
-    HAL_MDMA_STATE_READY = 0x01U, /*!< MDMA initialized and ready for use   */
-    HAL_MDMA_STATE_BUSY = 0x02U, /*!< MDMA process is ongoing              */
-    HAL_MDMA_STATE_ERROR = 0x03U, /*!< MDMA error state                     */
-    HAL_MDMA_STATE_ABORT = 0x04U, /*!< MDMA Abort state                     */
-} HAL_MDMA_StateTypeDef;
+  HAL_MDMA_STATE_RESET               = 0x00U,  /*!< MDMA not yet initialized or disabled */
+  HAL_MDMA_STATE_READY               = 0x01U,  /*!< MDMA initialized and ready for use   */
+  HAL_MDMA_STATE_BUSY                = 0x02U,  /*!< MDMA process is ongoing              */
+  HAL_MDMA_STATE_ERROR               = 0x03U,  /*!< MDMA error state                     */
+  HAL_MDMA_STATE_ABORT               = 0x04U,  /*!< MDMA Abort state                     */
+
+}HAL_MDMA_StateTypeDef;
 
 /**
   * @brief  HAL MDMA Level Complete structure definition
   */
 typedef enum
 {
-    HAL_MDMA_FULL_TRANSFER = 0x00U, /*!< Full transfer         */
-    HAL_MDMA_BUFFER_TRANSFER = 0x01U, /*!< Buffer Transfer       */
-    HAL_MDMA_BLOCK_TRANSFER = 0x02U, /*!< Block Transfer        */
-    HAL_MDMA_REPEAT_BLOCK_TRANSFER = 0x03U /*!< repeat block Transfer */
-} HAL_MDMA_LevelCompleteTypeDef;
+  HAL_MDMA_FULL_TRANSFER         = 0x00U,   /*!< Full transfer         */
+  HAL_MDMA_BUFFER_TRANSFER       = 0x01U,   /*!< Buffer Transfer       */
+  HAL_MDMA_BLOCK_TRANSFER        = 0x02U,   /*!< Block Transfer        */
+  HAL_MDMA_REPEAT_BLOCK_TRANSFER = 0x03U    /*!< repeat block Transfer */
+
+}HAL_MDMA_LevelCompleteTypeDef;
 
 /**
   * @brief  HAL MDMA Callbacks IDs structure definition
   */
 typedef enum
 {
-    HAL_MDMA_XFER_CPLT_CB_ID = 0x00U, /*!< Full transfer           */
-    HAL_MDMA_XFER_BUFFERCPLT_CB_ID = 0x01U, /*!< Buffer Transfer         */
-    HAL_MDMA_XFER_BLOCKCPLT_CB_ID = 0x02U, /*!< Block Transfer          */
-    HAL_MDMA_XFER_REPBLOCKCPLT_CB_ID = 0x03U, /*!< Repeated Block Transfer */
-    HAL_MDMA_XFER_ERROR_CB_ID = 0x04U, /*!< Error                   */
-    HAL_MDMA_XFER_ABORT_CB_ID = 0x05U, /*!< Abort                   */
-    HAL_MDMA_XFER_ALL_CB_ID = 0x06U /*!< All                     */
-} HAL_MDMA_CallbackIDTypeDef;
+  HAL_MDMA_XFER_CPLT_CB_ID          = 0x00U,    /*!< Full transfer           */
+  HAL_MDMA_XFER_BUFFERCPLT_CB_ID    = 0x01U,    /*!< Buffer Transfer         */
+  HAL_MDMA_XFER_BLOCKCPLT_CB_ID     = 0x02U,    /*!< Block Transfer          */
+  HAL_MDMA_XFER_REPBLOCKCPLT_CB_ID  = 0x03U,    /*!< Repeated Block Transfer */
+  HAL_MDMA_XFER_ERROR_CB_ID         = 0x04U,    /*!< Error                   */
+  HAL_MDMA_XFER_ABORT_CB_ID         = 0x05U,    /*!< Abort                   */
+  HAL_MDMA_XFER_ALL_CB_ID           = 0x06U     /*!< All                     */
+
+}HAL_MDMA_CallbackIDTypeDef;
 
 
 /**
@@ -195,43 +201,43 @@ typedef enum
   */
 typedef struct __MDMA_HandleTypeDef
 {
-    MDMA_Channel_TypeDef* Instance; /*!< Register base address                  */
+  MDMA_Channel_TypeDef *Instance;                                                              /*!< Register base address                  */
 
-    MDMA_InitTypeDef Init; /*!< MDMA communication parameters          */
+  MDMA_InitTypeDef      Init;                                                                  /*!< MDMA communication parameters          */
 
-    HAL_LockTypeDef Lock; /*!< MDMA locking object                    */
+  HAL_LockTypeDef       Lock;                                                                  /*!< MDMA locking object                    */
 
-  __IO HAL_MDMA_StateTypeDef State; /*!< MDMA transfer state                    */
+  __IO HAL_MDMA_StateTypeDef  State;                                                           /*!< MDMA transfer state                    */
 
-    void* Parent; /*!< Parent object state                    */
+  void                  *Parent;                                                               /*!< Parent object state                    */
 
-    void (*XferCpltCallback)(struct __MDMA_HandleTypeDef* hmdma); /*!< MDMA transfer complete callback        */
+  void                  (* XferCpltCallback)( struct __MDMA_HandleTypeDef * hmdma);            /*!< MDMA transfer complete callback        */
 
-    void (*XferBufferCpltCallback)(struct __MDMA_HandleTypeDef* hmdma); /*!< MDMA buffer transfer complete callback */
+  void                  (* XferBufferCpltCallback)( struct __MDMA_HandleTypeDef * hmdma);      /*!< MDMA buffer transfer complete callback */
 
-    void (*XferBlockCpltCallback)(struct __MDMA_HandleTypeDef* hmdma); /*!< MDMA block transfer complete callback  */
+  void                  (* XferBlockCpltCallback)( struct __MDMA_HandleTypeDef * hmdma);       /*!< MDMA block transfer complete callback  */
 
-    void (*XferRepeatBlockCpltCallback)(struct __MDMA_HandleTypeDef* hmdma);
-    /*!< MDMA block transfer repeat callback    */
+  void                  (* XferRepeatBlockCpltCallback)( struct __MDMA_HandleTypeDef * hmdma); /*!< MDMA block transfer repeat callback    */
 
-    void (*XferErrorCallback)(struct __MDMA_HandleTypeDef* hmdma); /*!< MDMA transfer error callback           */
+  void                  (* XferErrorCallback)( struct __MDMA_HandleTypeDef * hmdma);           /*!< MDMA transfer error callback           */
 
-    void (*XferAbortCallback)(struct __MDMA_HandleTypeDef* hmdma); /*!< MDMA transfer Abort callback           */
+  void                  (* XferAbortCallback)( struct __MDMA_HandleTypeDef * hmdma);           /*!< MDMA transfer Abort callback           */
 
 
-    MDMA_LinkNodeTypeDef* FirstLinkedListNodeAddress; /*!< specifies the first node address of the transfer list
+  MDMA_LinkNodeTypeDef *FirstLinkedListNodeAddress;                                             /*!< specifies the first node address of the transfer list
                                                                                                      (after the initial node defined by the Init struct)
                                                                                                      this parameter is used internally by the MDMA driver
                                                                                                      to construct the linked list node
                                                                                                 */
 
-    MDMA_LinkNodeTypeDef* LastLinkedListNodeAddress; /*!< specifies the last node address of the transfer list
+  MDMA_LinkNodeTypeDef *LastLinkedListNodeAddress;                                             /*!< specifies the last node address of the transfer list
                                                                                                     this parameter is used internally by the MDMA driver
                                                                                                     to construct the linked list node
                                                                                                 */
-    uint32_t LinkedListNodeCounter; /*!< Number of nodes in the MDMA linked list */
+  uint32_t LinkedListNodeCounter;                                                               /*!< Number of nodes in the MDMA linked list */
 
-  __IO uint32_t ErrorCode; /*!< MDMA Error code                        */
+  __IO uint32_t          ErrorCode;                                                            /*!< MDMA Error code                        */
+
 } MDMA_HandleTypeDef;
 
 /**
@@ -258,7 +264,6 @@ typedef struct __MDMA_HandleTypeDef
 #define HAL_MDMA_ERROR_BLOCK_SIZE  ((uint32_t)0x00000020U)   /*!< Block Size error                       */
 #define HAL_MDMA_ERROR_TIMEOUT     ((uint32_t)0x00000040U)   /*!< Timeout error                          */
 #define HAL_MDMA_ERROR_NO_XFER     ((uint32_t)0x00000080U)   /*!< Abort or SW trigger requested with no Xfer ongoing   */
-
 #define HAL_MDMA_ERROR_BUSY        ((uint32_t)0x00000100U)   /*!< DeInit or SW trigger requested with Xfer ongoing   */
 
 /**
@@ -271,96 +276,59 @@ typedef struct __MDMA_HandleTypeDef
   */
 
 #define MDMA_REQUEST_DMA1_Stream0_TC      ((uint32_t)0x00000000U)  /*!< MDMA HW request is DMA1 Stream 0 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream1_TC      ((uint32_t)0x00000001U)  /*!< MDMA HW request is DMA1 Stream 1 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream2_TC      ((uint32_t)0x00000002U)  /*!< MDMA HW request is DMA1 Stream 2 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream3_TC      ((uint32_t)0x00000003U)  /*!< MDMA HW request is DMA1 Stream 3 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream4_TC      ((uint32_t)0x00000004U)  /*!< MDMA HW request is DMA1 Stream 4 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream5_TC      ((uint32_t)0x00000005U)  /*!< MDMA HW request is DMA1 Stream 5 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream6_TC      ((uint32_t)0x00000006U)  /*!< MDMA HW request is DMA1 Stream 6 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA1_Stream7_TC      ((uint32_t)0x00000007U)  /*!< MDMA HW request is DMA1 Stream 7 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream0_TC      ((uint32_t)0x00000008U)  /*!< MDMA HW request is DMA2 Stream 0 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream1_TC      ((uint32_t)0x00000009U)  /*!< MDMA HW request is DMA2 Stream 1 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream2_TC      ((uint32_t)0x0000000AU)  /*!< MDMA HW request is DMA2 Stream 2 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream3_TC      ((uint32_t)0x0000000BU)  /*!< MDMA HW request is DMA2 Stream 3 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream4_TC      ((uint32_t)0x0000000CU)  /*!< MDMA HW request is DMA2 Stream 4 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream5_TC      ((uint32_t)0x0000000DU)  /*!< MDMA HW request is DMA2 Stream 5 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream6_TC      ((uint32_t)0x0000000EU)  /*!< MDMA HW request is DMA2 Stream 6 Transfer Complete Flag   */
-
 #define MDMA_REQUEST_DMA2_Stream7_TC      ((uint32_t)0x0000000FU)  /*!< MDMA HW request is DMA2 Stream 7 Transfer Complete Flag   */
-
 #if defined (LTDC)
 #define MDMA_REQUEST_LTDC_LINE_IT         ((uint32_t)0x00000010U)  /*!< MDMA HW request is LTDC Line interrupt Flag               */
-
 #endif /* LTDC */
 #if defined (JPEG)
 #define MDMA_REQUEST_JPEG_INFIFO_TH       ((uint32_t)0x00000011U)  /*!< MDMA HW request is JPEG Input FIFO threshold Flag         */
-
 #define MDMA_REQUEST_JPEG_INFIFO_NF       ((uint32_t)0x00000012U)  /*!< MDMA HW request is JPEG Input FIFO not full Flag          */
-
 #define MDMA_REQUEST_JPEG_OUTFIFO_TH      ((uint32_t)0x00000013U)  /*!< MDMA HW request is JPEG Output FIFO threshold Flag        */
-
 #define MDMA_REQUEST_JPEG_OUTFIFO_NE      ((uint32_t)0x00000014U)  /*!< MDMA HW request is JPEG Output FIFO not empty Flag        */
-
 #define MDMA_REQUEST_JPEG_END_CONVERSION  ((uint32_t)0x00000015U)  /*!< MDMA HW request is JPEG End of conversion Flag            */
-
 #endif /* JPEG */
 #if defined (OCTOSPI1)
 #define MDMA_REQUEST_OCTOSPI1_FIFO_TH     ((uint32_t)0x00000016U)  /*!< MDMA HW request is OCTOSPI1 FIFO threshold Flag           */
-
 #define MDMA_REQUEST_OCTOSPI1_TC          ((uint32_t)0x00000017U)  /*!< MDMA HW request is OCTOSPI1 Transfer complete Flag        */
-
 #endif /* OCTOSPI1 */
 #if defined (QUADSPI)
 #define MDMA_REQUEST_QUADSPI_FIFO_TH      ((uint32_t)0x00000016U)  /*!< MDMA HW request is QSPI FIFO threshold Flag               */
-
 #define MDMA_REQUEST_QUADSPI_TC           ((uint32_t)0x00000017U)  /*!< MDMA HW request is QSPI Transfer complete Flag            */
-
 #endif /* QUADSPI */
 #define MDMA_REQUEST_DMA2D_CLUT_TC        ((uint32_t)0x00000018U)  /*!< MDMA HW request is DMA2D CLUT Transfer Complete Flag      */
-
 #define MDMA_REQUEST_DMA2D_TC             ((uint32_t)0x00000019U)  /*!< MDMA HW request is DMA2D Transfer Complete Flag           */
-
 #define MDMA_REQUEST_DMA2D_TW             ((uint32_t)0x0000001AU)  /*!< MDMA HW request is DMA2D Transfer Watermark Flag          */
-
 
 #if defined (DSI)
 #define MDMA_REQUEST_DSI_TEARING_EFFECT   ((uint32_t)0x0000001BU)  /*!< MDMA HW request is DSI Tearing Effect Flag                */
-
 #define MDMA_REQUEST_DSI_END_REFRESH      ((uint32_t)0x0000001CU)  /*!< MDMA HW request is DSI End of refresh  Flag               */
-
 #endif /* DSI */
 
 #define MDMA_REQUEST_SDMMC1_END_DATA      ((uint32_t)0x0000001DU)  /*!< MDMA HW request is SDMMC1 End of Data Flag                */
 
-
 #define MDMA_REQUEST_SDMMC1_DMA_ENDBUFFER ((uint32_t)0x0000001EU)  /*!< MDMA HW request is SDMMC1 Internal DMA buffer End Flag    */
-
 #define MDMA_REQUEST_SDMMC1_COMMAND_END   ((uint32_t)0x0000001FU)  /*!< MDMA HW request is SDMMC1 Command End Flag                */
-
 
 #if defined (OCTOSPI2)
 #define MDMA_REQUEST_OCTOSPI2_FIFO_TH     ((uint32_t)0x00000020U)  /*!< MDMA HW request is OCTOSPI2 FIFO threshold Flag           */
-
 #define MDMA_REQUEST_OCTOSPI2_TC          ((uint32_t)0x00000021U)  /*!< MDMA HW request is OCTOSPI2 Transfer complete Flag        */
-
 #endif /* OCTOSPI2 */
 
 #define MDMA_REQUEST_SW                   ((uint32_t)0x40000000U) /*!< MDMA SW request                                            */
-
 
 /**
   * @}
@@ -371,13 +339,9 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_BUFFER_TRANSFER          ((uint32_t)0x00000000U)        /*!< Each MDMA request (SW or HW) triggers a buffer transfer                                */
-
 #define MDMA_BLOCK_TRANSFER           ((uint32_t)MDMA_CTCR_TRGM_0)   /*!< Each MDMA request (SW or HW) triggers a block transfer                                 */
-
 #define MDMA_REPEAT_BLOCK_TRANSFER    ((uint32_t)MDMA_CTCR_TRGM_1)   /*!< Each MDMA request (SW or HW) triggers a repeated block transfer                        */
-
 #define MDMA_FULL_TRANSFER            ((uint32_t)MDMA_CTCR_TRGM)     /*!< Each MDMA request (SW or HW) triggers a Full transfer or a linked list transfer if any */
-
 
 /**
   * @}
@@ -402,13 +366,9 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_LITTLE_ENDIANNESS_PRESERVE          ((uint32_t)0x00000000U)   /*!< little endianness preserve                                               */
-
 #define MDMA_LITTLE_BYTE_ENDIANNESS_EXCHANGE     ((uint32_t)MDMA_CCR_BEX)  /*!< BYTEs endianness exchange when destination data size is > Byte           */
-
 #define MDMA_LITTLE_HALFWORD_ENDIANNESS_EXCHANGE ((uint32_t)MDMA_CCR_HEX)  /*!< HALF WORDs endianness exchange when destination data size is > HALF WORD */
-
 #define MDMA_LITTLE_WORD_ENDIANNESS_EXCHANGE     ((uint32_t)MDMA_CCR_WEX)  /*!< WORDs endianness exchange  when destination data size is > DOUBLE WORD   */
-
 
 /**
   * @}
@@ -419,23 +379,14 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_SRC_INC_DISABLE      ((uint32_t)0x00000000U)                                     /*!< Source address pointer is fixed                                   */
-
 #define MDMA_SRC_INC_BYTE         ((uint32_t)MDMA_CTCR_SINC_1)                                /*!< Source address pointer is incremented by a BYTE (8 bits)          */
-
 #define MDMA_SRC_INC_HALFWORD     ((uint32_t)MDMA_CTCR_SINC_1 | (uint32_t)MDMA_CTCR_SINCOS_0) /*!< Source address pointer is incremented by a half Word (16 bits)    */
-
 #define MDMA_SRC_INC_WORD         ((uint32_t)MDMA_CTCR_SINC_1 | (uint32_t)MDMA_CTCR_SINCOS_1) /*!< Source address pointer is incremented by a Word (32 bits)         */
-
 #define MDMA_SRC_INC_DOUBLEWORD   ((uint32_t)MDMA_CTCR_SINC_1 | (uint32_t)MDMA_CTCR_SINCOS)   /*!< Source address pointer is incremented by a double Word (64 bits)) */
-
 #define MDMA_SRC_DEC_BYTE         ((uint32_t)MDMA_CTCR_SINC)                                  /*!< Source address pointer is decremented by a BYTE (8 bits)          */
-
 #define MDMA_SRC_DEC_HALFWORD     ((uint32_t)MDMA_CTCR_SINC | (uint32_t)MDMA_CTCR_SINCOS_0)   /*!< Source address pointer is decremented by a half Word (16 bits)    */
-
 #define MDMA_SRC_DEC_WORD         ((uint32_t)MDMA_CTCR_SINC | (uint32_t)MDMA_CTCR_SINCOS_1)   /*!< Source address pointer is decremented by a Word (32 bits)         */
-
 #define MDMA_SRC_DEC_DOUBLEWORD   ((uint32_t)MDMA_CTCR_SINC | (uint32_t)MDMA_CTCR_SINCOS)     /*!< Source address pointer is decremented by a double Word (64 bits)) */
-
 
 /**
   * @}
@@ -446,23 +397,14 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_DEST_INC_DISABLE      ((uint32_t)0x00000000U)                                     /*!< Source address pointer is fixed                                   */
-
 #define MDMA_DEST_INC_BYTE         ((uint32_t)MDMA_CTCR_DINC_1)                                /*!< Source address pointer is incremented by a BYTE (8 bits)          */
-
 #define MDMA_DEST_INC_HALFWORD     ((uint32_t)MDMA_CTCR_DINC_1 | (uint32_t)MDMA_CTCR_DINCOS_0) /*!< Source address pointer is incremented by a half Word (16 bits)    */
-
 #define MDMA_DEST_INC_WORD         ((uint32_t)MDMA_CTCR_DINC_1 | (uint32_t)MDMA_CTCR_DINCOS_1) /*!< Source address pointer is incremented by a Word (32 bits)         */
-
 #define MDMA_DEST_INC_DOUBLEWORD   ((uint32_t)MDMA_CTCR_DINC_1 | (uint32_t)MDMA_CTCR_DINCOS)   /*!< Source address pointer is incremented by a double Word (64 bits)) */
-
 #define MDMA_DEST_DEC_BYTE         ((uint32_t)MDMA_CTCR_DINC)                                  /*!< Source address pointer is decremented by a BYTE (8 bits)          */
-
 #define MDMA_DEST_DEC_HALFWORD     ((uint32_t)MDMA_CTCR_DINC | (uint32_t)MDMA_CTCR_DINCOS_0)   /*!< Source address pointer is decremented by a half Word (16 bits)    */
-
 #define MDMA_DEST_DEC_WORD         ((uint32_t)MDMA_CTCR_DINC | (uint32_t)MDMA_CTCR_DINCOS_1)   /*!< Source address pointer is decremented by a Word (32 bits)         */
-
 #define MDMA_DEST_DEC_DOUBLEWORD   ((uint32_t)MDMA_CTCR_DINC | (uint32_t)MDMA_CTCR_DINCOS)     /*!< Source address pointer is decremented by a double Word (64 bits)) */
-
 
 /**
   * @}
@@ -500,14 +442,10 @@ typedef struct __MDMA_HandleTypeDef
   */
 #define MDMA_DATAALIGN_PACKENABLE        ((uint32_t)MDMA_CTCR_PKE)     /*!< The source data is packed/un-packed into the destination data size
                                                                             All data are right aligned, in Little Endien mode.                                              */
-
 #define MDMA_DATAALIGN_RIGHT            ((uint32_t)0x00000000U)        /*!< Right Aligned, padded w/ 0s (default)                                                           */
-
 #define MDMA_DATAALIGN_RIGHT_SIGNED     ((uint32_t)MDMA_CTCR_PAM_0)    /*!< Right Aligned, Sign extended ,
                                                                             Note : this mode is allowed only if the Source data size is smaller than Destination data size  */
-
 #define MDMA_DATAALIGN_LEFT             ((uint32_t)MDMA_CTCR_PAM_1)    /*!< Left Aligned (padded with 0s)                                                                   */
-
 
 /**
   * @}
@@ -518,21 +456,13 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_SOURCE_BURST_SINGLE        ((uint32_t)0x00000000U)                                       /*!< single transfer */
-
 #define MDMA_SOURCE_BURST_2BEATS        ((uint32_t)MDMA_CTCR_SBURST_0)                                /*!< Burst 2 beats   */
-
 #define MDMA_SOURCE_BURST_4BEATS        ((uint32_t)MDMA_CTCR_SBURST_1)                                /*!< Burst 4 beats   */
-
 #define MDMA_SOURCE_BURST_8BEATS        ((uint32_t)MDMA_CTCR_SBURST_0 | (uint32_t)MDMA_CTCR_SBURST_1) /*!< Burst 8 beats   */
-
 #define MDMA_SOURCE_BURST_16BEATS       ((uint32_t)MDMA_CTCR_SBURST_2)                                /*!< Burst 16 beats  */
-
 #define MDMA_SOURCE_BURST_32BEATS       ((uint32_t)MDMA_CTCR_SBURST_0 | (uint32_t)MDMA_CTCR_SBURST_2) /*!< Burst 32 beats  */
-
 #define MDMA_SOURCE_BURST_64BEATS       ((uint32_t)MDMA_CTCR_SBURST_1 | (uint32_t)MDMA_CTCR_SBURST_2) /*!< Burst 64 beats  */
-
 #define MDMA_SOURCE_BURST_128BEATS      ((uint32_t)MDMA_CTCR_SBURST)                                  /*!< Burst 128 beats */
-
 
 /**
   * @}
@@ -543,21 +473,13 @@ typedef struct __MDMA_HandleTypeDef
   * @{
   */
 #define MDMA_DEST_BURST_SINGLE        ((uint32_t)0x00000000U)                                        /*!< single transfer */
-
 #define MDMA_DEST_BURST_2BEATS        ((uint32_t)MDMA_CTCR_DBURST_0)                                 /*!< Burst 2 beats   */
-
 #define MDMA_DEST_BURST_4BEATS        ((uint32_t)MDMA_CTCR_DBURST_1)                                 /*!< Burst 4 beats   */
-
 #define MDMA_DEST_BURST_8BEATS        ((uint32_t)MDMA_CTCR_DBURST_0 | (uint32_t)MDMA_CTCR_DBURST_1)  /*!< Burst 8 beats   */
-
 #define MDMA_DEST_BURST_16BEATS       ((uint32_t)MDMA_CTCR_DBURST_2)                                 /*!< Burst 16 beats  */
-
 #define MDMA_DEST_BURST_32BEATS       ((uint32_t)MDMA_CTCR_DBURST_0 | (uint32_t)MDMA_CTCR_DBURST_2)  /*!< Burst 32 beats  */
-
 #define MDMA_DEST_BURST_64BEATS       ((uint32_t)MDMA_CTCR_DBURST_1 | (uint32_t)MDMA_CTCR_DBURST_2)  /*!< Burst 64 beats  */
-
 #define MDMA_DEST_BURST_128BEATS      ((uint32_t)MDMA_CTCR_DBURST)                                   /*!< Burst 128 beats */
-
 
 /**
   * @}
@@ -715,13 +637,12 @@ typedef struct __MDMA_HandleTypeDef
   * @brief   Initialization and de-initialization functions
   * @{
   */
-HAL_StatusTypeDef HAL_MDMA_Init(MDMA_HandleTypeDef* hmdma);
-HAL_StatusTypeDef HAL_MDMA_DeInit(MDMA_HandleTypeDef* hmdma);
-HAL_StatusTypeDef HAL_MDMA_ConfigPostRequestMask(MDMA_HandleTypeDef* hmdma, uint32_t MaskAddress, uint32_t MaskData);
+HAL_StatusTypeDef HAL_MDMA_Init(MDMA_HandleTypeDef *hmdma);
+HAL_StatusTypeDef HAL_MDMA_DeInit (MDMA_HandleTypeDef *hmdma);
+HAL_StatusTypeDef HAL_MDMA_ConfigPostRequestMask(MDMA_HandleTypeDef *hmdma, uint32_t MaskAddress, uint32_t MaskData);
 
-HAL_StatusTypeDef HAL_MDMA_RegisterCallback(MDMA_HandleTypeDef* hmdma, HAL_MDMA_CallbackIDTypeDef CallbackID,
-                                            void (*pCallback)(MDMA_HandleTypeDef* _hmdma));
-HAL_StatusTypeDef HAL_MDMA_UnRegisterCallback(MDMA_HandleTypeDef* hmdma, HAL_MDMA_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_MDMA_RegisterCallback(MDMA_HandleTypeDef *hmdma, HAL_MDMA_CallbackIDTypeDef CallbackID, void (* pCallback)(MDMA_HandleTypeDef *_hmdma));
+HAL_StatusTypeDef HAL_MDMA_UnRegisterCallback(MDMA_HandleTypeDef *hmdma, HAL_MDMA_CallbackIDTypeDef CallbackID);
 
 /**
   * @}
@@ -733,12 +654,11 @@ HAL_StatusTypeDef HAL_MDMA_UnRegisterCallback(MDMA_HandleTypeDef* hmdma, HAL_MDM
   * @{
   */
 
-HAL_StatusTypeDef HAL_MDMA_LinkedList_CreateNode(MDMA_LinkNodeTypeDef* pNode, MDMA_LinkNodeConfTypeDef* pNodeConfig);
-HAL_StatusTypeDef HAL_MDMA_LinkedList_AddNode(MDMA_HandleTypeDef* hmdma, MDMA_LinkNodeTypeDef* pNewNode,
-                                              const MDMA_LinkNodeTypeDef* pPrevNode);
-HAL_StatusTypeDef HAL_MDMA_LinkedList_RemoveNode(MDMA_HandleTypeDef* hmdma, MDMA_LinkNodeTypeDef* pNode);
-HAL_StatusTypeDef HAL_MDMA_LinkedList_EnableCircularMode(MDMA_HandleTypeDef* hmdma);
-HAL_StatusTypeDef HAL_MDMA_LinkedList_DisableCircularMode(MDMA_HandleTypeDef* hmdma);
+HAL_StatusTypeDef HAL_MDMA_LinkedList_CreateNode(MDMA_LinkNodeTypeDef *pNode, MDMA_LinkNodeConfTypeDef *pNodeConfig);
+HAL_StatusTypeDef HAL_MDMA_LinkedList_AddNode(MDMA_HandleTypeDef *hmdma, MDMA_LinkNodeTypeDef *pNewNode, const MDMA_LinkNodeTypeDef *pPrevNode);
+HAL_StatusTypeDef HAL_MDMA_LinkedList_RemoveNode(MDMA_HandleTypeDef *hmdma, MDMA_LinkNodeTypeDef *pNode);
+HAL_StatusTypeDef HAL_MDMA_LinkedList_EnableCircularMode(MDMA_HandleTypeDef *hmdma);
+HAL_StatusTypeDef HAL_MDMA_LinkedList_DisableCircularMode(MDMA_HandleTypeDef *hmdma);
 
 
 /**
@@ -750,16 +670,13 @@ HAL_StatusTypeDef HAL_MDMA_LinkedList_DisableCircularMode(MDMA_HandleTypeDef* hm
   * @brief   I/O operation functions
   * @{
   */
-HAL_StatusTypeDef HAL_MDMA_Start(MDMA_HandleTypeDef* hmdma, uint32_t SrcAddress, uint32_t DstAddress,
-                                 uint32_t BlockDataLength, uint32_t BlockCount);
-HAL_StatusTypeDef HAL_MDMA_Start_IT(MDMA_HandleTypeDef* hmdma, uint32_t SrcAddress, uint32_t DstAddress,
-                                    uint32_t BlockDataLength, uint32_t BlockCount);
-HAL_StatusTypeDef HAL_MDMA_Abort(MDMA_HandleTypeDef* hmdma);
-HAL_StatusTypeDef HAL_MDMA_Abort_IT(MDMA_HandleTypeDef* hmdma);
-HAL_StatusTypeDef HAL_MDMA_PollForTransfer(MDMA_HandleTypeDef* hmdma, HAL_MDMA_LevelCompleteTypeDef CompleteLevel,
-                                           uint32_t Timeout);
-HAL_StatusTypeDef HAL_MDMA_GenerateSWRequest(MDMA_HandleTypeDef* hmdma);
-void HAL_MDMA_IRQHandler(MDMA_HandleTypeDef* hmdma);
+HAL_StatusTypeDef HAL_MDMA_Start (MDMA_HandleTypeDef *hmdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t BlockDataLength, uint32_t BlockCount);
+HAL_StatusTypeDef HAL_MDMA_Start_IT(MDMA_HandleTypeDef *hmdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t BlockDataLength, uint32_t BlockCount);
+HAL_StatusTypeDef HAL_MDMA_Abort(MDMA_HandleTypeDef *hmdma);
+HAL_StatusTypeDef HAL_MDMA_Abort_IT(MDMA_HandleTypeDef *hmdma);
+HAL_StatusTypeDef HAL_MDMA_PollForTransfer(MDMA_HandleTypeDef *hmdma, HAL_MDMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout);
+HAL_StatusTypeDef HAL_MDMA_GenerateSWRequest(MDMA_HandleTypeDef *hmdma);
+void HAL_MDMA_IRQHandler(MDMA_HandleTypeDef *hmdma);
 
 /**
   * @}
@@ -770,8 +687,8 @@ void HAL_MDMA_IRQHandler(MDMA_HandleTypeDef* hmdma);
   * @brief    Peripheral State functions
   * @{
   */
-HAL_MDMA_StateTypeDef HAL_MDMA_GetState(const MDMA_HandleTypeDef* hmdma);
-uint32_t HAL_MDMA_GetError(const MDMA_HandleTypeDef* hmdma);
+HAL_MDMA_StateTypeDef HAL_MDMA_GetState(const MDMA_HandleTypeDef *hmdma);
+uint32_t              HAL_MDMA_GetError(const MDMA_HandleTypeDef *hmdma);
 
 /**
   * @}
@@ -900,7 +817,7 @@ uint32_t HAL_MDMA_GetError(const MDMA_HandleTypeDef* hmdma);
                                               ((__BURST__) == MDMA_DEST_BURST_64BEATS) || \
                                               ((__BURST__) == MDMA_DEST_BURST_128BEATS))
 
-#define IS_MDMA_TRANSFER_TRIGGER_MODE(__MODE__) (((__MODE__) == MDMA_BUFFER_TRANSFER )      || \
+ #define IS_MDMA_TRANSFER_TRIGGER_MODE(__MODE__) (((__MODE__) == MDMA_BUFFER_TRANSFER )      || \
                                                   ((__MODE__) == MDMA_BLOCK_TRANSFER )        || \
                                                   ((__MODE__) == MDMA_REPEAT_BLOCK_TRANSFER ) || \
                                                   ((__MODE__) == MDMA_FULL_TRANSFER))
@@ -948,3 +865,4 @@ uint32_t HAL_MDMA_GetError(const MDMA_HandleTypeDef* hmdma);
 #endif
 
 #endif /* STM32H7xx_HAL_MDMA_H */
+

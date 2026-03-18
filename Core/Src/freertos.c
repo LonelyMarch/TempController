@@ -25,10 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "joystick.h"
-#include "lvgl.h"
-#include "lcd.h"
-#include "ui_temp_scale.h"
+
 
 /* USER CODE END Includes */
 
@@ -51,19 +48,24 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-/* Definitions for lvglTask */
-osThreadId_t lvglTaskHandle;
-const osThreadAttr_t lvglTask_attributes = {
-    .name = "lvglTask",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityNormal,
+/* Definitions for lcdTask */
+osThreadId_t lcdTaskHandle;
+const osThreadAttr_t lcdTask_attributes = {
+  .name = "lcdTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for joystickTask */
-osThreadId_t joystickTaskHandle;
-const osThreadAttr_t joystickTask_attributes = {
-    .name = "joystickTask",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityLow,
+/* Definitions for stickTask */
+osThreadId_t stickTaskHandle;
+const osThreadAttr_t stickTask_attributes = {
+  .name = "stickTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh,
+};
+/* Definitions for stickQueue */
+osMessageQueueId_t stickQueueHandle;
+const osMessageQueueAttr_t stickQueue_attributes = {
+  .name = "stickQueue"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,114 +73,99 @@ const osThreadAttr_t joystickTask_attributes = {
 
 /* USER CODE END FunctionPrototypes */
 
-void LvglTask(void* argument);
-extern void JoystickTask(void* argument);
+void LcdTask(void *argument);
+void StickTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-
-/* Hook prototypes */
-void vApplicationTickHook(void);
-
-/* USER CODE BEGIN 3 */
-void vApplicationTickHook(void)
-{
-    /* This function will be called by each tick interrupt if
-   configUSE_TICK_HOOK is set to 1 in FreeRTOSConfig.h. User code can be
-   added here, but the tick hook is called from an interrupt context, so
-   code must not attempt to block, and only the interrupt safe FreeRTOS API
-   functions can be used (those that end in FromISR()). */
-
-    /* LVGL uses HAL_GetTick() via lv_tick_set_cb(), no periodic increment needed here. */
-}
-
-/* USER CODE END 3 */
 
 /**
   * @brief  FreeRTOS initialization
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void)
-{
-    /* USER CODE BEGIN Init */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
 
 
-    if (Joystick_Init() != HAL_OK)
-    {
-        Error_Handler();
-    }
 
-    /* USER CODE END Init */
 
-    /* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE END Init */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
     /* add mutexes, ... */
-    /* USER CODE END RTOS_MUTEX */
+  /* USER CODE END RTOS_MUTEX */
 
-    /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
     /* add semaphores, ... */
-    /* USER CODE END RTOS_SEMAPHORES */
+  /* USER CODE END RTOS_SEMAPHORES */
 
-    /* USER CODE BEGIN RTOS_TIMERS */
+  /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */
-    /* USER CODE END RTOS_TIMERS */
+  /* USER CODE END RTOS_TIMERS */
 
-    /* USER CODE BEGIN RTOS_QUEUES */
+  /* Create the queue(s) */
+  /* creation of stickQueue */
+  stickQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &stickQueue_attributes);
+
+  /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
-    /* USER CODE END RTOS_QUEUES */
+  /* USER CODE END RTOS_QUEUES */
 
-    /* Create the thread(s) */
-    /* creation of lvglTask */
-    lvglTaskHandle = osThreadNew(LvglTask, NULL, &lvglTask_attributes);
+  /* Create the thread(s) */
+  /* creation of lcdTask */
+  lcdTaskHandle = osThreadNew(LcdTask, NULL, &lcdTask_attributes);
 
-    /* creation of joystickTask */
-    joystickTaskHandle = osThreadNew(JoystickTask, NULL, &joystickTask_attributes);
+  /* creation of stickTask */
+  stickTaskHandle = osThreadNew(StickTask, NULL, &stickTask_attributes);
 
-    /* USER CODE BEGIN RTOS_THREADS */
+  /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-    /* USER CODE END RTOS_THREADS */
+  /* USER CODE END RTOS_THREADS */
 
-    /* USER CODE BEGIN RTOS_EVENTS */
+  /* USER CODE BEGIN RTOS_EVENTS */
     /* add events, ... */
-    /* USER CODE END RTOS_EVENTS */
+  /* USER CODE END RTOS_EVENTS */
+
 }
 
-/* USER CODE BEGIN Header_LvglTask */
+/* USER CODE BEGIN Header_LcdTask */
 /**
-  * @brief  Function implementing the lvglTask thread.
+  * @brief  Function implementing the lcdTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_LvglTask */
-void LvglTask(void* argument)
+/* USER CODE END Header_LcdTask */
+__weak void LcdTask(void *argument)
 {
-    /* USER CODE BEGIN LvglTask */
-    lv_init();
-    lv_tick_set_cb(HAL_GetTick);
-    LCD_Init();
-    lcd_Dri_Init();
-    // ui_init();
+  /* USER CODE BEGIN LcdTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END LcdTask */
+}
 
-    /*Change the active screen's background color*/
-    // lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x003a57), LV_PART_MAIN);
-
-    /*Create a white label, set its text and align it to the center*/
-    // lv_obj_t* label = lv_label_create(lv_screen_active());
-    // lv_label_set_text(label, "Hello world");
-    // lv_obj_set_style_text_color(lv_screen_active(), lv_color_hex(0xffffff), LV_PART_MAIN);
-    // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-
-
-    // UI_TempScale_Create();
-    /* Infinite loop */
-    for (;;)
-    {
-        lv_task_handler(); /* Let LVGL process pending tasks. */
-        osDelay(1);
-    }
-    /* USER CODE END LvglTask */
+/* USER CODE BEGIN Header_StickTask */
+/**
+* @brief Function implementing the stickTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StickTask */
+__weak void StickTask(void *argument)
+{
+  /* USER CODE BEGIN StickTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StickTask */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
+

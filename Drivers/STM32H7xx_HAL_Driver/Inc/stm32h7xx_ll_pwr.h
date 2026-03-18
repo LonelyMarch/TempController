@@ -91,16 +91,11 @@ extern "C" {
   * @{
   */
 #define LL_PWR_FLAG_AVDO              PWR_CSR1_AVDO       /*!< Analog voltage detector output on VDDA flag                          */
-
 #define LL_PWR_FLAG_PVDO              PWR_CSR1_PVDO       /*!< Programmable voltage detect output flag                              */
-
 #define LL_PWR_FLAG_ACTVOS            PWR_CSR1_ACTVOS     /*!< Current VOS applied for VCORE voltage scaling flag                   */
-
 #define LL_PWR_FLAG_ACTVOSRDY         PWR_CSR1_ACTVOSRDY  /*!< Ready bit for current actual used VOS for VCORE voltage scaling flag */
-
 #if defined (PWR_CSR1_MMCVDO)
 #define LL_PWR_FLAG_MMCVDO            PWR_CSR1_MMCVDO     /*!< Voltage detector output on VDDMMC flag                               */
-
 #endif /* PWR_CSR1_MMCVDO */
 
 #define LL_PWR_FLAG_TEMPH             PWR_CR2_TEMPH       /*!< Temperature high threshold flag */
@@ -157,54 +152,35 @@ extern "C" {
   */
 #if defined (PWR_CPUCR_PDDS_D2)
 #define LL_PWR_CPU_MODE_D1STOP        0x00000000U           /*!< Enter D1 domain to Stop mode when the CPU enters deepsleep       */
-
 #define LL_PWR_CPU_MODE_D1STANDBY     PWR_CPUCR_PDDS_D1     /*!< Enter D1 domain to Standby mode when the CPU enters deepsleep    */
-
 #else
 #define LL_PWR_CPU_MODE_CDSTOP        0x00000000U           /*!< Enter CD domain to Stop mode when the CPU enters deepsleep       */
-
 #define LL_PWR_CPU_MODE_CDSTOP2       PWR_CPUCR_RETDS_CD    /*!< Enter CD domain to Stop2 mode when the CPU enters deepsleep      */
-
 #endif /* PWR_CPUCR_PDDS_D2 */
 
 #if defined (PWR_CPUCR_PDDS_D2)
 #define LL_PWR_CPU_MODE_D2STOP        0x00000000U           /*!< Enter D2 domain to Stop mode when the CPU enters deepsleep       */
-
 #define LL_PWR_CPU_MODE_D2STANDBY     PWR_CPUCR_PDDS_D2     /*!< Enter D2 domain to Standby mode when the CPU enters deepsleep    */
-
 #endif /* PWR_CPUCR_PDDS_D2 */
 
 #if defined (PWR_CPUCR_PDDS_D2)
 #define LL_PWR_CPU_MODE_D3RUN         PWR_CPUCR_RUN_D3      /*!< Keep system D3 domain in Run mode when the CPU enter deepsleep   */
-
 #define LL_PWR_CPU_MODE_D3STOP        0x00000000U           /*!< Enter D3 domain to Stop mode when the CPU enters deepsleep       */
-
 #define LL_PWR_CPU_MODE_D3STANDBY     PWR_CPUCR_PDDS_D3     /*!< Enter D3 domain to Standby mode when the CPU enters deepsleep    */
-
 #else
 #define LL_PWR_CPU_MODE_SRDRUN        PWR_CPUCR_RUN_SRD     /*!< Keep system SRD domain in Run mode when the CPU enter deepsleep  */
-
 #define LL_PWR_CPU_MODE_SRDSTOP       0x00000000U           /*!< Enter SRD domain to Stop mode when the CPU enters deepsleep      */
-
 #define LL_PWR_CPU_MODE_SRDSTANDBY    PWR_CPUCR_PDDS_SRD    /*!< Enter SRD domain to Standby mode when the CPU enters deepsleep   */
-
 #endif /* PWR_CPUCR_PDDS_D2 */
 
 #if defined (DUAL_CORE)
 #define LL_PWR_CPU2_MODE_D1STOP       0x00000000U           /*!< Enter D1 domain to Stop mode when the CPU2 enters deepsleep      */
-
 #define LL_PWR_CPU2_MODE_D1STANDBY    PWR_CPU2CR_PDDS_D1    /*!< Enter D1 domain to Standby mode when the CPU2 enters deepsleep   */
-
 #define LL_PWR_CPU2_MODE_D2STOP       0x00000000U           /*!< Enter D2 domain to Stop mode when the CPU2 enters deepsleep      */
-
 #define LL_PWR_CPU2_MODE_D2STANDBY    PWR_CPU2CR_PDDS_D2    /*!< Enter D2 domain to Standby mode when the CPU2 enters deepsleep   */
-
 #define LL_PWR_CPU2_MODE_D3RUN        PWR_CPU2CR_RUN_D3     /*!< Keep system D3 domain in RUN mode when the CPU2 enter deepsleep  */
-
 #define LL_PWR_CPU2_MODE_D3STOP       0x00000000U           /*!< Enter D3 domain to Stop mode when the CPU2 enters deepsleep      */
-
 #define LL_PWR_CPU2_MODE_D3STANDBY    PWR_CPU2CR_PDDS_D3    /*!< Enter D3 domain to Standby mode when the CPU2 enter deepsleep    */
-
 #endif /* DUAL_CORE */
 /**
   * @}
@@ -236,11 +212,8 @@ extern "C" {
   * @{
   */
 #define LL_PWR_REGU_VOLTAGE_SVOS_SCALE5   PWR_CR1_SVOS_0                    /*!< Select voltage scale 5 when system enters STOP mode */
-
 #define LL_PWR_REGU_VOLTAGE_SVOS_SCALE4   PWR_CR1_SVOS_1                    /*!< Select voltage scale 4 when system enters STOP mode */
-
 #define LL_PWR_REGU_VOLTAGE_SVOS_SCALE3   (PWR_CR1_SVOS_0 | PWR_CR1_SVOS_1) /*!< Select voltage scale 3 when system enters STOP mode */
-
 /**
   * @}
   */
@@ -249,9 +222,7 @@ extern "C" {
   * @{
   */
 #define LL_PWR_REGU_DSMODE_MAIN           0x00000000U   /*!< Voltage Regulator in main mode during deepsleep mode      */
-
 #define LL_PWR_REGU_DSMODE_LOW_POWER      PWR_CR1_LPDS  /*!< Voltage Regulator in low-power mode during deepsleep mode */
-
 /**
   * @}
   */
@@ -267,7 +238,6 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_5   PWR_CR1_PLS_LEV5  /*!< Voltage threshold detected by PVD 2.7 V  */
 #define LL_PWR_PVDLEVEL_6   PWR_CR1_PLS_LEV6  /*!< Voltage threshold detected by PVD 2.85 V */
 #define LL_PWR_PVDLEVEL_7   PWR_CR1_PLS_LEV7  /*!< External voltage level on PVD_IN pin, compared to internal VREFINT level. */
-
 /**
   * @}
   */
@@ -324,25 +294,16 @@ extern "C" {
   * @{
   */
 #define LL_PWR_LDO_SUPPLY                     PWR_CR3_LDOEN                                                               /*!< Core domains are supplied from the LDO                                                                     */
-
 #if defined (SMPS)
 #define LL_PWR_DIRECT_SMPS_SUPPLY             PWR_CR3_SMPSEN                                                              /*!< Core domains are supplied from the SMPS                                                                    */
-
 #define LL_PWR_SMPS_1V8_SUPPLIES_LDO          (PWR_CR3_SMPSLEVEL_0 | PWR_CR3_SMPSEN | PWR_CR3_LDOEN)                      /*!< The SMPS 1.8V output supplies the LDO which supplies the Core domains                                       */
-
 #define LL_PWR_SMPS_2V5_SUPPLIES_LDO          (PWR_CR3_SMPSLEVEL_1 | PWR_CR3_SMPSEN | PWR_CR3_LDOEN)                      /*!< The SMPS 2.5V output supplies the LDO which supplies the Core domains                                       */
-
 #define LL_PWR_SMPS_1V8_SUPPLIES_EXT_AND_LDO  (PWR_CR3_SMPSLEVEL_0 | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN)  /*!< The SMPS 1.8V output supplies an external circuits and the LDO. The Core domains are supplied from the LDO */
-
 #define LL_PWR_SMPS_2V5_SUPPLIES_EXT_AND_LDO  (PWR_CR3_SMPSLEVEL_1 | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN)  /*!< The SMPS 2.5V output supplies an external circuits and the LDO. The Core domains are supplied from the LDO */
-
 #define LL_PWR_SMPS_1V8_SUPPLIES_EXT          (PWR_CR3_SMPSLEVEL_0 | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_BYPASS) /*!< The SMPS 1.8V output supplies an external source which supplies the Core domains                            */
-
 #define LL_PWR_SMPS_2V5_SUPPLIES_EXT          (PWR_CR3_SMPSLEVEL_1 | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_BYPASS) /*!< The SMPS 2.5V output supplies an external source which supplies the Core domains                            */
-
 #endif /* SMPS */
 #define LL_PWR_EXTERNAL_SOURCE_SUPPLY         PWR_CR3_BYPASS                                                              /*!< The SMPS and the LDO are Bypassed. The Core domains are supplied from an external source                    */
-
 /**
   * @}
   */
@@ -389,7 +350,7 @@ extern "C" {
   * @{
   */
 
-/**
+  /**
   * @brief  Set the voltage Regulator mode during deep sleep mode
   * @rmtoll CR1    LPDS         LL_PWR_SetRegulModeDS
   * @param  RegulMode This parameter can be one of the following values:
@@ -399,7 +360,7 @@ extern "C" {
   */
 __STATIC_INLINE void LL_PWR_SetRegulModeDS(uint32_t RegulMode)
 {
-    MODIFY_REG(PWR->CR1, PWR_CR1_LPDS, RegulMode);
+  MODIFY_REG(PWR->CR1, PWR_CR1_LPDS, RegulMode);
 }
 
 /**
@@ -411,7 +372,7 @@ __STATIC_INLINE void LL_PWR_SetRegulModeDS(uint32_t RegulMode)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetRegulModeDS(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_LPDS));
+  return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_LPDS));
 }
 
 /**
@@ -421,7 +382,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetRegulModeDS(void)
   */
 __STATIC_INLINE void LL_PWR_EnablePVD(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_PVDEN);
+  SET_BIT(PWR->CR1, PWR_CR1_PVDEN);
 }
 
 /**
@@ -431,7 +392,7 @@ __STATIC_INLINE void LL_PWR_EnablePVD(void)
   */
 __STATIC_INLINE void LL_PWR_DisablePVD(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_PVDEN);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_PVDEN);
 }
 
 /**
@@ -441,7 +402,7 @@ __STATIC_INLINE void LL_PWR_DisablePVD(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVD(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_PVDEN) == (PWR_CR1_PVDEN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_PVDEN) == (PWR_CR1_PVDEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -460,7 +421,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVD(void)
   */
 __STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t PVDLevel)
 {
-    MODIFY_REG(PWR->CR1, PWR_CR1_PLS, PVDLevel);
+  MODIFY_REG(PWR->CR1, PWR_CR1_PLS, PVDLevel);
 }
 
 /**
@@ -478,7 +439,7 @@ __STATIC_INLINE void LL_PWR_SetPVDLevel(uint32_t PVDLevel)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_PLS));
+  return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_PLS));
 }
 
 /**
@@ -488,7 +449,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetPVDLevel(void)
   */
 __STATIC_INLINE void LL_PWR_EnableBkUpAccess(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_DBP);
+  SET_BIT(PWR->CR1, PWR_CR1_DBP);
 }
 
 /**
@@ -498,7 +459,7 @@ __STATIC_INLINE void LL_PWR_EnableBkUpAccess(void)
   */
 __STATIC_INLINE void LL_PWR_DisableBkUpAccess(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
 }
 
 /**
@@ -508,7 +469,7 @@ __STATIC_INLINE void LL_PWR_DisableBkUpAccess(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpAccess(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_DBP) == (PWR_CR1_DBP)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_DBP) == (PWR_CR1_DBP)) ? 1UL : 0UL);
 }
 
 /**
@@ -518,7 +479,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpAccess(void)
   */
 __STATIC_INLINE void LL_PWR_EnableFlashPowerDown(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_FLPS);
+  SET_BIT(PWR->CR1, PWR_CR1_FLPS);
 }
 
 /**
@@ -528,7 +489,7 @@ __STATIC_INLINE void LL_PWR_EnableFlashPowerDown(void)
   */
 __STATIC_INLINE void LL_PWR_DisableFlashPowerDown(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_FLPS);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_FLPS);
 }
 
 /**
@@ -538,7 +499,7 @@ __STATIC_INLINE void LL_PWR_DisableFlashPowerDown(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledFlashPowerDown(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_FLPS) == (PWR_CR1_FLPS)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_FLPS) == (PWR_CR1_FLPS)) ? 1UL : 0UL);
 }
 
 #if defined (PWR_CR1_BOOSTE)
@@ -549,7 +510,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledFlashPowerDown(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAnalogBooster(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_BOOSTE);
+  SET_BIT(PWR->CR1, PWR_CR1_BOOSTE);
 }
 
 /**
@@ -559,7 +520,7 @@ __STATIC_INLINE void LL_PWR_EnableAnalogBooster(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAnalogBooster(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_BOOSTE);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_BOOSTE);
 }
 
 /**
@@ -569,7 +530,7 @@ __STATIC_INLINE void LL_PWR_DisableAnalogBooster(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAnalogBooster(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_BOOSTE) == (PWR_CR1_BOOSTE)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_BOOSTE) == (PWR_CR1_BOOSTE)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_BOOSTE */
 
@@ -581,7 +542,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAnalogBooster(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAnalogVoltageReady(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AVD_READY);
+  SET_BIT(PWR->CR1, PWR_CR1_AVD_READY);
 }
 
 /**
@@ -591,7 +552,7 @@ __STATIC_INLINE void LL_PWR_EnableAnalogVoltageReady(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAnalogVoltageReady(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AVD_READY);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AVD_READY);
 }
 
 /**
@@ -601,7 +562,7 @@ __STATIC_INLINE void LL_PWR_DisableAnalogVoltageReady(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAnalogVoltageReady(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AVD_READY) == (PWR_CR1_AVD_READY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AVD_READY) == (PWR_CR1_AVD_READY)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AVD_READY */
 
@@ -616,7 +577,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAnalogVoltageReady(void)
   */
 __STATIC_INLINE void LL_PWR_SetStopModeRegulVoltageScaling(uint32_t VoltageScaling)
 {
-    MODIFY_REG(PWR->CR1, PWR_CR1_SVOS, VoltageScaling);
+  MODIFY_REG(PWR->CR1, PWR_CR1_SVOS, VoltageScaling);
 }
 
 /**
@@ -629,7 +590,7 @@ __STATIC_INLINE void LL_PWR_SetStopModeRegulVoltageScaling(uint32_t VoltageScali
   */
 __STATIC_INLINE uint32_t LL_PWR_GetStopModeRegulVoltageScaling(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_SVOS));
+  return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_SVOS));
 }
 
 /**
@@ -639,7 +600,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetStopModeRegulVoltageScaling(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAVD(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AVDEN);
+  SET_BIT(PWR->CR1, PWR_CR1_AVDEN);
 }
 
 /**
@@ -649,7 +610,7 @@ __STATIC_INLINE void LL_PWR_EnableAVD(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAVD(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AVDEN);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AVDEN);
 }
 
 /**
@@ -659,7 +620,7 @@ __STATIC_INLINE void LL_PWR_DisableAVD(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAVD(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AVDEN) == (PWR_CR1_AVDEN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AVDEN) == (PWR_CR1_AVDEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -674,7 +635,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAVD(void)
   */
 __STATIC_INLINE void LL_PWR_SetAVDLevel(uint32_t AVDLevel)
 {
-    MODIFY_REG(PWR->CR1, PWR_CR1_ALS, AVDLevel);
+  MODIFY_REG(PWR->CR1, PWR_CR1_ALS, AVDLevel);
 }
 
 /**
@@ -688,7 +649,7 @@ __STATIC_INLINE void LL_PWR_SetAVDLevel(uint32_t AVDLevel)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetAVDLevel(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_ALS));
+  return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_ALS));
 }
 
 #if defined (PWR_CR1_AXIRAM1SO)
@@ -699,7 +660,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetAVDLevel(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAXIRAM1ShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO);
+  SET_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO);
 }
 
 /**
@@ -709,7 +670,7 @@ __STATIC_INLINE void LL_PWR_EnableAXIRAM1ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAXIRAM1ShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO);
 }
 
 /**
@@ -719,7 +680,7 @@ __STATIC_INLINE void LL_PWR_DisableAXIRAM1ShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM1ShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO) == (PWR_CR1_AXIRAM1SO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM1SO) == (PWR_CR1_AXIRAM1SO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AXIRAM1SO */
 
@@ -731,7 +692,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM1ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAXIRAM2ShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO);
+  SET_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO);
 }
 
 /**
@@ -741,7 +702,7 @@ __STATIC_INLINE void LL_PWR_EnableAXIRAM2ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAXIRAM2ShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO);
 }
 
 /**
@@ -751,7 +712,7 @@ __STATIC_INLINE void LL_PWR_DisableAXIRAM2ShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM2ShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO) == (PWR_CR1_AXIRAM2SO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM2SO) == (PWR_CR1_AXIRAM2SO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AXIRAM2SO */
 
@@ -763,7 +724,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM2ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAXIRAM3ShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO);
+  SET_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO);
 }
 
 /**
@@ -773,7 +734,7 @@ __STATIC_INLINE void LL_PWR_EnableAXIRAM3ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAXIRAM3ShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO);
 }
 
 /**
@@ -783,7 +744,7 @@ __STATIC_INLINE void LL_PWR_DisableAXIRAM3ShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM3ShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO) == (PWR_CR1_AXIRAM3SO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AXIRAM3SO) == (PWR_CR1_AXIRAM3SO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AXIRAM3SO */
 
@@ -795,7 +756,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAXIRAM3ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAHBRAM1ShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO);
+  SET_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO);
 }
 
 /**
@@ -805,7 +766,7 @@ __STATIC_INLINE void LL_PWR_EnableAHBRAM1ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAHBRAM1ShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO);
 }
 
 /**
@@ -815,7 +776,7 @@ __STATIC_INLINE void LL_PWR_DisableAHBRAM1ShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAHBRAM1ShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO) == (PWR_CR1_AHBRAM1SO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AHBRAM1SO) == (PWR_CR1_AHBRAM1SO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AHBRAM1SO */
 
@@ -827,7 +788,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAHBRAM1ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableAHBRAM2ShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO);
+  SET_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO);
 }
 
 /**
@@ -837,7 +798,7 @@ __STATIC_INLINE void LL_PWR_EnableAHBRAM2ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableAHBRAM2ShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO);
 }
 
 /**
@@ -847,7 +808,7 @@ __STATIC_INLINE void LL_PWR_DisableAHBRAM2ShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledAHBRAM2ShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO) == (PWR_CR1_AHBRAM2SO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_AHBRAM2SO) == (PWR_CR1_AHBRAM2SO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_AHBRAM2SO */
 
@@ -859,7 +820,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledAHBRAM2ShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableITCMSOShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_ITCMSO);
+  SET_BIT(PWR->CR1, PWR_CR1_ITCMSO);
 }
 
 /**
@@ -869,7 +830,7 @@ __STATIC_INLINE void LL_PWR_EnableITCMSOShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableITCMSOShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_ITCMSO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_ITCMSO);
 }
 
 /**
@@ -879,7 +840,7 @@ __STATIC_INLINE void LL_PWR_DisableITCMSOShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledITCMShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_ITCMSO) == (PWR_CR1_ITCMSO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_ITCMSO) == (PWR_CR1_ITCMSO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_ITCMSO */
 
@@ -891,7 +852,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledITCMShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableHSITFShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_HSITFSO);
+  SET_BIT(PWR->CR1, PWR_CR1_HSITFSO);
 }
 
 /**
@@ -901,7 +862,7 @@ __STATIC_INLINE void LL_PWR_EnableHSITFShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableHSITFShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_HSITFSO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_HSITFSO);
 }
 
 /**
@@ -911,7 +872,7 @@ __STATIC_INLINE void LL_PWR_DisableHSITFShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledHSITFShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_HSITFSO) == (PWR_CR1_HSITFSO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_HSITFSO) == (PWR_CR1_HSITFSO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_HSITFSO */
 
@@ -923,7 +884,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledHSITFShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableSRDRAMShutOff(void)
 {
-    SET_BIT(PWR->CR1, PWR_CR1_SRDRAMSO);
+  SET_BIT(PWR->CR1, PWR_CR1_SRDRAMSO);
 }
 
 /**
@@ -933,7 +894,7 @@ __STATIC_INLINE void LL_PWR_EnableSRDRAMShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_DisableSRDRAMShutOff(void)
 {
-    CLEAR_BIT(PWR->CR1, PWR_CR1_SRDRAMSO);
+  CLEAR_BIT(PWR->CR1, PWR_CR1_SRDRAMSO);
 }
 
 /**
@@ -943,7 +904,7 @@ __STATIC_INLINE void LL_PWR_DisableSRDRAMShutOff(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRDRAMShutOff(void)
 {
-    return ((READ_BIT(PWR->CR1, PWR_CR1_SRDRAMSO) == (PWR_CR1_SRDRAMSO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR1, PWR_CR1_SRDRAMSO) == (PWR_CR1_SRDRAMSO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CR1_SRDRAMSO */
 
@@ -959,7 +920,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRDRAMShutOff(void)
   */
 __STATIC_INLINE void LL_PWR_EnableBkUpRegulator(void)
 {
-    SET_BIT(PWR->CR2, PWR_CR2_BREN);
+  SET_BIT(PWR->CR2, PWR_CR2_BREN);
 }
 
 /**
@@ -969,7 +930,7 @@ __STATIC_INLINE void LL_PWR_EnableBkUpRegulator(void)
   */
 __STATIC_INLINE void LL_PWR_DisableBkUpRegulator(void)
 {
-    CLEAR_BIT(PWR->CR2, PWR_CR2_BREN);
+  CLEAR_BIT(PWR->CR2, PWR_CR2_BREN);
 }
 
 /**
@@ -979,7 +940,7 @@ __STATIC_INLINE void LL_PWR_DisableBkUpRegulator(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpRegulator(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_BREN) == (PWR_CR2_BREN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_BREN) == (PWR_CR2_BREN)) ? 1UL : 0UL);
 }
 
 /**
@@ -989,7 +950,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpRegulator(void)
   */
 __STATIC_INLINE void LL_PWR_EnableMonitoring(void)
 {
-    SET_BIT(PWR->CR2, PWR_CR2_MONEN);
+  SET_BIT(PWR->CR2, PWR_CR2_MONEN);
 }
 
 /**
@@ -999,7 +960,7 @@ __STATIC_INLINE void LL_PWR_EnableMonitoring(void)
   */
 __STATIC_INLINE void LL_PWR_DisableMonitoring(void)
 {
-    CLEAR_BIT(PWR->CR2, PWR_CR2_MONEN);
+  CLEAR_BIT(PWR->CR2, PWR_CR2_MONEN);
 }
 
 /**
@@ -1009,7 +970,7 @@ __STATIC_INLINE void LL_PWR_DisableMonitoring(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledMonitoring(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_MONEN) == (PWR_CR2_MONEN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_MONEN) == (PWR_CR2_MONEN)) ? 1UL : 0UL);
 }
 
 #if defined (SMPS)
@@ -1034,9 +995,8 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledMonitoring(void)
   */
 __STATIC_INLINE void LL_PWR_ConfigSupply(uint32_t SupplySource)
 {
-    /* Set the power supply configuration */
-    MODIFY_REG(PWR->CR3, (PWR_CR3_SMPSLEVEL | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS),
-               SupplySource);
+  /* Set the power supply configuration */
+  MODIFY_REG(PWR->CR3, (PWR_CR3_SMPSLEVEL | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS), SupplySource);
 }
 #else
 /**
@@ -1051,8 +1011,8 @@ __STATIC_INLINE void LL_PWR_ConfigSupply(uint32_t SupplySource)
   */
 __STATIC_INLINE void LL_PWR_ConfigSupply(uint32_t SupplySource)
 {
-    /* Set the power supply configuration */
-    MODIFY_REG(PWR->CR3, (PWR_CR3_SCUEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS), SupplySource);
+  /* Set the power supply configuration */
+  MODIFY_REG(PWR->CR3, (PWR_CR3_SCUEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS), SupplySource);
 }
 #endif /* defined (SMPS) */
 
@@ -1077,9 +1037,8 @@ __STATIC_INLINE void LL_PWR_ConfigSupply(uint32_t SupplySource)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSupply(void)
 {
-    /* Get the power supply configuration */
-    return (uint32_t)(
-        READ_BIT(PWR->CR3, (PWR_CR3_SMPSLEVEL | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS)));
+  /* Get the power supply configuration */
+  return(uint32_t)(READ_BIT(PWR->CR3, (PWR_CR3_SMPSLEVEL | PWR_CR3_SMPSEXTHP | PWR_CR3_SMPSEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS)));
 }
 #else
 /**
@@ -1093,8 +1052,8 @@ __STATIC_INLINE uint32_t LL_PWR_GetSupply(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetSupply(void)
 {
-    /* Get the power supply configuration */
-    return (uint32_t)(READ_BIT(PWR->CR3, (PWR_CR3_SCUEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS)));
+  /* Get the power supply configuration */
+  return(uint32_t)(READ_BIT(PWR->CR3, (PWR_CR3_SCUEN | PWR_CR3_LDOEN | PWR_CR3_BYPASS)));
 }
 #endif /* defined (SMPS) */
 
@@ -1105,7 +1064,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetSupply(void)
   */
 __STATIC_INLINE void LL_PWR_EnableBatteryCharging(void)
 {
-    SET_BIT(PWR->CR3, PWR_CR3_VBE);
+  SET_BIT(PWR->CR3, PWR_CR3_VBE);
 }
 
 /**
@@ -1115,7 +1074,7 @@ __STATIC_INLINE void LL_PWR_EnableBatteryCharging(void)
   */
 __STATIC_INLINE void LL_PWR_DisableBatteryCharging(void)
 {
-    CLEAR_BIT(PWR->CR3, PWR_CR3_VBE);
+  CLEAR_BIT(PWR->CR3, PWR_CR3_VBE);
 }
 
 /**
@@ -1125,7 +1084,7 @@ __STATIC_INLINE void LL_PWR_DisableBatteryCharging(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledBatteryCharging(void)
 {
-    return ((READ_BIT(PWR->CR3, PWR_CR3_VBE) == (PWR_CR3_VBE)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR3, PWR_CR3_VBE) == (PWR_CR3_VBE)) ? 1UL : 0UL);
 }
 
 /**
@@ -1138,7 +1097,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBatteryCharging(void)
   */
 __STATIC_INLINE void LL_PWR_SetBattChargResistor(uint32_t Resistor)
 {
-    MODIFY_REG(PWR->CR3, PWR_CR3_VBRS, Resistor);
+  MODIFY_REG(PWR->CR3, PWR_CR3_VBRS, Resistor);
 }
 
 /**
@@ -1150,7 +1109,7 @@ __STATIC_INLINE void LL_PWR_SetBattChargResistor(uint32_t Resistor)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetBattChargResistor(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CR3, PWR_CR3_VBRS));
+  return (uint32_t)(READ_BIT(PWR->CR3, PWR_CR3_VBRS));
 }
 
 /**
@@ -1160,7 +1119,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetBattChargResistor(void)
   */
 __STATIC_INLINE void LL_PWR_EnableUSBReg(void)
 {
-    SET_BIT(PWR->CR3, PWR_CR3_USBREGEN);
+  SET_BIT(PWR->CR3, PWR_CR3_USBREGEN);
 }
 
 /**
@@ -1170,7 +1129,7 @@ __STATIC_INLINE void LL_PWR_EnableUSBReg(void)
   */
 __STATIC_INLINE void LL_PWR_DisableUSBReg(void)
 {
-    CLEAR_BIT(PWR->CR3, PWR_CR3_USBREGEN);
+  CLEAR_BIT(PWR->CR3, PWR_CR3_USBREGEN);
 }
 
 /**
@@ -1180,7 +1139,7 @@ __STATIC_INLINE void LL_PWR_DisableUSBReg(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledUSBReg(void)
 {
-    return ((READ_BIT(PWR->CR3, PWR_CR3_USBREGEN) == (PWR_CR3_USBREGEN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR3, PWR_CR3_USBREGEN) == (PWR_CR3_USBREGEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -1190,7 +1149,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledUSBReg(void)
   */
 __STATIC_INLINE void LL_PWR_EnableUSBVoltageDetector(void)
 {
-    SET_BIT(PWR->CR3, PWR_CR3_USB33DEN);
+  SET_BIT(PWR->CR3, PWR_CR3_USB33DEN);
 }
 
 /**
@@ -1200,7 +1159,7 @@ __STATIC_INLINE void LL_PWR_EnableUSBVoltageDetector(void)
   */
 __STATIC_INLINE void LL_PWR_DisableUSBVoltageDetector(void)
 {
-    CLEAR_BIT(PWR->CR3, PWR_CR3_USB33DEN);
+  CLEAR_BIT(PWR->CR3, PWR_CR3_USB33DEN);
 }
 
 /**
@@ -1210,7 +1169,7 @@ __STATIC_INLINE void LL_PWR_DisableUSBVoltageDetector(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledUSBVoltageDetector(void)
 {
-    return ((READ_BIT(PWR->CR3, PWR_CR3_USB33DEN) == (PWR_CR3_USB33DEN)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR3, PWR_CR3_USB33DEN) == (PWR_CR3_USB33DEN)) ? 1UL : 0UL);
 }
 
 #if defined (PWR_CPUCR_PDDS_D2)
@@ -1224,7 +1183,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledUSBVoltageDetector(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_SetD1PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D1, PDMode);
+  MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D1, PDMode);
 }
 #else
 /**
@@ -1237,7 +1196,7 @@ __STATIC_INLINE void LL_PWR_CPU_SetD1PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE void LL_PWR_CPU_SetCDPowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPUCR, PWR_CPUCR_RETDS_CD, PDMode);
+  MODIFY_REG(PWR->CPUCR, PWR_CPUCR_RETDS_CD, PDMode);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1252,7 +1211,7 @@ __STATIC_INLINE void LL_PWR_CPU_SetCDPowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE void LL_PWR_CPU2_SetD1PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D1, PDMode);
+  MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D1, PDMode);
 }
 #endif /* DUAL_CORE */
 
@@ -1266,7 +1225,7 @@ __STATIC_INLINE void LL_PWR_CPU2_SetD1PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_GetD1PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D1));
+  return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D1));
 }
 #else
 /**
@@ -1278,7 +1237,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_GetD1PowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_GetCDPowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_RETDS_CD));
+  return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_RETDS_CD));
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1292,7 +1251,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_GetCDPowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD1PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D1));
+  return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D1));
 }
 #endif /* DUAL_CORE */
 
@@ -1307,7 +1266,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD1PowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_SetD2PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D2, PDMode);
+  MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D2, PDMode);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1322,7 +1281,7 @@ __STATIC_INLINE void LL_PWR_CPU_SetD2PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE void LL_PWR_CPU2_SetD2PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D2, PDMode);
+  MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D2, PDMode);
 }
 #endif /* DUAL_CORE */
 
@@ -1336,7 +1295,7 @@ __STATIC_INLINE void LL_PWR_CPU2_SetD2PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_GetD2PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D2));
+  return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D2));
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1350,7 +1309,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_GetD2PowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD2PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D2));
+  return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D2));
 }
 #endif /* DUAL_CORE */
 
@@ -1365,7 +1324,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD2PowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_SetD3PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D3, PDMode);
+  MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_D3 , PDMode);
 }
 #else
 /**
@@ -1378,7 +1337,7 @@ __STATIC_INLINE void LL_PWR_CPU_SetD3PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE void LL_PWR_CPU_SetSRDPowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_SRD, PDMode);
+  MODIFY_REG(PWR->CPUCR, PWR_CPUCR_PDDS_SRD , PDMode);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1393,7 +1352,7 @@ __STATIC_INLINE void LL_PWR_CPU_SetSRDPowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE void LL_PWR_CPU2_SetD3PowerMode(uint32_t PDMode)
 {
-    MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D3, PDMode);
+  MODIFY_REG(PWR->CPU2CR, PWR_CPU2CR_PDDS_D3, PDMode);
 }
 #endif /* DUAL_CORE */
 
@@ -1407,7 +1366,7 @@ __STATIC_INLINE void LL_PWR_CPU2_SetD3PowerMode(uint32_t PDMode)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_GetD3PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D3));
+  return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_D3));
 }
 #else
 /**
@@ -1419,7 +1378,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_GetD3PowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_GetSRDPowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_SRD));
+  return (uint32_t)(READ_BIT(PWR->CPUCR, PWR_CPUCR_PDDS_SRD));
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1433,7 +1392,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_GetSRDPowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD3PowerMode(void)
 {
-    return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D3));
+  return (uint32_t)(READ_BIT(PWR->CPU2CR, PWR_CPU2CR_PDDS_D3));
 }
 #endif /* DUAL_CORE */
 
@@ -1445,7 +1404,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_GetD3PowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_HoldCPU1(void)
 {
-    SET_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1);
+  SET_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1);
 }
 
 /**
@@ -1455,7 +1414,7 @@ __STATIC_INLINE void LL_PWR_HoldCPU1(void)
   */
 __STATIC_INLINE void LL_PWR_ReleaseCPU1(void)
 {
-    CLEAR_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1);
+  CLEAR_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1);
 }
 
 /**
@@ -1465,7 +1424,7 @@ __STATIC_INLINE void LL_PWR_ReleaseCPU1(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsCPU1Held(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1) == (PWR_CPU2CR_HOLD1)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1) == (PWR_CPU2CR_HOLD1))  ? 1UL : 0UL);
 }
 
 /**
@@ -1475,7 +1434,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsCPU1Held(void)
   */
 __STATIC_INLINE void LL_PWR_HoldCPU2(void)
 {
-    SET_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2);
+  SET_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2);
 }
 
 /**
@@ -1485,7 +1444,7 @@ __STATIC_INLINE void LL_PWR_HoldCPU2(void)
   */
 __STATIC_INLINE void LL_PWR_ReleaseCPU2(void)
 {
-    CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2);
+  CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2);
 }
 
 /**
@@ -1495,7 +1454,7 @@ __STATIC_INLINE void LL_PWR_ReleaseCPU2(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsCPU2Held(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2) == (PWR_CPUCR_HOLD2)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2) == (PWR_CPUCR_HOLD2)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -1507,7 +1466,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsCPU2Held(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_EnableD3RunInLowPowerMode(void)
 {
-    SET_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3);
+  SET_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3);
 }
 #else
 /**
@@ -1517,7 +1476,7 @@ __STATIC_INLINE void LL_PWR_CPU_EnableD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_EnableSRDRunInLowPowerMode(void)
 {
-    SET_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD);
+  SET_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1529,7 +1488,7 @@ __STATIC_INLINE void LL_PWR_CPU_EnableSRDRunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU2_EnableD3RunInLowPowerMode(void)
 {
-    SET_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3);
+  SET_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3);
 }
 #endif /* DUAL_CORE */
 
@@ -1541,7 +1500,7 @@ __STATIC_INLINE void LL_PWR_CPU2_EnableD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_DisableD3RunInLowPowerMode(void)
 {
-    CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3);
+  CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3);
 }
 #else
 /**
@@ -1551,7 +1510,7 @@ __STATIC_INLINE void LL_PWR_CPU_DisableD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU_DisableSRDRunInLowPowerMode(void)
 {
-    CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD);
+  CLEAR_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1563,7 +1522,7 @@ __STATIC_INLINE void LL_PWR_CPU_DisableSRDRunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_CPU2_DisableD3RunInLowPowerMode(void)
 {
-    CLEAR_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3);
+  CLEAR_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3);
 }
 #endif /* DUAL_CORE */
 
@@ -1575,7 +1534,7 @@ __STATIC_INLINE void LL_PWR_CPU2_DisableD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsEnabledD3RunInLowPowerMode(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3) == (PWR_CPUCR_RUN_D3)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_RUN_D3) == (PWR_CPUCR_RUN_D3)) ? 1UL : 0UL);
 }
 #else
 /**
@@ -1585,7 +1544,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsEnabledD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsEnabledSRDRunInLowPowerMode(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD) == (PWR_CPUCR_RUN_SRD)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_RUN_SRD) == (PWR_CPUCR_RUN_SRD)) ? 1UL : 0UL);
 }
 #endif /* PWR_CPUCR_PDDS_D2 */
 
@@ -1597,7 +1556,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsEnabledSRDRunInLowPowerMode(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_IsEnabledD3RunInLowPowerMode(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3) == (PWR_CPU2CR_RUN_D3)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_RUN_D3) == (PWR_CPU2CR_RUN_D3)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -1615,11 +1574,10 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_IsEnabledD3RunInLowPowerMode(void)
   */
 __STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling)
 {
-
 #if defined (PWR_CPUCR_PDDS_D2)
-MODIFY_REG (PWR->D3CR, PWR_D3CR_VOS, VoltageScaling);
+  MODIFY_REG(PWR->D3CR, PWR_D3CR_VOS, VoltageScaling);
 #else
-MODIFY_REG (PWR->SRDCR, PWR_SRDCR_VOS, VoltageScaling);
+  MODIFY_REG(PWR->SRDCR, PWR_SRDCR_VOS, VoltageScaling);
 #endif /* PWR_CPUCR_PDDS_D2 */
 }
 
@@ -1636,11 +1594,10 @@ MODIFY_REG (PWR->SRDCR, PWR_SRDCR_VOS, VoltageScaling);
   */
 __STATIC_INLINE uint32_t LL_PWR_GetRegulVoltageScaling(void)
 {
-
 #if defined (PWR_CPUCR_PDDS_D2)
-return (uint32_t)(READ_BIT(PWR->D3CR, PWR_D3CR_VOS));
+  return (uint32_t)(READ_BIT(PWR->D3CR, PWR_D3CR_VOS));
 #else
-return (uint32_t)(READ_BIT(PWR->SRDCR, PWR_SRDCR_VOS));
+  return (uint32_t)(READ_BIT(PWR->SRDCR, PWR_SRDCR_VOS));
 #endif /* PWR_CPUCR_PDDS_D2 */
 }
 
@@ -1666,7 +1623,7 @@ return (uint32_t)(READ_BIT(PWR->SRDCR, PWR_SRDCR_VOS));
   */
 __STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
 {
-    SET_BIT(PWR->WKUPEPR, WakeUpPin);
+  SET_BIT(PWR->WKUPEPR, WakeUpPin);
 }
 
 /**
@@ -1691,7 +1648,7 @@ __STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
 {
-    CLEAR_BIT(PWR->WKUPEPR, WakeUpPin);
+  CLEAR_BIT(PWR->WKUPEPR, WakeUpPin);
 }
 
 /**
@@ -1716,7 +1673,7 @@ __STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
 {
-    return ((READ_BIT(PWR->WKUPEPR, WakeUpPin) == (WakeUpPin)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPEPR, WakeUpPin) == (WakeUpPin)) ? 1UL : 0UL);
 }
 
 /**
@@ -1741,7 +1698,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin)
 {
-    SET_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos));
+  SET_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos));
 }
 
 /**
@@ -1766,7 +1723,7 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin)
 {
-    CLEAR_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos));
+  CLEAR_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos));
 }
 
 /**
@@ -1791,9 +1748,7 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
 {
-    return ((READ_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos)) == (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos))
-                ? 1UL
-                : 0UL);
+  return ((READ_BIT(PWR->WKUPEPR, (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos)) == (WakeUpPin << PWR_WKUPEPR_WKUPP1_Pos)) ? 1UL : 0UL);
 }
 
 /**
@@ -1818,11 +1773,9 @@ __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPullNone(uint32_t WakeUpPin)
 {
-    MODIFY_REG(PWR->WKUPEPR,
-               (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) &
-                   LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)),
-               (LL_PWR_WAKEUP_PIN_NOPULL << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET *
-                   POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
+  MODIFY_REG(PWR->WKUPEPR, \
+            (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)), \
+            (LL_PWR_WAKEUP_PIN_NOPULL << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
 }
 
 /**
@@ -1847,11 +1800,9 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPullNone(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPullUp(uint32_t WakeUpPin)
 {
-    MODIFY_REG(PWR->WKUPEPR,
-               (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) &
-                   LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)),
-               (LL_PWR_WAKEUP_PIN_PULLUP << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET *
-                   POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
+  MODIFY_REG(PWR->WKUPEPR, \
+            (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)), \
+            (LL_PWR_WAKEUP_PIN_PULLUP << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
 }
 
 /**
@@ -1876,11 +1827,9 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPullUp(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPullDown(uint32_t WakeUpPin)
 {
-    MODIFY_REG(PWR->WKUPEPR,
-               (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) &
-                   LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)),
-               (LL_PWR_WAKEUP_PIN_PULLDOWN << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET *
-                   POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
+  MODIFY_REG(PWR->WKUPEPR, \
+            (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)), \
+            (LL_PWR_WAKEUP_PIN_PULLDOWN << ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
 }
 
 /**
@@ -1908,13 +1857,9 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPullDown(uint32_t WakeUpPin)
   */
 __STATIC_INLINE uint32_t LL_PWR_GetWakeUpPinPull(uint32_t WakeUpPin)
 {
-    uint32_t regValue = READ_BIT(PWR->WKUPEPR,
-                                 (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET *
-                                     POSITION_VAL(WakeUpPin)) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
+  uint32_t regValue = READ_BIT(PWR->WKUPEPR, (PWR_WKUPEPR_WKUPPUPD1 << ((LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin)) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK)));
 
-    return (uint32_t)(
-        regValue >> ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin))) &
-            LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK));
+  return (uint32_t)(regValue >> ((PWR_WKUPEPR_WKUPPUPD1_Pos + (LL_PWR_WAKEUP_PINS_PULL_SHIFT_OFFSET * POSITION_VAL(WakeUpPin))) & LL_PWR_WAKEUP_PINS_MAX_SHIFT_MASK));
 }
 
 /**
@@ -1932,7 +1877,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetWakeUpPinPull(uint32_t WakeUpPin)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVDO(void)
 {
-    return ((READ_BIT(PWR->CSR1, PWR_CSR1_PVDO) == (PWR_CSR1_PVDO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CSR1, PWR_CSR1_PVDO) == (PWR_CSR1_PVDO)) ? 1UL : 0UL);
 }
 
 /**
@@ -1942,7 +1887,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVDO(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_ACTVOS(void)
 {
-    return ((READ_BIT(PWR->CSR1, PWR_CSR1_ACTVOSRDY) == (PWR_CSR1_ACTVOSRDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CSR1, PWR_CSR1_ACTVOSRDY) == (PWR_CSR1_ACTVOSRDY)) ? 1UL : 0UL);
 }
 
 /**
@@ -1952,7 +1897,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_ACTVOS(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_AVDO(void)
 {
-    return ((READ_BIT(PWR->CSR1, PWR_CSR1_AVDO) == (PWR_CSR1_AVDO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CSR1, PWR_CSR1_AVDO) == (PWR_CSR1_AVDO)) ? 1UL : 0UL);
 }
 
 #if defined (PWR_CSR1_MMCVDO)
@@ -1963,7 +1908,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_AVDO(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_MMCVDO(void)
 {
-    return ((READ_BIT(PWR->CSR1, PWR_CSR1_MMCVDO) == (PWR_CSR1_MMCVDO)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CSR1, PWR_CSR1_MMCVDO) == (PWR_CSR1_MMCVDO)) ? 1UL : 0UL);
 }
 #endif /* PWR_CSR1_MMCVDO */
 
@@ -1974,7 +1919,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_MMCVDO(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_BRR(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_BRRDY) == (PWR_CR2_BRRDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_BRRDY) == (PWR_CR2_BRRDY)) ? 1UL : 0UL);
 }
 
 /**
@@ -1984,7 +1929,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_BRR(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VBATL(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_VBATL) == (PWR_CR2_VBATL)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_VBATL) == (PWR_CR2_VBATL)) ? 1UL : 0UL);
 }
 
 /**
@@ -1994,7 +1939,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VBATL(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VBATH(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_VBATH) == (PWR_CR2_VBATH)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_VBATH) == (PWR_CR2_VBATH)) ? 1UL : 0UL);
 }
 
 /**
@@ -2004,7 +1949,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VBATH(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_TEMPL(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_TEMPL) == (PWR_CR2_TEMPL)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_TEMPL) == (PWR_CR2_TEMPL)) ? 1UL : 0UL);
 }
 
 /**
@@ -2014,7 +1959,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_TEMPL(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_TEMPH(void)
 {
-    return ((READ_BIT(PWR->CR2, PWR_CR2_TEMPH) == (PWR_CR2_TEMPH)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR2, PWR_CR2_TEMPH) == (PWR_CR2_TEMPH)) ? 1UL : 0UL);
 }
 
 #if defined (SMPS)
@@ -2025,7 +1970,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_TEMPH(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_SMPSEXT(void)
 {
-    return ((READ_BIT(PWR->CR3, PWR_CR3_SMPSEXTRDY) == (PWR_CR3_SMPSEXTRDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR3, PWR_CR3_SMPSEXTRDY) == (PWR_CR3_SMPSEXTRDY)) ? 1UL : 0UL);
 }
 #endif /* SMPS */
 
@@ -2036,7 +1981,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_SMPSEXT(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_USB(void)
 {
-    return ((READ_BIT(PWR->CR3, PWR_CR3_USB33RDY) == (PWR_CR3_USB33RDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CR3, PWR_CR3_USB33RDY) == (PWR_CR3_USB33RDY)) ? 1UL : 0UL);
 }
 
 #if defined (DUAL_CORE)
@@ -2047,7 +1992,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_USB(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_HOLD2(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2F) == (PWR_CPUCR_HOLD2F)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_HOLD2F) == (PWR_CPUCR_HOLD2F)) ? 1UL : 0UL);
 }
 
 /**
@@ -2057,7 +2002,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_HOLD2(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_HOLD1(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1F) == (PWR_CPU2CR_HOLD1F)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_HOLD1F) == (PWR_CPU2CR_HOLD1F)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -2068,7 +2013,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_HOLD1(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_STOP(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_STOPF) == (PWR_CPUCR_STOPF)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_STOPF) == (PWR_CPUCR_STOPF)) ? 1UL : 0UL);
 }
 
 #if defined (DUAL_CORE)
@@ -2079,7 +2024,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_STOP(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_STOP(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_STOPF) == (PWR_CPU2CR_STOPF)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_STOPF) == (PWR_CPU2CR_STOPF)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -2090,7 +2035,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_STOP(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF) == (PWR_CPUCR_SBF)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF) == (PWR_CPUCR_SBF)) ? 1UL : 0UL);
 }
 
 #if defined (DUAL_CORE)
@@ -2101,7 +2046,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF) == (PWR_CPU2CR_SBF)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF) == (PWR_CPU2CR_SBF)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -2113,7 +2058,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB_D1(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF_D1) == (PWR_CPUCR_SBF_D1)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF_D1) == (PWR_CPUCR_SBF_D1)) ? 1UL : 0UL);
 }
 #endif /* PWR_CPUCR_SBF_D1 */
 
@@ -2125,7 +2070,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB_D1(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB_D1(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF_D1) == (PWR_CPU2CR_SBF_D1)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF_D1) == (PWR_CPU2CR_SBF_D1)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -2137,7 +2082,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB_D1(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB_D2(void)
 {
-    return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF_D2) == (PWR_CPUCR_SBF_D2)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPUCR, PWR_CPUCR_SBF_D2) == (PWR_CPUCR_SBF_D2)) ? 1UL : 0UL);
 }
 #endif /* PWR_CPUCR_SBF_D2 */
 
@@ -2149,7 +2094,7 @@ __STATIC_INLINE uint32_t LL_PWR_CPU_IsActiveFlag_SB_D2(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB_D2(void)
 {
-    return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF_D2) == (PWR_CPU2CR_SBF_D2)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->CPU2CR, PWR_CPU2CR_SBF_D2) == (PWR_CPU2CR_SBF_D2)) ? 1UL : 0UL);
 }
 #endif /* DUAL_CORE */
 
@@ -2162,11 +2107,10 @@ __STATIC_INLINE uint32_t LL_PWR_CPU2_IsActiveFlag_SB_D2(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VOS(void)
 {
-
 #if defined (PWR_CPUCR_PDDS_D2)
-return ((READ_BIT(PWR->D3CR, PWR_D3CR_VOSRDY) == (PWR_D3CR_VOSRDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->D3CR, PWR_D3CR_VOSRDY) == (PWR_D3CR_VOSRDY)) ? 1UL : 0UL);
 #else
-return ((READ_BIT(PWR->SRDCR, PWR_SRDCR_VOSRDY) == (PWR_SRDCR_VOSRDY)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->SRDCR, PWR_SRDCR_VOSRDY) == (PWR_SRDCR_VOSRDY)) ? 1UL : 0UL);
 #endif /* PWR_CPUCR_PDDS_D2 */
 }
 
@@ -2177,7 +2121,7 @@ return ((READ_BIT(PWR->SRDCR, PWR_SRDCR_VOSRDY) == (PWR_SRDCR_VOSRDY)) ? 1UL : 0
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU6(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF6) == (PWR_WKUPFR_WKUPF6)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF6) == (PWR_WKUPFR_WKUPF6)) ? 1UL : 0UL);
 }
 
 #if defined (PWR_WKUPFR_WKUPF5)
@@ -2188,7 +2132,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU6(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU5(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF5) == (PWR_WKUPFR_WKUPF5)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF5) == (PWR_WKUPFR_WKUPF5)) ? 1UL : 0UL);
 }
 #endif /* defined (PWR_WKUPFR_WKUPF5) */
 
@@ -2199,7 +2143,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU5(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU4(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF4) == (PWR_WKUPFR_WKUPF4)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF4) == (PWR_WKUPFR_WKUPF4)) ? 1UL : 0UL);
 }
 
 #if defined (PWR_WKUPFR_WKUPF3)
@@ -2210,7 +2154,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU4(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU3(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF3) == (PWR_WKUPFR_WKUPF3)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF3) == (PWR_WKUPFR_WKUPF3)) ? 1UL : 0UL);
 }
 #endif /* defined (PWR_WKUPFR_WKUPF3) */
 
@@ -2221,7 +2165,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU3(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU2(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF2) == (PWR_WKUPFR_WKUPF2)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF2) == (PWR_WKUPFR_WKUPF2)) ? 1UL : 0UL);
 }
 
 /**
@@ -2231,7 +2175,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU2(void)
   */
 __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU1(void)
 {
-    return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF1) == (PWR_WKUPFR_WKUPF1)) ? 1UL : 0UL);
+  return ((READ_BIT(PWR->WKUPFR, PWR_WKUPFR_WKUPF1) == (PWR_WKUPFR_WKUPF1)) ? 1UL : 0UL);
 }
 
 /**
@@ -2241,7 +2185,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU1(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_CPU(void)
 {
-    SET_BIT(PWR->CPUCR, PWR_CPUCR_CSSF);
+  SET_BIT(PWR->CPUCR, PWR_CPUCR_CSSF);
 }
 
 #if defined (DUAL_CORE)
@@ -2252,7 +2196,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_CPU(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_CPU2(void)
 {
-    SET_BIT(PWR->CPU2CR, PWR_CPU2CR_CSSF);
+  SET_BIT(PWR->CPU2CR, PWR_CPU2CR_CSSF);
 }
 #endif /* DUAL_CORE */
 
@@ -2263,7 +2207,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_CPU2(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU6(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC6);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC6);
 }
 
 #if defined (PWR_WKUPCR_WKUPC5)
@@ -2274,7 +2218,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU6(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU5(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC5);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC5);
 }
 #endif /* defined (PWR_WKUPCR_WKUPC5) */
 
@@ -2285,7 +2229,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU5(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU4(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC4);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC4);
 }
 
 #if defined (PWR_WKUPCR_WKUPC3)
@@ -2296,7 +2240,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU4(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU3(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC3);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC3);
 }
 #endif /* defined (PWR_WKUPCR_WKUPC3) */
 
@@ -2307,7 +2251,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU3(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU2(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC2);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC2);
 }
 
 /**
@@ -2317,7 +2261,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU2(void)
   */
 __STATIC_INLINE void LL_PWR_ClearFlag_WU1(void)
 {
-    WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC1);
+  WRITE_REG(PWR->WKUPCR, PWR_WKUPCR_WKUPC1);
 }
 
 #if defined (USE_FULL_LL_DRIVER)
@@ -2354,3 +2298,4 @@ ErrorStatus LL_PWR_DeInit(void);
 #endif
 
 #endif /* STM32H7xx_LL_PWR_H */
+

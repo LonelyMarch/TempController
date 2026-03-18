@@ -21,7 +21,7 @@
 #define STM32H7xx_HAL_DMA_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -46,31 +46,33 @@ extern "C" {
   */
 typedef enum
 {
-    MEMORY0 = 0x00U, /*!< Memory 0     */
-    MEMORY1 = 0x01U, /*!< Memory 1     */
-} HAL_DMA_MemoryTypeDef;
+  MEMORY0      = 0x00U,    /*!< Memory 0     */
+  MEMORY1      = 0x01U,    /*!< Memory 1     */
+
+}HAL_DMA_MemoryTypeDef;
 
 /**
   * @brief  HAL DMAMUX Synchronization configuration structure definition
   */
 typedef struct
 {
-    uint32_t SyncSignalID; /*!< Specifies the synchronization signal gating the DMA request in periodic mode.
+  uint32_t SyncSignalID;  /*!< Specifies the synchronization signal gating the DMA request in periodic mode.
                               This parameter can be a value of @ref DMAEx_MUX_SyncSignalID_selection */
 
-    uint32_t SyncPolarity; /*!< Specifies the polarity of the signal on which the DMA request is synchronized.
+  uint32_t SyncPolarity;  /*!< Specifies the polarity of the signal on which the DMA request is synchronized.
                               This parameter can be a value of @ref DMAEx_MUX_SyncPolarity_selection */
 
-    FunctionalState SyncEnable; /*!< Specifies if the synchronization shall be enabled or disabled
+  FunctionalState SyncEnable;  /*!< Specifies if the synchronization shall be enabled or disabled
                                     This parameter can take the value ENABLE or DISABLE*/
 
 
-    FunctionalState EventEnable; /*!< Specifies if an event shall be generated once the RequestNumber is reached.
+  FunctionalState EventEnable;    /*!< Specifies if an event shall be generated once the RequestNumber is reached.
                                        This parameter can take the value ENABLE or DISABLE */
 
-    uint32_t RequestNumber; /*!< Specifies the number of DMA request that will be authorized after a sync event.
+  uint32_t RequestNumber; /*!< Specifies the number of DMA request that will be authorized after a sync event.
                                This parameters can be in the range 1 to 32 */
-} HAL_DMA_MuxSyncConfigTypeDef;
+
+}HAL_DMA_MuxSyncConfigTypeDef;
 
 
 /**
@@ -78,15 +80,16 @@ typedef struct
   */
 typedef struct
 {
-    uint32_t SignalID; /*!< Specifies the ID of the signal used for DMAMUX request generator
+ uint32_t SignalID;      /*!< Specifies the ID of the signal used for DMAMUX request generator
                               This parameter can be a value of @ref DMAEx_MUX_SignalGeneratorID_selection */
 
-    uint32_t Polarity; /*!< Specifies the polarity of the signal on which the request is generated.
+  uint32_t Polarity;       /*!< Specifies the polarity of the signal on which the request is generated.
                              This parameter can be a value of @ref DMAEx_MUX_RequestGeneneratorPolarity_selection */
 
-    uint32_t RequestNumber; /*!< Specifies the number of DMA request that will be generated after a signal event.
+  uint32_t RequestNumber;  /*!< Specifies the number of DMA request that will be generated after a signal event.
                                 This parameters can be in the range 1 to 32 */
-} HAL_DMA_MuxRequestGeneratorConfigTypeDef;
+
+}HAL_DMA_MuxRequestGeneratorConfigTypeDef;
 
 /**
   * @}
@@ -193,7 +196,6 @@ typedef struct
 #if defined(ADC3)
 #define HAL_DMAMUX2_REQ_GEN_ADC3_IT          26U   /*!< DMAMUX2 Request generator Signal is ADC3 IT                */
 #define HAL_DMAMUX2_REQ_GEN_ADC3_AWD1_OUT    27U   /*!< DMAMUX2 Request generator Signal is ADC3 Analog Watchdog 1 output */
-
 #endif /* ADC3 */
 #define HAL_DMAMUX2_REQ_GEN_BDMA_CH0_IT      28U   /*!< DMAMUX2 Request generator Signal is BDMA Channel 0 IT      */
 #define HAL_DMAMUX2_REQ_GEN_BDMA_CH1_IT      29U   /*!< DMAMUX2 Request generator Signal is BDMA Channel 1 IT      */
@@ -208,13 +210,9 @@ typedef struct
   * @{
   */
 #define HAL_DMAMUX_REQ_GEN_NO_EVENT        0x00000000U           /*!< block request generator events                     */
-
 #define HAL_DMAMUX_REQ_GEN_RISING          DMAMUX_RGxCR_GPOL_0  /*!< generate request on rising edge events             */
-
 #define HAL_DMAMUX_REQ_GEN_FALLING         DMAMUX_RGxCR_GPOL_1  /*!< generate request on falling edge events            */
-
 #define HAL_DMAMUX_REQ_GEN_RISING_FALLING  DMAMUX_RGxCR_GPOL    /*!< generate request on rising and falling edge events */
-
 
 /**
   * @}
@@ -236,19 +234,15 @@ typedef struct
   */
 
 /* IO operation functions *******************************************************/
-HAL_StatusTypeDef HAL_DMAEx_MultiBufferStart(DMA_HandleTypeDef* hdma, uint32_t SrcAddress, uint32_t DstAddress,
-                                             uint32_t SecondMemAddress, uint32_t DataLength);
-HAL_StatusTypeDef HAL_DMAEx_MultiBufferStart_IT(DMA_HandleTypeDef* hdma, uint32_t SrcAddress, uint32_t DstAddress,
-                                                uint32_t SecondMemAddress, uint32_t DataLength);
-HAL_StatusTypeDef HAL_DMAEx_ChangeMemory(DMA_HandleTypeDef* hdma, uint32_t Address, HAL_DMA_MemoryTypeDef memory);
-HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef * hdma, HAL_DMA_MuxSyncConfigTypeDef * pSyncConfig);
-HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef * hdma,
-                                                      HAL_DMA_MuxRequestGeneratorConfigTypeDef *
-                                                      pRequestGeneratorConfig);
-HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator(DMA_HandleTypeDef * hdma);
-HAL_StatusTypeDef HAL_DMAEx_DisableMuxRequestGenerator(DMA_HandleTypeDef * hdma);
+HAL_StatusTypeDef HAL_DMAEx_MultiBufferStart(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SecondMemAddress, uint32_t DataLength);
+HAL_StatusTypeDef HAL_DMAEx_MultiBufferStart_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SecondMemAddress, uint32_t DataLength);
+HAL_StatusTypeDef HAL_DMAEx_ChangeMemory(DMA_HandleTypeDef *hdma, uint32_t Address, HAL_DMA_MemoryTypeDef memory);
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSyncConfigTypeDef *pSyncConfig);
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator (DMA_HandleTypeDef *hdma, HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig);
+HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator (DMA_HandleTypeDef *hdma);
+HAL_StatusTypeDef HAL_DMAEx_DisableMuxRequestGenerator (DMA_HandleTypeDef *hdma);
 
-void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef * hdma);
+void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 /**
   * @}
   */
@@ -313,3 +307,4 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef * hdma);
 #endif
 
 #endif /* STM32H7xx_HAL_DMA_H */
+

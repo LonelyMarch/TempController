@@ -20,7 +20,7 @@
 #define STM32H7xx_HAL_FLASH_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -44,14 +44,14 @@ extern "C" {
   */
 typedef enum
 {
-    FLASH_PROC_NONE = 0U,
-    FLASH_PROC_SECTERASE_BANK1,
-    FLASH_PROC_MASSERASE_BANK1,
-    FLASH_PROC_PROGRAM_BANK1,
-    FLASH_PROC_SECTERASE_BANK2,
-    FLASH_PROC_MASSERASE_BANK2,
-    FLASH_PROC_PROGRAM_BANK2,
-    FLASH_PROC_ALLBANK_MASSERASE
+  FLASH_PROC_NONE = 0U,
+  FLASH_PROC_SECTERASE_BANK1,
+  FLASH_PROC_MASSERASE_BANK1,
+  FLASH_PROC_PROGRAM_BANK1,
+  FLASH_PROC_SECTERASE_BANK2,
+  FLASH_PROC_MASSERASE_BANK2,
+  FLASH_PROC_PROGRAM_BANK2,
+  FLASH_PROC_ALLBANK_MASSERASE
 } FLASH_ProcedureTypeDef;
 
 
@@ -60,21 +60,21 @@ typedef enum
   */
 typedef struct
 {
-  __IO FLASH_ProcedureTypeDef ProcedureOnGoing;
-    /*!< Internal variable to indicate which procedure is ongoing or not in IT context */
+  __IO FLASH_ProcedureTypeDef ProcedureOnGoing;   /*!< Internal variable to indicate which procedure is ongoing or not in IT context */
 
-  __IO uint32_t NbSectorsToErase; /*!< Internal variable to save the remaining sectors to erase in IT context        */
+  __IO uint32_t               NbSectorsToErase;   /*!< Internal variable to save the remaining sectors to erase in IT context        */
 
-  __IO uint32_t VoltageForErase; /*!< Internal variable to provide voltage range selected by user in IT context     */
+  __IO uint32_t               VoltageForErase;    /*!< Internal variable to provide voltage range selected by user in IT context     */
 
-  __IO uint32_t Sector; /*!< Internal variable to define the current sector which is erasing               */
+  __IO uint32_t               Sector;             /*!< Internal variable to define the current sector which is erasing               */
 
-  __IO uint32_t Address; /*!< Internal variable to save address selected for program                        */
+  __IO uint32_t               Address;            /*!< Internal variable to save address selected for program                        */
 
-    HAL_LockTypeDef Lock; /*!< FLASH locking object                                                          */
+  HAL_LockTypeDef             Lock;               /*!< FLASH locking object                                                          */
 
-  __IO uint32_t ErrorCode; /*!< FLASH error code                                                              */
-} FLASH_ProcessTypeDef;
+  __IO uint32_t               ErrorCode;          /*!< FLASH error code                                                              */
+
+}FLASH_ProcessTypeDef;
 
 /**
   * @}
@@ -194,7 +194,6 @@ typedef struct
                                            FLASH_FLAG_OPERR_BANK1    | FLASH_FLAG_RDPERR_BANK1   | \
                                            FLASH_FLAG_RDSERR_BANK1   | FLASH_FLAG_SNECCERR_BANK1 | \
                                            FLASH_FLAG_DBECCERR_BANK1 | FLASH_FLAG_CRCRDERR_BANK1) /*!< All Bank 1 error flags */
-
 #else
 #define FLASH_FLAG_ALL_ERRORS_BANK1       (FLASH_FLAG_WRPERR_BANK1   | FLASH_FLAG_PGSERR_BANK1   | \
                                            FLASH_FLAG_STRBERR_BANK1  | FLASH_FLAG_INCERR_BANK1   | \
@@ -210,34 +209,22 @@ typedef struct
 
 #define FLASH_FLAG_BSY_BANK2               (FLASH_SR_BSY      | 0x80000000U)        /*!< FLASH Bank 2 Busy flag */
 #define FLASH_FLAG_WBNE_BANK2              (FLASH_SR_WBNE     | 0x80000000U)        /*!< Write Buffer Not Empty on Bank 2 flag */
-
 #define FLASH_FLAG_QW_BANK2                (FLASH_SR_QW       | 0x80000000U)        /*!< Wait Queue on Bank 2 flag */
 #define FLASH_FLAG_CRC_BUSY_BANK2          (FLASH_SR_CRC_BUSY | 0x80000000U)        /*!< CRC Busy on Bank 2 flag */
 #define FLASH_FLAG_EOP_BANK2               (FLASH_SR_EOP      | 0x80000000U)        /*!< End Of Program on Bank 2 flag */
-
 #define FLASH_FLAG_WRPERR_BANK2            (FLASH_SR_WRPERR   | 0x80000000U)        /*!< Write Protection Error on Bank 2 flag */
-
 #define FLASH_FLAG_PGSERR_BANK2            (FLASH_SR_PGSERR   | 0x80000000U)        /*!< Program Sequence Error on Bank 2 flag */
-
 #define FLASH_FLAG_STRBERR_BANK2           (FLASH_SR_STRBERR  | 0x80000000U)        /*!< Strobe Error on Bank 2 flag */
 #define FLASH_FLAG_INCERR_BANK2            (FLASH_SR_INCERR   | 0x80000000U)        /*!< Inconsistency Error on Bank 2 flag */
-
 #if defined (FLASH_SR_OPERR)
 #define FLASH_FLAG_OPERR_BANK2             (FLASH_SR_OPERR    | 0x80000000U)        /*!< Operation Error on Bank 2 flag */
-
 #endif /* FLASH_SR_OPERR */
 #define FLASH_FLAG_RDPERR_BANK2            (FLASH_SR_RDPERR   | 0x80000000U)        /*!< Read Protection Error on Bank 2 flag */
-
 #define FLASH_FLAG_RDSERR_BANK2            (FLASH_SR_RDSERR   | 0x80000000U)        /*!< Read Secured Error on Bank 2 flag */
-
 #define FLASH_FLAG_SNECCERR_BANK2          (FLASH_SR_SNECCERR | 0x80000000U)        /*!< Single ECC Error Correction on Bank 2 flag */
-
 #define FLASH_FLAG_DBECCERR_BANK2          (FLASH_SR_DBECCERR | 0x80000000U)        /*!< Double Detection ECC Error on Bank 2 flag */
-
 #define FLASH_FLAG_CRCEND_BANK2            (FLASH_SR_CRCEND   | 0x80000000U)        /*!< CRC End of Calculation on Bank 2 flag */
-
 #define FLASH_FLAG_CRCRDERR_BANK2          (FLASH_SR_CRCRDERR | 0x80000000U)        /*!< CRC Read error on Bank 2 flag */
-
 
 #if defined (FLASH_SR_OPERR)
 #define FLASH_FLAG_ALL_ERRORS_BANK2       (FLASH_FLAG_WRPERR_BANK2   | FLASH_FLAG_PGSERR_BANK2   | \
@@ -245,7 +232,6 @@ typedef struct
                                            FLASH_FLAG_OPERR_BANK2    | FLASH_FLAG_RDPERR_BANK2   | \
                                            FLASH_FLAG_RDSERR_BANK2   | FLASH_FLAG_SNECCERR_BANK2 | \
                                            FLASH_FLAG_DBECCERR_BANK2 | FLASH_FLAG_CRCRDERR_BANK2) /*!< All Bank 2 error flags */
-
 #else
 #define FLASH_FLAG_ALL_ERRORS_BANK2       (FLASH_FLAG_WRPERR_BANK2   | FLASH_FLAG_PGSERR_BANK2   | \
                                            FLASH_FLAG_STRBERR_BANK2  | FLASH_FLAG_INCERR_BANK2   | \
@@ -268,21 +254,16 @@ typedef struct
   */
 #define FLASH_IT_EOP_BANK1                  FLASH_CR_EOPIE       /*!< End of FLASH Bank 1 Operation Interrupt source */
 #define FLASH_IT_WRPERR_BANK1               FLASH_CR_WRPERRIE    /*!< Write Protection Error on Bank 1 Interrupt source */
-
 #define FLASH_IT_PGSERR_BANK1               FLASH_CR_PGSERRIE    /*!< Program Sequence Error on Bank 1 Interrupt source */
-
 #define FLASH_IT_STRBERR_BANK1              FLASH_CR_STRBERRIE   /*!< Strobe Error on Bank 1 Interrupt source */
 #define FLASH_IT_INCERR_BANK1               FLASH_CR_INCERRIE    /*!< Inconsistency Error on Bank 1 Interrupt source */
 #if defined (FLASH_CR_OPERRIE)
 #define FLASH_IT_OPERR_BANK1                FLASH_CR_OPERRIE     /*!< Operation Error on Bank 1 Interrupt source */
 #endif /* FLASH_CR_OPERRIE */
 #define FLASH_IT_RDPERR_BANK1               FLASH_CR_RDPERRIE    /*!< Read protection Error on Bank 1 Interrupt source */
-
 #define FLASH_IT_RDSERR_BANK1               FLASH_CR_RDSERRIE    /*!< Read Secured Error on Bank 1 Interrupt source */
 #define FLASH_IT_SNECCERR_BANK1             FLASH_CR_SNECCERRIE  /*!< Single ECC Error Correction on Bank 1 Interrupt source */
-
 #define FLASH_IT_DBECCERR_BANK1             FLASH_CR_DBECCERRIE  /*!< Double Detection ECC Error on Bank 1 Interrupt source */
-
 #define FLASH_IT_CRCEND_BANK1               FLASH_CR_CRCENDIE    /*!< CRC End on Bank 1 Interrupt source */
 #define FLASH_IT_CRCRDERR_BANK1             FLASH_CR_CRCRDERRIE  /*!< CRC Read error on Bank 1 Interrupt source */
 
@@ -293,7 +274,6 @@ typedef struct
                                             FLASH_IT_RDPERR_BANK1    | FLASH_IT_RDSERR_BANK1    | \
                                             FLASH_IT_SNECCERR_BANK1  | FLASH_IT_DBECCERR_BANK1  | \
                                             FLASH_IT_CRCEND_BANK1    | FLASH_IT_CRCRDERR_BANK1) /*!< All Bank 1 Interrupt sources */
-
 #else
 #define FLASH_IT_ALL_BANK1                 (FLASH_IT_EOP_BANK1       | FLASH_IT_WRPERR_BANK1    | \
                                             FLASH_IT_PGSERR_BANK1    | FLASH_IT_STRBERR_BANK1   | \
@@ -304,31 +284,19 @@ typedef struct
 #endif /* FLASH_CR_OPERRIE */
 
 #define FLASH_IT_EOP_BANK2                 (FLASH_CR_EOPIE      | 0x80000000U)  /*!< End of FLASH Bank 2 Operation Interrupt source */
-
 #define FLASH_IT_WRPERR_BANK2              (FLASH_CR_WRPERRIE   | 0x80000000U)  /*!< Write Protection Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_PGSERR_BANK2              (FLASH_CR_PGSERRIE   | 0x80000000U)  /*!< Program Sequence Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_STRBERR_BANK2             (FLASH_CR_STRBERRIE  | 0x80000000U)  /*!< Strobe Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_INCERR_BANK2              (FLASH_CR_INCERRIE   | 0x80000000U)  /*!< Inconsistency Error on Bank 2 Interrupt source */
-
 #if defined (FLASH_CR_OPERRIE)
 #define FLASH_IT_OPERR_BANK2               (FLASH_CR_OPERRIE    | 0x80000000U)  /*!< Operation Error on Bank 2 Interrupt source */
-
 #endif /* FLASH_CR_OPERRIE */
 #define FLASH_IT_RDPERR_BANK2              (FLASH_CR_RDPERRIE   | 0x80000000U)  /*!< Read protection Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_RDSERR_BANK2              (FLASH_CR_RDSERRIE   | 0x80000000U)  /*!< Read Secured Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_SNECCERR_BANK2            (FLASH_CR_SNECCERRIE | 0x80000000U)  /*!< Single ECC Error Correction on Bank 2 Interrupt source */
-
 #define FLASH_IT_DBECCERR_BANK2            (FLASH_CR_DBECCERRIE | 0x80000000U)  /*!< Double Detection ECC Error on Bank 2 Interrupt source */
-
 #define FLASH_IT_CRCEND_BANK2              (FLASH_CR_CRCENDIE   | 0x80000000U)  /*!< CRC End on Bank 2 Interrupt source */
-
 #define FLASH_IT_CRCRDERR_BANK2            (FLASH_CR_CRCRDERRIE | 0x80000000U)  /*!< CRC Read Error on Bank 2 Interrupt source */
-
 
 #if defined (FLASH_CR_OPERRIE)
 #define FLASH_IT_ALL_BANK2                 (FLASH_IT_EOP_BANK2       | FLASH_IT_WRPERR_BANK2    | \
@@ -337,7 +305,6 @@ typedef struct
                                             FLASH_IT_RDPERR_BANK2    | FLASH_IT_RDSERR_BANK2    | \
                                             FLASH_IT_SNECCERR_BANK2  | FLASH_IT_DBECCERR_BANK2  | \
                                             FLASH_IT_CRCEND_BANK2    | FLASH_IT_CRCRDERR_BANK2) /*!< All Bank 2 Interrupt sources */
-
 #else
 #define FLASH_IT_ALL_BANK2                 (FLASH_IT_EOP_BANK2       | FLASH_IT_WRPERR_BANK2    | \
                                             FLASH_IT_PGSERR_BANK2    | FLASH_IT_STRBERR_BANK2   | \
@@ -891,3 +858,4 @@ HAL_StatusTypeDef FLASH_CRC_WaitForLastOperation(uint32_t Timeout, uint32_t Bank
 #endif
 
 #endif /* STM32H7xx_HAL_FLASH_H */
+

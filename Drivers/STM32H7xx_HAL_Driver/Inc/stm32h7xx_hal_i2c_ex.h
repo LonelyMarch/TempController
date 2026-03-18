@@ -54,29 +54,18 @@ extern "C" {
   * @{
   */
 #define I2C_FMP_NOT_SUPPORTED           0xAAAA0000U                                     /*!< Fast Mode Plus not supported       */
-
 #define I2C_FASTMODEPLUS_PB6            SYSCFG_PMCR_I2C_PB6_FMP                        /*!< Enable Fast Mode Plus on PB6       */
-
 #define I2C_FASTMODEPLUS_PB7            SYSCFG_PMCR_I2C_PB7_FMP                        /*!< Enable Fast Mode Plus on PB7       */
-
 #define I2C_FASTMODEPLUS_PB8            SYSCFG_PMCR_I2C_PB8_FMP                        /*!< Enable Fast Mode Plus on PB8       */
-
 #define I2C_FASTMODEPLUS_PB9            SYSCFG_PMCR_I2C_PB9_FMP                        /*!< Enable Fast Mode Plus on PB9       */
-
 #define I2C_FASTMODEPLUS_I2C1           SYSCFG_PMCR_I2C1_FMP                           /*!< Enable Fast Mode Plus on I2C1 pins */
-
 #define I2C_FASTMODEPLUS_I2C2           SYSCFG_PMCR_I2C2_FMP                           /*!< Enable Fast Mode Plus on I2C2 pins */
-
 #define I2C_FASTMODEPLUS_I2C3           SYSCFG_PMCR_I2C3_FMP                           /*!< Enable Fast Mode Plus on I2C3 pins */
-
 #define I2C_FASTMODEPLUS_I2C4           SYSCFG_PMCR_I2C4_FMP                           /*!< Enable Fast Mode Plus on I2C4 pins */
-
 #if defined(SYSCFG_PMCR_I2C5_FMP)
 #define I2C_FASTMODEPLUS_I2C5           SYSCFG_PMCR_I2C5_FMP                           /*!< Enable Fast Mode Plus on I2C5 pins */
-
 #else
 #define I2C_FASTMODEPLUS_I2C5           (uint32_t)(0x00001000U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C5 not supported  */
-
 #endif /* SYSCFG_PMCR_I2C5_FMP */
 /**
   * @}
@@ -104,8 +93,8 @@ extern "C" {
   * @{
   */
 /* Peripheral Control functions  ************************************************/
-HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef* hi2c, uint32_t AnalogFilter);
-HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef* hi2c, uint32_t DigitalFilter);
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
 /**
   * @}
   */
@@ -113,8 +102,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef* hi2c, uint32_
 /** @addtogroup I2CEx_Exported_Functions_Group2 WakeUp Mode Functions
   * @{
   */
-HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef * hi2c);
-HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef * hi2c);
+HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
 /**
   * @}
   */
