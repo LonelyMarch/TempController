@@ -30,6 +30,7 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticTask_t osStaticThreadDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -50,16 +51,26 @@
 /* USER CODE END Variables */
 /* Definitions for lcdTask */
 osThreadId_t lcdTaskHandle;
+uint32_t lcdTaskBuffer[ 8192 ];
+osStaticThreadDef_t lcdTaskControlBlock;
 const osThreadAttr_t lcdTask_attributes = {
   .name = "lcdTask",
-  .stack_size = 128 * 4,
+  .cb_mem = &lcdTaskControlBlock,
+  .cb_size = sizeof(lcdTaskControlBlock),
+  .stack_mem = &lcdTaskBuffer[0],
+  .stack_size = sizeof(lcdTaskBuffer),
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for stickTask */
 osThreadId_t stickTaskHandle;
+uint32_t stickTaskBuffer[ 2048 ];
+osStaticThreadDef_t stickTaskControlBlock;
 const osThreadAttr_t stickTask_attributes = {
   .name = "stickTask",
-  .stack_size = 128 * 4,
+  .cb_mem = &stickTaskControlBlock,
+  .cb_size = sizeof(stickTaskControlBlock),
+  .stack_mem = &stickTaskBuffer[0],
+  .stack_size = sizeof(stickTaskBuffer),
   .priority = (osPriority_t) osPriorityHigh,
 };
 /* Definitions for stickQueue */
