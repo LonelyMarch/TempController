@@ -249,6 +249,15 @@ SECTIONS
     . = ALIGN(16);
   } >RAM_D1
 
+  /* ADC DMA buffers in SRAM2 (RAM_D2). */
+  .adc_dma_buf (NOLOAD) :
+  {
+    . = ALIGN(16);
+    *(.adc_dma_buf)
+    *(.adc_dma_buf*)
+    . = ALIGN(16);
+  } >RAM_D2
+
 
 
   /* Remove information from the standard libraries */

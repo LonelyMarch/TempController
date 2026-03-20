@@ -18,10 +18,10 @@ extern osMessageQueueId_t stickQueueHandle;
 
 /*
  * ADC DMA 缓冲区（16bit 采样）。
- * 注意：工程默认 .bss 在 DTCMRAM，DMA1 无法访问 DTCM。
- * 因此这里显式放入可 DMA 访问的 RAM_D1 段（.lcd_buf），并按 32B 对齐。
+ * 注意：工程默认 .bss 在 DTCMRAM，DMA 控制器无法访问 DTCM。
+ * 因此这里显式放入 RAM_D2 段（.adc_dma_buf），并按 32B 对齐。
  */
-static uint16_t s_adc_dma_buf[STICK_DMA_SAMPLE_COUNT] __attribute__((section(".lcd_buf"), aligned(32)));
+static uint16_t s_adc_dma_buf[STICK_DMA_SAMPLE_COUNT] __attribute__((section(".adc_dma_buf"), aligned(16)));
 /* 对外可读的最新滤波 ADC 值（当前为最小值滤波结果）。 */
 static volatile uint16_t s_adc_latest = 0U;
 /* 对外可读的稳定键值。 */

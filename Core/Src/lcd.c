@@ -7,9 +7,10 @@
 #define LCD_FB_PIXELS ((uint32_t)LCD_W * (uint32_t)LCD_H)
 #define LCD_SPI_DMA_CHUNK_BYTES 16384U
 
+
 /* 双缓冲显存：front用于显示，back用于本帧绘制。 */
-static uint16_t s_lcd_buf_a[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(32)));
-static uint16_t s_lcd_buf_b[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(32)));
+static uint16_t s_lcd_buf_a[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(16)));
+static uint16_t s_lcd_buf_b[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(16)));
 static uint16_t *s_lcd_front_buf = s_lcd_buf_a;
 static uint16_t *s_lcd_back_buf = s_lcd_buf_b;
 
@@ -61,7 +62,7 @@ static void LCD_SPI_SetDataSize(uint32_t data_size)
 static void LCD_SPI_Transmit8(const uint8_t *data, uint16_t size)
 {
 	LCD_SPI_SetDataSize(SPI_DATASIZE_8BIT);
-	if (HAL_SPI_Transmit(&hspi1, (uint8_t *)data, size, 0xFFFFU) != HAL_OK)
+	if (HAL_SPI_Transmit(&hspi1, (uint8_t *)data, size, 0x100) != HAL_OK)
 	{
 		Error_Handler();
 	}
@@ -98,6 +99,7 @@ static void LCD_SPI_TransmitDMA_Pixels(const uint16_t *data, uint32_t pixel_coun
 		/* HAL长度参数为16位，超长帧拆分发送。 */
 		uint16_t chunk = (pixel_count > 0xFFFFU) ? 0xFFFFU : (uint16_t)pixel_count;
 		if (HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)data, chunk) != HAL_OK)
+		// if (HAL_SPI_Transmit(&hspi1, (uint8_t *)data, chunk,1000) != HAL_OK)
 		{
 			Error_Handler();
 		}
@@ -1108,9 +1110,10 @@ void LCD_Init(void)
 	osDelay(100);
 	LCD_RES_Set();
 	osDelay(100);
-	
+
 	LCD_BLK_Set();//打开背光
 	osDelay(100);
+
 	
 	//************* Start Initial Sequence **********//
 	LCD_WR_REG(0x11); //Sleep out 
@@ -1189,11 +1192,19 @@ void LCD_Init(void)
 
 	LCD_WR_REG(0x29);
 
+		
+
+
 	for (i = 0U; i < LCD_FB_PIXELS; i++)
 	{
 		s_lcd_front_buf[i] = LCD_ColorToBuf(BLACK);
 		s_lcd_back_buf[i] = LCD_ColorToBuf(BLACK);
 	}
+
+	/* 上电后主动刷一帧黑色，确保面板GRAM与本地双缓冲一致。 */
+	LCD_Panel_BeginMemoryWrite(0U, 0U, LCD_W - 1U, LCD_H - 1U);
+	LCD_SPI_TransmitDMA_Pixels(s_lcd_front_buf, LCD_FB_PIXELS);
+	LCD_CS_Set();
 
 	LCD_Address_Set(0U, 0U, LCD_W - 1U, LCD_H - 1U);
 }

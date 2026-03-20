@@ -287,7 +287,7 @@ void ui_handler(void)
 void LcdTask(void *argument)
 {
   (void)argument;
-
+  osDelay(100U); /* 等待系统稳定后再初始化 LCD，避免电源/时钟等问题。 */
   LCD_Init();
   ui_init();
 
