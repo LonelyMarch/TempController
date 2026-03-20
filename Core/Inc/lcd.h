@@ -41,6 +41,8 @@
 #define LCD_BLK_Set(x)  HAL_GPIO_WritePin(LCD_BLK_GPIO_Port,LCD_BLK_Pin, GPIO_PIN_SET)//TIM1->CCR1=x//
 
 void LCD_Init(void); 						//LCD初始化
+void LCD_BeginFrame(void);      // 开始一帧绘制（复制前缓冲到后缓冲）
+void LCD_EndFrame(void);        // 结束一帧绘制（SPI DMA发送并交换缓冲）
 void LCD_Writ_Bus(uint8_t dat);	// 模拟SPI时序
 void LCD_WR_DATA8(uint8_t dat);	// 写入一个字节
 void LCD_WR_DATA(uint16_t dat);	// 写入两个字节

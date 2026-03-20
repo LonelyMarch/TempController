@@ -9,9 +9,20 @@ extern osMessageQueueId_t stickQueueHandle;
 /* DMA 环形缓冲长度。取 16 可兼顾平滑度与响应速度。 */
 #define STICK_DMA_SAMPLE_COUNT 16U
 
-/* ADC DMA 缓冲区（16bit 采样）。 */
-static uint16_t s_adc_dma_buf[STICK_DMA_SAMPLE_COUNT];
-/* 对外可读的最新平均 ADC 值。 */
+/* 摇杆扫描周期与状态判定时间参数（单位：ms）。 */
+#define STICK_SCAN_PERIOD_MS 10U
+#define STICK_ACTIVATE_MS 40U
+#define STICK_RELEASE_MS 30U
+#define STICK_LONGPRESS_MS 600U
+#define STICK_REPEAT_MS 120U
+
+/*
+ * ADC DMA 缓冲区（16bit 采样）。
+ * 注意：工程默认 .bss 在 DTCMRAM，DMA1 无法访问 DTCM。
+ * 因此这里显式放入可 DMA 访问的 RAM_D1 段（.lcd_buf），并按 32B 对齐。
+ */
+static uint16_t s_adc_dma_buf[STICK_DMA_SAMPLE_COUNT] __attribute__((section(".lcd_buf"), aligned(32)));
+/* 对外可读的最新滤波 ADC 值（当前为最小值滤波结果）。 */
 static volatile uint16_t s_adc_latest = 0U;
 /* 对外可读的稳定键值。 */
 static volatile stick_key_t s_stick_key = STICK_KEY_NONE;
@@ -35,17 +46,20 @@ static void stick_queue_push(stick_key_t key)
 }
 
 /**
- * @brief 计算 DMA 缓冲区均值，用于抑制采样抖动。
+ * @brief 软件滤波：读取 DMA 窗口中的最小值。
+ * @note 该策略会优先响应低电平方向，可能更敏感；配合后级去抖使用。
  */
-static uint16_t stick_average_adc(void)
+static uint16_t stick_min_adc(void)
 {
-  uint32_t sum = 0U;
+  uint16_t min_val = 0xFFFFU;
 
   for (uint32_t i = 0; i < STICK_DMA_SAMPLE_COUNT; ++i) {
-    sum += s_adc_dma_buf[i];
+    if (s_adc_dma_buf[i] < min_val) {
+      min_val = s_adc_dma_buf[i];
+    }
   }
 
-  return (uint16_t)(sum / STICK_DMA_SAMPLE_COUNT);
+  return min_val;
 }
 
 /**
@@ -79,14 +93,14 @@ stick_key_t stick_get_key(void)
   return s_stick_key;
 }
 
-/** @brief 读取当前平均 ADC 值。 */
+/** @brief 读取当前滤波后的 ADC 值（当前为窗口最小值）。 */
 uint16_t stick_get_raw_adc(void)
 {
   return s_adc_latest;
 }
 
 /**
- * @brief 摇杆任务：启动 ADC DMA，并周期性执行均值+去抖。
+ * @brief 摇杆任务：最小值滤波 + 时间状态机 + 队列事件输出。
  */
 void StickTask(void *argument)
 {
@@ -100,43 +114,91 @@ void StickTask(void *argument)
     }
   }
 
-  stick_key_t candidate = STICK_KEY_NONE;
-  uint8_t stable_count = 0U;
+  stick_key_t raw_candidate = STICK_KEY_NONE;
+  uint32_t raw_candidate_tick = 0U;
+
+  stick_key_t active_key = STICK_KEY_NONE;
+  uint32_t active_tick = 0U;
   uint32_t next_repeat_tick = 0U;
+  uint32_t release_tick = 0U;
+  uint8_t longpress_entered = 0U;
 
   for (;;) {
-    const uint16_t adc = stick_average_adc();
+#if (__DCACHE_PRESENT == 1U)
+    /* H7 开启 D-Cache 时，先失效缓存再读取 DMA 写入的数据。 */
+    SCB_InvalidateDCache_by_Addr((uint32_t *)s_adc_dma_buf, sizeof(s_adc_dma_buf));
+#endif
+
+    const uint16_t adc = stick_min_adc();
     const stick_key_t decoded = stick_decode_key(adc);
     const uint32_t now = osKernelGetTickCount();
 
     s_adc_latest = adc;
 
-    /* 简单去抖：同一候选状态连续出现后才更新稳定状态。 */
-    if (decoded == candidate) {
-      if (stable_count < 3U) {
-        stable_count++;
+    if (active_key == STICK_KEY_NONE) {
+      /*
+       * 空闲态：检测“掰动”动作。
+       * 只有某个非 NONE 状态持续 STICK_ACTIVATE_MS 才算一次有效动作。
+       */
+      if (decoded != raw_candidate) {
+        raw_candidate = decoded;
+        raw_candidate_tick = now;
+      } else if (raw_candidate != STICK_KEY_NONE &&
+                 (now - raw_candidate_tick) >= STICK_ACTIVATE_MS) {
+        active_key = raw_candidate;
+        active_tick = now;
+        next_repeat_tick = now + STICK_LONGPRESS_MS;
+        release_tick = 0U;
+        longpress_entered = 0U;
+
+        s_stick_key = active_key;
+        stick_queue_push(active_key);
+      } else {
+        s_stick_key = STICK_KEY_NONE;
       }
     } else {
-      candidate = decoded;
-      stable_count = 0U;
-    }
+      /*
+       * 激活态：强制要求先回到 NONE 才允许下一次状态变化。
+       * 即使中途抖到其他方向，也不会切换 active_key。
+       */
+      s_stick_key = active_key;
 
-    if (stable_count >= 2U) {
-      if (candidate != s_stick_key) {
-        /* 边沿事件：状态变化时立即发送一次。 */
-        s_stick_key = candidate;
-        if (s_stick_key != STICK_KEY_NONE) {
-          stick_queue_push(s_stick_key);
-          next_repeat_tick = now + 280U;
+      if (decoded == STICK_KEY_NONE) {
+        if (release_tick == 0U) {
+          release_tick = now;
         }
-      } else if (s_stick_key != STICK_KEY_NONE && now >= next_repeat_tick) {
-        /* 长按连发：保持按下时周期发送。 */
-        stick_queue_push(s_stick_key);
-        next_repeat_tick = now + 90U;
+
+        if ((now - release_tick) >= STICK_RELEASE_MS) {
+          active_key = STICK_KEY_NONE;
+          raw_candidate = STICK_KEY_NONE;
+          raw_candidate_tick = now;
+          release_tick = 0U;
+          longpress_entered = 0U;
+          s_stick_key = STICK_KEY_NONE;
+        }
+      } else {
+        release_tick = 0U;
+
+        /*
+         * 长按判定：持续 STICK_LONGPRESS_MS 后进入长按连发。
+         * 连发仅对方向键生效，按下键不连发。
+         */
+        if (active_key == STICK_KEY_LEFT || active_key == STICK_KEY_RIGHT ||
+            active_key == STICK_KEY_UP || active_key == STICK_KEY_DOWN) {
+          if (longpress_entered == 0U) {
+            if ((now - active_tick) >= STICK_LONGPRESS_MS) {
+              longpress_entered = 1U;
+              next_repeat_tick = now + STICK_REPEAT_MS;
+              stick_queue_push(active_key);
+            }
+          } else if (now >= next_repeat_tick) {
+            stick_queue_push(active_key);
+            next_repeat_tick = now + STICK_REPEAT_MS;
+          }
+        }
       }
     }
 
-    /* 100Hz 处理频率。 */
-    osDelay(10U);
+    osDelay(STICK_SCAN_PERIOD_MS);
   }
 }

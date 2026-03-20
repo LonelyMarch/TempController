@@ -23,16 +23,16 @@
 #define UI_POINTER_APEX_Y (LCD_H - 18U)
 #define UI_POINTER_BASE_Y (LCD_H - 4U)
 
-/* 刻度长度：小格/中格/主格（每 10 小格）明显分层。 */
+/* 刻度长度：每小格 0.2C；中格/大格适当加长但不过分。 */
 #define UI_TICK_LEN_MINOR 10U
-#define UI_TICK_LEN_MID 26U
-#define UI_TICK_LEN_MAJOR 52U
+#define UI_TICK_LEN_MID 16U
+#define UI_TICK_LEN_MAJOR 24U
 
 /* 交互与温度范围：内部统一使用 x10 定点值。 */
 #define UI_CENTER_X (LCD_W / 2)
-#define UI_PX_PER_01C 2
-#define UI_SETPOINT_MIN_X10 50
-#define UI_SETPOINT_MAX_X10 450
+#define UI_PX_PER_01C 3
+#define UI_SETPOINT_MIN_X10 400
+#define UI_SETPOINT_MAX_X10 700
 
 /* 由 CubeMX 在 freertos.c 中生成的摇杆消息队列句柄。 */
 extern osMessageQueueId_t stickQueueHandle;
@@ -138,8 +138,11 @@ static void ui_draw_scale(int16_t set_x10)
         const uint16_t digits = ui_u16_digits(abs_whole);
         const uint16_t text_x = (uint16_t)((x > (int16_t)(digits * 4U)) ? (x - (int16_t)(digits * 4U)) : 0);
 
+        /* 数字紧贴主刻度上方显示（16 号字高约 16 像素，留 2 像素间隔）。 */
+        const uint16_t text_y = (uint16_t)(UI_SCALE_BASE_Y - UI_TICK_LEN_MAJOR - 18U);
+
         (void)snprintf(num_buf, sizeof(num_buf), "%d", (int)whole);
-        LCD_ShowString(text_x, UI_SCALE_LABEL_Y, (const uint8_t *)num_buf, UI_COLOR_TEXT, UI_COLOR_BG, 16, 0);
+        LCD_ShowString(text_x, text_y, (const uint8_t *)num_buf, UI_COLOR_TEXT, UI_COLOR_BG, 16, 0);
       }
     }
 
@@ -169,8 +172,30 @@ static void ui_draw_scale(int16_t set_x10)
 static void ui_apply_setpoint_delta(int16_t delta_x10)
 {
   int16_t set_x10 = ui_float_to_x10(g_temp_setpoint_c);
+  const int16_t original_x10 = set_x10;
 
   set_x10 = (int16_t)(set_x10 + delta_x10);
+
+  if (set_x10 < UI_SETPOINT_MIN_X10) {
+    set_x10 = UI_SETPOINT_MIN_X10;
+  }
+  if (set_x10 > UI_SETPOINT_MAX_X10) {
+    set_x10 = UI_SETPOINT_MAX_X10;
+  }
+
+  if (set_x10 == original_x10) {
+    return;
+  }
+
+  g_temp_setpoint_c = (float)set_x10 / 10.0f;
+}
+
+/**
+ * @brief 强制将设定温度钳位到允许范围，防止外部改写越界。
+ */
+static void ui_clamp_setpoint_inplace(void)
+{
+  int16_t set_x10 = ui_float_to_x10(g_temp_setpoint_c);
 
   if (set_x10 < UI_SETPOINT_MIN_X10) {
     set_x10 = UI_SETPOINT_MIN_X10;
@@ -196,11 +221,11 @@ static void ui_process_input_queue(void)
   while (osMessageQueueGet(stickQueueHandle, &msg, NULL, 0U) == osOK) {
     const stick_key_t key = (stick_key_t)msg;
 
-    /* 左右细调 0.1C，上下粗调 1.0C，按下对齐当前温度。 */
+    /* 左右细调 0.2C（1 小格），上下粗调 1.0C，按下对齐当前温度。 */
     if (key == STICK_KEY_LEFT) {
-      ui_apply_setpoint_delta(-1);
+      ui_apply_setpoint_delta(-2);
     } else if (key == STICK_KEY_RIGHT) {
-      ui_apply_setpoint_delta(1);
+      ui_apply_setpoint_delta(2);
     } else if (key == STICK_KEY_UP) {
       ui_apply_setpoint_delta(10);
     } else if (key == STICK_KEY_DOWN) {
@@ -219,7 +244,9 @@ void ui_init(void)
   s_last_cur_x10 = -32768;
   s_last_set_x10 = -32768;
 
+  LCD_BeginFrame();
   LCD_Fill(0, 0, LCD_W, LCD_H, UI_COLOR_BG);
+  LCD_EndFrame();
 }
 
 /**
@@ -229,7 +256,10 @@ void ui_handler(void)
 {
   const int16_t cur_x10 = ui_float_to_x10(g_temp_current_c);
 
+  LCD_BeginFrame();
+
   ui_process_input_queue();
+  ui_clamp_setpoint_inplace();
 
   {
     const int16_t set_x10 = ui_float_to_x10(g_temp_setpoint_c);
@@ -246,6 +276,8 @@ void ui_handler(void)
       s_last_set_x10 = set_x10;
     }
   }
+
+  LCD_EndFrame();
 }
 
 /**

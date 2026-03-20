@@ -1,7 +1,318 @@
 #include "lcd.h"
 
 #include "cmsis_os2.h"
+#include "dma2d.h"
 #include "lcdfont.h"
+
+#define LCD_FB_PIXELS ((uint32_t)LCD_W * (uint32_t)LCD_H)
+#define LCD_SPI_DMA_CHUNK_BYTES 16384U
+
+/* 双缓冲显存：front用于显示，back用于本帧绘制。 */
+static uint16_t s_lcd_buf_a[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(32)));
+static uint16_t s_lcd_buf_b[LCD_FB_PIXELS] __attribute__((section(".lcd_buf"), aligned(32)));
+static uint16_t *s_lcd_front_buf = s_lcd_buf_a;
+static uint16_t *s_lcd_back_buf = s_lcd_buf_b;
+
+/* 软件绘制窗口状态：用于兼容原有 LCD_WR_DATA 连续写入语义。 */
+static uint16_t s_win_x1 = 0U;
+static uint16_t s_win_y1 = 0U;
+static uint16_t s_win_x2 = 0U;
+static uint16_t s_win_y2 = 0U;
+static uint16_t s_win_cx = 0U;
+static uint16_t s_win_cy = 0U;
+
+/**
+************************************************************************
+* @brief:        LCD_SPI_SetDataSize: 动态切换SPI数据位宽
+* @param:        data_size - 目标位宽（8bit/16bit）
+* @retval:       void
+* @details:      当配置变化时执行DeInit/Init重建SPI，保证命令(8bit)与像素(16bit)可共存。
+************************************************************************
+**/
+static void LCD_SPI_SetDataSize(uint32_t data_size)
+{
+	if (hspi1.Init.DataSize == data_size)
+	{
+		return;
+	}
+
+	if (HAL_SPI_DeInit(&hspi1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	hspi1.Init.DataSize = data_size;
+
+	if (HAL_SPI_Init(&hspi1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+}
+
+/**
+************************************************************************
+* @brief:        LCD_SPI_Transmit8: 以8位模式发送SPI数据
+* @param:        data - 发送缓冲区
+* @param:        size - 字节数
+* @retval:       void
+* @details:      LCD命令和寄存器参数均按8位发送。
+************************************************************************
+**/
+static void LCD_SPI_Transmit8(const uint8_t *data, uint16_t size)
+{
+	LCD_SPI_SetDataSize(SPI_DATASIZE_8BIT);
+	if (HAL_SPI_Transmit(&hspi1, (uint8_t *)data, size, 0xFFFFU) != HAL_OK)
+	{
+		Error_Handler();
+	}
+}
+
+/**
+************************************************************************
+* @brief:        LCD_ColorToBuf: 将颜色转换为帧缓冲格式
+* @param:        color - RGB565颜色
+* @retval:       uint16_t
+* @details:      当前SPI配置为16bit发送，帧缓冲保持原生RGB565字序。
+************************************************************************
+**/
+static uint16_t LCD_ColorToBuf(uint16_t color)
+{
+	return color;
+}
+
+/**
+************************************************************************
+* @brief:        LCD_SPI_TransmitDMA_Pixels: 使用SPI DMA发送像素流
+* @param:        data - 像素缓冲区（RGB565）
+* @param:        pixel_count - 像素数量
+* @retval:       void
+* @details:      SPI处于16bit模式，按像素分块DMA发送并等待每块完成。
+************************************************************************
+**/
+static void LCD_SPI_TransmitDMA_Pixels(const uint16_t *data, uint32_t pixel_count)
+{
+	LCD_SPI_SetDataSize(SPI_DATASIZE_16BIT);
+
+	while (pixel_count > 0U)
+	{
+		/* HAL长度参数为16位，超长帧拆分发送。 */
+		uint16_t chunk = (pixel_count > 0xFFFFU) ? 0xFFFFU : (uint16_t)pixel_count;
+		if (HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)data, chunk) != HAL_OK)
+		{
+			Error_Handler();
+		}
+
+		/* 该实现为阻塞式等待，保证缓冲区交换时DMA已结束。 */
+		while (HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY)
+		{
+			if (osKernelGetState() == osKernelRunning)
+			{
+				osThreadYield();
+			}
+		}
+
+		data += chunk;
+		pixel_count -= chunk;
+	}
+}
+
+/**
+************************************************************************
+* @brief:        LCD_DMA2D_FillRect: 使用DMA2D填充矩形
+* @param:        dst - 目标帧缓冲
+* @param:        x, y - 矩形左上角
+* @param:        w, h - 矩形宽高
+* @param:        color - 填充颜色
+* @retval:       void
+* @details:      采用DMA2D R2M模式，将单色快速写入back buffer。
+************************************************************************
+**/
+static void LCD_DMA2D_FillRect(uint16_t *dst, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color)
+{
+	if (w == 0U || h == 0U)
+	{
+		return;
+	}
+
+	hdma2d.Init.Mode = DMA2D_R2M;
+	hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
+	hdma2d.Init.OutputOffset = LCD_W - w;
+	if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if (HAL_DMA2D_Start(&hdma2d,
+	                   (uint32_t)LCD_ColorToBuf(color),
+	                   (uint32_t)&dst[(uint32_t)y * LCD_W + x],
+	                   w,
+	                   h) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if (HAL_DMA2D_PollForTransfer(&hdma2d, 100U) != HAL_OK)
+	{
+		Error_Handler();
+	}
+}
+
+/**
+************************************************************************
+* @brief:        LCD_DMA2D_CopyFullFrame: 使用DMA2D复制整帧
+* @param:        dst - 目标帧缓冲
+* @param:        src - 源帧缓冲
+* @retval:       void
+* @details:      每帧开始时将front复制到back，实现保留上一帧内容后再增量绘制。
+************************************************************************
+**/
+static void LCD_DMA2D_CopyFullFrame(uint16_t *dst, const uint16_t *src)
+{
+	hdma2d.Init.Mode = DMA2D_M2M;
+	hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
+	hdma2d.Init.OutputOffset = 0;
+	hdma2d.LayerCfg[1].InputOffset = 0;
+	hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
+	hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+	hdma2d.LayerCfg[1].InputAlpha = 0;
+	hdma2d.LayerCfg[1].AlphaInverted = DMA2D_REGULAR_ALPHA;
+	hdma2d.LayerCfg[1].RedBlueSwap = DMA2D_RB_REGULAR;
+	hdma2d.LayerCfg[1].ChromaSubSampling = DMA2D_NO_CSS;
+
+	if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if (HAL_DMA2D_Start(&hdma2d,
+	                   (uint32_t)src,
+	                   (uint32_t)dst,
+	                   LCD_W,
+	                   LCD_H) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if (HAL_DMA2D_PollForTransfer(&hdma2d, 100U) != HAL_OK)
+	{
+		Error_Handler();
+	}
+}
+
+/**
+************************************************************************
+* @brief:        LCD_MapToPanelWindow: 将逻辑坐标映射到面板物理窗口
+* @param:        x1, y1, x2, y2 - 逻辑窗口坐标
+* @param:        tx1, ty1, tx2, ty2 - 映射后的面板坐标输出
+* @retval:       void
+* @details:      与原驱动保持一致：竖屏Y偏移+20，横屏X偏移+20。
+************************************************************************
+**/
+static void LCD_MapToPanelWindow(uint16_t x1,
+	                             uint16_t y1,
+	                             uint16_t x2,
+	                             uint16_t y2,
+	                             uint16_t *tx1,
+	                             uint16_t *ty1,
+	                             uint16_t *tx2,
+	                             uint16_t *ty2)
+{
+#if USE_HORIZONTAL==0 || USE_HORIZONTAL==1
+	*tx1 = x1;
+	*tx2 = x2;
+	*ty1 = y1 + 20U;
+	*ty2 = y2 + 20U;
+#else
+	*tx1 = x1 + 20U;
+	*tx2 = x2 + 20U;
+	*ty1 = y1;
+	*ty2 = y2;
+#endif
+}
+
+/**
+************************************************************************
+* @brief:        LCD_Panel_BeginMemoryWrite: 配置LCD显存写窗口
+* @param:        x1, y1, x2, y2 - 逻辑窗口坐标
+* @retval:       void
+* @details:      发送ST7789的2A/2B/2C命令，后续可连续写入像素数据。
+************************************************************************
+**/
+static void LCD_Panel_BeginMemoryWrite(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+{
+	uint8_t cmd;
+	uint8_t data[4];
+	uint16_t tx1, ty1, tx2, ty2;
+
+	LCD_MapToPanelWindow(x1, y1, x2, y2, &tx1, &ty1, &tx2, &ty2);
+
+	LCD_CS_Clr();
+
+	cmd = 0x2A;
+	LCD_DC_Clr();
+	LCD_SPI_Transmit8(&cmd, 1);
+	LCD_DC_Set();
+	data[0] = (uint8_t)(tx1 >> 8);
+	data[1] = (uint8_t)tx1;
+	data[2] = (uint8_t)(tx2 >> 8);
+	data[3] = (uint8_t)tx2;
+	LCD_SPI_Transmit8(data, 4);
+
+	cmd = 0x2B;
+	LCD_DC_Clr();
+	LCD_SPI_Transmit8(&cmd, 1);
+	LCD_DC_Set();
+	data[0] = (uint8_t)(ty1 >> 8);
+	data[1] = (uint8_t)ty1;
+	data[2] = (uint8_t)(ty2 >> 8);
+	data[3] = (uint8_t)ty2;
+	LCD_SPI_Transmit8(data, 4);
+
+	cmd = 0x2C;
+	LCD_DC_Clr();
+	LCD_SPI_Transmit8(&cmd, 1);
+	LCD_DC_Set();
+}
+
+/**
+************************************************************************
+* @brief:        LCD_BeginFrame: 开始一帧绘制
+* @param:        void
+* @retval:       void
+* @details:      使用DMA2D将前台缓冲复制到后台缓冲，供本帧继续绘制。
+************************************************************************
+**/
+void LCD_BeginFrame(void)
+{
+	LCD_DMA2D_CopyFullFrame(s_lcd_back_buf, s_lcd_front_buf);
+}
+
+/**
+************************************************************************
+* @brief:        LCD_EndFrame: 结束一帧绘制并刷新到屏幕
+* @param:        void
+* @retval:       void
+* @details:      将back buffer通过SPI DMA整帧发送，再交换front/back指针。
+************************************************************************
+**/
+void LCD_EndFrame(void)
+{
+	uint16_t *tmp;
+
+	/* 配置全屏写窗口并发送整帧像素。 */
+	LCD_Panel_BeginMemoryWrite(0U, 0U, LCD_W - 1U, LCD_H - 1U);
+	LCD_SPI_TransmitDMA_Pixels(s_lcd_back_buf, LCD_FB_PIXELS);
+	LCD_CS_Set();
+
+	/* 交换双缓冲角色：刚发送完成的缓冲成为新的front。 */
+	tmp = s_lcd_front_buf;
+	s_lcd_front_buf = s_lcd_back_buf;
+	s_lcd_back_buf = tmp;
+}
 
 /**
 ************************************************************************
@@ -10,7 +321,7 @@
 * @retval:     	void
 * @details:    	将串行数据写入LCD，根据使用的通信方式选择使用软件模拟SPI（USE_ANALOG_SPI宏定义为真）或硬件SPI。
 *               - 当USE_ANALOG_SPI宏定义为真时，通过GPIO控制SCLK、MOSI和CS信号，循环将8位数据写入。
-*               - 当USE_ANALOG_SPI宏定义为假时，通过HAL_SPI_Transmit函数使用硬件SPI传输1字节数据。
+*              - 当USE_ANALOG_SPI宏定义为假时，通过HAL_SPI_Transmit函数使用硬件SPI传输1字节数据。
 ************************************************************************
 **/
 void LCD_Writ_Bus(uint8_t dat) 
@@ -28,7 +339,7 @@ void LCD_Writ_Bus(uint8_t dat)
 		dat<<=1;
 	}
 #else
-	HAL_SPI_Transmit(&hspi1, &dat, 1, 0xffff);
+	LCD_SPI_Transmit8(&dat, 1);
 #endif	
   LCD_CS_Set();	
 }
@@ -54,8 +365,23 @@ void LCD_WR_DATA8(uint8_t dat)
 **/
 void LCD_WR_DATA(uint16_t dat)
 {
-	LCD_Writ_Bus(dat>>8);
-	LCD_Writ_Bus(dat);
+	if (s_win_cx < LCD_W && s_win_cy < LCD_H)
+	{
+		s_lcd_back_buf[(uint32_t)s_win_cy * LCD_W + s_win_cx] = LCD_ColorToBuf(dat);
+	}
+
+	if (s_win_cx < s_win_x2)
+	{
+		s_win_cx++;
+	}
+	else
+	{
+		s_win_cx = s_win_x1;
+		if (s_win_cy < s_win_y2)
+		{
+			s_win_cy++;
+		}
+	}
 }
 /**
 ************************************************************************
@@ -81,46 +407,29 @@ void LCD_WR_REG(uint8_t dat)
 **/
 void LCD_Address_Set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2)
 {
-	if(USE_HORIZONTAL==0)
+	if (x1 >= LCD_W)
 	{
-		LCD_WR_REG(0x2a);//列地址设置
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//行地址设置
-		LCD_WR_DATA(y1+20);
-		LCD_WR_DATA(y2+20);
-		LCD_WR_REG(0x2c);//储存器写
+		x1 = LCD_W - 1U;
 	}
-	else if(USE_HORIZONTAL==1)
+	if (x2 >= LCD_W)
 	{
-		LCD_WR_REG(0x2a);//列地址设置
-		LCD_WR_DATA(x1);
-		LCD_WR_DATA(x2);
-		LCD_WR_REG(0x2b);//行地址设置
-		LCD_WR_DATA(y1+20);
-		LCD_WR_DATA(y2+20);
-		LCD_WR_REG(0x2c);//储存器写
+		x2 = LCD_W - 1U;
 	}
-	else if(USE_HORIZONTAL==2)
+	if (y1 >= LCD_H)
 	{
-		LCD_WR_REG(0x2a);//列地址设置
-		LCD_WR_DATA(x1+20);
-		LCD_WR_DATA(x2+20);
-		LCD_WR_REG(0x2b);//行地址设置
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//储存器写
+		y1 = LCD_H - 1U;
 	}
-	else
+	if (y2 >= LCD_H)
 	{
-		LCD_WR_REG(0x2a);//列地址设置
-		LCD_WR_DATA(x1+20);
-		LCD_WR_DATA(x2+20);
-		LCD_WR_REG(0x2b);//行地址设置
-		LCD_WR_DATA(y1);
-		LCD_WR_DATA(y2);
-		LCD_WR_REG(0x2c);//储存器写
+		y2 = LCD_H - 1U;
 	}
+
+	s_win_x1 = x1;
+	s_win_y1 = y1;
+	s_win_x2 = x2;
+	s_win_y2 = y2;
+	s_win_cx = x1;
+	s_win_cy = y1;
 }
 /**
 ************************************************************************
@@ -133,15 +442,17 @@ void LCD_Address_Set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2)
 **/
 void LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t color)
 {          
-	uint16_t i,j; 
-	LCD_Address_Set(xsta,ysta,xend-1,yend-1);//设置显示范围
-	for(i=ysta;i<yend;i++)
-	{													   	 	
-		for(j=xsta;j<xend;j++)
-		{
-			LCD_WR_DATA(color);
-		}
-	} 					  	    
+	uint16_t x2;
+	uint16_t y2;
+
+	if (xsta >= LCD_W || ysta >= LCD_H || xend <= xsta || yend <= ysta)
+	{
+		return;
+	}
+
+	x2 = (xend > LCD_W) ? LCD_W : xend;
+	y2 = (yend > LCD_H) ? LCD_H : yend;
+	LCD_DMA2D_FillRect(s_lcd_back_buf, xsta, ysta, (uint16_t)(x2 - xsta), (uint16_t)(y2 - ysta), color);
 }
 /**
 ************************************************************************
@@ -154,8 +465,12 @@ void LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t c
 **/
 void LCD_DrawPoint(uint16_t x,uint16_t y,uint16_t color)
 {
-	LCD_Address_Set(x,y,x,y);//设置光标位置 
-	LCD_WR_DATA(color);
+	if (x >= LCD_W || y >= LCD_H)
+	{
+		return;
+	}
+
+	s_lcd_back_buf[(uint32_t)y * LCD_W + x] = LCD_ColorToBuf(color);
 } 
 /**
 ************************************************************************
@@ -753,13 +1068,26 @@ void LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const 
 {
 	uint16_t i,j;
 	uint32_t k=0;
-	LCD_Address_Set(x,y,x+length-1,y+width-1);
+	if (x >= LCD_W || y >= LCD_H)
+	{
+		return;
+	}
+
+	if ((uint32_t)x + length > LCD_W)
+	{
+		length = (uint16_t)(LCD_W - x);
+	}
+	if ((uint32_t)y + width > LCD_H)
+	{
+		width = (uint16_t)(LCD_H - y);
+	}
+
 	for(i=0;i<length;i++)
 	{
 		for(j=0;j<width;j++)
 		{
-			LCD_WR_DATA8(pic[k*2]);
-			LCD_WR_DATA8(pic[k*2+1]);
+			s_lcd_back_buf[(uint32_t)(y + j) * LCD_W + (x + i)] =
+				(uint16_t)(((uint16_t)pic[k * 2U + 1U] << 8) | pic[k * 2U]);
 			k++;
 		}
 	}			
@@ -774,6 +1102,7 @@ void LCD_ShowPicture(uint16_t x,uint16_t y,uint16_t length,uint16_t width,const 
 **/
 void LCD_Init(void)
 {
+	uint32_t i;
 	
 	LCD_RES_Clr();//复位
 	osDelay(100);
@@ -859,5 +1188,13 @@ void LCD_Init(void)
 	LCD_WR_REG(0x21); 
 
 	LCD_WR_REG(0x29);
+
+	for (i = 0U; i < LCD_FB_PIXELS; i++)
+	{
+		s_lcd_front_buf[i] = LCD_ColorToBuf(BLACK);
+		s_lcd_back_buf[i] = LCD_ColorToBuf(BLACK);
+	}
+
+	LCD_Address_Set(0U, 0U, LCD_W - 1U, LCD_H - 1U);
 }
 
